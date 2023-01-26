@@ -9,6 +9,8 @@ import {
   InputGroup,
   InputRightElement,
   Button,
+  Stack,
+  Circle,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
@@ -40,6 +42,7 @@ const SignIn = () => {
       w="599px"
       direction="column"
       gap="30px"
+      zIndex="99"
     >
       <Box bgColor="#0F172A" h="104.25px" p="30px 60px">
         <Flex justifyContent="center">
@@ -176,7 +179,7 @@ const SignIn = () => {
               Forgot password?
             </Text>
           </Flex>
-          
+
           <Button
             bgColor="#55D4CC"
             opacity="0.5"
@@ -212,6 +215,47 @@ const SignIn = () => {
         </Flex>
       </Box>
     </Flex>
+
+    // <Stack
+    //   width="100%"
+    //   height="1136px"
+    //   maxWidth="100%"
+    //   background="#083358"
+    //   boxShadow="0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
+    // >
+    //   <Box>
+    //     <Box>
+    //       <Circle
+    //         size="1136px"
+    //         background="#FF9F1C"
+    //         filter="blur(300px)"
+    //         opacity="0.3"
+    //         zIndex="-9999"
+    //       />
+    //       <Circle
+    //         size="1136px"
+    //         background="#009F94"
+    //         filter="blur(300px)"
+    //         opacity="0.3"
+    //       />
+    //     </Box>
+    /* <Box>
+          <Circle
+           size="1136px"
+            background="#FF9F1C"
+            filter="blur(300px)"
+            opacity="0.3"
+          />
+          <Circle
+            size="1136px"
+            background="#009F94"
+            filter="blur(300px)"
+            opacity="0.3"
+          />
+        </Box> */
+    //   </Box>
+
+    // </Stack>
   );
 };
 
