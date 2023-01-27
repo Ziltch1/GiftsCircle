@@ -15,19 +15,52 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import Logo from '../../../assets/Logo.png';
+import checkbox from '../assets/checkbox.svg';
+import checkedbox from '../assets/checkedbox.svg';
 
 const SetPassword = () => {
   const [password, setPassword] = useState('');
-  const [emailTest, setEmailTest] = useState(false);
+  const [passwordCount, setPasswordCount] = useState(false);
+  const [passwordUpper, setPasswordUpper] = useState(false);
+  const [passwordSpecial, setPasswordSpecial] = useState(false);
+  const [btnDisabled, setButtonDisabled] = useState(true);
+  const [agree, setAgree] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (password.length < 8) {
+      setPasswordCount(false);
+    } else {
+      setPasswordCount(true);
+    }
+    let UpperCaseRegex = /^(.*[A-Z].*)$/gm;
+    if (UpperCaseRegex.test(password)) {
+      setPasswordUpper(true);
+    } else {
+      setPasswordUpper(false);
+    }
+
+    let SpecialCaseRegex = /^(.*\W.*)$/;
+    if (SpecialCaseRegex.test(password)) {
+      setPasswordSpecial(true);
+    } else {
+      setPasswordSpecial(false);
+    }
+  }, [password]);
+
+  useEffect(() => {
+    if (passwordCount && passwordSpecial && passwordUpper && agree) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [passwordCount, passwordSpecial, passwordUpper, agree]);
 
   return (
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="628px"
+      h="599px"
       w="599px"
       direction="column"
       gap="30px"
@@ -103,7 +136,10 @@ const SetPassword = () => {
                 </InputGroup>
               </FormControl>
               <Flex gap="10px" alignItems="center">
-                <Checkbox border="rgba(0, 0, 81, 0.3)"></Checkbox>
+                <Checkbox
+                  border="rgba(0, 0, 81, 0.3)"
+                  onChange={e => setAgree(e.target.checked)}
+                ></Checkbox>
                 <Text
                   fontSize="14px"
                   color="#000000"
@@ -113,14 +149,63 @@ const SetPassword = () => {
                   I agree to Gift circle’s Terms and Privacy Policy.
                 </Text>
               </Flex>
+
+              <Flex gap="5px">
+                <Flex gap="10px">
+                  {passwordCount ? (
+                    <img src={checkedbox} alt="" />
+                  ) : (
+                    <img src={checkbox} alt="" />
+                  )}
+                  <Text
+                    fontSize="14px"
+                    color="#717171"
+                    lineHeight="22px"
+                    fontWeight="500"
+                  >
+                    minimum of 8 characters
+                  </Text>
+                </Flex>
+
+                <Flex gap="10px" alignItems="center">
+                  {passwordUpper ? (
+                    <img src={checkedbox} alt="" />
+                  ) : (
+                    <img src={checkbox} alt="" />
+                  )}
+                  <Text
+                    fontSize="14px"
+                    color="#717171"
+                    lineHeight="22px"
+                    fontWeight="500"
+                  >
+                    One UPPERCASE character
+                  </Text>
+                </Flex>
+              </Flex>
+
+              <Flex gap="10px" alignItems="center">
+                {passwordSpecial ? (
+                  <img src={checkedbox} alt="" />
+                ) : (
+                  <img src={checkbox} alt="" />
+                )}
+                <Text
+                  fontSize="14px"
+                  color="#717171"
+                  lineHeight="22px"
+                  fontWeight="500"
+                >
+                  One unique character (e.g: !@#$%^&*?)
+                </Text>
+              </Flex>
             </Flex>
           </Flex>
-          <Flex justifyContent="right">
-            
-          </Flex>
+          <Flex justifyContent="right"></Flex>
 
           <Button
-            bgColor="#55D4CC"
+            bgColor={btnDisabled ? '#55D4CC' : '#00BFB2'}
+            boxShadow={btnDisabled ? '' : '0px 8px 30px rgba(0, 191, 178, 0.1)'}
             opacity="0.5"
             borderRadius="5px"
             gap="10px"
@@ -131,8 +216,9 @@ const SetPassword = () => {
             lineHeight="22px"
             fontWeight="500"
             _hover={{ bgColor: '55D4CC' }}
+            disabled={btnDisabled}
           >
-            Login
+            Proceed <HiOutlineArrowNarrowRight />
           </Button>
 
           <Flex justifyContent="center">
@@ -144,8 +230,8 @@ const SetPassword = () => {
                 fontWeight="500"
               >
                 Don’t have an account?{' '}
-                <Link to="/signup" style={{ color: '#0C4C84' }}>
-                  Sign up here
+                <Link to="/signin" style={{ color: '#0C4C84' }}>
+                  Login here
                 </Link>
               </Text>
               <HiOutlineArrowNarrowRight />
