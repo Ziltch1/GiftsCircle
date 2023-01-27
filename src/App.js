@@ -1,36 +1,24 @@
-import React from 'react';
-import { ChakraProvider, Box, Grid, theme } from '@chakra-ui/react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import FirstPage from './Pages/Homepage/First-page'
-import SecondPage from './Pages/Homepage/Second-page';
-import 'swiper/css'
-import { Autoplay} from 'swiper';
-import './styles.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AuthLayout from './Layouts/AuthLayout';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/signup';
+import SetPassword from './pages/signup/SubPages/SetPassword';
+import SignWithEmail from './pages/signup/SubPages/SignWithEmail';
+import VerifyOtp from './pages/signup/SubPages/VerifyOtp';
 
 function App() {
   return (
-    
-      <ChakraProvider>
-        <Swiper
-          spaceBetween={30}
-          centeredSlides={true}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          modules={[Autoplay]}
-          className="mySwiper"
-        >
-          <SwiperSlide>
-            <FirstPage />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SecondPage />
-          </SwiperSlide>
-        </Swiper>
-      </ChakraProvider>
-    
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AuthLayout />} path="/">
+          <Route path="signin" element={<SignIn />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="signup_with_email" element={<SignWithEmail />} />
+          <Route path="signup_verify_otp" element={<VerifyOtp />} />
+          <Route path="signup_set_password" element={<SetPassword />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

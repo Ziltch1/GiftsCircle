@@ -1,4 +1,4 @@
-import { ColorModeScript } from '@chakra-ui/react';
+import { ColorModeScript, ChakraProvider, extendTheme } from '@chakra-ui/react';
 import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import App from './App';
@@ -7,10 +7,18 @@ import * as serviceWorker from './serviceWorker';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
+const theme = extendTheme({
+  fonts: {
+    body: `'Inter', sans-serif`,
+  },
+});
 
 root.render(
   <StrictMode>
-    <App />
+    <ColorModeScript />
+    <ChakraProvider theme={theme}>
+      <App />
+    </ChakraProvider>
   </StrictMode>
 );
 
