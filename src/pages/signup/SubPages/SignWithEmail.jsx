@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Box,
   Flex,
@@ -6,21 +7,19 @@ import {
   Input,
   FormLabel,
   FormHelperText,
-  InputGroup,
-  InputRightElement,
   Button,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
-import Logo from "../../assets/Logo.png";
+import Logo from '../../../assets/Logo.png';
 
-const SignIn = () => {
+const SignWithEmail = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [emailTest, setEmailTest] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [lastName, setLastName] = useState('');
 
   useEffect(() => {
     const EmailRegex =
@@ -31,13 +30,12 @@ const SignIn = () => {
       setEmailTest(false);
     }
   }, [email]);
-
   return (
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="628px"
-      w="599px"
+      h="685px"
+      w="559px"
       direction="column"
       gap="30px"
       zIndex="99"
@@ -60,7 +58,7 @@ const SignIn = () => {
               lineHeight="40px"
               fontWeight="500"
             >
-              Sign in
+              Sign up
             </Text>
 
             <Text
@@ -69,8 +67,8 @@ const SignIn = () => {
               lineHeight="22px"
               fontWeight="500"
             >
-              Let's get you logged in to get back to adding gift list to your
-              event page.
+              Start adding gifts to your events and let people <br /> purchase
+              it for you
             </Text>
           </Flex>
           <Flex direction="column" gap="20px">
@@ -136,46 +134,60 @@ const SignIn = () => {
                 lineHeight="22px"
                 fontWeight="500"
               >
-                Enter your password
+                Enter firstname
               </FormLabel>
-              <InputGroup h="46px" bgColor="#F4F4F4" borderRadius="10px">
-                <Input
-                  borderRadius="10px"
-                  h="46px"
-                  gap="10px"
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  fontSize="14px"
-                  p="12px"
-                  lineHeight="22px"
-                  fontWeight="400"
-                  placeholder="****************"
-                  _placeholder={{
-                    color: '#A8A8A8',
-                    opacity: 0.4,
-                    fontSize: '14px',
-                  }}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                />
-                <InputRightElement
-                  cursor="pointer"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {!showPassword ? <FiEyeOff /> : <FiEye />}
-                </InputRightElement>
-              </InputGroup>
+              <Input
+                bgColor="#F4F4F4"
+                borderRadius="10px"
+                h="46px"
+                gap="10px"
+                type="text"
+                name="firstname"
+                fontSize="14px"
+                p="12px"
+                lineHeight="22px"
+                fontWeight="400"
+                placeholder="dayo"
+                _placeholder={{
+                  color: '#A8A8A8',
+                  opacity: 0.4,
+                  fontSize: '14px',
+                }}
+                value={firstName}
+                onChange={e => setFirstName(e.target.value)}
+              />
             </FormControl>
-          </Flex>
-          <Flex justifyContent="right">
-            <Text
-              fontSize="14px"
-              color="#0C4C84"
-              lineHeight="22px"
-              fontWeight="600"
-            >
-              Forgot password?
-            </Text>
+
+            <FormControl gap="6px">
+              <FormLabel
+                fontSize="14px"
+                color="#12141D"
+                lineHeight="22px"
+                fontWeight="500"
+              >
+                Enter your lastname
+              </FormLabel>
+              <Input
+                bgColor="#F4F4F4"
+                borderRadius="10px"
+                h="46px"
+                gap="10px"
+                type="text"
+                name="lastname"
+                fontSize="14px"
+                p="12px"
+                lineHeight="22px"
+                fontWeight="400"
+                placeholder="albdullahi"
+                _placeholder={{
+                  color: '#A8A8A8',
+                  opacity: 0.4,
+                  fontSize: '14px',
+                }}
+                value={lastName}
+                onChange={e => setLastName(e.target.value)}
+              />
+            </FormControl>
           </Flex>
 
           <Button
@@ -191,7 +203,7 @@ const SignIn = () => {
             fontWeight="500"
             _hover={{ bgColor: '55D4CC' }}
           >
-            Login
+            Continue
           </Button>
 
           <Flex justifyContent="center">
@@ -213,48 +225,7 @@ const SignIn = () => {
         </Flex>
       </Box>
     </Flex>
-
-    // <Stack
-    //   width="100%"
-    //   height="1136px"
-    //   maxWidth="100%"
-    //   background="#083358"
-    //   boxShadow="0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
-    // >
-    //   <Box>
-    //     <Box>
-    //       <Circle
-    //         size="1136px"
-    //         background="#FF9F1C"
-    //         filter="blur(300px)"
-    //         opacity="0.3"
-    //         zIndex="-9999"
-    //       />
-    //       <Circle
-    //         size="1136px"
-    //         background="#009F94"
-    //         filter="blur(300px)"
-    //         opacity="0.3"
-    //       />
-    //     </Box>
-    /* <Box>
-          <Circle
-           size="1136px"
-            background="#FF9F1C"
-            filter="blur(300px)"
-            opacity="0.3"
-          />
-          <Circle
-            size="1136px"
-            background="#009F94"
-            filter="blur(300px)"
-            opacity="0.3"
-          />
-        </Box> */
-    //   </Box>
-
-    // </Stack>
   );
 };
 
-export default SignIn;
+export default SignWithEmail;
