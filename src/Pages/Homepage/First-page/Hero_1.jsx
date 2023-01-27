@@ -1,13 +1,13 @@
 import React from 'react'
 import {Image, Box, Text, Flex, VStack, Card, CardBody, Heading, Button} from '@chakra-ui/react'
-import hero from '../../assets/hero_image.svg'
-import overlay from '../../assets/overlay_1.svg'
-import google_play from '../../assets/google_play.svg'
-import apple_store from '../../assets/apple_store.svg'
+import hero from '../../../assets/hero_image.svg'
+import overlay from '../../../assets/overlay_1.svg'
+import google_play from '../../../assets/google_play.svg'
+import apple_store from '../../../assets/apple_store.svg'
 
 const Hero_1 = () => {
   return (
-    <Box w='100%' bg='#0C4C84' pt='5' pb='5' position='absolute'>
+    <Box w='100%' bg='#0C4C84' pt='5' pb='5' position='absolute' h='auto' overflow={'auto'}>
       <Box w='90%' mx='auto'>
           <Box>
               <Image src={hero} display='block' mx={'auto'} mt='8' mb='6' />

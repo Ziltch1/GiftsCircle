@@ -1,21 +1,34 @@
 import React from 'react';
 import { ChakraProvider, Box, Grid, theme } from '@chakra-ui/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
-import Navbar from './Components/Navbar/Navbar'
-import Hero from './Pages/Homepage'
-import Navbar_2 from './Components/Navbar_2/Navbar_2';
-
+import FirstPage from './Pages/Homepage/First-page'
+import SecondPage from './Pages/Homepage/Second-page';
+import 'swiper/css'
+import { Autoplay} from 'swiper';
+// import './styles.css'
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Navbar_2 />
-      <Hero />
-      {/* <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-        </Grid>
-      </Box> */}
+    <ChakraProvider>
+      {/* <FirstPage /> */}
+      <Swiper
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 4500,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        className="mySwiper"
+      >
+        <SwiperSlide>
+          <FirstPage />
+        </SwiperSlide>
+        <SwiperSlide>
+          <SecondPage />
+        </SwiperSlide>
+      </Swiper>
     </ChakraProvider>
   );
 }

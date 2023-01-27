@@ -1,6 +1,6 @@
 import React from 'react'
 import {Box, Text, Image, Flex, Button, VStack} from '@chakra-ui/react'
-import logo from '../../assets/gift_circle_logo.svg'
+import logo from '../../../assets/gift_circle_logo.svg'
 import {AddIcon} from '@chakra-ui/icons'
 
 const Navbar = () => {
