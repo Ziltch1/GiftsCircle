@@ -1,15 +1,32 @@
 import React from 'react'
-import {Box, Container} from '@chakra-ui/react'
-import Hero_1 from './Hero_1'
-import Hero_2 from './Hero_2'
+import { ChakraProvider, Box, Grid, theme } from '@chakra-ui/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import FirstPage from './First-page'
+import SecondPage from './Second-page';
+import 'swiper/css'
+import { Autoplay } from 'swiper';
 
-
-const index = () => {
+function index() {
   return (
-    <Box>
-        <Hero_1/>
-        <Hero_2 />
-    </Box>
+    <ChakraProvider>
+      <Swiper
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        className="mySwiper"
+      >
+        <SwiperSlide>
+          <FirstPage />
+        </SwiperSlide>
+        <SwiperSlide>
+          <SecondPage />
+        </SwiperSlide>
+      </Swiper>
+    </ChakraProvider>
   )
 }
 
