@@ -4,10 +4,11 @@ import hero from '../../../assets/hero_image.svg'
 import overlay from '../../../assets/overlay_1.svg'
 import google_play from '../../../assets/google_play.svg'
 import apple_store from '../../../assets/apple_store.svg'
+import bgImage from '../../../assets/first-bg.png'
 
 const Hero_1 = () => {
   return (
-    <Box w='100%' bg='#0C4C84' pt='5' pb='5' position='absolute' h='auto' overflow={'auto'}>
+    <Box w='100%' bgImage={bgImage} backgroundSize='cover' backgroundRepeat={'no-repeat'} pt='5' pb='5' overflow={'auto'}>
       <Box w='90%' mx='auto'>
           <Box>
               <Image src={hero} display='block' mx={'auto'} mt='8' mb='6' />
@@ -17,7 +18,7 @@ const Hero_1 = () => {
             <Image src={overlay} />
           </Box>
 
-          <Box w='226px' h='46px' borderRadius={'5px'} bg='#CEDBE6' display={'flex'} justifyContent='center' alignItems='center' position={'absolute'} left='135px' top='315px'>
+          <Box w='226px' h='46px' borderRadius={'5px'} bg='#CEDBE6' display={'flex'} justifyContent='center' alignItems='center' position={'absolute'} left='135px' top='330px'>
             <Text fontWeight={'semibold'}>Your delivery is on it's way!</Text>
           </Box>
 
@@ -29,8 +30,8 @@ const Hero_1 = () => {
             <Heading size={'2xl'} textAlign='center' lineHeight={'58px'} color='#CCF2F0'>Add <b style={{color: '#FF9F1C'}}>gift list</b> when you create your event with <b style={{color: '#00BFB2'}}>Gift Circle</b></Heading>
             <Text color='white' maxW='450px' mx='auto'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus quam sed sed proin. Imperdiet velit, tempor, venen</Text>
             <Flex justifyContent={'space-around'} w='450px'>
-              <Button bg='none' _hover={{bg: "none"}}><Image src={google_play} w='80%' /></Button>
-              <Button bg='none' _hover={{bg: "none"}}><Image src={apple_store} w='80%' /></Button>
+              <Button bg='none' _hover={{bg: "none"}}><Image src={google_play} /></Button>
+              <Button bg='none' _hover={{bg: "none"}}><Image src={apple_store} /></Button>
             </Flex>
           </VStack>
       </Box>

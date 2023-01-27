@@ -5,7 +5,7 @@ import Navbar from './Navbar'
 
 const index = () => {
   return (
-    <Box height='100%' overflowY={'auto'}>
+    <Box >
         <Navbar />
         <Hero_1 />
     </Box>

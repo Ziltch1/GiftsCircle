@@ -7,7 +7,7 @@ import Hero_2 from './Hero_2'
 const index = () => {
   return (
     <Box>
-        {/* <Hero_1/> */}
+        <Hero_1/>
         <Hero_2 />
     </Box>
   )

@@ -14,7 +14,7 @@ const Navbar = () => {
         <Box>
           <Button bg='none' color='#0C4C84'> <AddIcon mr='1.5' /> Create an event</Button>
           <Button bg='none' _hover={{bg: 'none'}}>Sign in</Button>
-          <Button bg={'#0C4C84'} color='white'>Create an account</Button>
+          <Button bg={'#0C4C84'} color='white' boxShadow={'md'} _hover={{ bg: '#0C4C84'}}>Create an account</Button>
         </Box>
       </Flex>
     </Box>
