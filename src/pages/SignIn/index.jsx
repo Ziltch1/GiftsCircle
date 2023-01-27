@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
-import Logo from "../../assets/Logo.png";
+import Logo from '../../assets/Logo.png';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -37,7 +37,7 @@ const SignIn = () => {
       bgColor="#fff"
       color="#000000"
       h="628px"
-      w="599px"
+      w="559px"
       direction="column"
       gap="30px"
       zIndex="99"
@@ -174,7 +174,7 @@ const SignIn = () => {
               lineHeight="22px"
               fontWeight="600"
             >
-              Forgot password?
+              <Link to="/forgot_password">Forgot password?</Link>
             </Text>
           </Flex>
 
@@ -213,47 +213,6 @@ const SignIn = () => {
         </Flex>
       </Box>
     </Flex>
-
-    // <Stack
-    //   width="100%"
-    //   height="1136px"
-    //   maxWidth="100%"
-    //   background="#083358"
-    //   boxShadow="0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
-    // >
-    //   <Box>
-    //     <Box>
-    //       <Circle
-    //         size="1136px"
-    //         background="#FF9F1C"
-    //         filter="blur(300px)"
-    //         opacity="0.3"
-    //         zIndex="-9999"
-    //       />
-    //       <Circle
-    //         size="1136px"
-    //         background="#009F94"
-    //         filter="blur(300px)"
-    //         opacity="0.3"
-    //       />
-    //     </Box>
-    /* <Box>
-          <Circle
-           size="1136px"
-            background="#FF9F1C"
-            filter="blur(300px)"
-            opacity="0.3"
-          />
-          <Circle
-            size="1136px"
-            background="#009F94"
-            filter="blur(300px)"
-            opacity="0.3"
-          />
-        </Box> */
-    //   </Box>
-
-    // </Stack>
   );
 };
 

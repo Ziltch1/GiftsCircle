@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AuthLayout from './Layouts/AuthLayout';
+import ForgotPassword from './pages/ForgotPassword';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/signup';
 import SignUpLoading from './pages/signup/SubPages/Loading';
@@ -18,6 +19,7 @@ function App() {
           <Route path="signup_verify_otp" element={<VerifyOtp />} />
           <Route path="signup_set_password" element={<SetPassword />} />
           <Route path="signup_loading" element={<SignUpLoading />} />
+          <Route path="forgot_password" element={<ForgotPassword />} />
         </Route>
       </Routes>
     </BrowserRouter>
