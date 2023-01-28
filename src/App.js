@@ -19,6 +19,8 @@ function App() {
           <Route path="signup_with_email" element={<SignWithEmail />} />
           <Route path="signup_verify_otp" element={<VerifyOtp />} />
           <Route path="signup_set_password" element={<SetPassword />} />
+          <Route path="signup_loading" element={<SignUpLoading />} />
+          <Route path="forgot_password" element={<ForgotPassword />} />
         </Route>
       </Routes>
     </BrowserRouter>
