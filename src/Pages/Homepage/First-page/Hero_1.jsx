@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, Box, Text, Flex, VStack, Card, CardBody, Heading, Button} from '@chakra-ui/react'
+import {Image, Box, Text, Flex, VStack, Heading, Button} from '@chakra-ui/react'
 import hero from '../../../assets/hero_image.svg'
 import overlay from '../../../assets/overlay_1.svg'
 import google_play from '../../../assets/google_play.svg'

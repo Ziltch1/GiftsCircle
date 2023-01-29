@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box, Image, Text, Heading, Flex, Stack, Button} from '@chakra-ui/react'
+import {Box, Image, Text, Heading, Flex, Button} from '@chakra-ui/react'
 import bgImage from '../../../assets/second_bg.svg'
 import google_play from '../../../assets/google_play.svg'
 import apple_store from '../../../assets/apple_store.svg'

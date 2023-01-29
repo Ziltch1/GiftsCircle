@@ -10,7 +10,6 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import Logo from '../../../assets/Logo.png';

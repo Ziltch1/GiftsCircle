@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Button,
-} from '@chakra-ui/react';
+import { Box, Flex, Text, Button } from '@chakra-ui/react';
 import {
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
@@ -57,8 +52,8 @@ const SignUp = () => {
           </Flex>
           <Flex direction="column" gap="20px">
             <Button
-              bgColor="#55D4CC"
-              opacity="0.5"
+              bgColor="#00BFB2"
+              boxShadow="0px 8px 30px rgba(0, 191, 178, 0.1)"
               borderRadius="5px"
               gap="10px"
               h="50px"
@@ -67,7 +62,7 @@ const SignUp = () => {
               color="#FFFFFF"
               lineHeight="22px"
               fontWeight="500"
-              _hover={{ bgColor: '55D4CC' }}
+              _hover={{ bgColor: '#00BFB2' }}
             >
               Sign up with email
             </Button>
@@ -112,7 +107,8 @@ const SignUp = () => {
               borderRadius="5px"
               gap="10px"
               h="50px"
-              p="13px 198px"
+              justifyContent="center"
+              alignItems="center"
               _hover={{ bgColor: '#ffffff' }}
               cursor="pointer"
             >
