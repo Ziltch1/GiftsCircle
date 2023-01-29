@@ -1,5 +1,4 @@
 import React from 'react'
-import { ChakraProvider, Box, Grid, theme } from '@chakra-ui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import FirstPage from './First-page'
 import SecondPage from './Second-page';
@@ -8,7 +7,6 @@ import { Autoplay } from 'swiper';
 
 function index() {
   return (
-    <ChakraProvider>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -26,7 +24,6 @@ function index() {
           <SecondPage />
         </SwiperSlide>
       </Swiper>
-    </ChakraProvider>
   )
 }
 
