@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String     @id @db.VarChar(255)
+  firstname        String?    @db.VarChar(255)
+  lastname         String?    @db.VarChar(255)
+  gender           String?    @db.VarChar(255)
+  placeOfResidence String?    @db.VarChar(255)
+  tel              String?    @db.VarChar(255)
+  state            String?    @db.VarChar(255)
+  dob              String?    @db.VarChar(255)
+  email            String     @unique @db.VarChar(255)
+  Events           Event[]
+  Gift             Gift[]
+  Delivery         Delivery[]
+}
+
+model Event {
+  id              String   @id @db.VarChar(255)
+  title           String?  @db.VarChar(255)
+  category        String   @db.VarChar(255)
+  venue           String   @db.VarChar(255)
+  date            DateTime
+  time            DateTime
+  timezone        String?  @db.VarChar(255)
+  image           String?  @db.VarChar(255)
+  descCeleb       String?  @db.VarChar(255)
+  summary         String?  @db.VarChar(255)
+  descSummary     String?  @db.VarChar(255)
+  published       Boolean
+  applyDonation   Boolean
+  percentDonation Int
+  owner           User     @relation(fields: [userId], references: [id])
+  userId          String   @db.VarChar(255)
+  gifts           Gift[]
+}
+
+model GiftItem {
+  id       String  @id @db.VarChar(255)
+  title    String? @db.VarChar(255)
+  category String  @db.VarChar(255)
+  image    String? @db.VarChar(255)
+  details  String? @db.VarChar(255)
+  amount   Int
+  Gift     Gift[]
+}
+
+model Gift {
+  id                 String   @id @db.VarChar(255)
+  gift               GiftItem @relation(fields: [giftItemId], references: [id])
+  giftItemId         String   @db.VarChar(255)
+  enableContribution Boolean
+  purchased          Boolean
+  quantity           Int
+  purchasedBY        User     @relation(fields: [userId], references: [id])
+  userId             String   @db.VarChar(255)
+  status             String   @db.VarChar(255)
+  complimentaryGift  String   @db.VarChar(255)
+  amountPaid         Int
+  Event              Event?   @relation(fields: [eventId], references: [id])
+  eventId            String?  @db.VarChar(255)
+}
+
+model Delivery {
+  id           String   @id @db.VarChar(255)
+  address      String   @db.VarChar(255)
+  city         String   @db.VarChar(255)
+  state        String   @db.VarChar(255)
+  orderDate    DateTime
+  country      String   @db.VarChar(255)
+  expectedDate DateTime
+  postalCode   String   @db.VarChar(255)
+  tel          String   @db.VarChar(255)
+  tel2         String   @db.VarChar(255)
+  status       String   @db.VarChar(255)
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String   @db.VarChar(255)
+}
