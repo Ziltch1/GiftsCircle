@@ -4,12 +4,13 @@ import {
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
 } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Logo.png';
 import Google from './assets/google.svg';
 import Apple from './assets/apple.svg';
 
 const SignUp = () => {
+  const navigate = useNavigate()
   return (
     <Flex
       bgColor="#fff"
@@ -63,6 +64,7 @@ const SignUp = () => {
               lineHeight="22px"
               fontWeight="500"
               _hover={{ bgColor: '#00BFB2' }}
+              onClick={() => navigate("/signup_with_email")}
             >
               Sign up with email
             </Button>

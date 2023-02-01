@@ -11,14 +11,16 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/Logo.png';
+import { CreateUserApi } from '../../../redux/axios/apis/user';
 
 const SignWithEmail = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
+  const [firstname, setFirstName] = useState('');
   const [emailTest, setEmailTest] = useState(false);
-  const [lastName, setLastName] = useState('');
+  const [lastname, setLastName] = useState('');
 
   useEffect(() => {
     const EmailRegex =
@@ -29,6 +31,22 @@ const SignWithEmail = () => {
       setEmailTest(false);
     }
   }, [email]);
+
+  const HandleSubmit = async () => {
+    if (emailTest) {
+      const formBody = {
+        firstname,
+        lastname,
+        email,
+      };
+      const res = await CreateUserApi(formBody);
+      console.log(res);
+      if (res.status) {
+        navigate('/signup_verify_otp');
+      }
+    }
+  };
+
   return (
     <Flex
       bgColor="#fff"
@@ -152,7 +170,7 @@ const SignWithEmail = () => {
                   opacity: 0.4,
                   fontSize: '14px',
                 }}
-                value={firstName}
+                value={firstname}
                 onChange={e => setFirstName(e.target.value)}
               />
             </FormControl>
@@ -183,7 +201,7 @@ const SignWithEmail = () => {
                   opacity: 0.4,
                   fontSize: '14px',
                 }}
-                value={lastName}
+                value={lastname}
                 onChange={e => setLastName(e.target.value)}
               />
             </FormControl>
@@ -201,6 +219,7 @@ const SignWithEmail = () => {
             lineHeight="22px"
             fontWeight="500"
             _hover={{ bgColor: '55D4CC' }}
+            onClick={() => HandleSubmit()}
           >
             Continue
           </Button>
