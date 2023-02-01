@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChangePassword = exports.SetPassword = exports.GetUser = exports.Create = void 0;
 const client_1 = require("@prisma/client");
+const EmailService_1 = __importDefault(require("../../Utils/EmailService"));
 const services_1 = require("../Auth/services");
 const service_1 = require("./service");
 const { v4: uuidv4 } = require("uuid");
@@ -29,9 +33,23 @@ const Create = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 email: data.email,
                 lastname: data.lastname,
                 firstname: data.firstname,
+                emailVerified: false,
                 id: id,
             },
         });
+        let otp = (0, services_1.GenerateOtp)();
+        var expires = new Date();
+        expires.setMinutes(expires.getMinutes() + 1);
+        expires = new Date(expires);
+        yield prisma.otp.create({
+            data: {
+                id: uuidv4(),
+                user: data.email,
+                code: otp,
+                expires: expires,
+            },
+        });
+        yield (0, EmailService_1.default)(data.email, data.firstname, otp);
         yield prisma.$disconnect();
         return data;
     }

@@ -9,12 +9,12 @@ router.get("/:id", async (req: Request, res: Response) => {
   try {
     let data = await GetUser(req.params.id);
     if (data) {
-      res.status(201).send({ user: data });
+      return res.status(200).send({ user: data });
     }
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    res.status(400).send({ msg: "User not found" });
+    return res.status(400).send({ msg: "User not found" });
   }
 });
 
@@ -32,7 +32,7 @@ router.post("/changePassword", async (req: Request, res: Response) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send({ msg: "Request Failed" });
   }
 });
 

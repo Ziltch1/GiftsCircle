@@ -8,9 +8,37 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Logo.png';
 import Google from './assets/google.svg';
 import Apple from './assets/apple.svg';
+import {
+  signInWithPopup,
+  auth,
+  provider,
+} from '../../redux/axios/Utils/Firebase';
+import { CreateUserApi } from '../../redux/axios/apis/user';
 
 const SignUp = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const GoogleSignUp = () => {
+    signInWithPopup(auth, provider)
+      .then(async result => {
+        const formBody = {
+          firstname: result.user.displayName?.split(' ')[1],
+          lastname: result.user.displayName?.split(' ')[0],
+          email: result.user.email,
+        };
+
+        const res = await CreateUserApi(formBody);
+        if (res.status) {
+          localStorage.setItem('newUser', result.user.email);
+          navigate('/signup_verify_otp');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        return error;
+      });
+  };
+
   return (
     <Flex
       bgColor="#fff"
@@ -64,7 +92,7 @@ const SignUp = () => {
               lineHeight="22px"
               fontWeight="500"
               _hover={{ bgColor: '#00BFB2' }}
-              onClick={() => navigate("/signup_with_email")}
+              onClick={() => navigate('/signup_with_email')}
             >
               Sign up with email
             </Button>
@@ -91,6 +119,7 @@ const SignUp = () => {
               p="13px 198px"
               _hover={{ bgColor: '#ffffff' }}
               cursor="pointer"
+              onClick={() => GoogleSignUp()}
             >
               <img src={Google} alt="google" />
               <Text

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SendVerifyEmail = exports.VerifyEmail = exports.GoogleSignIn = exports.Login = void 0;
+exports.SendVerifyEmail = exports.VerifyOtp = exports.GoogleSignIn = exports.Login = void 0;
 const client_1 = require("@prisma/client");
 const Response_1 = __importDefault(require("../../DTO/Request/Response"));
 const EmailService_1 = __importDefault(require("../../Utils/EmailService"));
@@ -32,9 +32,9 @@ const Login = (data) => __awaiter(void 0, void 0, void 0, function* () {
             let token = (0, services_1.GenerateToken)(data.email);
             return { token, user };
         }
-        return new Response_1.default("Failed", "Email or Password is Incorrect");
+        return null;
     }
-    return new Response_1.default("Failed", "Email or Password is Incorrect");
+    return null;
 });
 exports.Login = Login;
 const GoogleSignIn = (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -51,28 +51,6 @@ const GoogleSignIn = (data) => __awaiter(void 0, void 0, void 0, function* () {
     return null;
 });
 exports.GoogleSignIn = GoogleSignIn;
-const VerifyEmail = (token) => __awaiter(void 0, void 0, void 0, function* () {
-    let token_data = (0, services_1.VerifyToken)(token);
-    const user = yield prisma.user.findUnique({
-        where: {
-            email: token_data.email,
-        },
-    });
-    if (user) {
-        yield prisma.user.update({
-            where: {
-                email: user.email,
-            },
-            data: {
-                emailVerified: true,
-            },
-        });
-        yield prisma.$disconnect();
-        return user;
-    }
-    return null;
-});
-exports.VerifyEmail = VerifyEmail;
 const SendVerifyEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield prisma.user.findUnique({
         where: {
@@ -103,17 +81,17 @@ const SendVerifyEmail = (email) => __awaiter(void 0, void 0, void 0, function* (
     return null;
 });
 exports.SendVerifyEmail = SendVerifyEmail;
-const VerifyOtp = (code) => __awaiter(void 0, void 0, void 0, function* () {
+const VerifyOtp = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const otp = yield prisma.otp.findFirst({
         where: {
-            code: code,
+            code: data.code,
         },
     });
-    if (otp) {
+    if (otp && data.user === otp.user) {
         try {
-            var expires = new Date().getTime();
-            var otp_date = new Date(otp.expires).getTime();
-            if (otp_date < expires) {
+            var currentDate = new Date().getTime();
+            var expires = new Date(otp.expires).getTime();
+            if (expires > currentDate) {
                 yield prisma.user.update({
                     where: {
                         email: otp.user,
@@ -122,11 +100,26 @@ const VerifyOtp = (code) => __awaiter(void 0, void 0, void 0, function* () {
                         emailVerified: true,
                     },
                 });
+                yield prisma.otp.delete({
+                    where: {
+                        id: otp.id,
+                    },
+                });
+                return new Response_1.default("Success", "Email has been verified");
+            }
+            else {
+                yield prisma.otp.delete({
+                    where: {
+                        id: otp.id,
+                    },
+                });
+                return new Response_1.default("Failed", "Otp has Expired");
             }
         }
         catch (error) {
-            console.log(error);
+            return new Response_1.default("Failed", "Request Failed");
         }
     }
-    return null;
+    return new Response_1.default("Failed", "Otp is Invalid");
 });
+exports.VerifyOtp = VerifyOtp;

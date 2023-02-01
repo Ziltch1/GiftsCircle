@@ -8,4 +8,16 @@ const SignInApi = data => {
   return api.post('/login', data);
 };
 
-export { GoogleSignInApi, SignInApi };
+const VerifyEmailApi = data => {
+  return api.post('/verifyEmail', data);
+};
+
+const SetPasswordApi = data => {
+  return api.post('/setPassword', data);
+};
+
+// const SendResetPasswordLink = data => {
+//   return api.post('/setPassword', data);
+// }
+
+export { GoogleSignInApi, SignInApi, VerifyEmailApi, SetPasswordApi };

@@ -4,7 +4,8 @@ import ChangePasswordDTO from "../../DTO/Request/User/ChangePasswordDTO";
 import CreateUserDTO from "../../DTO/Request/User/CreateDTO";
 import SetPasswordDTO from "../../DTO/Request/User/SetPassword";
 import User from "../../Models/User";
-import { comparePassword, VerifyToken } from "../Auth/services";
+import SendEmail from "../../Utils/EmailService";
+import { comparePassword, GenerateOtp, VerifyToken } from "../Auth/services";
 import { hashPassword } from "./service";
 const { v4: uuidv4 } = require("uuid");
 const prisma = new PrismaClient();
@@ -24,9 +25,26 @@ const Create = async (data: CreateUserDTO) => {
         email: data.email,
         lastname: data.lastname,
         firstname: data.firstname,
+        emailVerified: false,
         id: id,
       },
     });
+
+    let otp = GenerateOtp();
+    var expires = new Date();
+    expires.setMinutes(expires.getMinutes() + 1);
+    expires = new Date(expires);
+
+    await prisma.otp.create({
+      data: {
+        id: uuidv4(),
+        user: data.email,
+        code: otp,
+        expires: expires,
+      },
+    });
+
+    await SendEmail(data.email, data.firstname, otp);
     await prisma.$disconnect();
 
     return data;

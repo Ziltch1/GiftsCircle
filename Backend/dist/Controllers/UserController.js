@@ -22,13 +22,13 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         let data = yield (0, Users_1.GetUser)(req.params.id);
         if (data) {
-            res.status(201).send({ user: data });
+            return res.status(200).send({ user: data });
         }
     }
     catch (err) {
         console.log(err);
         yield prisma.$disconnect();
-        res.status(400).send({ msg: "User not found" });
+        return res.status(400).send({ msg: "User not found" });
     }
 }));
 router.post("/changePassword", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,7 +46,7 @@ router.post("/changePassword", (req, res) => __awaiter(void 0, void 0, void 0, f
     catch (err) {
         console.log(err);
         yield prisma.$disconnect();
-        res.status(400).send({ msg: "Request Failed" });
+        return res.status(400).send({ msg: "Request Failed" });
     }
 }));
 module.exports = router;

@@ -14,6 +14,8 @@ import Logo from '../../assets/Logo.png';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+
+  
   return (
     <Flex
       bgColor="#fff"

@@ -22,15 +22,15 @@ const prisma = new client_1.PrismaClient();
 router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let data = yield (0, Auth_1.Login)(req.body);
-        if (typeof data === typeof Response_1.default) {
-            return res.status(400).send(data);
+        if (data) {
+            return res.status(200).send(data);
         }
-        return res.status(200).send(data);
+        return res.status(400).send(new Response_1.default("Failed", "Email or Password is Incorrect"));
     }
     catch (err) {
         console.log(err);
         yield prisma.$disconnect();
-        res.status(400).send({ msg: "Request Failed" });
+        return res.status(400).send({ msg: "Request Failed" });
     }
 }));
 router.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -44,28 +44,28 @@ router.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, functio
     catch (err) {
         console.log(err);
         yield prisma.$disconnect();
-        res.status(400).send({ msg: "Request Failed" });
+        return res.status(400).send({ msg: "Request Failed" });
     }
 }));
 router.post("/googleSignin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let data = yield (0, Auth_1.GoogleSignIn)(req.body);
         if (data) {
-            res.status(200).send(data);
+            return res.status(200).send(data);
         }
         return res.status(400).send(new Response_1.default("Failed", "User not found"));
     }
     catch (err) {
         console.log(err);
         yield prisma.$disconnect();
-        res.status(400).send({ msg: "Request Failed" });
+        return res.status(400).send({ msg: "Request Failed" });
     }
 }));
 router.post("/setPassword", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let data = yield (0, Users_1.SetPassword)(req.body, "SET");
         if (data) {
-            res
+            return res
                 .status(201)
                 .send(new Response_1.default("Success", "Password set successfully"));
         }
@@ -74,14 +74,14 @@ router.post("/setPassword", (req, res) => __awaiter(void 0, void 0, void 0, func
     catch (err) {
         console.log(err);
         yield prisma.$disconnect();
-        res.status(400).send({ msg: "Request Failed" });
+        return res.status(400).send({ msg: "Request Failed" });
     }
 }));
 router.post("/resetPassword", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let data = yield (0, Users_1.SetPassword)(req.body, "RESET");
         if (data) {
-            res
+            return res
                 .status(201)
                 .send(new Response_1.default("Success", "Password reset successfully"));
         }
@@ -90,30 +90,28 @@ router.post("/resetPassword", (req, res) => __awaiter(void 0, void 0, void 0, fu
     catch (err) {
         console.log(err);
         yield prisma.$disconnect();
-        res.status(400).send({ msg: "Request Failed" });
+        return res.status(400).send({ msg: "Request Failed" });
     }
 }));
 router.post("/verifyEmail", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let data = yield (0, Auth_1.VerifyEmail)(req.body);
-        if (data) {
-            res
-                .status(201)
-                .send(new Response_1.default("Success", "Email verified successfully"));
+        let data = yield (0, Auth_1.VerifyOtp)(req.body);
+        if (data.Status === "Success") {
+            return res.status(200).send(data);
         }
-        return res.status(400).send(new Response_1.default("Failed", "User not found"));
+        return res.status(400).send(data);
     }
     catch (err) {
         console.log(err);
         yield prisma.$disconnect();
-        res.status(400).send({ msg: "Request Failed" });
+        return res.status(400).send({ msg: "Request Failed" });
     }
 }));
 router.post("/sendVerifyEmail", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let data = yield (0, Auth_1.SendVerifyEmail)(req.body.email);
         if (data.status) {
-            res
+            return res
                 .status(201)
                 .send(new Response_1.default("Success", "Email sent successfully"));
         }
@@ -122,7 +120,7 @@ router.post("/sendVerifyEmail", (req, res) => __awaiter(void 0, void 0, void 0, 
     catch (err) {
         console.log(err);
         yield prisma.$disconnect();
-        res.status(400).send({ msg: "Request Failed" });
+        return res.status(400).send({ msg: "Request Failed" });
     }
 }));
 module.exports = router;

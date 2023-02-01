@@ -40,8 +40,8 @@ const SignWithEmail = () => {
         email,
       };
       const res = await CreateUserApi(formBody);
-      console.log(res);
       if (res.status) {
+        localStorage.setItem('newUser', email);
         navigate('/signup_verify_otp');
       }
     }

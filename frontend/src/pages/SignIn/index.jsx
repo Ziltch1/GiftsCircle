@@ -15,10 +15,14 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Logo.png';
-import { EmailSignIn } from '../../redux/features/auth/services';
+import { EmailSignIn, GoogleSignIn } from '../../redux/features/auth/services';
 import { dispatch } from '../../redux/store';
 import { useSelector } from 'react-redux';
-
+import {
+  signInWithPopup,
+  auth,
+  provider,
+} from '../../redux/axios/Utils/Firebase';
 const SignIn = () => {
   const { token } = useSelector(state => state.auth);
   const navigate = useNavigate();
@@ -45,6 +49,21 @@ const SignIn = () => {
       };
       dispatch(EmailSignIn(formBody));
     }
+  };
+
+  const GoogleSignInHandler = () => {
+    signInWithPopup(auth, provider)
+      .then(async result => {
+        const formBody = {
+          email: result.user.email,
+        };
+
+        dispatch(GoogleSignIn(formBody));
+      })
+      .catch(error => {
+        console.log(error);
+        return error;
+      });
   };
 
   useEffect(() => {

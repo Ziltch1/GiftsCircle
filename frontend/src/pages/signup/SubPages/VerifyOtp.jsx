@@ -8,13 +8,25 @@ import {
   PinInputField,
 } from '@chakra-ui/react';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/Logo.png';
 import Warning from '../assets/warning.svg';
+import { VerifyEmailApi } from '../../../redux/axios/apis/auth';
 
 const VerifyOtp = () => {
+  const navigate = useNavigate();
+  const user = localStorage.getItem('newUser');
   const [otp, setOtp] = useState('');
+  const [counter, setCounter] = useState(60);
   const [btnDisabled, setBtnDisabled] = useState(true);
+
+  useEffect(() => {
+    if (counter > 0) {
+      setTimeout(() => {
+        setCounter(prev => (prev -= 1));
+      }, 1000);
+    }
+  }, [counter]);
 
   useEffect(() => {
     if (otp.length !== 5) {
@@ -23,6 +35,20 @@ const VerifyOtp = () => {
       setBtnDisabled(false);
     }
   }, [otp]);
+
+  const HandleSubmit = async () => {
+    if (!btnDisabled) {
+      const formBody = {
+        code: otp,
+        user: user,
+      };
+      const res = await VerifyEmailApi(formBody);
+      if (res.status) {
+        navigate('/signup_set_password');
+      }
+    }
+  };
+
   return (
     <Flex
       bgColor="#fff"
@@ -60,8 +86,7 @@ const VerifyOtp = () => {
               fontWeight="500"
             >
               To complete your registration, please enter the code <br /> that
-              we sent to{' '}
-              <Link style={{ color: '#0C4C84' }}>dayoabodunrin@gmail.com</Link>
+              we sent to <Link style={{ color: '#0C4C84' }}>{user}</Link>
             </Text>
           </Flex>
           <Flex direction="column" gap="20px">
@@ -143,7 +168,7 @@ const VerifyOtp = () => {
                 fontWeight="500"
                 letterSpacing="-0.015em"
               >
-                00:59
+                00:{counter}
               </Text>
             </Flex>
 
@@ -182,6 +207,7 @@ const VerifyOtp = () => {
               fontWeight="500"
               _hover={{ bgColor: '55D4CC' }}
               disabled={btnDisabled}
+              onClick={() => HandleSubmit()}
             >
               Proceed <HiOutlineArrowNarrowRight />
             </Button>

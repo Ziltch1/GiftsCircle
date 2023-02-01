@@ -11,9 +11,11 @@ dotenv.config();
 app.use(express.json());
 // assuming you are sending from a form you need to add the line below for it work.
 app.use(express.urlencoded({ extended: false }));
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 app.use("/api/user", require("./Controllers/UserController"));
 app.use("/api/", require("./Controllers/AuthController"));
-app.use(cors());
 const options = {
     definition: {
         openapi: "3.1.0",
