@@ -13,12 +13,14 @@ import {
 import React, { useEffect, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/Logo.png';
+import { SetPasswordApi } from '../../../redux/axios/apis/auth';
 import checkbox from '../assets/checkbox.svg';
 import checkedbox from '../assets/checkedbox.svg';
 
 const SetPassword = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [passwordCount, setPasswordCount] = useState(false);
   const [passwordUpper, setPasswordUpper] = useState(false);
@@ -55,6 +57,20 @@ const SetPassword = () => {
       setButtonDisabled(true);
     }
   }, [passwordCount, passwordSpecial, passwordUpper, agree]);
+
+  const HandleSubmit = async () => {
+    if (!btnDisabled) {
+      const formBody = {
+        user: localStorage.getItem('newUser'),
+        password,
+      };
+      const res = await SetPasswordApi(formBody);
+      if (res.status) {
+        navigate('/signup_loading');
+        localStorage.removeItem('newUser');
+      }
+    }
+  };
 
   return (
     <Flex
@@ -217,6 +233,7 @@ const SetPassword = () => {
             fontWeight="500"
             _hover={{ bgColor: '55D4CC' }}
             disabled={btnDisabled}
+            onClick={() => HandleSubmit()}
           >
             Proceed <HiOutlineArrowNarrowRight />
           </Button>

@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hashPassword = void 0;
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 const bcrypt = require("bcrypt");
 const hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     const hash = yield bcrypt.hash(password, 10);

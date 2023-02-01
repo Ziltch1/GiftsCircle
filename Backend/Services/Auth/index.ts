@@ -1,5 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { GoogleLoginDTO, LoginDTO } from "../../DTO/Request/Auth/LoginDTO";
+import {
+  GoogleLoginDTO,
+  LoginDTO,
+  VerifyEmailDTO,
+} from "../../DTO/Request/Auth";
 import ResponseDTO from "../../DTO/Request/Response";
 import User from "../../Models/User";
 import SendMail from "../../Utils/EmailService";
@@ -27,9 +31,9 @@ const Login = async (data: LoginDTO) => {
       return { token, user };
     }
 
-    return new ResponseDTO("Failed", "Email or Password is Incorrect");
+    return null;
   }
-  return new ResponseDTO("Failed", "Email or Password is Incorrect");
+  return null;
 };
 
 const GoogleSignIn = async (data: GoogleLoginDTO) => {
@@ -43,30 +47,6 @@ const GoogleSignIn = async (data: GoogleLoginDTO) => {
     let token = GenerateToken(user.email);
     await prisma.$disconnect();
     return { token, user };
-  }
-  return null;
-};
-
-const VerifyEmail = async (token: string) => {
-  let token_data = VerifyToken(token);
-
-  const user = await prisma.user.findUnique({
-    where: {
-      email: token_data.email,
-    },
-  });
-
-  if (user) {
-    await prisma.user.update({
-      where: {
-        email: user.email,
-      },
-      data: {
-        emailVerified: true,
-      },
-    });
-    await prisma.$disconnect();
-    return user;
   }
   return null;
 };
@@ -103,18 +83,18 @@ const SendVerifyEmail = async (email: string) => {
   return null;
 };
 
-const VerifyOtp = async (code: string) => {
+const VerifyOtp = async (data: VerifyEmailDTO) => {
   const otp = await prisma.otp.findFirst({
     where: {
-      code: code,
+      code: data.code,
     },
   });
 
-  if (otp) {
+  if (otp && data.user === otp.user) {
     try {
-      var expires = new Date().getTime();
-      var otp_date = new Date(otp.expires).getTime();
-      if (otp_date < expires) {
+      var currentDate = new Date().getTime();
+      var expires = new Date(otp.expires).getTime();
+      if (expires > currentDate) {
         await prisma.user.update({
           where: {
             email: otp.user,
@@ -123,12 +103,25 @@ const VerifyOtp = async (code: string) => {
             emailVerified: true,
           },
         });
+        await prisma.otp.delete({
+          where: {
+            id: otp.id,
+          },
+        });
+        return new ResponseDTO("Success", "Email has been verified");
+      } else {
+        await prisma.otp.delete({
+          where: {
+            id: otp.id,
+          },
+        });
+        return new ResponseDTO("Failed", "Otp has Expired");
       }
     } catch (error) {
-      console.log(error);
+      return new ResponseDTO("Failed", "Request Failed");
     }
   }
-  return null;
+  return new ResponseDTO("Failed", "Otp is Invalid");
 };
 
-export { Login, GoogleSignIn, VerifyEmail, SendVerifyEmail };
+export { Login, GoogleSignIn, VerifyOtp, SendVerifyEmail };
