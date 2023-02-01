@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const express_1 = __importDefault(require("express"));
+const Response_1 = __importDefault(require("../DTO/Request/Response"));
 const Auth_1 = require("../Services/Auth");
 const Users_1 = require("../Services/Users");
 const router = express_1.default.Router();
@@ -21,10 +22,10 @@ const prisma = new client_1.PrismaClient();
 router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let data = yield (0, Auth_1.Login)(req.body);
-        if (data) {
-            return res.status(200).send(data);
+        if (typeof data === typeof Response_1.default) {
+            return res.status(400).send(data);
         }
-        return res.status(400).send({ msg: "Email or Password is Incorrect" });
+        return res.status(200).send(data);
     }
     catch (err) {
         console.log(err);
@@ -52,7 +53,7 @@ router.post("/googleSignin", (req, res) => __awaiter(void 0, void 0, void 0, fun
         if (data) {
             res.status(200).send(data);
         }
-        return res.status(400).send({ msg: "User not found" });
+        return res.status(400).send(new Response_1.default("Failed", "User not found"));
     }
     catch (err) {
         console.log(err);
@@ -64,9 +65,11 @@ router.post("/setPassword", (req, res) => __awaiter(void 0, void 0, void 0, func
     try {
         let data = yield (0, Users_1.SetPassword)(req.body, "SET");
         if (data) {
-            res.status(201).send({ msg: "Password set successfully" });
+            res
+                .status(201)
+                .send(new Response_1.default("Success", "Password set successfully"));
         }
-        return res.status(400).send({ msg: "User not found" });
+        return res.status(400).send(new Response_1.default("Failed", "User not found"));
     }
     catch (err) {
         console.log(err);
@@ -78,9 +81,11 @@ router.post("/resetPassword", (req, res) => __awaiter(void 0, void 0, void 0, fu
     try {
         let data = yield (0, Users_1.SetPassword)(req.body, "RESET");
         if (data) {
-            res.status(201).send({ msg: "Password reset successfully" });
+            res
+                .status(201)
+                .send(new Response_1.default("Success", "Password reset successfully"));
         }
-        return res.status(400).send({ msg: "User not found" });
+        return res.status(400).send(new Response_1.default("Failed", "User not found"));
     }
     catch (err) {
         console.log(err);
@@ -92,9 +97,11 @@ router.post("/verifyEmail", (req, res) => __awaiter(void 0, void 0, void 0, func
     try {
         let data = yield (0, Auth_1.VerifyEmail)(req.body);
         if (data) {
-            res.status(201).send({ msg: "Email verified successfully" });
+            res
+                .status(201)
+                .send(new Response_1.default("Success", "Email verified successfully"));
         }
-        return res.status(400).send({ msg: "User not found" });
+        return res.status(400).send(new Response_1.default("Failed", "User not found"));
     }
     catch (err) {
         console.log(err);
@@ -105,10 +112,12 @@ router.post("/verifyEmail", (req, res) => __awaiter(void 0, void 0, void 0, func
 router.post("/sendVerifyEmail", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let data = yield (0, Auth_1.SendVerifyEmail)(req.body.email);
-        if (data) {
-            res.status(201).send({ msg: "Email sent successfully" });
+        if (data.status) {
+            res
+                .status(201)
+                .send(new Response_1.default("Success", "Email sent successfully"));
         }
-        return res.status(400).send({ msg: "User not found" });
+        return res.status(400).send(new Response_1.default("Failed", "User not found"));
     }
     catch (err) {
         console.log(err);

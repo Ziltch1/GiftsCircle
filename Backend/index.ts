@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const cors = require("cors")
+const cors = require("cors");
 const app = express();
 
 const dotenv = require("dotenv");
@@ -13,15 +13,14 @@ app.use(express.json());
 // assuming you are sending from a form you need to add the line below for it work.
 app.use(express.urlencoded({ extended: false }));
 
-app.use(cors())
-
 app.use("/api/user", require("./Controllers/UserController"));
 app.use("/api/", require("./Controllers/AuthController"));
-// app.use("/user", require("./apis/user"));
+
+app.use(cors());
 const options = {
   definition: {
     openapi: "3.1.0",
-    "swagger": "2.0",
+    swagger: "2.0",
     info: {
       title: "LogRocket Express API with Swagger",
       version: "0.1.0",
@@ -47,11 +46,7 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(specs)
-);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {

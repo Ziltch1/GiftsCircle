@@ -33,12 +33,12 @@ const VerifyToken = (token) => {
 };
 exports.VerifyToken = VerifyToken;
 const GenerateOtp = () => {
-    let otp = otpGenerator.generate(6, {
+    let otp = otpGenerator.generate(5, {
         upperCaseAlphabets: false,
         specialChars: false,
+        lowerCaseAlphabets: false,
         digits: true,
     });
-    console.log(otp);
     return otp;
 };
 exports.GenerateOtp = GenerateOtp;

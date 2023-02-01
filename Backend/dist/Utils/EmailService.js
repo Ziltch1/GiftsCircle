@@ -35,12 +35,6 @@ const SendEmail = (reciever, name, data) => __awaiter(void 0, void 0, void 0, fu
             },
         ],
     });
-    request
-        .then((result) => {
-        return result;
-    })
-        .catch((err) => {
-        console.log(err);
-    });
+    return request;
 });
 exports.default = SendEmail;
