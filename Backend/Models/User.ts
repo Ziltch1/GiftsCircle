@@ -1,15 +1,15 @@
-import Gift from "./Gift";
 
 interface User {
-  id: String;
-  firstname: String;
-  lastname: String;
-  gender: String;
-  placeOfResidence: String;
-  tel: String;
-  state: String;
-  dob: String;
-  email: String;
+  id: string;
+  firstname: string;
+  lastname: string;
+  gender: string;
+  placeOfResidence: string;
+  tel: string;
+  state: string;
+  dob: string;
+  email: string;
+  password: string,
   Events: Event[];
 }
 

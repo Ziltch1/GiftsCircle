@@ -13,10 +13,15 @@ import {
 import React, { useEffect, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Logo.png';
+import { EmailSignIn } from '../../redux/features/auth/services';
+import { dispatch } from '../../redux/store';
+import { useSelector } from 'react-redux';
 
 const SignIn = () => {
+  const { token } = useSelector(state => state.auth);
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailTest, setEmailTest] = useState(false);
@@ -31,6 +36,22 @@ const SignIn = () => {
       setEmailTest(false);
     }
   }, [email]);
+
+  const HandleSubmit = () => {
+    if (emailTest) {
+      const formBody = {
+        email,
+        password,
+      };
+      dispatch(EmailSignIn(formBody));
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token]);
 
   return (
     <Flex
@@ -190,6 +211,8 @@ const SignIn = () => {
             lineHeight="22px"
             fontWeight="500"
             _hover={{ bgColor: '55D4CC' }}
+            disabled={!emailTest}
+            onClick={() => HandleSubmit()}
           >
             Login
           </Button>
