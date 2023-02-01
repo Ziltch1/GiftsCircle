@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const express_1 = __importDefault(require("express"));
+const Response_1 = __importDefault(require("../DTO/Request/Response"));
 const Users_1 = require("../Services/Users");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
@@ -34,9 +35,13 @@ router.post("/changePassword", (req, res) => __awaiter(void 0, void 0, void 0, f
     try {
         let data = yield (0, Users_1.ChangePassword)(req.body);
         if (data) {
-            res.status(201).send({ msg: "Password changed successfully" });
+            res
+                .status(201)
+                .send(new Response_1.default("Success", "Password changed successfully"));
         }
-        return res.status(400).send({ msg: "Password is Incorrect" });
+        return res
+            .status(400)
+            .send(new Response_1.default("Failed", "Password is Incorrect"));
     }
     catch (err) {
         console.log(err);

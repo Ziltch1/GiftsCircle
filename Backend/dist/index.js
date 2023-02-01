@@ -11,14 +11,13 @@ dotenv.config();
 app.use(express.json());
 // assuming you are sending from a form you need to add the line below for it work.
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
 app.use("/api/user", require("./Controllers/UserController"));
 app.use("/api/", require("./Controllers/AuthController"));
-// app.use("/user", require("./apis/user"));
+app.use(cors());
 const options = {
     definition: {
         openapi: "3.1.0",
-        "swagger": "2.0",
+        swagger: "2.0",
         info: {
             title: "LogRocket Express API with Swagger",
             version: "0.1.0",

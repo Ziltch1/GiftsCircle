@@ -1,3 +1,5 @@
+import { request } from "http";
+
 const MailJet = require("node-mailjet");
 
 const SendEmail = async (reciever: string, name: string, data: string) => {
@@ -28,13 +30,7 @@ const SendEmail = async (reciever: string, name: string, data: string) => {
       },
     ],
   });
-  request
-    .then((result: any) => {
-      return result
-    })
-    .catch((err: any) => {
-      console.log(err)
-    });
+ return request;
 };
 
 export default SendEmail;

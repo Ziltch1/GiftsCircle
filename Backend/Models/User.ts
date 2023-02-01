@@ -1,4 +1,3 @@
-
 interface User {
   id: string;
   firstname: string;
@@ -9,8 +8,7 @@ interface User {
   state: string;
   dob: string;
   email: string;
-  password: string,
-  Events: Event[];
+  password: string;
 }
 
 export default User;
