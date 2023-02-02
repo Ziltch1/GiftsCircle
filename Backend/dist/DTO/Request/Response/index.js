@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class ResponseDTO {
-    constructor(status, message) {
+var ResponseDTO = /** @class */ (function () {
+    function ResponseDTO(status, message) {
         this.Status = status;
         this.message = message;
     }
-}
+    return ResponseDTO;
+}());
 exports.default = ResponseDTO;
-//# sourceMappingURL=index.js.map
