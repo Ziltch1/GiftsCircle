@@ -1,11 +1,11 @@
-import { PrismaClient } from "@prisma/client";
-import express, { Request, Response } from "express";
-import ResponseDTO from "../DTO/Request/Response";
-import { ChangePassword, Create, GetUser } from "../Services/Users";
+const { PrismaClient } = require("@prisma/client");
+const express = require("express");
+const ResponseDTO = require("../DTO/Response");
+const { ChangePassword, GetUser } = require("../Services/Users");
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get("/:id", async (req: Request, res: Response) => {
+router.get("/:id", async (req, res) => {
   try {
     let data = await GetUser(req.params.id);
     if (data) {
@@ -18,7 +18,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/changePassword", async (req: Request, res: Response) => {
+router.post("/changePassword", async (req, res) => {
   try {
     let data = await ChangePassword(req.body);
     if (data) {
