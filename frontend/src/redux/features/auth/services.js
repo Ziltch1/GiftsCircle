@@ -1,11 +1,13 @@
 import { GoogleSignInApi, SignInApi } from '../../axios/apis/auth';
 import { dispatch } from '../../store';
-import { setToken } from './authSlice';
+import { setToken, setUser } from './authSlice';
 
 const GoogleSignIn = data => async () => {
   try {
     const res = await GoogleSignInApi(data);
-    console.log(res);
+    sessionStorage.setItem('token', res.data.token);
+    dispatch(setToken(res.data.token));
+    dispatch(setUser(res.data.user));
   } catch (error) {
     console.log(error);
   }
