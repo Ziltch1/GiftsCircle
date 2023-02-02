@@ -42,4 +42,3 @@ const GenerateOtp = () => {
     return otp;
 };
 exports.GenerateOtp = GenerateOtp;
-//# sourceMappingURL=services.js.map

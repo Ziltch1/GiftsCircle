@@ -123,4 +123,3 @@ const VerifyOtp = (data) => __awaiter(void 0, void 0, void 0, function* () {
     return new Response_1.default("Failed", "Otp is Invalid");
 });
 exports.VerifyOtp = VerifyOtp;
-//# sourceMappingURL=index.js.map

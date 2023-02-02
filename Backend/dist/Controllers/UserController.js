@@ -50,4 +50,3 @@ router.post("/changePassword", (req, res) => __awaiter(void 0, void 0, void 0, f
     }
 }));
 module.exports = router;
-//# sourceMappingURL=UserController.js.map

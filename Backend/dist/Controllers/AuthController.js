@@ -124,4 +124,3 @@ router.post("/sendVerifyEmail", (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 }));
 module.exports = router;
-//# sourceMappingURL=AuthController.js.map

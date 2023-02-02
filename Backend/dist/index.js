@@ -1,3 +1,4 @@
+"use strict";
 const express = require("express");
 const bodyParser = require("body-parser");
 const swaggerJsdoc = require("swagger-jsdoc");
@@ -47,4 +48,3 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 });
-//# sourceMappingURL=index.js.map

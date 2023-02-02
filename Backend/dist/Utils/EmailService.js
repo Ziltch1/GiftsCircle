@@ -38,4 +38,3 @@ const SendEmail = (reciever, name, data) => __awaiter(void 0, void 0, void 0, fu
     return request;
 });
 exports.default = SendEmail;
-//# sourceMappingURL=EmailService.js.map

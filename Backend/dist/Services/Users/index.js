@@ -117,4 +117,3 @@ const GetUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return user;
 });
 exports.GetUser = GetUser;
-//# sourceMappingURL=index.js.map
