@@ -1,16 +1,15 @@
-import { PrismaClient } from "@prisma/client";
-import { Verify } from "crypto";
-import ChangePasswordDTO from "../../DTO/Request/User/ChangePasswordDTO";
-import CreateUserDTO from "../../DTO/Request/User/CreateDTO";
-import SetPasswordDTO from "../../DTO/Request/User/SetPassword";
-import User from "../../Models/User";
-import SendEmail from "../../Utils/EmailService";
-import { comparePassword, GenerateOtp, VerifyToken } from "../Auth/services";
-import { hashPassword } from "./service";
+const { PrismaClient } = require("@prisma/client");
+const SendEmail = require("../../Utils/EmailService");
+const {
+  comparePassword,
+  GenerateOtp,
+  VerifyToken,
+} = require("../Auth/services");
+const { hashPassword } = require("./service");
 const { v4: uuidv4 } = require("uuid");
 const prisma = new PrismaClient();
 
-const Create = async (data: CreateUserDTO) => {
+const Create = async (data) => {
   const user = await prisma.user.findUnique({
     where: {
       email: data.email,
@@ -52,7 +51,7 @@ const Create = async (data: CreateUserDTO) => {
   return null;
 };
 
-const SetPassword = async (data: SetPasswordDTO, type: string) => {
+const SetPassword = async (data, type) => {
   let token_data = null;
   if (type === "RESET") {
     token_data = VerifyToken(data.user);
@@ -81,7 +80,7 @@ const SetPassword = async (data: SetPasswordDTO, type: string) => {
   return null;
 };
 
-const ChangePassword = async (data: ChangePasswordDTO) => {
+const ChangePassword = async (data) => {
   const user = await prisma.user.findUnique({
     where: {
       email: data.email,
@@ -109,7 +108,7 @@ const ChangePassword = async (data: ChangePasswordDTO) => {
   return null;
 };
 
-const GetUser = async (id: string) => {
+const GetUser = async (id) => {
   const user = await prisma.user.findUnique({
     where: {
       id: id,
@@ -120,4 +119,4 @@ const GetUser = async (id: string) => {
   return user;
 };
 
-export { Create, GetUser, SetPassword, ChangePassword };
+module.exports = { Create, GetUser, SetPassword, ChangePassword };

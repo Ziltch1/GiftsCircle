@@ -1,8 +1,6 @@
-import { request } from "http";
-
 const MailJet = require("node-mailjet");
 
-const SendEmail = async (reciever: string, name: string, data: string) => {
+const SendEmail = async (reciever, name, data) => {
   const mailjet = MailJet.apiConnect(
     process.env.MJ_APIKEY_PUBLIC,
     process.env.MJ_APIKEY_PRIVATE
@@ -33,4 +31,4 @@ const SendEmail = async (reciever: string, name: string, data: string) => {
  return request;
 };
 
-export default SendEmail;
+module.exports = SendEmail;

@@ -1,23 +1,25 @@
-import { PrismaClient } from "@prisma/client";
-import express, { Request, Response } from "express";
-import ResponseDTO from "../DTO/Request/Response";
-import {
+const { PrismaClient } = require("@prisma/client");
+const express = require("express");
+const ResponseDTO = require("../DTO/Response");
+const {
   GoogleSignIn,
   Login,
   SendVerifyEmail,
   VerifyOtp,
-} from "../Services/Auth";
-import { Create, SetPassword } from "../Services/Users";
+} = require("../Services/Auth");
+const { Create, SetPassword } = require("../Services/Users");
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/login", async (req, res) => {
   try {
     let data = await Login(req.body);
     if (data) {
       return res.status(200).send(data);
     }
-    return res.status(400).send(new ResponseDTO("Failed", "Email or Password is Incorrect"));
+    return res
+      .status(400)
+      .send(new ResponseDTO("Failed", "Email or Password is Incorrect"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -25,7 +27,7 @@ router.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/register", async (req: Request, res: Response) => {
+router.post("/register", async (req, res) => {
   try {
     let data = await Create(req.body);
     if (data) {
@@ -39,7 +41,7 @@ router.post("/register", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/googleSignin", async (req: Request, res: Response) => {
+router.post("/googleSignin", async (req, res) => {
   try {
     let data = await GoogleSignIn(req.body);
     if (data) {
@@ -53,7 +55,7 @@ router.post("/googleSignin", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/setPassword", async (req: Request, res: Response) => {
+router.post("/setPassword", async (req, res) => {
   try {
     let data = await SetPassword(req.body, "SET");
     if (data) {
@@ -69,7 +71,7 @@ router.post("/setPassword", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/resetPassword", async (req: Request, res: Response) => {
+router.post("/resetPassword", async (req, res) => {
   try {
     let data = await SetPassword(req.body, "RESET");
     if (data) {
@@ -85,7 +87,7 @@ router.post("/resetPassword", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/verifyEmail", async (req: Request, res: Response) => {
+router.post("/verifyEmail", async (req, res) => {
   try {
     let data = await VerifyOtp(req.body);
     if (data.Status === "Success") {
@@ -99,7 +101,7 @@ router.post("/verifyEmail", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/sendVerifyEmail", async (req: Request, res: Response) => {
+router.post("/sendVerifyEmail", async (req, res) => {
   try {
     let data = await SendVerifyEmail(req.body.email);
     if (data.status) {

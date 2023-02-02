@@ -1,23 +1,17 @@
-import { PrismaClient } from "@prisma/client";
-import {
-  GoogleLoginDTO,
-  LoginDTO,
-  VerifyEmailDTO,
-} from "../../DTO/Request/Auth";
-import ResponseDTO from "../../DTO/Request/Response";
-import User from "../../Models/User";
-import SendMail from "../../Utils/EmailService";
-import {
+const { PrismaClient } = require("@prisma/client");
+const ResponseDTO = require("../../DTO/Response");
+const SendMail = require("../../Utils/EmailService");
+const {
   comparePassword,
   GenerateOtp,
   GenerateToken,
   VerifyToken,
-} from "./services";
+} = require("./services");
 const { v4: uuidv4 } = require("uuid");
 
 const prisma = new PrismaClient();
 
-const Login = async (data: LoginDTO) => {
+const Login = async (data) => {
   const user = await prisma.user.findUnique({
     where: {
       email: data.email,
@@ -27,7 +21,7 @@ const Login = async (data: LoginDTO) => {
     let checkPasssword = await comparePassword(data.password, user.password);
     if (checkPasssword) {
       await prisma.$disconnect();
-      let token: string = GenerateToken(data.email);
+      let token = GenerateToken(data.email);
       return { token, user };
     }
 
@@ -36,7 +30,7 @@ const Login = async (data: LoginDTO) => {
   return null;
 };
 
-const GoogleSignIn = async (data: GoogleLoginDTO) => {
+const GoogleSignIn = async (data) => {
   const user = await prisma.user.findUnique({
     where: {
       email: data.email,
@@ -51,7 +45,7 @@ const GoogleSignIn = async (data: GoogleLoginDTO) => {
   return null;
 };
 
-const SendVerifyEmail = async (email: string) => {
+const SendVerifyEmail = async (email) => {
   const user = await prisma.user.findUnique({
     where: {
       email: email,
@@ -83,7 +77,7 @@ const SendVerifyEmail = async (email: string) => {
   return null;
 };
 
-const VerifyOtp = async (data: VerifyEmailDTO) => {
+const VerifyOtp = async (data) => {
   const otp = await prisma.otp.findFirst({
     where: {
       code: data.code,
@@ -124,4 +118,4 @@ const VerifyOtp = async (data: VerifyEmailDTO) => {
   return new ResponseDTO("Failed", "Otp is Invalid");
 };
 
-export { Login, GoogleSignIn, VerifyOtp, SendVerifyEmail };
+module.exports = { Login, GoogleSignIn, VerifyOtp, SendVerifyEmail };

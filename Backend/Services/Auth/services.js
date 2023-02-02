@@ -3,12 +3,12 @@ var jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
 
 // compare password
-const comparePassword = async (password: string, hashedPassword: string) => {
+const comparePassword = async (password, hashedPassword) => {
   const result = await bcrypt.compare(password, hashedPassword);
   return result;
 };
 
-const GenerateToken = (email: string) => {
+const GenerateToken = (email) => {
   const token = jwt.sign({ email }, process.env.JWT_KEY, {
     algorithm: "HS256",
     expiresIn: 4 * 60 * 60,
@@ -16,7 +16,7 @@ const GenerateToken = (email: string) => {
   return token;
 };
 
-const VerifyToken = (token: string) => {
+const VerifyToken = (token) => {
   let payload = jwt.verify(token, process.env.JWT_KEY);
   return payload;
 };
@@ -31,4 +31,4 @@ const GenerateOtp = () => {
   return otp;
 };
 
-export { comparePassword, GenerateToken, VerifyToken, GenerateOtp };
+module.exports = { comparePassword, GenerateToken, VerifyToken, GenerateOtp };
