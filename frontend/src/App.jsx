@@ -10,6 +10,7 @@ import SignUpLoading from './pages/signup/SubPages/Loading';
 import ForgotPassword from './pages/ForgotPassword';
 import PasswordMail from './pages/ForgotPassword/SubPages/CheckMail';
 import ResetPassword from './pages/ForgotPassword/SubPages/ResetPassword';
+import SignInWithEmail from './pages/SignIn/SubPages/SignWithEmail';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route element={<AuthLayout />} path="/">
           <Route path="signin" element={<SignIn />} />
+          <Route path="signin_with_email" element={<SignInWithEmail />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="signup_with_email" element={<SignWithEmail />} />
           <Route path="signup_verify_otp" element={<VerifyOtp />} />

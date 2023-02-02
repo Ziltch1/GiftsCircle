@@ -1,55 +1,25 @@
+import React, { useEffect } from 'react';
+import { Box, Flex, Text, Button } from '@chakra-ui/react';
 import {
-  Box,
-  Flex,
-  Text,
-  FormControl,
-  Input,
-  FormLabel,
-  FormHelperText,
-  InputGroup,
-  InputRightElement,
-  Button,
-} from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
+  HiOutlineArrowNarrowLeft,
+  HiOutlineArrowNarrowRight,
+} from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Logo.png';
-import { EmailSignIn, GoogleSignIn } from '../../redux/features/auth/services';
-import { dispatch } from '../../redux/store';
-import { useSelector } from 'react-redux';
+import Google from './assets/google.svg';
+import Apple from './assets/apple.svg';
 import {
   signInWithPopup,
   auth,
   provider,
 } from '../../redux/axios/Utils/Firebase';
+import { GoogleSignIn } from '../../redux/features/auth/services';
+import { dispatch } from '../../redux/store';
+import { useSelector } from 'react-redux';
+
 const SignIn = () => {
-  const { token } = useSelector(state => state.auth);
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailTest, setEmailTest] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    const EmailRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (EmailRegex.test(email)) {
-      setEmailTest(true);
-    } else {
-      setEmailTest(false);
-    }
-  }, [email]);
-
-  const HandleSubmit = () => {
-    if (emailTest) {
-      const formBody = {
-        email,
-        password,
-      };
-      dispatch(EmailSignIn(formBody));
-    }
-  };
+  const { token } = useSelector(state => state.auth);
 
   const GoogleSignInHandler = () => {
     signInWithPopup(auth, provider)
@@ -76,13 +46,12 @@ const SignIn = () => {
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="628px"
+      h="575px"
       w="559px"
       direction="column"
-      gap="30px"
       zIndex="99"
     >
-      <Box bgColor="#0F172A" h="104.25px" p="30px 60px">
+      <Box bgColor="#0F172A" h="104.25px" p="30px 40px">
         <Flex justifyContent="center">
           <Box>
             <img src={Logo} alt="logo" />
@@ -90,7 +59,7 @@ const SignIn = () => {
         </Flex>
       </Box>
 
-      <Box m="0px 60px">
+      <Box p="40px" borderRadius="0px 0px 10px 10px">
         <Flex direction="column" gap="20px">
           <Flex direction="column" gap="10px" width="373px">
             <Text
@@ -100,7 +69,7 @@ const SignIn = () => {
               lineHeight="40px"
               fontWeight="500"
             >
-              Sign in
+              Welcome to Gift Circle!
             </Text>
 
             <Text
@@ -114,129 +83,79 @@ const SignIn = () => {
             </Text>
           </Flex>
           <Flex direction="column" gap="20px">
-            <FormControl gap="6px">
-              <FormLabel
-                fontSize="14px"
-                color="#12141D"
-                lineHeight="22px"
-                fontWeight="500"
-              >
-                Enter email address
-              </FormLabel>
-              <Input
-                borderRadius="10px"
-                bgColor={
-                  email === ''
-                    ? '#F4F4F4'
-                    : emailTest
-                    ? '#F4F4F4'
-                    : 'rgba(255, 77, 79, 0.1)'
-                }
-                border={
-                  email === ''
-                    ? 'none'
-                    : emailTest
-                    ? '1px solid #389E0D'
-                    : '1px solid #FF4D4F'
-                }
-                h="46px"
-                p="12px"
-                gap="10px"
-                type="email"
-                name="email"
-                fontSize="14px"
-                lineHeight="22px"
-                fontWeight="400"
-                color="#A8A8A8"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="e.g dayo.abdullahi@gmail.com"
-                _placeholder={{
-                  color: '#A8A8A8',
-                  opacity: 0.4,
-                  fontSize: '14px',
-                }}
-              />
-              {email !== '' && !emailTest && (
-                <FormHelperText
-                  fontSize="14px"
-                  lineHeight="22px"
-                  fontWeight="500"
-                  color="#FF4D4F"
-                >
-                  Not a valid Email
-                </FormHelperText>
-              )}
-            </FormControl>
-
-            <FormControl gap="6px">
-              <FormLabel
-                fontSize="14px"
-                color="#12141D"
-                lineHeight="22px"
-                fontWeight="500"
-              >
-                Enter your password
-              </FormLabel>
-              <InputGroup h="46px" bgColor="#F4F4F4" borderRadius="10px">
-                <Input
-                  borderRadius="10px"
-                  h="46px"
-                  gap="10px"
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  fontSize="14px"
-                  p="12px"
-                  lineHeight="22px"
-                  fontWeight="400"
-                  placeholder="****************"
-                  _placeholder={{
-                    color: '#A8A8A8',
-                    opacity: 0.4,
-                    fontSize: '14px',
-                  }}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                />
-                <InputRightElement
-                  cursor="pointer"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {!showPassword ? <FiEyeOff /> : <FiEye />}
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-          </Flex>
-          <Flex justifyContent="right">
-            <Text
+            <Button
+              bgColor="#00BFB2"
+              boxShadow="0px 8px 30px rgba(0, 191, 178, 0.1)"
+              borderRadius="5px"
+              gap="10px"
+              h="50px"
+              p="14px 28px"
               fontSize="14px"
-              color="#0C4C84"
+              color="#FFFFFF"
               lineHeight="22px"
-              fontWeight="600"
+              fontWeight="500"
+              _hover={{ bgColor: '#00BFB2' }}
+              onClick={() => navigate('/signin_with_email')}
             >
-              <Link to="/forgot_password">Forgot password?</Link>
-            </Text>
-          </Flex>
+              Sign In with email
+            </Button>
 
-          <Button
-            bgColor="#55D4CC"
-            opacity="0.5"
-            borderRadius="5px"
-            gap="10px"
-            h="50px"
-            p="14px 28px"
-            fontSize="14px"
-            color="#FFFFFF"
-            lineHeight="22px"
-            fontWeight="500"
-            _hover={{ bgColor: '55D4CC' }}
-            disabled={!emailTest}
-            onClick={() => HandleSubmit()}
-          >
-            Login
-          </Button>
+            <Flex justifyContent="center" alignItems="center" gap="10px">
+              <HiOutlineArrowNarrowLeft />
+              <Text
+                color="#000000"
+                fontSize="14px"
+                lineHeight="22px"
+                fontWeight="500"
+              >
+                or continue with
+              </Text>
+              <HiOutlineArrowNarrowRight />
+            </Flex>
 
-          <Flex justifyContent="center">
+            <Flex
+              border="1px solid #C6C6C6"
+              bgColor="#FFFFFF"
+              borderRadius="5px"
+              gap="10px"
+              h="50px"
+              p="13px 198px"
+              _hover={{ bgColor: '#ffffff' }}
+              cursor="pointer"
+              onClick={() => GoogleSignInHandler()}
+            >
+              <img src={Google} alt="google" />
+              <Text
+                fontSize="14px"
+                color="#000000"
+                lineHeight="22px"
+                fontWeight="500"
+              >
+                Google
+              </Text>
+            </Flex>
+
+            <Flex
+              border="1px solid #C6C6C6"
+              bgColor="#FFFFFF"
+              borderRadius="5px"
+              gap="10px"
+              h="50px"
+              justifyContent="center"
+              alignItems="center"
+              _hover={{ bgColor: '#ffffff' }}
+              cursor="pointer"
+            >
+              <img src={Apple} alt="google" />
+              <Text
+                fontSize="14px"
+                color="#000000"
+                lineHeight="22px"
+                fontWeight="500"
+              >
+                Apple ID
+              </Text>
+            </Flex>
             <Flex justifyContent="center" alignItems="center" gap="10px">
               <Text
                 color="#383838"
@@ -246,7 +165,7 @@ const SignIn = () => {
               >
                 Don’t have an account?{' '}
                 <Link to="/signup" style={{ color: '#0C4C84' }}>
-                  Sign up here
+                  Signup here
                 </Link>
               </Text>
               <HiOutlineArrowNarrowRight />
