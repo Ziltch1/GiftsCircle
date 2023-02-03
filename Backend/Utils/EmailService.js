@@ -1,6 +1,6 @@
 const MailJet = require("node-mailjet");
 
-const SendEmail = async (reciever, name, data) => {
+const SendEmail = async (reciever, name, data, type) => {
   const mailjet = MailJet.apiConnect(
     process.env.MJ_APIKEY_PUBLIC,
     process.env.MJ_APIKEY_PRIVATE
@@ -18,10 +18,12 @@ const SendEmail = async (reciever, name, data) => {
             Name: name,
           },
         ],
-        TemplateID: 4551222,
+        TemplateID: type ==="RESET" ? "" : 4551222,
         TemplateLanguage: true,
-        Subject: "Verify Email",
-        Variables: {
+        Subject: type ==="RESET" ? "Reset Password": "Verify Email",
+        Variables: type === "RESET" ? {
+
+        }:  {
           name: name,
           otp: data,
         },
