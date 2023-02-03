@@ -68,7 +68,7 @@ const SendVerifyEmail = async (email) => {
         },
       });
 
-      let result = await SendMail(email, user.firstname, otp);
+      let result = await SendMail(email, user.firstname, otp, "VERIFY");
       return result.response;
     } catch (error) {
       console.log(error);
@@ -118,7 +118,6 @@ const VerifyOtp = async (data) => {
   return ResponseDTO("Failed", "Otp is Invalid");
 };
 
-
 const SendResetPasswordEmail = async (email) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -128,8 +127,9 @@ const SendResetPasswordEmail = async (email) => {
 
   if (user) {
     try {
-      let token = GenerateToken(data.email, "1m");
-      let result = await SendMail(email, user.firstname, token, type);
+      let token = GenerateToken(email, "1m");
+      let data = `http://localhost:3000/change_password?token=${token}`;
+      let result = await SendMail(email, user.firstname, data, "RESET");
       return result.response;
     } catch (error) {
       console.log(error);
@@ -138,4 +138,10 @@ const SendResetPasswordEmail = async (email) => {
   return null;
 };
 
-module.exports = { Login, GoogleSignIn, VerifyOtp, SendVerifyEmail };
+module.exports = {
+  Login,
+  GoogleSignIn,
+  VerifyOtp,
+  SendVerifyEmail,
+  SendResetPasswordEmail,
+};
