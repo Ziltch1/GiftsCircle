@@ -18,11 +18,12 @@ const SendEmail = async (reciever, name, data, type) => {
             Name: name,
           },
         ],
-        TemplateID: type ==="RESET" ? "" : 4551222,
+        TemplateID: type ==="RESET" ? 4560457 : 4551222,
         TemplateLanguage: true,
         Subject: type ==="RESET" ? "Reset Password": "Verify Email",
-        Variables: type === "RESET" ? {
-
+        Variables: type === "RESET" ?  {
+          name: name,
+          confirmationlink: data
         }:  {
           name: name,
           otp: data,
@@ -30,6 +31,7 @@ const SendEmail = async (reciever, name, data, type) => {
       },
     ],
   });
+  console.log(await request)
  return request;
 };
 
