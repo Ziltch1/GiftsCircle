@@ -8,22 +8,25 @@ import bgImage from '../../../assets/first-bg.png'
 
 const Hero_1 = () => {
   return (
-    <Box w='100%' bgImage={bgImage} backgroundSize='cover' backgroundRepeat={'no-repeat'} pt='5' pb='5' overflow={'auto'}>
+    <Box w='100%' h='100%' bgImage={bgImage} backgroundSize='cover' backgroundRepeat={'no-repeat'} pt='5' pb='5' overflow={'auto'}>
       <Box w='90%' mx='auto'>
-          <Box>
-              <Image src={hero} display='block' mx={'auto'} mt='8' mb='6' />
-          </Box>
+          
+          <Box maxW='900px' mx='auto' position={'relative'}>
+            <Box>
+              <Image src={hero} display='block' mx={'auto'} mt='8' mb='6' w='100%' />
+            </Box>
 
-          <Box position='absolute' top='20%' left='5%'>
-            <Image src={overlay} />
-          </Box>
+            <Box position='absolute' top='20%' left='-100px' maxW='250px'>
+              <Image src={overlay} maxW='100%' />
+            </Box>
 
-          <Box w='226px' h='46px' borderRadius={'5px'} bg='#CEDBE6' display={'flex'} justifyContent='center' alignItems='center' position={'absolute'} left='135px' top='330px'>
-            <Text fontWeight={'semibold'}>Your delivery is on it's way!</Text>
-          </Box>
+            <Box maxW='200px' h='46px' borderRadius={'5px'} bg='#CEDBE6' display={'flex'} justifyContent='center' alignItems='center' position={'absolute'} left='-20px' top='205px'>
+              <Text fontWeight={'semibold'} fontSize='14px' px={3}>Your delivery is on it's way!</Text>
+            </Box>
 
-          <Box w='226px' h='46px' borderRadius={'5px'} bg='#CCF2F0' display={'flex'} justifyContent='center' alignItems='center' position={'absolute'} right='60px' top='430px'>
-            <Text fontWeight={'semibold'}>Your delivery is on it's way!</Text>
+            <Box maxW='200px' h='46px' borderRadius={'5px'} bg='#CCF2F0' display={'flex'} justifyContent='center' alignItems='center' position={'absolute'} right='-100px' bottom='90px'>
+              <Text fontWeight={'semibold'} fontSize='14px' px={3}>Your delivery is on it's way!</Text>
+            </Box>
           </Box>
 
           <VStack spacing={8} maxW='736px' h='auto' mx='auto' mt='6' mb='4' textAlign='center'>
