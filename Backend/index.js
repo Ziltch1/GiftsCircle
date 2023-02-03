@@ -13,14 +13,17 @@ app.use(express.json());
 // assuming you are sending from a form you need to add the line below for it work.
 app.use(express.urlencoded({ extended: false }));
 
-app.use(cors({
-  origin: 'http://localhost:3000'
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
+app.get("/", async (req, res) => {
+  return res.json({ msg: "hello world" });
+});
 app.use("/api/user", require("./Controllers/UserController"));
 app.use("/api/", require("./Controllers/AuthController"));
-
-
 
 const options = {
   definition: {
