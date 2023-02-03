@@ -17,7 +17,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://gift-circle-client.onrender.com",
+      "https://giftscircle.netlify.app",
     ],
   })
 );
