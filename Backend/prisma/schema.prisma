@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model delivery {
+  id           String   @id @db.VarChar(255)
+  address      String   @db.VarChar(255)
+  city         String   @db.VarChar(255)
+  state        String   @db.VarChar(255)
+  orderDate    DateTime
+  country      String   @db.VarChar(255)
+  expectedDate DateTime
+  postalCode   String   @db.VarChar(255)
+  tel          String   @db.VarChar(255)
+  tel2         String   @db.VarChar(255)
+  status       String   @db.VarChar(255)
+  userId       String   @db.VarChar(255)
+
+  @@index([userId], map: "Delivery_userId_fkey")
+}
+
+model event {
+  id              String   @id @db.VarChar(255)
+  title           String?  @db.VarChar(255)
+  category        String   @db.VarChar(255)
+  venue           String   @db.VarChar(255)
+  date            DateTime
+  time            DateTime
+  timezone        String?  @db.VarChar(255)
+  image           String?  @db.VarChar(255)
+  descCeleb       String?  @db.VarChar(255)
+  summary         String?  @db.VarChar(255)
+  descSummary     String?  @db.VarChar(255)
+  published       Boolean
+  applyDonation   Boolean
+  percentDonation Int
+  userId          String   @db.VarChar(255)
+
+  @@index([userId], map: "Event_userId_fkey")
+}
+
+model gift {
+  id                 String  @id @db.VarChar(255)
+  giftItemId         String  @db.VarChar(255)
+  enableContribution Boolean
+  purchased          Boolean
+  quantity           Int
+  userId             String  @db.VarChar(255)
+  status             String  @db.VarChar(255)
+  complimentaryGift  String  @db.VarChar(255)
+  amountPaid         Int
+  eventId            String? @db.VarChar(255)
+
+  @@index([eventId], map: "Gift_eventId_fkey")
+  @@index([giftItemId], map: "Gift_giftItemId_fkey")
+  @@index([userId], map: "Gift_userId_fkey")
+}
+
+model giftitem {
+  id       String  @id @db.VarChar(255)
+  title    String? @db.VarChar(255)
+  category String  @db.VarChar(255)
+  image    String? @db.VarChar(255)
+  details  String? @db.VarChar(255)
+  amount   Int
+}
+
+model user {
+  id               String   @id @db.VarChar(255)
+  firstname        String   @db.VarChar(255)
+  lastname         String   @db.VarChar(255)
+  gender           String?  @db.VarChar(255)
+  placeOfResidence String?  @db.VarChar(255)
+  tel              String?  @db.VarChar(255)
+  state            String?  @db.VarChar(255)
+  dob              String?  @db.VarChar(255)
+  emailVerified    Boolean?
+  email            String   @unique(map: "User_email_key") @db.VarChar(255)
+  password         String   @db.VarChar(255)
+}
+
+model otp {
+  id      String   @id @db.VarChar(50)
+  code    String   @db.VarChar(5)
+  expires DateTime
+  user    String   @db.VarChar(100)
+}
