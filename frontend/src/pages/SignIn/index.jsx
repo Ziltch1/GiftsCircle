@@ -24,6 +24,7 @@ const SignIn = () => {
   const GoogleSignInHandler = () => {
     signInWithPopup(auth, provider)
       .then(async result => {
+        console.log(result)
         const formBody = {
           email: result.user.email,
         };
