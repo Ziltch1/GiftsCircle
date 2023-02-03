@@ -102,20 +102,20 @@ const VerifyOtp = async (data) => {
             id: otp.id,
           },
         });
-        return new ResponseDTO("Success", "Email has been verified");
+        return ResponseDTO("Success", "Email has been verified");
       } else {
         await prisma.otp.delete({
           where: {
             id: otp.id,
           },
         });
-        return new ResponseDTO("Failed", "Otp has Expired");
+        return ResponseDTO("Failed", "Otp has Expired");
       }
     } catch (error) {
-      return new ResponseDTO("Failed", "Request Failed");
+      return ResponseDTO("Failed", "Request Failed");
     }
   }
-  return new ResponseDTO("Failed", "Otp is Invalid");
+  return ResponseDTO("Failed", "Otp is Invalid");
 };
 
 module.exports = { Login, GoogleSignIn, VerifyOtp, SendVerifyEmail };

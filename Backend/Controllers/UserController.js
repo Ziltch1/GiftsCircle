@@ -24,11 +24,11 @@ router.post("/changePassword", async (req, res) => {
     if (data) {
       res
         .status(201)
-        .send(new ResponseDTO("Success", "Password changed successfully"));
+        .send(ResponseDTO("Success", "Password changed successfully"));
     }
     return res
       .status(400)
-      .send(new ResponseDTO("Failed", "Password is Incorrect"));
+      .send(ResponseDTO("Failed", "Password is Incorrect"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
