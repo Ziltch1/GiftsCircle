@@ -6,7 +6,7 @@ const headers = {
   'content-type': 'Application/json',
 };
 
-axios.defaults.baseURL = 'http://localhost:4000/api/';
+axios.defaults.baseURL = 'https://giftcircle-ws.onrender.com/api/';
 
 const axiosInstance = axios.create({
   headers,
