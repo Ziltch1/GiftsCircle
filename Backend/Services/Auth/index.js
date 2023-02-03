@@ -21,7 +21,7 @@ const Login = async (data) => {
     let checkPasssword = await comparePassword(data.password, user.password);
     if (checkPasssword) {
       await prisma.$disconnect();
-      let token = GenerateToken(data.email);
+      let token = GenerateToken(data.email, "4h");
       return { token, user };
     }
 
@@ -38,7 +38,7 @@ const GoogleSignIn = async (data) => {
   });
 
   if (user) {
-    let token = GenerateToken(user.email);
+    let token = GenerateToken(user.email, "4h");
     await prisma.$disconnect();
     return { token, user };
   }
@@ -116,6 +116,26 @@ const VerifyOtp = async (data) => {
     }
   }
   return ResponseDTO("Failed", "Otp is Invalid");
+};
+
+
+const SendResetPasswordEmail = async (email) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+
+  if (user) {
+    try {
+      let token = GenerateToken(data.email, "1m");
+      let result = await SendMail(email, user.firstname, token, type);
+      return result.response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  return null;
 };
 
 module.exports = { Login, GoogleSignIn, VerifyOtp, SendVerifyEmail };
