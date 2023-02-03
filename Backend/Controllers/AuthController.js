@@ -19,7 +19,7 @@ router.post("/login", async (req, res) => {
     }
     return res
       .status(400)
-      .send(new ResponseDTO("Failed", "Email or Password is Incorrect"));
+      .send(ResponseDTO("Failed", "Email or Password is Incorrect"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -47,7 +47,7 @@ router.post("/googleSignin", async (req, res) => {
     if (data) {
       return res.status(200).send(data);
     }
-    return res.status(400).send(new ResponseDTO("Failed", "User not found"));
+    return res.status(400).send(ResponseDTO("Failed", "User not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -61,9 +61,9 @@ router.post("/setPassword", async (req, res) => {
     if (data) {
       return res
         .status(201)
-        .send(new ResponseDTO("Success", "Password set successfully"));
+        .send(ResponseDTO("Success", "Password set successfully"));
     }
-    return res.status(400).send(new ResponseDTO("Failed", "User not found"));
+    return res.status(400).send(ResponseDTO("Failed", "User not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -77,9 +77,9 @@ router.post("/resetPassword", async (req, res) => {
     if (data) {
       return res
         .status(201)
-        .send(new ResponseDTO("Success", "Password reset successfully"));
+        .send(ResponseDTO("Success", "Password reset successfully"));
     }
-    return res.status(400).send(new ResponseDTO("Failed", "User not found"));
+    return res.status(400).send(ResponseDTO("Failed", "User not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -107,9 +107,9 @@ router.post("/sendVerifyEmail", async (req, res) => {
     if (data.status) {
       return res
         .status(201)
-        .send(new ResponseDTO("Success", "Email sent successfully"));
+        .send(ResponseDTO("Success", "Email sent successfully"));
     }
-    return res.status(400).send(new ResponseDTO("Failed", "User not found"));
+    return res.status(400).send(ResponseDTO("Failed", "User not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

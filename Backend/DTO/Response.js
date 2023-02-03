@@ -1,11 +1,5 @@
-class ResponseDTO {
-  Status = "";
-  Message = "";
-
-  constructor(status, message) {
-    this.Status = status;
-    this.Message = message;
-  }
+function ResponseDTO(status, message){
+    return {status: status, message: message}
 }
 
-module.exports = { ResponseDTO };
+module.exports = ResponseDTO;
