@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 const headers = {
-  "Access-Control-Allow-Origin": "*",
-  'content-type': 'Application/json',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true,
+  'Content-Type': 'application/json',
 };
 
 axios.defaults.baseURL = 'https://giftcircle-ws.onrender.com/api/';
@@ -28,6 +29,5 @@ axiosInstance.interceptors.request.use(
   },
   err => Promise.reject(err)
 );
-
 
 export default axiosInstance;
