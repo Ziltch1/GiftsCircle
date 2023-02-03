@@ -91,7 +91,7 @@ router.post("/resetPassword", async (req, res) => {
 router.post("/verifyEmail", async (req, res) => {
   try {
     let data = await VerifyOtp(req.body);
-    if (data.Status === "Success") {
+    if (data.status === "Success") {
       return res.status(200).send(data);
     }
     return res.status(400).send(data);
