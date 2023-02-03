@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { dispatch } from '../store';
 
 const headers = {
-  'Access-Control-Allow-Credentials': true,
+  "Access-Control-Allow-Origin": "*",
   'content-type': 'Application/json',
 };
 
