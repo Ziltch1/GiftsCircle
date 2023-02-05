@@ -11,7 +11,7 @@ const Hero_2 = () => {
   return (
     <Box w='100%' bgImage={bg} backgroundSize='cover' backgroundRepeat={'no-repeat'} py='9'>
       <Box maxW={'90%'} mx='auto'>
-        <Flex justifyContent={'space-between'} alignItems='center'>
+        <Flex justifyContent={'space-between'} alignItems='center' flexWrap={'wrap'}>
           <Box maxW={'539px'}>
             <Heading size='2xl' lineHeight={'62px'} mb='3'>Add gift list when you create your event with <b style={{ color: '#00BFB2' }}>Gift Circle</b></Heading>
             <Text fontWeight={'semibold'} mb='5'>Gift Circle app allows you to create event, add gift list and allow yor guests to purchase from your gift list</Text>
