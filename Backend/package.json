@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "swagger_autogen": "node swagger.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "node-mailjet": "^6.0.2",
     "nodemailer": "^6.9.1",
     "otp-generator": "^4.0.0",
+    "swagger-autogen": "^2.23.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.0",
     "uuid": "^9.0.0"
@@ -28,7 +30,8 @@
   "devDependencies": {
     "nodemon": "^2.0.20",
     "prisma": "^4.9.0"
-  }, "engines": {
+  },
+  "engines": {
     "node": ">=14"
   }
 }

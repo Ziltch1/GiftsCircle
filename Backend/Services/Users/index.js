@@ -54,11 +54,11 @@ const Create = async (data) => {
 const SetPassword = async (data, type) => {
   let token_data = null;
   if (type === "RESET") {
-    token_data = VerifyToken(data.user);
+    token_data = VerifyToken(data.auth);
   }
   const user = await prisma.user.findUnique({
     where: {
-      email: token_data ? token_data.email : data.user,
+      email: token_data ? token_data.email : data.auth,
     },
   });
 
@@ -88,10 +88,10 @@ const ChangePassword = async (data) => {
   });
 
   if (user) {
-    let checkPassword = await comparePassword(data.password, user.password);
+    let checkPassword = await comparePassword(data.oldPassword, user.password);
 
     if (checkPassword) {
-      let hashedPassword = await hashPassword(data.password);
+      let hashedPassword = await hashPassword(data.newPassword);
       await prisma.user.update({
         where: {
           email: user.email,
