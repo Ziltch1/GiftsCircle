@@ -1,0 +1,367 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "localhost:4000",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "paths": {
+    "/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/Login" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/Register" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/googleSignin": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/GoogleSignin" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/setPassword": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/Setpassword" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/resetPassword": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/Setpassword" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/verifyEmail": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/VerifyEmail" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/sendVerifyEmail": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/GoogleSignin" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/sendResetEmail": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/GoogleSignin" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/changePassword": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/ChangePassword" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "openapi": {
+      "type": "string",
+      "example": "3.1.0"
+    },
+    "swagger": {
+      "type": "string",
+      "example": "2.0"
+    },
+    "info": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "LogRocket Express API with Swagger"
+        },
+        "version": {
+          "type": "string",
+          "example": "0.1.0"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is a simple CRUD API application made with Express and documented with Swagger"
+        },
+        "license": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "MIT"
+            },
+            "url": {
+              "type": "string",
+              "example": "https://spdx.org/licenses/MIT.html"
+            }
+          }
+        },
+        "contact": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "LogRocket"
+            },
+            "url": {
+              "type": "string",
+              "example": "https://logrocket.com"
+            },
+            "email": {
+              "type": "string",
+              "example": "info@email.com"
+            }
+          }
+        }
+      }
+    },
+    "servers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "http://localhost:4000/api"
+          }
+        }
+      }
+    },
+    "schema": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "Register": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "required": true
+          },
+          "firstname": {
+            "type": "string",
+            "required": true
+          },
+          "lastname": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "GoogleSignin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "Setpassword": {
+        "type": "object",
+        "properties": {
+          "auth": {
+            "type": "string",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "VerifyEmail": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "required": true
+          },
+          "user": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "ChangePassword": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "required": true
+          },
+          "oldPassword": {
+            "type": "string",
+            "required": true
+          },
+          "newPassword": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,7 +5,6 @@ const {
   comparePassword,
   GenerateOtp,
   GenerateToken,
-  VerifyToken,
 } = require("./services");
 const { v4: uuidv4 } = require("uuid");
 
@@ -127,9 +126,14 @@ const SendResetPasswordEmail = async (email) => {
 
   if (user) {
     try {
-      let token = GenerateToken(email, "1m");
+      let token = GenerateToken(email, "30m");
       let data = `http://localhost:3000/change_password?token=${token}`;
-      let result = await SendMail(email, user.firstname, data, "RESET");
+      let result = await SendMail.SendResetEmail(
+        email,
+        user.firstname,
+        data,
+        "RESET"
+      );
       return result.response;
     } catch (error) {
       console.log(error);

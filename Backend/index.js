@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerDocument = require("./swagger.json");
 const swaggerUi = require("swagger-ui-express");
 const cors = require("cors");
 const app = express();
@@ -15,10 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://giftscircle.netlify.app",
-    ],
+    origin: ["http://localhost:3000", "https://giftscircle.netlify.app"],
   })
 );
 
@@ -28,36 +25,7 @@ app.get("/", async (req, res) => {
 app.use("/api/user", require("./Controllers/UserController"));
 app.use("/api/", require("./Controllers/AuthController"));
 
-const options = {
-  definition: {
-    openapi: "3.1.0",
-    swagger: "2.0",
-    info: {
-      title: "LogRocket Express API with Swagger",
-      version: "0.1.0",
-      description:
-        "This is a simple CRUD API application made with Express and documented with Swagger",
-      license: {
-        name: "MIT",
-        url: "https://spdx.org/licenses/MIT.html",
-      },
-      contact: {
-        name: "LogRocket",
-        url: "https://logrocket.com",
-        email: "info@email.com",
-      },
-    },
-    servers: [
-      {
-        url: "http://localhost:4000",
-      },
-    ],
-  },
-  apis: ["./routes/*.js"],
-};
-
-const specs = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
