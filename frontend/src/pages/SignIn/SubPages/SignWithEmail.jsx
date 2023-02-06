@@ -201,7 +201,7 @@ const SignInWithEmail = () => {
 
           <Button
             bgColor="#55D4CC"
-            opacity="0.5"
+            opacity={emailTest ? '1.0' : '0.5'}
             borderRadius="5px"
             gap="10px"
             h="50px"

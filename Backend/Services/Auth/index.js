@@ -1,11 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const ResponseDTO = require("../../DTO/Response");
-const SendMail = require("../../Utils/EmailService");
-const {
-  comparePassword,
-  GenerateOtp,
-  GenerateToken,
-} = require("./services");
+const { SendEmail, SendResetEmail } = require("../../Utils/EmailService");
+const { comparePassword, GenerateOtp, GenerateToken } = require("./services");
 const { v4: uuidv4 } = require("uuid");
 
 const prisma = new PrismaClient();
@@ -67,7 +63,7 @@ const SendVerifyEmail = async (email) => {
         },
       });
 
-      let result = await SendMail(email, user.firstname, otp, "VERIFY");
+      let result = await SendEmail(email, user.firstname, otp);
       return result.response;
     } catch (error) {
       console.log(error);
@@ -128,12 +124,7 @@ const SendResetPasswordEmail = async (email) => {
     try {
       let token = GenerateToken(email, "30m");
       let data = `http://localhost:3000/change_password?token=${token}`;
-      let result = await SendMail.SendResetEmail(
-        email,
-        user.firstname,
-        data,
-        "RESET"
-      );
+      let result = await SendResetEmail(email, user.firstname, data);
       return result.response;
     } catch (error) {
       console.log(error);

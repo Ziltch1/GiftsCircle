@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const SendEmail = require("../../Utils/EmailService");
+const { SendEmail } = require("../../Utils/EmailService");
 const {
   comparePassword,
   GenerateOtp,
