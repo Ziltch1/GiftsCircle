@@ -21,11 +21,11 @@ const Hero_1 = () => {
             </Box>
 
             <Box maxW='200px' h='46px' borderRadius={'5px'} bg='#CEDBE6' display={'flex'} justifyContent='center' alignItems='center' position={'absolute'} left='-20px' top='205px'>
-              <Text fontWeight={'semibold'} fontSize='14px' px={3}>Your delivery is on it's way!</Text>
+              <Text fontWeight={'medium'} fontSize='14px' px={3}>Your delivery is on it's way!</Text>
             </Box>
 
             <Box maxW='200px' h='46px' borderRadius={'5px'} bg='#CCF2F0' display={'flex'} justifyContent='center' alignItems='center' position={'absolute'} right='-100px' bottom='90px'>
-              <Text fontWeight={'semibold'} fontSize='14px' px={3}>Your delivery is on it's way!</Text>
+              <Text fontWeight={'medium'} fontSize='14px' px={3}>Your delivery is on it's way!</Text>
             </Box>
           </Box>
 
