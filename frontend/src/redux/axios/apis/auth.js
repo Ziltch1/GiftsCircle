@@ -20,4 +20,8 @@ const SendResetPasswordLink = data => {
   return api.post('/setResetEmail', data);
 }
 
-export { GoogleSignInApi, SignInApi, VerifyEmailApi, SetPasswordApi, SendResetPasswordLink };
+const SendOtpLink = data => {
+  return api.post('/sendVerifyEmail', data);
+}
+
+export { GoogleSignInApi, SignInApi, VerifyEmailApi, SetPasswordApi, SendResetPasswordLink, SendOtpLink };
