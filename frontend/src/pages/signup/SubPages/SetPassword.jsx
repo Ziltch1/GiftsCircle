@@ -61,7 +61,7 @@ const SetPassword = () => {
   const HandleSubmit = async () => {
     if (!btnDisabled) {
       const formBody = {
-        user: localStorage.getItem('newUser'),
+        auth: localStorage.getItem('newUser'),
         password,
       };
       const res = await SetPasswordApi(formBody);
@@ -222,7 +222,7 @@ const SetPassword = () => {
           <Button
             bgColor={btnDisabled ? '#55D4CC' : '#00BFB2'}
             boxShadow={btnDisabled ? '' : '0px 8px 30px rgba(0, 191, 178, 0.1)'}
-            opacity="0.5"
+            opacity={!btnDisabled ? "1.0" :"0.5"}
             borderRadius="5px"
             gap="10px"
             h="50px"

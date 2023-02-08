@@ -119,6 +119,7 @@ router.post("/sendVerifyEmail", async (req, res) => {
   }
 });
 
+
 router.post("/sendResetEmail", async (req, res) => {
   try {
     let data = await SendResetPasswordEmail(req.body.email);

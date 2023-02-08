@@ -7,7 +7,7 @@ const headers = {
 };
 
 axios.defaults.baseURL = 'https://giftcircle-ws.onrender.com/api';
-//' http://localhost:4000/api'
+//' http://localhost:4000/api
 const axiosInstance = axios.create({
   headers,
   timeout: 60000,

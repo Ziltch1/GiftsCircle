@@ -30,7 +30,8 @@ model event {
   category        String   @db.VarChar(255)
   venue           String   @db.VarChar(255)
   date            DateTime
-  time            DateTime
+  start_time      String
+  end_time        String
   timezone        String?  @db.VarChar(255)
   image           String?  @db.VarChar(255)
   descCeleb       String?  @db.VarChar(255)
@@ -39,9 +40,13 @@ model event {
   published       Boolean
   applyDonation   Boolean
   percentDonation Int
-  userId          String   @db.VarChar(255)
+  user_id         String
+  created_at      DateTime
+  host            String   @db.VarChar(255)
+  co_hosts        user[]
+  gifts           gift[]
 
-  @@index([userId], map: "Event_userId_fkey")
+  @@index([host], map: "Event_userId_fkey")
 }
 
 model gift {
@@ -55,6 +60,7 @@ model gift {
   complimentaryGift  String  @db.VarChar(255)
   amountPaid         Int
   eventId            String? @db.VarChar(255)
+  event              event?  @relation(fields: [eventId], references: [id])
 
   @@index([eventId], map: "Gift_eventId_fkey")
   @@index([giftItemId], map: "Gift_giftItemId_fkey")
@@ -82,6 +88,8 @@ model user {
   emailVerified    Boolean?
   email            String   @unique(map: "User_email_key") @db.VarChar(255)
   password         String   @db.VarChar(255)
+  event            event?   @relation(fields: [eventId], references: [id])
+  eventId          String?  @db.VarChar(255)
 }
 
 model otp {

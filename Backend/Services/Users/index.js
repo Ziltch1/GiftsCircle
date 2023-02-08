@@ -20,7 +20,7 @@ const Create = async (data) => {
   if (!user) {
     await prisma.user.create({
       data: {
-        password: uuidv4(),
+        password: "",
         email: data.email,
         lastname: data.lastname,
         firstname: data.firstname,
@@ -119,4 +119,30 @@ const GetUser = async (id) => {
   return user;
 };
 
-module.exports = { Create, GetUser, SetPassword, ChangePassword };
+const GetUsers = async () => {
+  const users = await prisma.user.findMany();
+
+  await prisma.$disconnect();
+  return users;
+};
+
+const DeleteUser = async (id) => {
+  console.log(id);
+  let user = await prisma.user.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  await prisma.$disconnect();
+  return user;
+};
+
+module.exports = {
+  Create,
+  GetUser,
+  SetPassword,
+  ChangePassword,
+  GetUsers,
+  DeleteUser,
+};
