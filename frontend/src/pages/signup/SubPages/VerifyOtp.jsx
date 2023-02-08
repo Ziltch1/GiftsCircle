@@ -11,7 +11,8 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/Logo.png';
 import Warning from '../assets/warning.svg';
-import { VerifyEmailApi } from '../../../redux/axios/apis/auth';
+import { SendOtpLink, VerifyEmailApi } from '../../../redux/axios/apis/auth';
+import { dispatch } from '../../../redux/store';
 
 const VerifyOtp = () => {
   const navigate = useNavigate();
@@ -49,11 +50,22 @@ const VerifyOtp = () => {
     }
   };
 
+  const ResendOtp = async () => {
+    const formBody = {
+      email: user,
+    };
+    const res = await SendOtpLink(formBody);
+    if (res.status) {
+      setCounter(60);
+      setOtp('');
+    }
+  };
+
   return (
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="599px"
+      h="620px"
       w="559px"
       direction="column"
       zIndex="99"
@@ -196,7 +208,7 @@ const VerifyOtp = () => {
               boxShadow={
                 btnDisabled ? '' : '0px 8px 30px rgba(0, 191, 178, 0.1)'
               }
-              opacity={!btnDisabled? '1.0' : '0.5'}
+              opacity={!btnDisabled ? '1.0' : '0.5'}
               borderRadius="5px"
               gap="10px"
               h="50px"
@@ -211,6 +223,18 @@ const VerifyOtp = () => {
             >
               Proceed <HiOutlineArrowNarrowRight />
             </Button>
+
+            <Flex justifyContent="right">
+              <Text
+                fontSize="14px"
+                color="#0C4C84"
+                lineHeight="22px"
+                fontWeight="600"
+                onClick={() => ResendOtp()}
+              >
+                <Link>Resend Otp?</Link>
+              </Text>
+            </Flex>
           </Flex>
         </Flex>
       </Box>

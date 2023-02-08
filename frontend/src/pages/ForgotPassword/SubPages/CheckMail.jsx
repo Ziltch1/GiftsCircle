@@ -6,6 +6,8 @@ import Logo from '../../../assets/Logo.png';
 import Warning from '../assets/warning.svg';
 
 const PasswordMail = () => {
+  const email = localStorage.getItem('forgotUser');
+  console.log(email);
   return (
     <Flex
       bgColor="#fff"
@@ -43,8 +45,9 @@ const PasswordMail = () => {
               lineHeight="22px"
               fontWeight="500"
             >
-              A link was sent to abodunrindayo01@gmail.com to <br /> reset your
-              password.
+              A link was sent to{' '}
+              <Link style={{ color: '#0C4C84' }}>{email} </Link>to <br /> reset
+              your password.
             </Text>
           </Flex>
 
@@ -83,6 +86,8 @@ const PasswordMail = () => {
               spam folder
             </Text>
           </Flex>
+
+      
         </Flex>
       </Box>
     </Flex>

@@ -33,6 +33,7 @@ const ForgotPassword = () => {
 
 const handleSubmit = async () => {
   if (emailTest) {
+    localStorage.setItem("forgotUser", email)
     const formBody = {email};
     try {
       const res = await axios.post('https://giftcircle-ws.onrender.com/api/sendResetEmail', formBody)
