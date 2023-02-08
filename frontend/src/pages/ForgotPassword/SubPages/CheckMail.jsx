@@ -7,7 +7,6 @@ import Warning from '../assets/warning.svg';
 
 const PasswordMail = () => {
   const email = localStorage.getItem('forgotUser');
-  console.log(email);
   return (
     <Flex
       bgColor="#fff"

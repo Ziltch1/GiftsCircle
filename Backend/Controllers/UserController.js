@@ -1,7 +1,12 @@
 const { PrismaClient } = require("@prisma/client");
 const express = require("express");
 const ResponseDTO = require("../DTO/Response");
-const { ChangePassword, GetUser, GetUsers, DeleteUser } = require("../Services/Users");
+const {
+  ChangePassword,
+  GetUser,
+  GetUsers,
+  DeleteUser,
+} = require("../Services/Users");
 const router = express.Router();
 const prisma = new PrismaClient();
 
@@ -31,10 +36,11 @@ router.get("/users/GetAll", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
-  
   try {
     await DeleteUser(req.params.id);
-    return res.status(200).send({msg: `user with id ${req.params.id} deleted successfully`});
+    return res
+      .status(200)
+      .send({ msg: `user with id ${req.params.id} deleted successfully` });
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

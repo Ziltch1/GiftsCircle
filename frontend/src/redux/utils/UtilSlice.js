@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   response: {
-    message: "",
+    message: null,
     type: "",
+    title:""
   },
   isLoading: false,
   searchQuery: "",

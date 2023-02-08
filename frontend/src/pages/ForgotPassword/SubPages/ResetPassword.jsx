@@ -15,9 +15,11 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import Logo from '../../../assets/Logo.png';
 import checkbox from '../assets/checkbox.svg';
 import checkedbox from '../assets/checkedbox.svg';
-import axios from 'axios'
-import {useNavigate, useSearchParams} from 'react-router-dom'
-
+import axios from 'axios';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
+import { createResponse } from '../../../redux/utils/UtilSlice';
+import { dispatch } from '../../../redux/store';
 
 const ResetPassword = () => {
   const [tokenParams] = useSearchParams();
@@ -60,15 +62,19 @@ const ResetPassword = () => {
   }, [passwordCount, passwordSpecial, passwordUpper]);
 
   const handleSubmit = async () => {
-    const formBody = {"auth": token, "password": password}
+    const formBody = { auth: token, password: password };
     try {
-      const res = await axios.post('https://giftcircle-ws.onrender.com/api/resetPassword', formBody)
+      const res = await axios.post(
+        'https://giftcircle-ws.onrender.com/api/resetPassword',
+        formBody
+      );
       console.log(res.data);
-    }catch (e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
+      dispatch(createResponse(ErrorHandler(e)));
     }
     navigate('/signin');
-  }
+  };
 
   return (
     <Flex
@@ -205,7 +211,7 @@ const ResetPassword = () => {
           <Button
             bgColor={btnDisabled ? '#55D4CC' : '#00BFB2'}
             boxShadow={btnDisabled ? '' : '0px 8px 30px rgba(0, 191, 178, 0.1)'}
-            opacity="0.5"
+            opacity={!btnDisabled ? '1.0' : '0.5'}
             borderRadius="5px"
             gap="10px"
             h="50px"

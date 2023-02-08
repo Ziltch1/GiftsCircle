@@ -14,6 +14,9 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/Logo.png';
 import { CreateUserApi } from '../../../redux/axios/apis/user';
+import { dispatch } from '../../../redux/store';
+import { createResponse } from '../../../redux/utils/UtilSlice';
+import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 
 const SignWithEmail = () => {
   const navigate = useNavigate();
@@ -39,11 +42,17 @@ const SignWithEmail = () => {
         lastname,
         email,
       };
-      const res = await CreateUserApi(formBody);
-      if (res.status) {
-        localStorage.setItem('newUser', email);
-        navigate('/signup_verify_otp');
+      try{
+        const res = await CreateUserApi(formBody);
+        if (res.status) {
+          localStorage.setItem('newUser', email);
+          navigate('/signup_verify_otp');
+        }
       }
+      catch(error){
+        dispatch(createResponse(ErrorHandler(error)))
+      }
+      
     }
   };
 
