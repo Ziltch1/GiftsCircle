@@ -22,7 +22,8 @@ app.use(
 app.get("/", async (req, res) => {
   return res.json({ msg: "hello world" });
 });
-app.use("/api/user", require("./Controllers/UserController"));
+app.use("/api/user/", require("./Controllers/UserController"));
+app.use("/api/event/", require("./Controllers/EventController"));
 app.use("/api/", require("./Controllers/AuthController"));
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

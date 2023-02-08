@@ -196,7 +196,7 @@ const VerifyOtp = () => {
               boxShadow={
                 btnDisabled ? '' : '0px 8px 30px rgba(0, 191, 178, 0.1)'
               }
-              opacity="0.5"
+              opacity={!btnDisabled? '1.0' : '0.5'}
               borderRadius="5px"
               gap="10px"
               h="50px"
