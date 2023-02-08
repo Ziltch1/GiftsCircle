@@ -26,7 +26,6 @@ function App() {
           <Route path="signup_set_password" element={<SetPassword />} />
           <Route path="signup_loading" element={<SignUpLoading />} />
           <Route path="forgot_password" element={<ForgotPassword />} />
-
           <Route path="forgot_password_mail" element={<PasswordMail />} />
           <Route path="change_password" element={<ResetPassword />} />
         </Route>
