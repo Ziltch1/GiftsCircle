@@ -8,10 +8,15 @@ const Header = () => {
     <Box bg='#CEDBE6' p='3' w='100%'>
         <Box w='90%' mx='auto'>
           <Flex justifyContent={'space-between'}>
-            <Box><Image src={logo} w='60%' /></Box>
+            <Box>
+              <Image src={logo} w='60%' />
+            </Box>
             <Box>
                <Flex gap={4}>
-                 <Image src={notification} />
+                 <Box>
+                    <Image src={notification} />
+                    <AvatarBadge bg='tomato' boxSize='1em' />
+                 </Box>
                  <Avatar size='sm' name='Ayanwumi Abdulroheem' bg='#0C4C84' />
                </Flex>
             </Box>
