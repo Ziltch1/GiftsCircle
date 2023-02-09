@@ -5,7 +5,7 @@ const { Create, Update1, GetEvent, GetUserEvents } = require("../Services/Events
 const router = express.Router();
 const multer = require("multer");
 
-const upload = multer({ dest: "images/" });
+const upload = multer({ dest: "images/Events/" });
 const prisma = new PrismaClient();
 
 router.get("/:id", async (req, res) => {
@@ -64,5 +64,7 @@ router.post("/create2", upload.single("image"), async (req, res) => {
     return res.status(400).send({ msg: "Request Failed" });
   }
 });
+
+
 
 module.exports = router;

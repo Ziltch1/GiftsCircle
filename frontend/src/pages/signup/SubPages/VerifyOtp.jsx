@@ -13,6 +13,8 @@ import Logo from '../../../assets/Logo.png';
 import Warning from '../assets/warning.svg';
 import { SendOtpLink, VerifyEmailApi } from '../../../redux/axios/apis/auth';
 import { dispatch } from '../../../redux/store';
+import { createResponse } from '../../../redux/utils/UtilSlice';
+import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 
 const VerifyOtp = () => {
   const navigate = useNavigate();
@@ -54,11 +56,18 @@ const VerifyOtp = () => {
     const formBody = {
       email: user,
     };
-    const res = await SendOtpLink(formBody);
-    if (res.status) {
-      setCounter(60);
-      setOtp('');
+    try{
+      const res = await SendOtpLink(formBody);
+      if (res.status) {
+        setCounter(60);
+        setOtp('');
+      }
     }
+    catch(error){
+      dispatch(createResponse(ErrorHandler(error)))
+    }
+   
+
   };
 
   return (

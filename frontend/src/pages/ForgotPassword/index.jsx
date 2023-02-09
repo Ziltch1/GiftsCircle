@@ -13,6 +13,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Logo.png';
 import { SendResetPasswordLink } from '../../redux/axios/apis/auth';
 import axios from 'axios'
+import { dispatch } from '../../redux/store';
+import { createResponse } from '../../redux/utils/UtilSlice';
+import ErrorHandler from '../../redux/axios/Utils/ErrorHandler';
 
 
 const ForgotPassword = () => {
@@ -40,6 +43,7 @@ const handleSubmit = async () => {
       console.log(res.data)
     } catch (e) {
       console.log(e)
+      dispatch(createResponse(ErrorHandler(e)))
     }
     navigate('/forgot_password_mail')
   }
