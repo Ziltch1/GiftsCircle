@@ -127,7 +127,6 @@ const GetUsers = async () => {
 };
 
 const DeleteUser = async (id) => {
-  console.log(id);
   let user = await prisma.user.delete({
     where: {
       id: id,

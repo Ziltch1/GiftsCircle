@@ -84,4 +84,29 @@ const Update1 = async (data, image) => {
   return null;
 };
 
-module.exports = { Create, Update1, GetEvent, GetUserEvents };
+const Update2 = async (data) => {
+  const event = await prisma.event.findUnique({
+    where: {
+      id: data.id,
+    },
+  });
+
+  if (event) {
+   let Data = await prisma.event.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        published: data.published,
+        percentDonation: data.percentDonation,
+        applyDonation: data.applyDonation,
+      },
+    });
+
+    await prisma.$disconnect();
+    return Data;
+  }
+  return null;
+};
+
+module.exports = { Create, Update1, Update2, GetEvent, GetUserEvents };

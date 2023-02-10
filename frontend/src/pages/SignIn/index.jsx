@@ -16,6 +16,8 @@ import {
 import { GoogleSignIn } from '../../redux/features/auth/services';
 import { dispatch } from '../../redux/store';
 import { useSelector } from 'react-redux';
+import { createResponse } from '../../redux/utils/UtilSlice';
+import ErrorHandler from '../../redux/axios/Utils/ErrorHandler';
 
 
 const SignIn = () => {
@@ -34,7 +36,7 @@ const SignIn = () => {
       })
       .catch(error => {
         console.log(error);
-        return error;
+        dispatch(createResponse(ErrorHandler(error)))
       });
   };
 

@@ -16,6 +16,9 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/Logo.png';
 import { SetPasswordApi } from '../../../redux/axios/apis/auth';
+import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
+import { dispatch } from '../../../redux/store';
+import { createResponse } from '../../../redux/utils/UtilSlice';
 import checkbox from '../assets/checkbox.svg';
 import checkedbox from '../assets/checkedbox.svg';
 
@@ -64,10 +67,14 @@ const SetPassword = () => {
         auth: localStorage.getItem('newUser'),
         password,
       };
-      const res = await SetPasswordApi(formBody);
-      if (res.status) {
-        navigate('/dashboard');
-        localStorage.removeItem('newUser');
+      try {
+        const res = await SetPasswordApi(formBody);
+        if (res.status) {
+          navigate('/signup_loading');
+          localStorage.removeItem('newUser');
+        }
+      } catch (error) {
+        dispatch(createResponse(ErrorHandler(error)))
       }
     }
   };
@@ -222,7 +229,7 @@ const SetPassword = () => {
           <Button
             bgColor={btnDisabled ? '#55D4CC' : '#00BFB2'}
             boxShadow={btnDisabled ? '' : '0px 8px 30px rgba(0, 191, 178, 0.1)'}
-            opacity={!btnDisabled ? "1.0" :"0.5"}
+            opacity={!btnDisabled ? '1.0' : '0.5'}
             borderRadius="5px"
             gap="10px"
             h="50px"

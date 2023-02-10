@@ -14,6 +14,9 @@ import {
   provider,
 } from '../../redux/axios/Utils/Firebase';
 import { CreateUserApi } from '../../redux/axios/apis/user';
+import { dispatch } from '../../redux/store';
+import { createResponse } from '../../redux/utils/UtilSlice';
+import ErrorHandler from '../../redux/axios/Utils/ErrorHandler';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -35,7 +38,7 @@ const SignUp = () => {
       })
       .catch(error => {
         console.log(error);
-        return error;
+        dispatch(createResponse(ErrorHandler(error)))
       });
   };
 

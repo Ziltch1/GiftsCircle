@@ -1,40 +1,25 @@
 const { PrismaClient } = require("@prisma/client");
 const express = require("express");
 const ResponseDTO = require("../DTO/Response");
-const {
-  Create,
-  Update1,
-  GetEvent,
-  GetUserEvents,
-  Update2,
-} = require("../Services/Events");
 const router = express.Router();
-const multer = require("multer");
-
-const upload = multer({ dest: "images/Events/" });
+const {
+  Get,
+  Create,
+  Delete,
+  Update,
+  UpdateStatus,
+} = require("../Services/Delivery");
 const prisma = new PrismaClient();
 
 router.get("/:id", async (req, res) => {
   try {
-    let data = await GetEvent(req.params.id);
+    let data = await Get(req.params.id);
     if (data) {
       return res.status(200).send(data);
     }
-    return res.status(400).send(ResponseDTO("Failed", "Event not found"));
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
-  }
-});
-
-router.get("/UserEvents/:id", async (req, res) => {
-  try {
-    let data = await GetUserEvents(req.params.id);
-    if (data) {
-      return res.status(200).send(data);
-    }
-    return res.status(400).send(ResponseDTO("Failed", "Event not found"));
+    return res
+      .status(400)
+      .send(ResponseDTO("Failed", "Delivery Details not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -48,7 +33,9 @@ router.post("/create", async (req, res) => {
     if (data) {
       return res.status(200).send(data);
     }
-    return res.status(400).send(ResponseDTO("Failed", "User not found"));
+    return res
+      .status(400)
+      .send(ResponseDTO("Failed", "Delivery Details already Exists"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -56,14 +43,15 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.post("/create2", upload.single("image"), async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    const image = req.file.filename;
-    let data = await Update1(req.body, image);
+    let data = await Update(req.params.id, req.body);
     if (data) {
       return res.status(200).send(data);
     }
-    return res.status(400).send(ResponseDTO("Failed", "Event not found"));
+    return res
+      .status(400)
+      .send(ResponseDTO("Failed", "Delivery Details not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -71,17 +59,32 @@ router.post("/create2", upload.single("image"), async (req, res) => {
   }
 });
 
-router.post("/create3", async (req, res) => {
+router.put("/:id/UpdateStatus", async (req, res) => {
   try {
-    let data = await Update2(req.body);
+    let data = await UpdateStatus(req.params.id, req.body);
     if (data) {
       return res.status(200).send(data);
     }
-    return res.status(400).send(ResponseDTO("Failed", "Event not found"));
+    return res
+      .status(400)
+      .send(ResponseDTO("Failed", "Delivery Details not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
     return res.status(400).send({ msg: "Request Failed" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    await Delete(req.params.id);
+    return res
+      .status(200)
+      .send({ msg: `Delivery Details with id ${req.params.id} deleted successfully` });
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send({ msg: "Record not found" });
   }
 });
 

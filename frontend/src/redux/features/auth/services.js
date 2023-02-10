@@ -1,5 +1,7 @@
 import { GoogleSignInApi, SignInApi } from '../../axios/apis/auth';
+import ErrorHandler from '../../axios/Utils/ErrorHandler';
 import { dispatch } from '../../store';
+import { createResponse } from '../../utils/UtilSlice';
 import { setToken, setUser } from './authSlice';
 
 const GoogleSignIn = data => async () => {
@@ -10,6 +12,7 @@ const GoogleSignIn = data => async () => {
     dispatch(setUser(res.data.user));
   } catch (error) {
     console.log(error);
+    dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -18,9 +21,12 @@ const EmailSignIn = data => async () => {
     const res = await SignInApi(data);
     sessionStorage.setItem('token', res.data.token);
     dispatch(setToken(res.data.token));
+    dispatch(setUser(res.data.user));
     console.log(res.data);
   } catch (error) {
-    console.log(error);
+    console.log(ErrorHandler(error));
+
+    dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
