@@ -66,7 +66,7 @@ const SetPassword = () => {
       };
       const res = await SetPasswordApi(formBody);
       if (res.status) {
-        navigate('/signup_loading');
+        navigate('/dashboard');
         localStorage.removeItem('newUser');
       }
     }

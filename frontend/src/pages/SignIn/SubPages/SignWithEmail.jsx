@@ -38,17 +38,14 @@ const SignInWithEmail = () => {
 
   const HandleSubmit = () => {
     if (emailTest) {
-      const formBody = {
-        email,
-        password,
-      };
+      const formBody = {email,password,};
       dispatch(EmailSignIn(formBody));
     }
   };
 
   useEffect(() => {
     if (token) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [token]);
 

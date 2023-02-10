@@ -9,13 +9,12 @@ import Tabs from './Tabs'
 const Events = () => {
   return (
     <Box bg='#F5F5F5' h='100vh'>
-        <Header />
         <Navbar />
         <Box w='90%' mx='auto'>
               <Tabs />
               <Search />
               <Box textAlign={'center'} mt='100px'>
-                  <Text fontSize={35} fontWeight='medium' mb='3'>Create your first event</Text>
+                  <Text fontSize={30} fontWeight='medium' mb='3'>Create your first event</Text>
                   <Text fontSize={14} mb='3'>Don’t waste time, click the button at right corner to <br /> create your event attatch your gift list</Text>
                   <WelcomeModal />
               </Box>

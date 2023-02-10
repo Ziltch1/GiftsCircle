@@ -11,7 +11,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import PasswordMail from './pages/ForgotPassword/SubPages/CheckMail';
 import ResetPassword from './pages/ForgotPassword/SubPages/ResetPassword';
 import SignInWithEmail from './pages/SignIn/SubPages/SignWithEmail';
-import Events from './user/pages/Events';
+import Dashboard from './user/pages/Dashboard';
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Route path="forgot_password_mail" element={<PasswordMail />} />
           <Route path="change_password" element={<ResetPassword />} />
         </Route>
-        <Route path="/event" element={<Events />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );//856e64a6-d84a-4956-ace2-10c3adc167dc 793227a4-2a5d-40b2-80dd-1eb2c3521c0e 67b0472f-9c8a-43df-a211-374ec1dc5ed1

@@ -12,12 +12,13 @@ const Header = () => {
               <Image src={logo} w='60%' />
             </Box>
             <Box>
-               <Flex gap={4}>
+               <Flex gap={4} alignItems='center'>
                  <Box>
                     <Image src={notification} />
-                    <AvatarBadge bg='tomato' boxSize='1em' />
                  </Box>
-                 <Avatar size='sm' name='Ayanwumi Abdulroheem' bg='#0C4C84' />
+                 <Box>
+                    <Avatar size='sm' name='Ayanwumi Abdulroheem' bg='#0C4C84' />
+                 </Box>
                </Flex>
             </Box>
           </Flex>

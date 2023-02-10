@@ -18,6 +18,7 @@ const EmailSignIn = data => async () => {
     const res = await SignInApi(data);
     sessionStorage.setItem('token', res.data.token);
     dispatch(setToken(res.data.token));
+    console.log(res.data);
   } catch (error) {
     console.log(error);
   }
