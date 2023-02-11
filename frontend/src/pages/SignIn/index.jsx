@@ -42,7 +42,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (token) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [token]);
 

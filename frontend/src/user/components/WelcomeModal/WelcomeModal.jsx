@@ -13,13 +13,15 @@ import {
 } from '@chakra-ui/react'
 import flowerIcon from '../assets/flower.svg'
 import {ArrowForwardIcon} from '@chakra-ui/icons'
+import { useDispatch, useSelector } from 'react-redux'
 
 const WelcomeModal = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure({defaultIsOpen: true,});
+    const user = useSelector(state => state.auth.user);
+    console.log(user)
     return (
         <Box>
-            <Button onClick={onOpen}>Trigger modal</Button>
-
+            {/* <Button onClick={onOpen}>Trigger modal</Button> */}
             <Modal onClose={onClose} isOpen={isOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent>
@@ -30,7 +32,7 @@ const WelcomeModal = () => {
                        </Box>
                         <Box bg='#0C4C84' borderBottomRightRadius={'6px'} borderBottomLeftRadius='6px' minH='200px'>
                             <ModalBody>
-                                <Heading textAlign={'center'} mt='5' mb='3' fontSize='20px' color='white'>Welcome Abdullah!</Heading>
+                                <Heading textAlign={'center'} mt='5' mb='3' fontSize='20px' color='white'>Welcome {user.firstname}</Heading>
                                 <Text color='white' textAlign={'center'} mb='5' fontSize={'13px'}>
                                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae ea cum dolores pariatur harum doloribus aliquam dicta architecto laboriosam nulla?
                                 </Text>

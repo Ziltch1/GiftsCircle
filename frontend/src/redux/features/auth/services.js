@@ -21,6 +21,8 @@ const EmailSignIn = data => async () => {
     const res = await SignInApi(data);
     sessionStorage.setItem('token', res.data.token);
     dispatch(setToken(res.data.token));
+    dispatch(setUser(res.data.user));
+    console.log(res.data);
   } catch (error) {
     console.log(ErrorHandler(error));
 

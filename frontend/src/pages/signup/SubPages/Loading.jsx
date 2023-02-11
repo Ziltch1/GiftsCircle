@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Flex, Text } from '@chakra-ui/react';
 import LoadingImg from '../assets/Loader.svg';
 import '../index.css';
+import { useNavigate } from 'react-router-dom';
 
 const Loading = () => {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('/dashboard')
+    }, 2000);
+  }, []);
+
   return (
     <Flex
       bgColor="#fff"

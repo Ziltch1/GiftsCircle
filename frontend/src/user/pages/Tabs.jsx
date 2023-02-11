@@ -1,0 +1,27 @@
+import React from 'react'
+import {Box, Flex, Button, Heading} from '@chakra-ui/react'
+
+const Tabs = () => {
+  return (
+    <Box>
+            <Flex mt='8' justifyContent={'space-between'} alignItems='center' mb='8'>
+                  <Box>
+                      <Heading size='lg'>Events</Heading>
+                  </Box>
+                  <Flex gap='4'>
+                      <Button bg='rgba(204, 242, 240, 0.5)' color='#009F94'>Join an event</Button>
+                      <Button bg='#00BFB2' color='white'>Create an event</Button>
+                  </Flex>
+              </Flex>
+
+              <Box borderBottom='1.5px solid lightgrey' w='100%' mb='5'>
+                  <Flex gap={8} fontSize='14px'>
+                      <Button borderBottom='2px solid #00BFB2' bg='none' borderRadius={0} _hover={{bg: 'none'}}>Your events</Button>
+                      <Button bg='none' borderRadius={0} _hover={{ bg: 'none' }}>Events history</Button>
+                  </Flex>
+              </Box> 
+    </Box>
+  )
+}
+
+export default Tabs
