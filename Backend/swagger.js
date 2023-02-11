@@ -27,10 +27,14 @@ const config = {
   },
 };
 
-const outputFile = "./swagger.json";
+const outputFile = "./swagger1.json";
 const endpointsFiles = [
   "./Controllers/AuthController.js",
   "./Controllers/UserController.js",
+  "./Controllers/GiftItemController.js",
+  "./Controllers/GiftController.js",
+  "./Controllers/EventController.js",
+  "./Controllers/DeliveryController.js",
 ];
 
 swaggerAutogen(outputFile, endpointsFiles, config).then(async () => {
