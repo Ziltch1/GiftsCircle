@@ -25,7 +25,6 @@ const EmailSignIn = data => async () => {
     console.log(res.data);
   } catch (error) {
     console.log(ErrorHandler(error));
-
     dispatch(createResponse(ErrorHandler(error)));
   }
 };
