@@ -8,6 +8,7 @@ const GoogleSignIn = data => async () => {
   try {
     const res = await GoogleSignInApi(data);
     sessionStorage.setItem('token', res.data.token);
+    sessionStorage.setItem('user', res.data.user);
     dispatch(setToken(res.data.token));
     dispatch(setUser(res.data.user));
   } catch (error) {
@@ -20,6 +21,7 @@ const EmailSignIn = data => async () => {
   try {
     const res = await SignInApi(data);
     sessionStorage.setItem('token', res.data.token);
+    sessionStorage.setItem('user', res.data.user);
     dispatch(setToken(res.data.token));
     dispatch(setUser(res.data.user));
     console.log(res.data);

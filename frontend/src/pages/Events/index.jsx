@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {Box, Text, Heading, Button, Flex, HStack, Image, VStack} from '@chakra-ui/react'
 import Search from '../../components/Search/Search'
-import Header from '../../components/Header/Header'
 import Navbar from '../../components/Navbar/Navbar'
 import WelcomeModal from '../../components/WelcomeModal/WelcomeModal'
 import Tabs from '../../components/Tabs/Tabs'
