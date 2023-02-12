@@ -233,7 +233,14 @@
     "/event/Get/EventGifts": {
       "get": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -247,7 +254,14 @@
     "/events/createMany": {
       "post": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/CreateEvent" }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -261,7 +275,14 @@
     "/events/EnableContribution": {
       "put": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/EnableContribution" }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -317,7 +338,14 @@
     "/event/create2": {
       "post": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/Create2" }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -331,7 +359,14 @@
     "/event/create3": {
       "post": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/Create3" }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -342,7 +377,7 @@
         }
       }
     },
-    "/event/{id}/UpdateStatus": {
+    "/delivery/{id}/UpdateStatus": {
       "put": {
         "description": "",
         "parameters": [
@@ -351,6 +386,18 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "in": "body",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -515,7 +562,7 @@
           }
         }
       },
-      "CreateEvent":{
+      "CreateEvent": {
         "type": "object",
         "properties": {
           "title": {
@@ -551,6 +598,65 @@
             "required": true
           },
           "userId": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "EnableContribution": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "required": true
+          },
+          "giftItemId": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "Create3": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true
+          },
+          "published": {
+            "type": "boolean",
+            "required": true
+          },
+          "percentDonation": {
+            "type": "number",
+            "required": true
+          },
+          "applyDonation": {
+            "type": "boolean",
+            "required": true
+          }
+        }
+      },
+      "Create2": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true
+          },
+          "image": {
+            "type": "object",
+            "required": true
+          },
+          "desc_celeb": {
+            "type": "string",
+            "required": true
+          },
+          "desc_summary": {
+            "type": "string",
+            "required": true
+          },
+          "summary": {
             "type": "string",
             "required": true
           }
