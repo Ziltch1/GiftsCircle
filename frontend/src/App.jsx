@@ -11,7 +11,10 @@ import ForgotPassword from './pages/ForgotPassword';
 import PasswordMail from './pages/ForgotPassword/SubPages/CheckMail';
 import ResetPassword from './pages/ForgotPassword/SubPages/ResetPassword';
 import SignInWithEmail from './pages/SignIn/SubPages/SignWithEmail';
-import Dashboard from './user/pages/Dashboard';
+import Dashboard from './user/pages';
+import EventDetails from './user/pages/EventDetails';
+import Events from './user/pages/Events/Events';
+
 
 function App() {
   return (
@@ -30,7 +33,11 @@ function App() {
           <Route path="forgot_password_mail" element={<PasswordMail />} />
           <Route path="change_password" element={<ResetPassword />} />
         </Route>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" >
+          <Route index element={<Dashboard />} />
+          <Route path='events' element={<Events />} />
+          <Route path='event_details' element={<EventDetails />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

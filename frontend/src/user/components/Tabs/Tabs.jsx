@@ -9,8 +9,8 @@ const Tabs = () => {
                       <Heading size='lg'>Events</Heading>
                   </Box>
                   <Flex gap='4'>
-                      <Button bg='rgba(204, 242, 240, 0.5)' color='#009F94'>Join an event</Button>
-                      <Button bg='#00BFB2' color='white'>Create an event</Button>
+                      <Button bg='rgba(204, 242, 240, 0.5)' color='#009F94' fontWeight={'medium'} fontSize='14px'>Join an event</Button>
+                      <Button bg='#00BFB2' color='white' fontWeight={'medium'} fontSize='14px'>Create an event</Button>
                   </Flex>
               </Flex>
 

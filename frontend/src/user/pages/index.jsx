@@ -1,9 +1,9 @@
 import React from 'react'
 import {Box} from '@chakra-ui/react'
 import Header from '../components/Header/Header'
-import Events from './Events'
+import Events from './Events/Events'
 
-const Dashboard = () => {
+const index = () => {
   return (
     <Box>
         <Header />
@@ -12,4 +12,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default index
