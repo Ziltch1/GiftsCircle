@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Image, Text, Heading, Flex, Button } from '@chakra-ui/react'
-import { NavLink } from 'react-router-dom'
 import copyIcon from '../../../components/assets/copy.svg'
 import facebook from '../../../components/assets/facebook.svg'
 import instagram from '../../../components/assets/instagram.svg'
