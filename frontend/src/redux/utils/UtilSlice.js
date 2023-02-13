@@ -8,6 +8,7 @@ const initialState = {
   },
   isLoading: false,
   searchQuery: "",
+  welcomeModal: false
 };
 
 const UtilSlice = createSlice({
@@ -24,9 +25,12 @@ const UtilSlice = createSlice({
         type: action.payload.type,
       };
     },
+    setWelcomeModal: (state, action) => {
+      state.welcomeModal = action.payload;
+    },
   },
 });
 
-export const { setLoading, createResponse } = UtilSlice.actions;
+export const { setLoading, createResponse, setWelcomeModal } = UtilSlice.actions;
 
 export default UtilSlice.reducer;
