@@ -7,10 +7,11 @@ const {
   GetUsers,
   DeleteUser,
 } = require("../Services/Users");
+const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await GetUser(req.params.id);
     if (data) {
@@ -35,7 +36,7 @@ router.get("/users/GetAll", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     await DeleteUser(req.params.id);
     return res
@@ -48,7 +49,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.post("/changePassword", async (req, res) => {
+router.post("/changePassword",EnsureAuthenticated, async (req, res) => {
   try {
     let data = await ChangePassword(req.body);
     if (data) {

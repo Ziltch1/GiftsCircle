@@ -14,6 +14,7 @@ const Login = async (data) => {
   });
   if (user) {
     let checkPasssword = await comparePassword(data.password, user.password);
+    console.log(checkPasssword, data.password, user.password)
     if (checkPasssword) {
       await prisma.$disconnect();
       let token = GenerateToken(data.email, "4h");
@@ -123,7 +124,8 @@ const SendResetPasswordEmail = async (email) => {
   if (user) {
     try {
       let token = GenerateToken(email, "30m");
-      let data = `http://localhost:3000/change_password?token=${token}`;
+      let url = process.env.env === "development" ? "http://localhost:3000" :"https://giftscircle.netlify.app/"
+      let data = `${url}/change_password?token=${token}`;
       let result = await SendResetEmail(email, user.firstname, data);
       return result.response;
     } catch (error) {
