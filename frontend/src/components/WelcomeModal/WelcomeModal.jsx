@@ -16,12 +16,11 @@ import {ArrowForwardIcon} from '@chakra-ui/icons'
 import { useDispatch, useSelector } from 'react-redux'
 
 const WelcomeModal = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure({defaultIsOpen: true,});
+    const { isOpen, onOpen, onClose } = useDisclosure({defaultIsOpen: true});
     const user = useSelector(state => state.auth.user);
     console.log(user)
     return (
         <Box>
-            {/* <Button onClick={onOpen}>Trigger modal</Button> */}
             <Modal onClose={onClose} isOpen={isOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent>
