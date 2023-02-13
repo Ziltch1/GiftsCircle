@@ -12,7 +12,7 @@ const Search = () => {
                             pointerEvents='none'
                             children={<SearchIcon color='#8C8C8C' />}
                         />
-                        <Input type='tel' placeholder='Search anything in events' bg='white' border='none' fontSize={13} color='#8C8C8C' letterSpacing={1} />
+                        <Input type='text' outline='none' placeholder='Search anything in events' bg='white' border='none' fontSize={13} color='#8C8C8C' letterSpacing={0.5} />
                     </InputGroup>
 
                     <Select placeholder='Filter' variant={'flushed'} bg='#555555' w='10%' color='white' textAlign={'center'} borderRadius='5px'>

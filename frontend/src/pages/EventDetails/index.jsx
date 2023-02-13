@@ -4,15 +4,17 @@ import EventImages from './SubPages/EventImages';
 import Tabs from './SubPages/Tabs';
 import EventSchedule from './SubPages/EventSchedule';
 import EventHosts from './SubPages/EventHosts';
+import Gifts from '../EventGifts'
 
 const index = () => {
   return (
-    <Box>
-      <Box w="76%" mx="auto" mt="8">
+    <Box bg='#F5F5F5' h='100%'>
+      <Box w="76%" mx="auto" pt="8" pb='7'>
         <EventImages />
         <Tabs />
-        <EventSchedule />
-        <EventHosts />
+        <Gifts />
+        {/* <EventSchedule />
+        <EventHosts /> */}
       </Box>
     </Box>
   );
