@@ -40,6 +40,10 @@ model event {
   published       Boolean
   applyDonation   Boolean
   percentDonation Int
+  coHostCode      String   @db.VarChar(6)
+  coHostLink      String   @db.VarChar(100)
+  eventLink       String   @db.VarChar(100)
+  guestCode       String   @db.VarChar(6)
   user_id         String
   created_at      DateTime
   host            String   @db.VarChar(255)

@@ -9,9 +9,10 @@ const {
   Update,
   UpdateStatus,
 } = require("../Services/Delivery");
+const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const prisma = new PrismaClient();
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Get(req.params.id);
     if (data) {
@@ -27,7 +28,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/create", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Create(req.body);
     if (data) {
@@ -43,7 +44,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Update(req.params.id, req.body);
     if (data) {
@@ -59,7 +60,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id/UpdateStatus", async (req, res) => {
+router.put("/:id/UpdateStatus", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await UpdateStatus(req.params.id, req.body);
     if (data) {
@@ -75,7 +76,7 @@ router.put("/:id/UpdateStatus", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     await Delete(req.params.id);
     return res
