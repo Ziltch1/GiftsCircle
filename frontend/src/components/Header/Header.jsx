@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Image, Avatar, AvatarBadge, Flex } from '@chakra-ui/react';
+import { Box, Image, Avatar, Flex } from '@chakra-ui/react';
 import logo from '../assets/event-circle.svg';
 import notification from '../assets/notification.svg';
 import { useSelector } from 'react-redux';
