@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Image, Flex, Button } from '@chakra-ui/react';
-import logo from '../../../assets/gift_circle_logo.svg';
+import logo from '../../../components/assets/event-circle1.svg';
 import { AddIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 
