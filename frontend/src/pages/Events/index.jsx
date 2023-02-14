@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Box, Text, Heading, Button, Flex, HStack, Image, VStack} from '@chakra-ui/react'
 import Search from '../../components/Search/Search'
 import Navbar from '../../components/Navbar/Navbar'
@@ -8,22 +8,35 @@ import eventImage from '../../components/assets/event-image.svg'
 import calendarIcon from '../../components/assets/calendar.svg'
 import lockIcon from '../../components/assets/lock.svg'
 import { CheckIcon } from '@chakra-ui/icons'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 
 const Events = () => {
+
+  const [isActive, setIsActive] = useState(true);
+  const [data, setData] = useState([])
   const events = [0,1,2,3,4,5,6,7];
-  const {isActive, setIsActive} = useState(true)
-  const eventData = [
-    {
-      id: 1,
-      image: eventImage,
-      title: '',
-      description: '',
-      date: '',
-      status: '',
-      
+  const user = useSelector(state => state.auth.user);
+  const userId = user.id;
+  const api_url = `https://giftcircle-ws.onrender.com/api/event/UserEvents/${userId}`
+
+  const getEvents = async () => {
+    try {
+      const res = await axios.get(api_url);
+      setData(res.data);
+      console.log(res.data);
+    }catch (e) {
+      console.log(e);
     }
-  ]
+  }
+
+  useEffect(() => {
+    getEvents();
+  }, []);
+
+
+
   return (
     <Box bg='#F5F5F5' h='100%' pb='8'>
       <WelcomeModal />

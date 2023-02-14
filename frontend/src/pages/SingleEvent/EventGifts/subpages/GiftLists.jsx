@@ -13,8 +13,8 @@ import {
     Image,
     Flex
 } from '@chakra-ui/react'
-import eye from '../../../components/assets/eye.svg'
-import message from '../../../components/assets/message.svg'
+import eye from '../../../../components/assets/eye.svg'
+import message from '../../../../components/assets/message.svg'
 
 const GiftLists = () => {
   return (

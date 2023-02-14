@@ -3,12 +3,9 @@ import { Box, Flex, Button, Heading } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
 // import { NavLink } from 'react-router-dom'
 
-const Tabs = () => {
+const Tabs = ({navPosition, setNavPosition}) => {
 
-    const [navPosition, setNavPosition] = useState(0);
-    const [active, setActive] = useState(false);
     const links = ['About events', 'Gift', 'Media', 'Guests'];
-
     const handleClick = (index) => {
         setNavPosition(index);
     }

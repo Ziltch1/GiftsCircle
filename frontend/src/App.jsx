@@ -11,8 +11,8 @@ import ForgotPassword from './pages/ForgotPassword';
 import PasswordMail from './pages/ForgotPassword/SubPages/CheckMail';
 import ResetPassword from './pages/ForgotPassword/SubPages/ResetPassword';
 import SignInWithEmail from './pages/SignIn/SubPages/SignWithEmail';
-import EventDetails from './pages/EventDetails/';
-import Events from './pages/Events/';
+import EventDetails from './pages/SingleEvent'
+import Events from './pages/Events';
 import DashboardLayout from './Layouts/DashBoardLayout';
 
 function App() {
