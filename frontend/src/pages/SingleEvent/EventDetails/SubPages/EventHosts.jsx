@@ -1,6 +1,6 @@
 import React from 'react'
 import {Box, Image, Heading, Text, Flex} from '@chakra-ui/react'
-import host from '../../../components/assets/host.svg'
+import host from '../../../../components/assets/host.svg'
 
 const EventHosts = () => {
   return (

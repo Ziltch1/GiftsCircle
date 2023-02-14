@@ -1,7 +1,7 @@
 import React from 'react'
 import {Box, Text, Heading, Button, Flex, Image} from '@chakra-ui/react'
-import clock from '../../../components/assets/clock.svg'
-import location from '../../../components/assets/map-pin.svg'
+import clock from '../../../../components/assets/clock.svg'
+import location from '../../../../components/assets/map-pin.svg'
 
 const EventSchedule = () => {
   return (

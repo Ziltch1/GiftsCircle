@@ -1,12 +1,12 @@
 import React from 'react'
 import { Box, Image, Text, Heading, Flex, Button } from '@chakra-ui/react'
-import copyIcon from '../../../components/assets/copy.svg'
-import facebook from '../../../components/assets/facebook.svg'
-import instagram from '../../../components/assets/instagram.svg'
-import whatsapp from '../../../components/assets/whatsapp.svg'
-import linkedin from '../../../components/assets/linkedin.svg'
-import twitter from '../../../components/assets/twitter.svg'
-import defaultImage from '../../../components/assets/default-image.svg'
+import copyIcon from '../../components/assets/copy.svg'
+import facebook from '../../components/assets/facebook.svg'
+import instagram from '../../components/assets/instagram.svg'
+import whatsapp from '../../components/assets/whatsapp.svg'
+import linkedin from '../../components/assets/linkedin.svg'
+import twitter from '../../components/assets/twitter.svg'
+import defaultImage from '../../components/assets/default-image.svg'
 
 const EventImages = () => {
   return (
