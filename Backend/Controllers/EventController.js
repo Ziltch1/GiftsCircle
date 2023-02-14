@@ -8,6 +8,7 @@ const {
   GetUserEvents,
   Update2,
   GetAllEvents,
+  DeleteEvent,
 } = require("../Services/Events");
 const router = express.Router();
 const multer = require("multer");
@@ -100,6 +101,19 @@ router.post("/create3", EnsureAuthenticated, async (req, res) => {
     console.log(err);
     await prisma.$disconnect();
     return res.status(400).send({ msg: "Request Failed" });
+  }
+});
+
+router.delete("/:id", EnsureAuthenticated, async (req, res) => {
+  try {
+    await DeleteEvent(req.params.id);
+    return res
+      .status(200)
+      .send({ msg: `Event with id ${req.params.id} deleted successfully` });
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send({ msg: "Record not found" });
   }
 });
 

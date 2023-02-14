@@ -1,23 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Flex, Text } from '@chakra-ui/react';
 import LoadingImg from '../assets/Loader.svg';
 import '../index.css';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 const Loading = () => {
-
   const navigate = useNavigate();
   const user = useSelector(state => state.auth.user);
 
-  if(user){
-    // useEffect(() => {
-      // setTimeout(() => {
-        navigate('/dashboard')
-      // }, 3000);
-    // }, []);
+  if (user) {
+    navigate('/dashboard');
   }
-
 
   return (
     <Flex

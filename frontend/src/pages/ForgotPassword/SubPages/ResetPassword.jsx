@@ -15,11 +15,11 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import Logo from '../../../assets/Logo.png';
 import checkbox from '../assets/checkbox.svg';
 import checkedbox from '../assets/checkedbox.svg';
-import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 import { createResponse } from '../../../redux/utils/UtilSlice';
 import { dispatch } from '../../../redux/store';
+import { ResetPasswordApi } from '../../../redux/axios/apis/auth';
 
 const ResetPassword = () => {
   const [tokenParams] = useSearchParams();
@@ -64,11 +64,7 @@ const ResetPassword = () => {
   const handleSubmit = async () => {
     const formBody = { auth: token, password: password };
     try {
-      const res = await axios.post(
-        'https://giftcircle-ws.onrender.com/api/resetPassword',
-        formBody
-      );
-      console.log(res.data);
+      await ResetPasswordApi(formBody);
     } catch (e) {
       console.log(e);
       dispatch(createResponse(ErrorHandler(e)));

@@ -119,4 +119,15 @@ const Update2 = async (data) => {
   return null;
 };
 
-module.exports = { Create, Update1, Update2, GetEvent, GetAllEvents, GetUserEvents };
+const DeleteEvent = async (id) => {
+  let event = await prisma.event.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  await prisma.$disconnect();
+  return event;
+};
+
+module.exports = { Create, Update1, Update2, GetEvent, GetAllEvents, GetUserEvents, DeleteEvent };
