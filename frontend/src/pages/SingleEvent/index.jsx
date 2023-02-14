@@ -10,6 +10,7 @@ const Index = () => {
   const [navPosition, setNavPosition] = useState(0);
   return (
     <Box bg='#F5F5F5' h='100%'>
+          <Header />
           <Box w="76%" mx="auto" pt="8" pb='7'>
               <EventImages />
               <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />

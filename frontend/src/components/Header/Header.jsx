@@ -19,7 +19,7 @@ const Header = () => {
                     <Image src={notification} />
                  </Box>
                  <Box>
-                    <Avatar size='sm' name={user.firstname} bg='#0C4C84' />
+                    <Avatar size='sm' name={`${user.firstname} ${user.lastname}`} bg='#0C4C84' color='white' fontWeight={'semibold'} />
                  </Box>
                </Flex>
             </Box>

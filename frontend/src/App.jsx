@@ -14,6 +14,7 @@ import SignInWithEmail from './pages/SignIn/SubPages/SignWithEmail';
 import EventDetails from './pages/SingleEvent'
 import Events from './pages/Events';
 import DashboardLayout from './Layouts/DashBoardLayout';
+import SingleEvent from './pages/SingleEvent'
 
 function App() {
   return (
@@ -34,8 +35,9 @@ function App() {
         </Route>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index path="" element={<Events />} />
-          <Route path="event_details" element={<EventDetails />} />
         </Route>
+        <Route path="event_details" element={<EventDetails />} />
+        <Route path="event_details/:id" element={<SingleEvent />} />
       </Routes>
     </BrowserRouter>
   );

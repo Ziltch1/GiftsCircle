@@ -10,13 +10,15 @@ import lockIcon from '../../components/assets/lock.svg'
 import { CheckIcon } from '@chakra-ui/icons'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
+import {events} from './data'
+import { Link } from 'react-router-dom'
 
 
 const Events = () => {
 
   const [isActive, setIsActive] = useState(true);
-  const [data, setData] = useState([])
-  const events = [0,1,2,3,4,5,6,7];
+  const [data, setData] = useState([]);
+  const [eventsData, setEventsData] = useState(events)
   const user = useSelector(state => state.auth.user);
   const userId = user.id;
   const api_url = `https://giftcircle-ws.onrender.com/api/event/UserEvents/${userId}`
@@ -45,14 +47,15 @@ const Events = () => {
               <Tabs />
               <Search />
               <Box textAlign={'center'} mt='20px'>
-                {events.length === 0 ?
+                {eventsData.length === 0 ?
                   <Box>
                     <Text fontSize={30} fontWeight='medium' mb='3'>Create your first event</Text>
                     <Text fontSize={14} mb='3'>Don’t waste time, click the button at right corner to <br /> create your event attatch your gift list</Text>
                   </Box> 
                   :
                   <Box>
-                    {events.map((event) => {
+                    {eventsData.map((event) => {
+                      const {id} = event;
                         return (
                           <Box bg='white' mb='5' py='7' px='8' borderRadius={5}>
                               <HStack justifyContent={'space-between'} alignItems='center'>
@@ -76,7 +79,9 @@ const Events = () => {
                                 </Box>
 
                                 <Box>
-                                  <Button bg='#00BFB2' color='white' size='sm' fontWeight={'medium'} px='20px' py='10px' borderRadius={5} h='35px'>View event</Button>
+                                  <Link to={`/event_details/${id}`}>
+                                      <Button bg='#00BFB2' color='white' size='sm' fontWeight={'medium'} px='20px' py='10px' borderRadius={5} h='35px'>View event</Button>
+                                  </Link>
                                 </Box>
                               </HStack>
                           </Box>

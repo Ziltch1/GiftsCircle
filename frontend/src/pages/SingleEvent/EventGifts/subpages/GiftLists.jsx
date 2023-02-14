@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import eye from '../../../../components/assets/eye.svg'
 import message from '../../../../components/assets/message.svg'
+import axios from 'axios'
 
 const GiftLists = () => {
   return (
