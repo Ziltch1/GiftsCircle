@@ -40,9 +40,9 @@ router.get("/Get/All", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/Get/EventGifts", EnsureAuthenticated, async (req, res) => {
+router.get("/Get/EventGifts/:id", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await GetEventGifts();
+    let data = await GetEventGifts(req.params.id);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
@@ -86,7 +86,6 @@ router.put("/EnableContribution", EnsureAuthenticated, async (req, res) => {
     return res.status(400).send({ msg: "Request Failed" });
   }
 });
-
 
 
 router.put("/EnableContribution/:id", EnsureAuthenticated, async (req, res) => {
