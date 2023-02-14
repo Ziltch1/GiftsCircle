@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   token: sessionStorage.getItem('token') || null,
-  user: sessionStorage.getItem('user') || null,
+  user: JSON.parse(sessionStorage.getItem('user')) || null,
 };
 
 const AuthSlice = createSlice({

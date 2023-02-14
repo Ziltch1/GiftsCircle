@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box, Text, Heading, UnorderedList, List, ListItem, Flex, HStack} from '@chakra-ui/react'
+import {Box, UnorderedList, ListItem, HStack} from '@chakra-ui/react'
 
 const Navbar = () => {
   return (

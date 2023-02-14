@@ -73,9 +73,9 @@ router.post("/setPassword", async (req, res) => {
 });
 
 router.post("/resetPassword", async (req, res) => {
+  console.log("enetered")
   try {
     let data = await SetPassword(req.body, "RESET");
-    console.log(data)
     if (data) {
       return res
         .status(201)

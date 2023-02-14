@@ -1,8 +1,8 @@
-import React from 'react'
-import {Box, Image, Avatar, AvatarBadge, Flex} from '@chakra-ui/react'
-import logo from '../assets/event-circle.svg'
-import notification from '../assets/notification.svg'
-import { useSelector } from 'react-redux'
+import React from 'react';
+import { Box, Image, Avatar, AvatarBadge, Flex } from '@chakra-ui/react';
+import logo from '../assets/event-circle.svg';
+import notification from '../assets/notification.svg';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const user = useSelector(state => state.auth.user);
@@ -26,7 +26,7 @@ const Header = () => {
           </Flex>
         </Box>
     </Box>
-  )
-}
+  );
+};
 
 export default Header

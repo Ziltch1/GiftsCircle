@@ -63,6 +63,7 @@ const SetPassword = async (data, type) => {
   });
 
   if (user) {
+    console.log(data.password)
     let hashedPassword = await hashPassword(data.password);
 
     await prisma.user.update({

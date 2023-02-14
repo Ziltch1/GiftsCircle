@@ -11,10 +11,11 @@ const {
   CreateMany,
   EnableContribution,
 } = require("../Services/Gift");
+const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 
 const prisma = new PrismaClient();
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Get(req.params.id);
     if (data) {
@@ -28,7 +29,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/Get/All", async (req, res) => {
+router.get("/Get/All", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await GetAll();
     return res.status(200).send(data);
@@ -39,7 +40,7 @@ router.get("/Get/All", async (req, res) => {
   }
 });
 
-router.get("/Get/EventGifts", async (req, res) => {
+router.get("/Get/EventGifts", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await GetEventGifts();
     return res.status(200).send(data);
@@ -50,7 +51,7 @@ router.get("/Get/EventGifts", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/create", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Create(req.body);
     return res.status(200).send(data);
@@ -61,7 +62,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.post("/createMany", async (req, res) => {
+router.post("/createMany", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await CreateMany(req.body);
     return res.status(200).send(data);
@@ -72,7 +73,7 @@ router.post("/createMany", async (req, res) => {
   }
 });
 
-router.put("/EnableContribution", async (req, res) => {
+router.put("/EnableContribution", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await EnableContribution(req.body);
     if (data) {
@@ -86,21 +87,9 @@ router.put("/EnableContribution", async (req, res) => {
   }
 });
 
-router.put("/EnableContribution", async (req, res) => {
-  try {
-    let data = await EnableContribution(req.body);
-    if (data) {
-      return res.status(200).send(data);
-    }
-    return res.status(400).send(ResponseDTO("Failed", "Gift not found"));
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
-  }
-});
 
-router.put("/EnableContribution/:id", async (req, res) => {
+
+router.put("/EnableContribution/:id", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await EnableContribution(req.body, req.params.id);
     if (data) {
@@ -114,7 +103,7 @@ router.put("/EnableContribution/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     await Delete(req.params.id);
     return res

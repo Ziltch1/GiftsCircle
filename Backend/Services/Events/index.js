@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const { CreateEventId } = require("./service");
+const { CreateEventId, CreateCoHostId, CreateGuestId } = require("./service");
 const prisma = new PrismaClient();
 
 const GetEvent = async (id) => {
@@ -11,6 +11,13 @@ const GetEvent = async (id) => {
 
   await prisma.$disconnect();
   return event;
+};
+
+const GetAllEvents = async () => {
+  const events = await prisma.event.findMany();
+
+  await prisma.$disconnect();
+  return events;
 };
 
 const GetUserEvents = async (id) => {
@@ -30,11 +37,10 @@ const Create = async (data) => {
     },
   });
 
-  let id = CreateEventId();
   if (user) {
     await prisma.event.create({
       data: {
-        id: id,
+        id: CreateEventId(),
         title: data.title,
         category: data.category,
         venue: data.venue,
@@ -47,6 +53,10 @@ const Create = async (data) => {
         co_hosts: undefined,
         published: false,
         applyDonation: false,
+        coHostCode: CreateCoHostId(),
+        coHostLink: "",
+        guestCode: CreateGuestId(),
+        eventLink: "",
         percentDonation: 0,
         created_at: new Date(Date.now()),
       },
@@ -92,7 +102,7 @@ const Update2 = async (data) => {
   });
 
   if (event) {
-   let Data = await prisma.event.update({
+    let Data = await prisma.event.update({
       where: {
         id: data.id,
       },
@@ -109,4 +119,4 @@ const Update2 = async (data) => {
   return null;
 };
 
-module.exports = { Create, Update1, Update2, GetEvent, GetUserEvents };
+module.exports = { Create, Update1, Update2, GetEvent, GetAllEvents, GetUserEvents };
