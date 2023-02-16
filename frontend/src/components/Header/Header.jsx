@@ -3,6 +3,7 @@ import { Box, Image, Avatar, Flex } from '@chakra-ui/react';
 import logo from '../assets/event-circle.svg';
 import notification from '../assets/notification.svg';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const user = useSelector(state => state.auth.user);
@@ -11,7 +12,7 @@ const Header = () => {
         <Box w='90%' mx='auto'>
           <Flex justifyContent={'space-between'}>
             <Box>
-              <Image src={logo} w='100%' />
+              <Link to='/'><Image src={logo} w='100%' /></Link>
             </Box>
             <Box>
                <Flex gap={4} alignItems='center'>

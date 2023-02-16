@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Box,
     Table,
@@ -11,76 +11,60 @@ import {
     TableCaption,
     TableContainer,
     Image,
-    Flex
+    Flex,
+    useDisclosure
 } from '@chakra-ui/react'
-import eye from '../../../../components/assets/eye.svg'
-import message from '../../../../components/assets/message.svg'
-import axios from 'axios'
 
 const GiftLists = () => {
+    const gifts = [
+        {
+            id: 1,
+        },
+        {
+            id: 2,
+        },
+        {
+            id: 3,
+        },
+        {
+            id: 4,
+        },
+        {
+            id: 5,
+        },
+        {
+            id: 6,
+        },
+        {
+            id: 7,
+        },
+    ]
+
   return (
     <Box>
-          <TableContainer bg='white'>
+        <TableContainer bg='white'>
               <Table variant='simple'>
                   <Thead bg='#EEEEEE' px='17px' py='40px'>
                       <Tr fontSize={14} color='black'>
+                          <Th>S/N</Th>
                           <Th>Gift name</Th>
-                          <Th>Purchased by</Th>
-                          <Th>Complementary Gift</Th>
-                          <Th isNumeric>Amount</Th>
-                          <Th>Payment status</Th>
-                          <Th>Actions</Th>
+                          <Th>Quantity purchased</Th>
+                          <Th>Action</Th>
                       </Tr>
                   </Thead>
                   <Tbody>
-                      <Tr fontSize={14}>
-                          <Td>Iphone 14 pro max, black color</Td>
-                          <Td>Abdullahi Abodunrin</Td>
-                          <Td>Yes</Td>
-                          <Td isNumeric># 5,500</Td>
-                          <Td>Completed</Td>
-                          <Td><Flex gap={8}><Image src={eye} /><Image src={message} /></Flex></Td>
-                      </Tr>
-                      <Tr fontSize={14}>
-                          <Td>Iphone 14 pro max, black color</Td>
-                          <Td>Abdullahi Abodunrin</Td>
-                          <Td>Yes</Td>
-                          <Td isNumeric># 5,500</Td>
-                          <Td>Completed</Td>
-                          <Td><Flex gap={8}><Image src={eye} /><Image src={message} /></Flex></Td>
-                      </Tr>
-                      <Tr fontSize={14}>
-                          <Td>Iphone 14 pro max, black color</Td>
-                          <Td>Abdullahi Abodunrin</Td>
-                          <Td>Yes</Td>
-                          <Td isNumeric># 5,500</Td>
-                          <Td>Completed</Td>
-                          <Td><Flex gap={8}><Image src={eye} /><Image src={message} /></Flex></Td>
-                      </Tr>
-                      <Tr fontSize={14}>
-                          <Td>Iphone 14 pro max, black color</Td>
-                          <Td>Abdullahi Abodunrin</Td>
-                          <Td>Yes</Td>
-                          <Td isNumeric># 5,500</Td>
-                          <Td>Completed</Td>
-                          <Td><Flex gap={8}><Image src={eye} /><Image src={message} /></Flex></Td>
-                      </Tr>
-                      <Tr fontSize={14}>
-                          <Td>Iphone 14 pro max, black color</Td>
-                          <Td>Abdullahi Abodunrin</Td>
-                          <Td>Yes</Td>
-                          <Td isNumeric># 5,500</Td>
-                          <Td>Completed</Td>
-                          <Td><Flex gap={8}><Image src={eye} /><Image src={message} /></Flex></Td>
-                      </Tr>
-                      <Tr fontSize={14}>
-                          <Td>Iphone 14 pro max, black color</Td>
-                          <Td>Abdullahi Abodunrin</Td>
-                          <Td>Yes</Td>
-                          <Td isNumeric># 5,500</Td>
-                          <Td>Completed</Td>
-                          <Td><Flex gap={8}><Image src={eye} /><Image src={message} /></Flex></Td>
-                      </Tr>
+                      {gifts.map((gift, index) => {
+                        return (
+                            <>
+                                <Tr fontSize={14}>
+                                    <Td>{index + 1}</Td>
+                                    <Td>Iphone 14 pro max, black color</Td>
+                                    <Td>1</Td>
+                                    <Td color='#009F94'>Purchased</Td>
+                                </Tr>
+                            </>
+                        )
+                      })}
                   </Tbody>
               </Table>
           </TableContainer>
