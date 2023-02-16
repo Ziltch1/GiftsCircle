@@ -39,7 +39,7 @@ const EventSchedule = () => {
             </Box>
 
             <Box w='295px' h='auto'>
-                <Button w='100%' mb='4' fontWeight={550} bg='#EEEEEE' fontSize={14}>Start a fund raising</Button>
+                <Button w='100%' mb='4' fontWeight={550} bg='#EEEEEE' fontSize={14} boxShadow='md'>Start a fund raising</Button>
                 <Box fontSize={14} mb='5' bg='#EEEEEE' borderRadius={5} p='5'>
                     <Image src={clock} mb='2' />
                     <Text>Mon, October 31, 2022</Text>

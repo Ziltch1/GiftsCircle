@@ -12,11 +12,11 @@ const EventImages = () => {
   return (
         < Box mb = '6' >
             <Flex justifyContent={'space-between'} alignItems='center'>
-                <Box bg='#EEEEEE' w='715px' h='444px' borderRadius={5} display='flex' alignItems={'center'} justifyContent='center' boxShadow={'md'}>
+                <Box bg='#EEEEEE' w='68%' h='444px' borderRadius={5} display='flex' alignItems={'center'} justifyContent='center' boxShadow={'md'}>
                     <Image src={defaultImage} />
                 </Box>
 
-                <Box w='295px' h='444px' bg='#EEEEEE' borderRadius={5} p='6' boxShadow='md'>
+                <Box w='30%' h='444px' bg='#EEEEEE' borderRadius={5} p='6' boxShadow='md'>
 
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Event ID</Text>
