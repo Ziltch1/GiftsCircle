@@ -11,7 +11,7 @@ import { events } from '../../Events/data';
 const Index = () => {
 
   const {id} = useParams();
-  const [newEvent, setNewEvent] = useState(events);
+  const [newEvent, setNewEvent] = useState([]);
 
   useEffect(() => {
     const specificEvent = newEvent.find((event) => event.id === parseInt(id));
@@ -21,8 +21,8 @@ const Index = () => {
   return (
     <Box>
       <Box>
-        <EventSchedule />
-        <EventHosts />
+        <EventSchedule newEvent={newEvent} />
+        <EventHosts newEvent={newEvent} />
       </Box>
     </Box>
   );

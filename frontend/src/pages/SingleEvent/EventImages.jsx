@@ -8,12 +8,13 @@ import linkedin from '../../components/assets/linkedin.svg'
 import twitter from '../../components/assets/twitter.svg'
 import defaultImage from '../../components/assets/default-image.svg'
 
-const EventImages = () => {
+const EventImages = ({newEvent}) => {
+    const {coHostCode, guestCode, title, descSummary, image} = newEvent;
   return (
         < Box mb = '6' >
             <Flex justifyContent={'space-between'} alignItems='center'>
                 <Box bg='#EEEEEE' w='68%' h='444px' borderRadius={5} display='flex' alignItems={'center'} justifyContent='center' boxShadow={'md'}>
-                    <Image src={defaultImage} />
+                    {/* <Image src={image ? defaultImage : `https://giftcircle-ws.onrender.com/api/event/UserEvents/${userId}/image/${image}`} /> */}
                 </Box>
 
                 <Box w='30%' h='444px' bg='#EEEEEE' borderRadius={5} p='6' boxShadow='md'>

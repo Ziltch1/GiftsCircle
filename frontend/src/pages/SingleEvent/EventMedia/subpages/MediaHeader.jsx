@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Box, Heading, Text, Flex, Button } from '@chakra-ui/react'
+import { Box, Heading, Text, Flex, Button, FormLabel, Input } from '@chakra-ui/react'
 
 const MediaHeader = ({ navPosition, setNavPosition }) => {
-  const actionBtns = ['Uploaded by me', 'Sent to me'];
+  const actionBtns = ['Uploaded by me', 'Sent to me']
   const handleClick = (index) => {
     setNavPosition(index);
   }
@@ -11,7 +11,10 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
     <Box mb='5'>
         <Flex justifyContent='space-between'>
               <Heading mb='5' fontWeight={'medium'} fontSize={24}>Media</Heading>
-              <Button bg='#00BFB2' fontWeight={'medium'} color='white' fontSize='14px'>Upload images/videos</Button>
+              <FormLabel htmlFor='upload' w='200px' color='white' bg='#00BFB2' fontSize={14} borderRadius='5px' px='28px' py='11px' textAlign='center'>
+                Upload images/videos
+                <Input type='file' id='upload' display='none' />
+              </FormLabel>
         </Flex>
         <Box fontSize={14} fontWeight='semibold'>
             <Flex alignItems={'center'} gap={4}>
