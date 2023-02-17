@@ -5,6 +5,7 @@ import EventDetails from './EventDetails'
 import EventGifts from './EventGifts'
 import {Box} from '@chakra-ui/react'
 import Header from '../../components/Header/Header'
+import EventMedia from './EventMedia'
 
 const Index = () => {
   const [navPosition, setNavPosition] = useState(0);
@@ -17,6 +18,7 @@ const Index = () => {
               <Box>
                   {navPosition === 0 && <EventDetails /> }
                   {navPosition === 1 && <EventGifts /> }
+                  {navPosition === 2 && <EventMedia /> }
               </Box>
           </Box>
     </Box>
