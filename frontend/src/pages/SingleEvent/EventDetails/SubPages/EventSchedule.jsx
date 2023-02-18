@@ -3,12 +3,16 @@ import {Box, Text, Heading, Button, Flex, Image} from '@chakra-ui/react'
 import clock from '../../../../components/assets/clock.svg'
 import location from '../../../../components/assets/map-pin.svg'
 
-const EventSchedule = () => {
+const EventSchedule = ({newEvent}) => {
+    const date = newEvent[0]?.date;
+    const dateString = date;
+    const newDate = new Date(dateString).toDateString();
+
   return (
     <Box mb='6'>
         <Flex justifyContent='space-between' alignItems='flex-start'>
             <Box w='610px'>
-                <Heading fontWeight={500} fontSize='24px' mb='4'>Wedding of Adejumo Adedayo and Peace Adepeju</Heading>
+                <Heading fontWeight={500} fontSize='24px' mb='4'>{newEvent[0]?.title}</Heading>
                 <Text fontSize={14} lineHeight='27px' mb='4'>
                       Become a pro copywriter in 4 weeks. <br />
 
@@ -28,9 +32,7 @@ const EventSchedule = () => {
                       This course costs $1,000.00 per attendee.
                 </Text>
 
-                <Box w='610px' bg='#EEEEEE' h='270px' borderRadius={10} mb='7'>
-
-                </Box>
+                <Box w='610px' bg='#EEEEEE' h='270px' borderRadius={10} mb='7'></Box>
 
                 <Text fontSize={14} lineHeight='27px'>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et ut sodales semper consectetur sem. Commodo tristique eu ultrices eleifend commodo amet id. In orci, odio in eget viverra fermentum arcu. Lacus ultrices enim amet consequat dolor.
@@ -42,13 +44,13 @@ const EventSchedule = () => {
                 <Button w='100%' mb='4' fontWeight={550} bg='#EEEEEE' fontSize={14} boxShadow='md'>Start a fund raising</Button>
                 <Box fontSize={14} mb='5' bg='#EEEEEE' borderRadius={5} p='5'>
                     <Image src={clock} mb='2' />
-                    <Text>Mon, October 31, 2022</Text>
-                    <Text>7:00 PM – 10:00 PM WAT</Text>
+                    <Text>{newDate}</Text>
+                    <Text>{newEvent[0]?.start_time} – {newEvent[0]?.end_time} {newEvent[0]?.timezone}</Text>
                 </Box>
 
                 <Box fontSize={14} mb='5' bg='#EEEEEE' borderRadius={5} p='5'>
                     <Image src={location} mb='2' />
-                    <Text lineHeight='25px' fontSize='14px'>Thursday, October 20, 2022 at 10:30 PM to Friday, October 21, 2022 at 12:30 AM WAST</Text>
+                    <Text lineHeight='25px' fontSize='14px'>{newDate} at {newEvent[0]?.venue}</Text>
                 </Box>
             </Box>
         </Flex>

@@ -46,7 +46,6 @@ const Index = () => {
         setNewEvent(specificEvent);
    }, [data]);
 
-  console.log(newEvent);
 
   return (
     <Box bg='#F5F5F5' h='100%'>
@@ -56,7 +55,7 @@ const Index = () => {
               <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
               <Box>
                   {navPosition === 0 && <EventDetails /> }
-                  {navPosition === 1 && <EventGifts /> }
+                  {navPosition === 1 && <EventGifts newEvent={newEvent} /> }
                   {navPosition === 2 && <EventMedia /> }
               </Box>
           </Box>

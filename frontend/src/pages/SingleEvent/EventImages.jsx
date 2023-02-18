@@ -9,7 +9,7 @@ import twitter from '../../components/assets/twitter.svg'
 import defaultImage from '../../components/assets/default-image.svg'
 
 const EventImages = ({newEvent}) => {
-    const {coHostCode, guestCode, title, descSummary, image} = newEvent;
+
   return (
         < Box mb = '6' >
             <Flex justifyContent={'space-between'} alignItems='center'>
@@ -22,7 +22,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Event ID</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='16'>2345 7869 4560</Heading>
+                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent[0]?.id}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>
@@ -30,7 +30,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Co-host Code</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='16'>xufUW2</Heading>
+                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent[0]?.coHostCode}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>
@@ -46,7 +46,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Event Guest Code</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='16'>xufUW2</Heading>
+                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent[0]?.guestCode}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>
