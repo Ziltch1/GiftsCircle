@@ -9,12 +9,13 @@ import twitter from '../../components/assets/twitter.svg'
 import defaultImage from '../../components/assets/default-image.svg'
 
 const EventImages = ({newEvent}) => {
-
+    const image = newEvent[0]?.image;
+    const imageUrl = `https://giftcircle-ws.onrender.com/images/Events/${image}`
   return (
         < Box mb = '6' >
             <Flex justifyContent={'space-between'} alignItems='center'>
                 <Box bg='#EEEEEE' w='68%' h='444px' borderRadius={5} display='flex' alignItems={'center'} justifyContent='center' boxShadow={'md'}>
-                    {/* <Image src={image ? defaultImage : `https://giftcircle-ws.onrender.com/api/event/UserEvents/${userId}/image/${image}`} /> */}
+                  {newEvent[0]?.image ? <Image src={imageUrl} w='100%' h='100%' /> : <Image src={defaultImage} />}
                 </Box>
 
                 <Box w='30%' h='444px' bg='#EEEEEE' borderRadius={5} p='6' boxShadow='md'>

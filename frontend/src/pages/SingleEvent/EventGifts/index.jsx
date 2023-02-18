@@ -13,7 +13,9 @@ const Index = ({ newEvent }) => {
   const [navPosition, setNavPosition] = useState(0)
   const [data, setData] = useState([]);
   const token = useSelector(state => state.auth.token);
-  const api_url = `https://giftcircle-ws.onrender.com/api/event/Get/EventGifts/${eventId}`;
+  const api_url = `https://giftcircle-ws.onrender.com/api/gift/${eventId}`;
+  // const api_url = `https://giftcircle-ws.onrender.com/images/giftItems/${eventId}`;
+
 
 
   const getEvents = async () => {

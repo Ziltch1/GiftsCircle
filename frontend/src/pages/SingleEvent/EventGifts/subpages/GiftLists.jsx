@@ -56,7 +56,7 @@ const GiftLists = () => {
                       {gifts.map((gift, index) => {
                         return (
                             <>
-                                <Tr fontSize={14}>
+                                <Tr fontSize={14} _hover={{ bg: '#FAFAFA'}}>
                                     <Td>{index + 1}</Td>
                                     <Td>Iphone 14 pro max, black color</Td>
                                     <Td>1</Td>

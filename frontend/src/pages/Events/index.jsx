@@ -74,7 +74,7 @@ const Events = () => {
                 console.log(image);
                 const dateString = date;
                 const newDate = new Date(dateString).toDateString();
-                const imageUrl = `https://giftcircle-ws.onrender.com/images/${image}`
+                const imageUrl = `https://giftcircle-ws.onrender.com/images/Events/${image}`
 
                 return (
                   <Box bg="white" mb="5" py="7" px="8" borderRadius={5} key={id}>
@@ -87,11 +87,10 @@ const Events = () => {
                           <Box>
                             <Image
                               src={imageUrl}
-                              w="109px"
-                              h="109px"
+                              w="120px"
+                              h="110px"
                               borderRadius={5}
                             />
-                            <img src={imageUrl} alt="" />
                           </Box>
                           <Box>
                             <Box textAlign={'left'}>
