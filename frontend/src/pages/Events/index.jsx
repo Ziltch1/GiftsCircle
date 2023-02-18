@@ -25,19 +25,23 @@ import { Link } from 'react-router-dom';
 const Events = () => {
   const [isActive, setIsActive] = useState(true);
   const [data, setData] = useState([]);
-  const [eventsData, setEventsData] = useState(events);
   const user = useSelector(state => state.auth.user);
+  const token = useSelector(state => state.auth.token);
   const userId = user.id;
   const api_url = `https://giftcircle-ws.onrender.com/api/event/UserEvents/${userId}`;
+  
 
   const getEvents = async () => {
-    try {
-      const res = await axios.get(api_url);
-      setData(res.data);
-      console.log(res.data);
-    } catch (e) {
-      console.log(e);
-    }
+    axios.get(api_url, {
+      headers: {
+        'Authorization': `token ${token}`
+      }
+    }).then((res) => {
+        console.log(res.data)
+        setData(res.data);
+    }).catch((error) => {
+        console.error(error)
+    })
   };
 
   useEffect(() => {
@@ -52,7 +56,7 @@ const Events = () => {
         <Tabs />
         <Search />
         <Box textAlign={'center'} mt="20px">
-          {eventsData.length === 0 ? (
+          {data.length === 0 ? (
             <Box>
               <Text fontSize={30} fontWeight="medium" mb="3">
                 Create your first event
@@ -64,10 +68,16 @@ const Events = () => {
             </Box>
           ) : (
             <Box>
-              {eventsData.map(event => {
-                const { id } = event;
+              {data.map(event => {
+
+                const { id, descSummary, title, date, published, image } = event;
+                console.log(image);
+                const dateString = date;
+                const newDate = new Date(dateString).toDateString();
+                const imageUrl = `https://giftcircle-ws.onrender.com/images/Events/${image}`
+
                 return (
-                  <Box bg="white" mb="5" py="7" px="8" borderRadius={5}>
+                  <Box bg="white" mb="5" py="7" px="8" borderRadius={5} key={id}>
                     <HStack
                       justifyContent={'space-between'}
                       alignItems="center"
@@ -76,9 +86,9 @@ const Events = () => {
                         <HStack gap={2.5}>
                           <Box>
                             <Image
-                              src={eventImage}
-                              w="109px"
-                              h="109px"
+                              src={imageUrl}
+                              w="120px"
+                              h="110px"
                               borderRadius={5}
                             />
                           </Box>
@@ -90,7 +100,7 @@ const Events = () => {
                                 lineHeight={'26px'}
                                 mb="2"
                               >
-                                Wedding of Adejumo Adedayo and Peace Adepeju
+                                {title}
                               </Heading>
                               <Text
                                 fontSize={14}
@@ -98,27 +108,25 @@ const Events = () => {
                                 fontWeight={400}
                                 mb="2"
                               >
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Urna amet amet tincidunt nisl
-                                sociis metus...
+                                {descSummary}
                               </Text>
                               <Flex fontSize={14} gap={5} color="#717171">
                                 <Flex alignItems={'center'} gap={1}>
                                   <Image src={calendarIcon} />
-                                  <Text>January 20th, 2022</Text>
+                                  <Text>{newDate}</Text>
                                 </Flex>
                                 <Flex alignItems={'center'} gap={1}>
                                   <Image src={lockIcon} />
-                                  989 098 989
+                                  {id}
                                 </Flex>
                                 <Flex alignItems={'center'} gap={1}>
                                   <CheckIcon
-                                    color={isActive ? '#00BFB2' : '#717171'}
+                                    color={published ? '#00BFB2' : '#717171'}
                                   />{' '}
                                   <Text
-                                    color={isActive ? '#00BFB2' : '#717171'}
+                                    color={published ? '#00BFB2' : '#717171'}
                                   >
-                                    {isActive ? 'Active' : 'saved to draft'}
+                                    {published ? 'Active' : 'saved to draft'}
                                   </Text>
                                 </Flex>
                               </Flex>

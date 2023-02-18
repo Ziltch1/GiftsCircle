@@ -1,22 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Box, Image, Avatar, Flex } from '@chakra-ui/react';
 import logo from '../assets/event-circle.svg';
 import notification from '../assets/notification.svg';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Notification from '../Notification/Notification';
+
 
 const Header = () => {
   const user = useSelector(state => state.auth.user);
+  const [openModal, setOpenModal] = useState(false)
+  const showNotification = () => {
+    setOpenModal(!openModal)
+  }
+   
   return (
+    <>
     <Box bg='#CEDBE6' p='3' w='100%'>
         <Box w='90%' mx='auto'>
           <Flex justifyContent={'space-between'}>
+
             <Box>
               <Link to='/'><Image src={logo} w='100%' /></Link>
             </Box>
+
             <Box>
                <Flex gap={4} alignItems='center'>
-                 <Box>
+                 <Box onClick={showNotification}>
                     <Image src={notification} />
                  </Box>
                  <Box>
@@ -27,6 +37,8 @@ const Header = () => {
           </Flex>
         </Box>
     </Box>
+      {openModal && <Notification />}
+    </>
   );
 };
 

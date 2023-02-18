@@ -68,7 +68,7 @@ const PurchaseHistory = () => {
                       {gifts.map((gift) => {
                         return (
                             <>
-                                <Tr fontSize={14}>
+                                <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
                                     <Td>Iphone 14 pro max, black color</Td>
                                     <Td>Abdullahi Abodunrin</Td>
                                     <Td>Yes</Td>
