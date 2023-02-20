@@ -5,7 +5,7 @@ import {
   HiOutlineArrowNarrowRight,
 } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../assets/Logo.png';
+import Logo from '../../assets/event-circle.svg';
 import Google from './assets/google.svg';
 import Apple from './assets/apple.svg';
 import {

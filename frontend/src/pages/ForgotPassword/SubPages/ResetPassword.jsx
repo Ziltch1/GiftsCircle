@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
-import Logo from '../../../assets/Logo.png';
+import Logo from '../../../assets/event-circle.svg';
 import checkbox from '../assets/checkbox.svg';
 import checkedbox from '../assets/checkedbox.svg';
 import { useNavigate, useSearchParams } from 'react-router-dom';

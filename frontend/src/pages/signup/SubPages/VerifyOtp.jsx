@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../../assets/Logo.png';
+import Logo from '../../../assets/event-circle.svg';
 import Warning from '../assets/warning.svg';
 import { SendOtpLink, VerifyEmailApi } from '../../../redux/axios/apis/auth';
 import { dispatch } from '../../../redux/store';

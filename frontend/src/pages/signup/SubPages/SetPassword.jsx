@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../../assets/Logo.png';
+import Logo from '../../../assets/event-circle.svg';
 import { SetPasswordApi } from '../../../redux/axios/apis/auth';
 import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 import { dispatch } from '../../../redux/store';

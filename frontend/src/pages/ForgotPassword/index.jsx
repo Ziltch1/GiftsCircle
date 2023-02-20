@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../assets/Logo.png';
+import Logo from '../../assets/event-circle.svg';
 import { SendResetPasswordLink } from '../../redux/axios/apis/auth';
 import { dispatch } from '../../redux/store';
 import { createResponse } from '../../redux/utils/UtilSlice';
