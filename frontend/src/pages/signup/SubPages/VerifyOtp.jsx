@@ -20,16 +20,24 @@ const VerifyOtp = () => {
   const navigate = useNavigate();
   const user = localStorage.getItem('newUser');
   const [otp, setOtp] = useState('');
-  const [counter, setCounter] = useState(60);
+  const [counter, setCounter] = useState(59);
+  const [mins, setMins] = useState(9);
   const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
-    if (counter > 0) {
+    if (mins >= 0) {
       setTimeout(() => {
-        setCounter(prev => (prev -= 1));
+        if (counter === 0) {
+          if (mins !== 0) {
+            setMins(prev => (prev -= 1));
+            setCounter(60);
+          }
+        } else {
+          setCounter(prev => (prev -= 1));
+        }
       }, 1000);
     }
-  }, [counter]);
+  }, [counter, mins]);
 
   useEffect(() => {
     if (otp.length !== 5) {
@@ -52,22 +60,21 @@ const VerifyOtp = () => {
     }
   };
 
+  console.log(mins, counter);
+
   const ResendOtp = async () => {
     const formBody = {
       email: user,
     };
-    try{
+    try {
       const res = await SendOtpLink(formBody);
       if (res.status) {
         setCounter(60);
         setOtp('');
       }
+    } catch (error) {
+      dispatch(createResponse(ErrorHandler(error)));
     }
-    catch(error){
-      dispatch(createResponse(ErrorHandler(error)))
-    }
-   
-
   };
 
   return (
@@ -189,7 +196,7 @@ const VerifyOtp = () => {
                 fontWeight="500"
                 letterSpacing="-0.015em"
               >
-                00:{counter}
+                0{mins}:{counter}
               </Text>
             </Flex>
 
