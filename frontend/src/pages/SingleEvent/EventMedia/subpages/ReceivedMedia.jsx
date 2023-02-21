@@ -1,19 +1,15 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {
   Box,
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
-  Image,
   Flex,
-  Text,
-  useDisclosure
+  Text
 } from '@chakra-ui/react'
 
 

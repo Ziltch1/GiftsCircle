@@ -16,7 +16,7 @@ import {
 import gift from '../assets/gift.svg'
 
 const GiftDrawer = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure({defaultIsOpen: true})
+    const { isOpen, onClose } = useDisclosure({defaultIsOpen: true})
     const btnRef = React.useRef()
 
     return (

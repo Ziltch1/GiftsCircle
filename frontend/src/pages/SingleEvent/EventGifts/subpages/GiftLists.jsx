@@ -1,18 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
     Box,
     Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
-    TableCaption,
     TableContainer,
-    Image,
-    Flex,
-    useDisclosure
 } from '@chakra-ui/react'
 
 const GiftLists = () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box, Button, Text, Heading, Input, FormLabel, VStack} from '@chakra-ui/react'
+import {Box, Text, Heading, Input, FormLabel, VStack} from '@chakra-ui/react'
 
 const UploadedMedia = () => {
   return (

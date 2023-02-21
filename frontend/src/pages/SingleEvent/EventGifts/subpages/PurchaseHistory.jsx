@@ -4,23 +4,18 @@ import {
     Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
-    TableCaption,
     TableContainer,
     Image,
-    Flex,
-    useDisclosure
+    Flex
 } from '@chakra-ui/react'
 import eye from '../../../../components/assets/eye.svg'
 import message from '../../../../components/assets/message.svg'
-import axios from 'axios'
 import GiftDrawer from '../../../../components/Drawer/Drawer'
 
 const PurchaseHistory = () => {
-  const eventId = '';
   const [showDrawer, setShowDrawer] = useState(false);
   const openDrawer = () => {
     setShowDrawer(true);
