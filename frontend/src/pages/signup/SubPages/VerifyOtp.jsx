@@ -20,8 +20,8 @@ const VerifyOtp = () => {
   const navigate = useNavigate();
   const user = localStorage.getItem('newUser');
   const [otp, setOtp] = useState('');
-  const [counter, setCounter] = useState(10);
-  const [mins, setMins] = useState(1);
+  const [counter, setCounter] = useState(59);
+  const [mins, setMins] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
