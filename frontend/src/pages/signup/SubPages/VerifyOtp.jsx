@@ -19,7 +19,7 @@ import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 const VerifyOtp = () => {
   const navigate = useNavigate();
   const user = localStorage.getItem('newUser');
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState('-----');
   const [counter, setCounter] = useState(59);
   const [mins, setMins] = useState(9);
   const [btnDisabled, setBtnDisabled] = useState(true);
@@ -60,7 +60,6 @@ const VerifyOtp = () => {
     }
   };
 
-  console.log(mins, counter);
 
   const ResendOtp = async () => {
     const formBody = {
@@ -119,7 +118,7 @@ const VerifyOtp = () => {
           </Flex>
           <Flex direction="column" gap="20px">
             <Flex gap="40px" p="10px" justifyContent="center">
-              <PinInput defaultValue={otp} onChange={value => setOtp(value)}>
+              <PinInput onChange={value => setOtp(value)}>
                 <PinInputField
                   bgColor="#EFEFEF"
                   borderRadius="12px"
