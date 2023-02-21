@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box, Flex, Text, Heading, Button} from '@chakra-ui/react'
+import {Box, Flex, Heading, Button} from '@chakra-ui/react'
 import {FiMoreHorizontal} from 'react-icons/fi'
 
 

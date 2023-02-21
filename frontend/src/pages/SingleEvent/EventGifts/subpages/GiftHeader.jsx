@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {Box, Heading, Text, Flex, Button} from '@chakra-ui/react'
+import React from 'react'
+import {Box, Heading, Flex, Button} from '@chakra-ui/react'
 
 const GiftHeader = ({navPosition, setNavPosition}) => {
   const actionBtns = ['Purchase history', 'Gift list'];

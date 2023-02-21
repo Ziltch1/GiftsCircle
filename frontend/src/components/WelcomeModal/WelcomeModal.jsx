@@ -20,7 +20,6 @@ import { setWelcomeModal } from '../../redux/utils/UtilSlice';
 const WelcomeModal = () => {
   const user = useSelector(state => state.auth.user);
   const {welcomeModal} = useSelector(state => state.util);
-  console.log(welcomeModal);
   return (
     <Box>
       <Modal isOpen={welcomeModal} isCentered>

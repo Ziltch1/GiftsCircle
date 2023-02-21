@@ -9,13 +9,13 @@ import twitter from '../../components/assets/twitter.svg'
 import defaultImage from '../../components/assets/default-image.svg'
 
 const EventImages = ({newEvent}) => {
-    const image = newEvent[0]?.image;
+    const image = newEvent.image;
     const imageUrl = `https://giftcircle-ws.onrender.com/images/Events/${image}`
   return (
         < Box mb = '6' >
             <Flex justifyContent={'space-between'} alignItems='center'>
                 <Box bg='#EEEEEE' w='68%' h='444px' borderRadius={5} display='flex' alignItems={'center'} justifyContent='center' boxShadow={'md'}>
-                  {newEvent[0]?.image ? <Image src={imageUrl} w='100%' h='100%' /> : <Image src={defaultImage} />}
+                  {newEvent.image ? <Image src={imageUrl} w='100%' h='100%' /> : <Image src={defaultImage} />}
                 </Box>
 
                 <Box w='30%' h='444px' bg='#EEEEEE' borderRadius={5} p='6' boxShadow='md'>
@@ -23,7 +23,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Event ID</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent[0]?.id}</Heading>
+                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent.id}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>
@@ -31,7 +31,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Co-host Code</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent[0]?.coHostCode}</Heading>
+                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent.coHostCode}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>
@@ -47,7 +47,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Event Guest Code</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent[0]?.guestCode}</Heading>
+                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent.guestCode}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>

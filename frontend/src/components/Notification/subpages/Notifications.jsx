@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Image, Flex, HStack, VStack } from '@chakra-ui/react'
+import { Box, Heading, Text, Image, HStack, VStack } from '@chakra-ui/react'
 import React from 'react'
 import avatar from '../../../components/assets/user-notification.svg'
 

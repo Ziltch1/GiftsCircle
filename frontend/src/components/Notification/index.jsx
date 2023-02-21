@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import { Box, Flex, Text, Heading, Button } from '@chakra-ui/react'
-import { FiMoreHorizontal } from 'react-icons/fi'
+import { Box } from '@chakra-ui/react'
 import NotificationHeader from './subpages/NotificationHeader'
 import Notifications, { ReadNotifications } from './subpages/Notifications'
 

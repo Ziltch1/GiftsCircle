@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { setToken } from '../features/auth/authSlice';
+import { dispatch } from '../store';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -17,8 +19,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   config => {
-    const token = sessionStorage.getItem('accessToken');
-    // dispatch(setToken(Token));
+    const token = sessionStorage.getItem('token');
+    dispatch(setToken(token));
     if (token) {
       config.headers = {
         ...config.headers,
