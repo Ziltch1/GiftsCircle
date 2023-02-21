@@ -4,7 +4,7 @@ import logo from '../assets/event-circle.svg';
 import notification from '../assets/notification.svg';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Notification from '../Notification/Notification';
+import Notification from '../Notification';
 
 
 const Header = () => {

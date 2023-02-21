@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Flex, Text, Button } from '@chakra-ui/react';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
-import Logo from '../../../assets/Logo.png';
+import Logo from '../../../assets/event-circle.svg';
 import Warning from '../assets/warning.svg';
 
 const PasswordMail = () => {

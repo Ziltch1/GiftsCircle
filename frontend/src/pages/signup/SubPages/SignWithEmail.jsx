@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from 'react';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../../assets/Logo.png';
+import Logo from '../../../assets/event-circle.svg';
 import { CreateUserApi } from '../../../redux/axios/apis/user';
 import { dispatch } from '../../../redux/store';
 import { createResponse } from '../../../redux/utils/UtilSlice';
