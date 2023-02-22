@@ -1,12 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Box, Text, Heading, Button, Flex, Image} from '@chakra-ui/react'
 import clock from '../../../../components/assets/clock.svg'
 import location from '../../../../components/assets/map-pin.svg'
+import Fundraising from './Fundraising'
 
 const EventSchedule = ({newEvent}) => {
     const date = newEvent[0]?.date;
     const dateString = date;
     const newDate = new Date(dateString).toDateString();
+    const [openDrawer, setOpenDrawer] = useState(false);
+
+    const showDrawer = () => {
+        setOpenDrawer(true);
+    }
 
   return (
     <Box mb='6'>
@@ -41,7 +47,7 @@ const EventSchedule = ({newEvent}) => {
             </Box>
 
             <Box w='295px' h='auto'>
-                <Button w='100%' mb='4' fontWeight={550} bg='#EEEEEE' fontSize={14} boxShadow='md'>Start a fund raising</Button>
+                <Button w='100%' mb='4' fontWeight={550} bg='#EEEEEE' fontSize={14} boxShadow='md' onClick={showDrawer}>Start a fund raising</Button>
                 <Box fontSize={14} mb='5' bg='#EEEEEE' borderRadius={5} p='5'>
                     <Image src={clock} mb='2' />
                     <Text>{newDate}</Text>
@@ -52,6 +58,7 @@ const EventSchedule = ({newEvent}) => {
                     <Image src={location} mb='2' />
                     <Text lineHeight='25px' fontSize='14px'>{newDate} at {newEvent[0]?.venue}</Text>
                 </Box>
+                {openDrawer ? <Fundraising setOpenDrawer={setOpenDrawer} /> : null }
             </Box>
         </Flex>
     </Box>
