@@ -15,6 +15,7 @@ import EventDetails from './pages/SingleEvent';
 import Events from './pages/Events';
 import DashboardLayout from './Layouts/DashBoardLayout';
 import SingleEvent from './pages/SingleEvent';
+import CreateEvent from './pages/CreateEvent'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/dashboard/event_details" element={<EventDetails />} />
           <Route path="/dashboard/event_details/:id" element={<SingleEvent />} />
         </Route>
+        <Route path="/create_event" element={<CreateEvent />} />
       </Routes>
     </BrowserRouter>
   );
