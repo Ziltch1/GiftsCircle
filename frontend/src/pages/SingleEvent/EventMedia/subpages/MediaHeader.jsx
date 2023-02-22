@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Box, Heading, Text, Flex, Button, FormLabel, Input } from '@chakra-ui/react'
+import React from 'react'
+import { Box, Heading, Flex, Button, FormLabel, Input } from '@chakra-ui/react'
 
 const MediaHeader = ({ navPosition, setNavPosition }) => {
   const actionBtns = ['Uploaded by me', 'Sent to me']

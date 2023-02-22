@@ -8,7 +8,7 @@ const EventHosts = ({newEvent}) => {
         <Heading fontWeight={500} fontSize='24px' mb='4'>Event Host</Heading>
         <Flex alignItems='center' gap={3} mb='3'>
             <Image src={host} />
-            <Text>{newEvent[0]?.host}</Text>
+            <Text>{newEvent.host}</Text>
         </Flex>
         {/* <Flex alignItems='center' gap={3} mb='3'>
             <Image src={host} />

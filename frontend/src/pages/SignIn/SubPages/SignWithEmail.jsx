@@ -47,7 +47,7 @@ const SignInWithEmail = () => {
     if (token) {
       navigate('/dashboard');
     }
-  }, [token]);
+  }, [token, navigate]);
 
   return (
     <Flex

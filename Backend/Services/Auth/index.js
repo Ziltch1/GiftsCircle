@@ -52,7 +52,7 @@ const SendVerifyEmail = async (email) => {
     try {
       let otp = GenerateOtp();
       var expires = new Date();
-      expires.setMinutes(expires.getMinutes() + 1);
+      expires.setMinutes(expires.getMinutes() + 10);
       expires = new Date(expires);
 
       await prisma.otp.create({

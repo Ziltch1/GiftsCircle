@@ -1,52 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Text,
-  Heading,
-  Button,
-  Flex,
-  HStack,
-  Image,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Text, Stack, Skeleton } from '@chakra-ui/react';
 import Search from '../../components/Search/Search';
 import Navbar from '../../components/Navbar/Navbar';
 import WelcomeModal from '../../components/WelcomeModal/WelcomeModal';
 import Tabs from '../../components/Tabs/Tabs';
-import eventImage from '../../components/assets/event-image.svg';
-import calendarIcon from '../../components/assets/calendar.svg';
-import lockIcon from '../../components/assets/lock.svg';
-import { CheckIcon } from '@chakra-ui/icons';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { events } from './data';
-import { Link } from 'react-router-dom';
+import { dispatch } from '../../redux/store';
+import { GetUserEvents } from '../../redux/features/user/service';
+import EventItem from './components/EventItem';
 
 const Events = () => {
-  const [isActive, setIsActive] = useState(true);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const user = useSelector(state => state.auth.user);
-  const token = useSelector(state => state.auth.token);
-  const userId = user.id;
-  const api_url = `https://giftcircle-ws.onrender.com/api/event/UserEvents/${userId}`;
-  
-
-  const getEvents = async () => {
-    axios.get(api_url, {
-      headers: {
-        'Authorization': `token ${token}`
-      }
-    }).then((res) => {
-        console.log(res.data)
-        setData(res.data);
-    }).catch((error) => {
-        console.error(error)
-    })
-  };
+  const { events } = useSelector(state => state.user);
 
   useEffect(() => {
-    getEvents();
-  }, []);
+    if (user) {
+      dispatch(GetUserEvents(user.id));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (events) {
+      if (events.length > 0) {
+        setData(events);
+      }
+    }
+  }, [events]);
+
+  useEffect(() => {
+    if (data) {
+      setLoading(false);
+    }
+  }, [data]);
 
   return (
     <Box bg="#F5F5F5" h="100%" pb="8">
@@ -56,106 +43,40 @@ const Events = () => {
         <Tabs />
         <Search />
         <Box textAlign={'center'} mt="20px">
-          {data.length === 0 ? (
-            <Box>
-              <Text fontSize={30} fontWeight="medium" mb="3">
-                Create your first event
-              </Text>
-              <Text fontSize={14} mb="3">
-                Don’t waste time, click the button at right corner to <br />{' '}
-                create your event attatch your gift list
-              </Text>
-            </Box>
+          {loading ? (
+            <Stack spacing="20px">
+              <Skeleton height="50px" width="100%" />
+              <Skeleton height="50px" width="75%" />
+              <Skeleton height="50px" width="50%" />
+            </Stack>
           ) : (
-            <Box>
-              {data.map(event => {
-
-                const { id, descSummary, title, date, published, image } = event;
-                console.log(image);
-                const dateString = date;
-                const newDate = new Date(dateString).toDateString();
-                const imageUrl = `https://giftcircle-ws.onrender.com/images/Events/${image}`
-
-                return (
-                  <Box bg="white" mb="5" py="7" px="8" borderRadius={5} key={id}>
-                    <HStack
-                      justifyContent={'space-between'}
-                      alignItems="center"
-                    >
-                      <Box>
-                        <HStack gap={2.5}>
-                          <Box>
-                            <Image
-                              src={imageUrl}
-                              w="120px"
-                              h="110px"
-                              borderRadius={5}
-                            />
-                          </Box>
-                          <Box>
-                            <Box textAlign={'left'}>
-                              <Heading
-                                fontWeight={'medium'}
-                                fontSize="18px"
-                                lineHeight={'26px'}
-                                mb="2"
-                              >
-                                {title}
-                              </Heading>
-                              <Text
-                                fontSize={14}
-                                textAlign="left"
-                                fontWeight={400}
-                                mb="2"
-                              >
-                                {descSummary}
-                              </Text>
-                              <Flex fontSize={14} gap={5} color="#717171">
-                                <Flex alignItems={'center'} gap={1}>
-                                  <Image src={calendarIcon} />
-                                  <Text>{newDate}</Text>
-                                </Flex>
-                                <Flex alignItems={'center'} gap={1}>
-                                  <Image src={lockIcon} />
-                                  {id}
-                                </Flex>
-                                <Flex alignItems={'center'} gap={1}>
-                                  <CheckIcon
-                                    color={published ? '#00BFB2' : '#717171'}
-                                  />{' '}
-                                  <Text
-                                    color={published ? '#00BFB2' : '#717171'}
-                                  >
-                                    {published ? 'Active' : 'saved to draft'}
-                                  </Text>
-                                </Flex>
-                              </Flex>
-                            </Box>
-                          </Box>
-                        </HStack>
-                      </Box>
-
-                      <Box>
-                        <Link to={`/event_details/${id}`}>
-                          <Button
-                            bg="#00BFB2"
-                            color="white"
-                            size="sm"
-                            fontWeight={'medium'}
-                            px="20px"
-                            py="10px"
-                            borderRadius={5}
-                            h="35px"
-                          >
-                            View event
-                          </Button>
-                        </Link>
-                      </Box>
-                    </HStack>
-                  </Box>
-                );
-              })}
-            </Box>
+            <>
+              {data.length === 0 ? (
+                <Box>
+                  <Text fontSize={30} fontWeight="medium" mb="3">
+                    Create your first event
+                  </Text>
+                  <Text fontSize={14} mb="3">
+                    Don’t waste time, click the button at right corner to <br />{' '}
+                    create your event attatch your gift list
+                  </Text>
+                </Box>
+              ) : (
+                <Box>
+                  {data.map(event => (
+                    <EventItem
+                      key={event.id}
+                      id={event.id}
+                      title={event.title}
+                      descSummary={event.descSummary}
+                      date={event.date}
+                      image={event.image}
+                      published={event.published}
+                    />
+                  ))}
+                </Box>
+              )}
+            </>
           )}
         </Box>
       </Box>

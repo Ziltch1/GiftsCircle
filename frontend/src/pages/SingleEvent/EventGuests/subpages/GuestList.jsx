@@ -9,8 +9,7 @@ import {
     Td,
     TableContainer,
     Image,
-    Flex,
-    useDisclosure
+    Flex
 } from '@chakra-ui/react'
 
 const GuestList = () => {
