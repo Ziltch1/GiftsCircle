@@ -1,5 +1,6 @@
 import React from 'react'
 import {Box, Flex, Button, Heading} from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 
 const Tabs = () => {
   return (
@@ -10,7 +11,7 @@ const Tabs = () => {
                   </Box>
                   <Flex gap='4'>
                       <Button bg='rgba(204, 242, 240, 0.5)' color='#009F94' fontWeight={'medium'} fontSize='14px'>Join an event</Button>
-                      <Button bg='#00BFB2' color='white' fontWeight={'medium'} fontSize='14px'>Create an event</Button>
+                      <Link to='/create_event'><Button bg='#00BFB2' color='white' fontWeight={'medium'} fontSize='14px'>Create an event</Button></Link>
                   </Flex>
               </Flex>
 

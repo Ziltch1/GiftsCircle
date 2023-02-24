@@ -19,6 +19,10 @@ const GiftDrawer = () => {
     const { isOpen, onClose } = useDisclosure({defaultIsOpen: true})
     const btnRef = React.useRef()
 
+    const closeModal = () => {
+        
+    }
+
     return (
         <>
             <Drawer
@@ -27,10 +31,11 @@ const GiftDrawer = () => {
                 onClose={onClose}
                 finalFocusRef={btnRef}
                 size='lg'
+                closeOnOverlayClick={false}
             >
                 <DrawerOverlay />
                 <DrawerContent>
-                    <DrawerCloseButton />
+                    <DrawerCloseButton onClick={closeModal} />
 
                     <DrawerHeader mt='1'>
                         <Box w='140px' h='140px' borderRadius='50%' bg='#FAFAFA' mx='auto' display={'flex'} justifyContent='center' alignItems='center'>
