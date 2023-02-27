@@ -5,7 +5,8 @@ import FormHeader from './subpages/FormHeader';
 import BasicForm from './subpages/step1/BasicForm';
 import Stepper from './subpages/Stepper';
 
-const index = () => {
+const Index = () => {
+  const [step, setStep] = useState(1)
   return (
     <Box py="4">
       <FormHeader />
