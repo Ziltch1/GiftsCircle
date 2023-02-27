@@ -14,7 +14,7 @@ const BasicForm = () => {
     }
 
   return (
-    <Box h='100%' overflow='auto' mb='12' maxW='750px' mx='auto'>
+    <Box h='100%' overflow='auto' mb='12' maxW='750px' mx='auto' mt='8'>
         <Flex alignItems='start' justifyContent='space-between' flexWrap='wrap'>
             <BackButton />
             <Box maxW='500px' mx='auto' fontSize={13}>

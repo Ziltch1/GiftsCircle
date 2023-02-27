@@ -4,7 +4,7 @@ import { SearchIcon, } from '@chakra-ui/icons'
 
 const Search = () => {
     return (
-        <Box>
+        <Box mb='5'>
             <FormControl>
                 <Flex justifyContent={'space-between'}>
                     <InputGroup w='100%'>
