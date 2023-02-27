@@ -2,7 +2,7 @@ import { CloseIcon } from '@chakra-ui/icons'
 import { Box, Heading, Text, Flex } from '@chakra-ui/react'
 import React from 'react'
 
-const FormHeader = () => {
+const FormHeader = ({step}) => {
   return (
     <Box w='80%' mx='auto' mb='3'>
         <Flex justifyContent='space-between' alignItems='center'>
@@ -14,7 +14,7 @@ const FormHeader = () => {
             </Box>
 
             <Box fontSize={14}>
-                Step 1/6 - Basic Info
+                Step {step}/5 - Basic Info
             </Box>
         </Flex>
     </Box>
