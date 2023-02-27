@@ -1,5 +1,5 @@
-import { Box } from '@chakra-ui/react'
-import React, {useState} from 'react'
+import { Box } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import BackButton from './subpages/BackButton'
 import FormFooter from './subpages/FormFooter'
 import FormHeader from './subpages/FormHeader'
@@ -9,6 +9,7 @@ import AddGiftForm from './subpages/step3'
 import DeliveryDetailsForm from './subpages/step4/DeliveryDetailsForm'
 import SummaryForm from './subpages/step5/SummaryForm'
 import Stepper from './subpages/Stepper'
+
 
 const Index = () => {
   const [step, setStep] = useState(1)
@@ -26,6 +27,6 @@ const Index = () => {
         <FormFooter step={step} setStep={setStep} />
     </Box>
   )
-}
+};
 
-export default Index
+export default Index;

@@ -60,8 +60,6 @@ const VerifyOtp = () => {
     }
   };
 
-  console.log(mins, counter);
-
   const ResendOtp = async () => {
     const formBody = {
       email: user,
@@ -70,6 +68,7 @@ const VerifyOtp = () => {
       const res = await SendOtpLink(formBody);
       if (res.status) {
         setCounter(60);
+        setMins(9);
         setOtp('');
       }
     } catch (error) {

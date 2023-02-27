@@ -8,7 +8,7 @@ import { Box, Skeleton, Stack } from '@chakra-ui/react';
 import EventMedia from './EventMedia';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { GetUserEvents } from '../../redux/features/user/service';
+import { GetUserEvents } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 
 const Index = () => {
@@ -17,7 +17,7 @@ const Index = () => {
   const [newEvent, setNewEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { events } = useSelector(state => state.user);
+  const { events } = useSelector(state => state.event);
   const { user } = useSelector(state => state.auth);
   let userId = user.id
 
