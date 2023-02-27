@@ -6,14 +6,14 @@ import WelcomeModal from '../../components/WelcomeModal/WelcomeModal';
 import Tabs from '../../components/Tabs/Tabs';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../redux/store';
-import { GetUserEvents } from '../../redux/features/user/service';
+import { GetUserEvents } from '../../redux/features/events/service';
 import EventItem from './components/EventItem';
 
 const Events = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const user = useSelector(state => state.auth.user);
-  const { events } = useSelector(state => state.user);
+  const { events } = useSelector(state => state.event);
 
   useEffect(() => {
     if (user) {
