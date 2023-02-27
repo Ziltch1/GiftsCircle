@@ -5,7 +5,7 @@ import { Box } from '@chakra-ui/react';
 import GiftLists from './subpages/GiftLists';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../redux/store';
-import { GetEventGifts } from '../../../redux/features/user/service';
+import { GetEventGifts } from '../../../redux/features/events/service';
 
 const Index = ({ newEvent }) => {
   const eventId = newEvent.id;
@@ -13,7 +13,7 @@ const Index = ({ newEvent }) => {
   const [navPosition, setNavPosition] = useState(0);
   const [data, setData] = useState([]);
 
-  const { eventGifts } = useSelector(state => state.user);
+  const { eventGifts } = useSelector(state => state.event);
 
   useEffect(() => {
     dispatch(GetEventGifts(eventId));
