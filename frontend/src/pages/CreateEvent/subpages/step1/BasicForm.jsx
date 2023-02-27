@@ -48,7 +48,7 @@ const BasicForm = () => {
   };
 
   return (
-    <Box>
+    <Box mt='10'>
       <Box h="100%" overflow="auto" mb="12" w="750px" mx="auto">
         <Flex alignItems="start" justifyContent="space-between">
           <BackButton />
