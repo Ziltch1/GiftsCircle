@@ -70,9 +70,10 @@ const BasicForm = () => {
                 <Input
                   type="text"
                   placeholder="Enter the name of the event"
-                  fontSize={11}
+                  fontSize={14}
                   bg="#FAFAFA"
-                  color="#8C8C8C"
+                  color="black"
+                  _placeholder={{ color: '#8C8C8C'}}
                   onChange={e => setTitle(e.target.value)}
                 />
               </Box>
@@ -84,9 +85,10 @@ const BasicForm = () => {
                 <Input
                   type="text"
                   placeholder="Enter the name of the event"
-                  fontSize={11}
+                  fontSize={14}
                   bg="#FAFAFA"
-                  color="#8C8C8C"
+                  color="black"
+                  _placeholder={{ color: '#8C8C8C' }}
                   onChange={e => setHosts(e.target.value)}
                 />
                 <Text fontWeight="semibold" fontSize={11}>
@@ -110,15 +112,19 @@ const BasicForm = () => {
                 <Select
                   type="text"
                   placeholder="Select your category"
-                  fontSize={11}
+                  fontSize={14}
                   bg="#FAFAFA"
-                  color="#8C8C8C"
+                  color="black"
+                  _placeholder={{ color: '#8C8C8C' }}
                   onChange={e => setCategory(e.target.value)}
                 >
-                  <option value="gfgffgf">ytyuiisjsnxn</option>
-                  <option value="gfgffgf">ytyuiisjsnxn</option>
-                  <option value="gfgffgf">ytyuiisjsnxn</option>
-                  <option value="gfgffgf">ytyuiisjsnxn</option>
+                  <option value="gfgffgf">Birthday</option>
+                  <option value="gfgffgf">Naming Ceremony</option>
+                  <option value="gfgffgf">Retirement Ceremony</option>
+                  <option value="gfgffgf">Graduation Ceremony</option>
+                  <option value="gfgffgf">Induction Ceremony</option>
+                  <option value="gfgffgf">Wedding Ceremony</option>
+                  <option value="gfgffgf">Funeral Ceremony</option>
                 </Select>
               </Box>
 
@@ -138,9 +144,10 @@ const BasicForm = () => {
                 <Input
                   type="text"
                   placeholder="e.g 26, Beside Mouka foam, Mokola, Ibadan"
-                  fontSize={11}
+                  fontSize={14}
                   bg="#FAFAFA"
-                  color="#8C8C8C"
+                  color="black"
+                  _placeholder={{ color: '#8C8C8C' }}
                   onChange={e => setVenue(e.target.value)}
                 />
               </Box>
@@ -161,9 +168,10 @@ const BasicForm = () => {
                 </FormLabel>
                 <Input
                   type="date"
-                  fontSize={11}
+                  fontSize={14}
                   bg="#FAFAFA"
-                  color="#8C8C8C"
+                  color="black"
+                  _placeholder={{ color: '#8C8C8C' }}
                   onChange={e => setDate(e.target.value)}
                 />
               </Box>
@@ -180,9 +188,10 @@ const BasicForm = () => {
                     <Input
                       type="time"
                       placeholder="Start time"
-                      fontSize={11}
+                      fontSize={14}
                       bg="#FAFAFA"
-                      color="#8C8C8C"
+                      color="black"
+                      _placeholder={{ color: '#8C8C8C' }}
                       onChange={e => setStartTime(e.target.value)}
                     />
                   </Box>
@@ -193,9 +202,10 @@ const BasicForm = () => {
                     <Input
                       type="time"
                       placeholder="Start time"
-                      fontSize={11}
+                      fontSize={14}
                       bg="#FAFAFA"
-                      color="#8C8C8C"
+                      color="black"
+                      _placeholder={{ color: '#8C8C8C' }}
                       onChange={e => setEndTime(e.target.value)}
                     />
                   </Box>
