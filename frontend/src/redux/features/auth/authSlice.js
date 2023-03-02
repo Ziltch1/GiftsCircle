@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  token: sessionStorage.getItem('token') || null,
-  user: JSON.parse(sessionStorage.getItem('user')) || null,
+  token: sessionStorage.getItem('token') || null
 };
 
 const AuthSlice = createSlice({
@@ -11,13 +10,10 @@ const AuthSlice = createSlice({
   reducers: {
     setToken: (state, action) => {
       state.token = action.payload;
-    },
-    setUser: (state, action) => {
-      state.user = action.payload;
-    },
+    }
   },
 });
 
-export const { setToken, setUser } = AuthSlice.actions;
+export const { setToken } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

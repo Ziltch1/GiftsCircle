@@ -10,30 +10,14 @@ import { GetUserEvents } from '../../redux/features/events/service';
 import EventItem from './components/EventItem';
 
 const Events = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const user = useSelector(state => state.auth.user);
-  const { events } = useSelector(state => state.event);
+  const { user } = useSelector(state => state.user);
+  const { events, loading } = useSelector(state => state.event);
 
   useEffect(() => {
     if (user) {
       dispatch(GetUserEvents(user.id));
     }
   }, [user]);
-
-  useEffect(() => {
-    if (events) {
-      if (events.length > 0) {
-        setData(events);
-      }
-    }
-  }, [events]);
-
-  useEffect(() => {
-    if (data) {
-      setLoading(false);
-    }
-  }, [data]);
 
   return (
     <Box bg="#F5F5F5" h="100%" pb="8">
@@ -44,21 +28,21 @@ const Events = () => {
         <Search />
         <Box textAlign={'center'} mt="20px">
             <>
-              {data.length === 0 ? (
-                <Box minH='300px' display='flex' alignItems='center' justifyContent='center'>
-                  <Box>
-                    <Text fontSize={30} fontWeight="medium" mb="3">
-                      Create your first event
-                    </Text>
-                    <Text fontSize={14} mb="3">
-                      Don’t waste time, click the button at right corner to <br />{' '}
-                      create your event and attatch your gift list
-                    </Text>
-                  </Box>
+              {events.length === 0 ? (
+                <Box minH={300} display='flex' alignItems='center' justifyContent='center'>
+                 <Box>
+                   <Text fontSize={30} fontWeight="medium" mb="3">
+                    Create your first event
+                  </Text>
+                  <Text fontSize={14} mb="3">
+                    Don’t waste time, click the button at right corner to <br />{' '}
+                    create your event attatch your gift list
+                  </Text>
+                 </Box>
                 </Box>
               ) : (
                 <Box>
-                  {data.map(event => (
+                  {events.map(event => (
                     <EventItem
                       key={event.id}
                       id={event.id}

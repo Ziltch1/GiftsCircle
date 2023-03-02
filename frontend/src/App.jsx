@@ -21,6 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        
         <Route path="/" element={<Homepage />} />
         <Route element={<AuthLayout />} path="/">
           <Route path="signin" element={<SignIn />} />

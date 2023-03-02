@@ -18,8 +18,8 @@ import { dispatch } from '../../redux/store';
 import { setWelcomeModal } from '../../redux/utils/UtilSlice';
 
 const WelcomeModal = () => {
-  const user = useSelector(state => state.auth.user);
-  const {welcomeModal} = useSelector(state => state.util);
+  const { user } = useSelector(state => state.user);
+  const { welcomeModal } = useSelector(state => state.util);
   return (
     <Box>
       <Modal isOpen={welcomeModal} isCentered>
@@ -35,7 +35,9 @@ const WelcomeModal = () => {
               pt="5"
             >
               <Image src={flowerIcon} display="block" mx="auto" />
-              <ModalCloseButton onClick={() => dispatch(setWelcomeModal(false))}/>
+              <ModalCloseButton
+                onClick={() => dispatch(setWelcomeModal(false))}
+              />
             </Box>
             <Box
               bg="#0C4C84"
