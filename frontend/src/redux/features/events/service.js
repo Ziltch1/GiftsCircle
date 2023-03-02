@@ -1,7 +1,12 @@
-import { GetUserEventsApi } from '../../axios/apis/events';
+import { DeleteEventApi, GetUserEventsApi } from '../../axios/apis/events';
 import { dispatch } from '../../store';
 import { createResponse } from '../../utils/UtilSlice';
-import { setEventGifts, setEvents, setLoading } from './eventSlice';
+import {
+  setEventGifts,
+  setEvents,
+  setLoading,
+  setNewEvent,
+} from './eventSlice';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 
 const GetUserEvents = id => async () => {
@@ -28,4 +33,15 @@ const GetEventGifts = id => async () => {
   }
 };
 
-export { GetUserEvents, GetEventGifts };
+const DeleteEvent = id => async () => {
+  try {
+    await DeleteEventApi(id);
+
+    dispatch(setNewEvent(null));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+export { GetUserEvents, GetEventGifts, DeleteEvent };
