@@ -2,8 +2,9 @@ import { Box, Input, FormLabel, Text, Heading, Flex, FormControl, Image, Textare
 import React from 'react'
 import BackButton from '../BackButton'
 import galleryImage from '../../../../components/assets/gallery.svg'
+import FormFooter from '../FormFooter'
 
-const EventImageForm = () => {
+const EventImageForm = ({step}) => {
   return (
     <Box mt='8' h='100%' overflow='auto' mb='20' maxW='750px' mx='auto'>
       <Flex alignItems='start' justifyContent='space-between' flexWrap='wrap'>
@@ -46,6 +47,7 @@ const EventImageForm = () => {
           </FormControl>
         </Box>
       </Flex>
+      <FormFooter action={() => console.log("hey")} step={step} />
     </Box>
   )
 }

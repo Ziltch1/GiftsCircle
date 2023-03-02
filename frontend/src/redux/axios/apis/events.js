@@ -12,4 +12,8 @@ const CreateEventApi1 = data => {
   return api.post(`/event/create`, data);
 };
 
-export { GetUserEventsApi, GetEventGiftsApi, CreateEventApi1 };
+const DeleteEventApi = id => {
+  return api.delete(`/event/${id}`);
+};
+
+export { GetUserEventsApi, GetEventGiftsApi, CreateEventApi1, DeleteEventApi };
