@@ -304,6 +304,31 @@
         }
       }
     },
+    "/events//create": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/Update1" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
 
     "/event/UserEvents/{id}": {
       "get": {
@@ -1067,6 +1092,43 @@
             "required": true
           },
           "userId": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "Update1": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "required": true
+          },
+          "category": {
+            "type": "string",
+            "required": true
+          },
+          "venue": {
+            "type": "string",
+            "required": true
+          },
+          "date": {
+            "type": "string",
+            "required": true
+          },
+          "start_time": {
+            "type": "string",
+            "required": true
+          },
+          "end_time": {
+            "type": "string",
+            "required": true
+          },
+          "timezone": {
+            "type": "string",
+            "required": true
+          },
+          "host": {
             "type": "string",
             "required": true
           }
