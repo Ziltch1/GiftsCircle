@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://giftscircle.netlify.app"],
+    origin: ["http://localhost:3000", "http://localhost:3001", "https://giftscircle.netlify.app"],
   })
 );
 
