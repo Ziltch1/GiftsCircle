@@ -8,7 +8,7 @@ import {
   Text,
   Select,
   Button,
-  FormErrorMessage, FormHelperText
+  FormErrorMessage, FormHelperText, useToast
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import BackButton from '../BackButton';
@@ -37,36 +37,47 @@ const BasicForm = ({ step, setStep }) => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [selectedTimezone, setSelectedTimezone] = useState({});
+  const toast = useToast()
 
   const showModal = () => {
     setOpenModal(true);
   };
 
-  const isError = title
-
   const HandleSubmit = async (e) => {
-    e.preventDefault();
-    const formBody = {
-      title,
-      host: hosts,
-      category,
-      venue,
-      date,
-      start_time: startTime,
-      end_time: endTime,
-      timezone: selectedTimezone.label,
-      userId: user.id,
-    };
+    if(title && hosts && category && venue && date && startTime && endTime && selectedTimezone){
+      const formBody = {
+        title,
+        host: hosts,
+        category,
+        venue,
+        date,
+        start_time: startTime,
+        end_time: endTime,
+        timezone: selectedTimezone.label,
+        userId: user.id,
+      };
 
-    console.log(formBody);
-    try {
-      const res = await CreateEventApi1(formBody);
-      console.log(res.data);
-      dispatch(setNewEvent(res.data));
-      setStep(step + 1);
-    } catch (error) {
-      dispatch(createResponse(ErrorHandler(error)));
+      console.log(formBody);
+      try {
+        const res = await CreateEventApi1(formBody);
+        console.log(res.data);
+        dispatch(setNewEvent(res.data));
+        setStep(step + 1);
+      } catch (error) {
+        dispatch(createResponse(ErrorHandler(error)));
+      }
+    }else{
+      toast({
+        title: 'Error!',
+        description: "Please fill all fields",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top'
+      })
     }
+    
+    
   };
 
   const BackAction = () => {
@@ -88,7 +99,7 @@ const BasicForm = ({ step, setStep }) => {
                 details that highlight what makes it unique.
               </Text>
             </Box>
-            <FormControl isRequired isInvalid={isError}>
+            <FormControl isRequired>
               <Box mb="5">
                 <FormLabel fontWeight="semibold" fontSize={13.5}>
                   Event title
@@ -102,9 +113,9 @@ const BasicForm = ({ step, setStep }) => {
                   _placeholder={{ color: '#8C8C8C' }}
                   onChange={e => setTitle(e.target.value)}
                 />
-                {!isError ? '' : (
+                {/* {!isError ? '' : (
                   <FormErrorMessage>Email is required.</FormErrorMessage>
-                )}
+                )} */}
               </Box>
 
               <Box mb="5">
