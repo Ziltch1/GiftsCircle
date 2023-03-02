@@ -14,7 +14,10 @@ import BackButton from '../BackButton';
 import TimezoneSelect from 'react-timezone-select';
 import HostModal from './HostModal';
 import { useSelector } from 'react-redux';
-import { CreateEventApi1 } from '../../../../redux/axios/apis/events';
+import {
+  CreateEventApi1,
+  UpdateEventApi1,
+} from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
@@ -54,11 +57,30 @@ const BasicForm = ({ step, setStep }) => {
       userId: user.id,
     };
 
+    const UpdateForm = {
+      id: newEvent.id,
+      title: title === '' ? newEvent.title : title,
+      host: hosts === '' ? newEvent.hosts : hosts,
+      category: category === '' ? newEvent.category : category,
+      venue: venue === '' ? newEvent.venue : venue,
+      date: date === '' ? newEvent.date : date,
+      start_time: startTime === '' ? newEvent.start_time : startTime,
+      end_time: endTime === '' ? newEvent.end_time : endTime,
+      timezone: selectedTimezone.label,
+    };
+
     try {
-      const res = await CreateEventApi1(formBody);
-      localStorage.setItem("newEvent", JSON.stringify(res.data))
-      dispatch(setNewEvent(res.data));
-      setStep(step + 1);
+      if (newEvent) {
+        const res = await UpdateEventApi1(UpdateForm);
+        localStorage.setItem('newEvent', JSON.stringify(res.data));
+        dispatch(setNewEvent(res.data));
+        setStep(step + 1);
+      } else {
+        const res = await CreateEventApi1(formBody);
+        localStorage.setItem('newEvent', JSON.stringify(res.data));
+        dispatch(setNewEvent(res.data));
+        setStep(step + 1);
+      }
     } catch (error) {
       dispatch(createResponse(ErrorHandler(error)));
     }
@@ -90,11 +112,14 @@ const BasicForm = ({ step, setStep }) => {
                 </FormLabel>
                 <Input
                   type="text"
-                  placeholder="Enter the name of the event"
+                  placeholder={
+                    newEvent ? newEvent.title : 'Enter the name of the event'
+                  }
                   fontSize={14}
                   bg="#FAFAFA"
                   color="black"
-                  _placeholder={{ color: '#8C8C8C' }}
+                  value={title}
+                  _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setTitle(e.target.value)}
                 />
               </Box>
@@ -105,11 +130,14 @@ const BasicForm = ({ step, setStep }) => {
                 </FormLabel>
                 <Input
                   type="text"
-                  placeholder="Enter the name of the event"
+                  placeholder={
+                    newEvent ? newEvent.hosts : 'Enter the hosts of the event'
+                  }
                   fontSize={14}
                   bg="#FAFAFA"
                   color="black"
-                  _placeholder={{ color: '#8C8C8C' }}
+                  value={hosts}
+                  _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setHosts(e.target.value)}
                 />
                 <Text fontWeight="semibold" fontSize={11}>
@@ -132,11 +160,14 @@ const BasicForm = ({ step, setStep }) => {
                 </FormLabel>
                 <Select
                   type="text"
-                  placeholder="Select your category"
+                  placeholder={
+                    newEvent ? newEvent.category : 'Select your category'
+                  }
                   fontSize={14}
                   bg="#FAFAFA"
                   color="black"
-                  _placeholder={{ color: '#8C8C8C' }}
+                  _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
+                  value={category}
                   onChange={e => setCategory(e.target.value)}
                 >
                   <option value="gfgffgf">Birthday</option>
@@ -164,11 +195,16 @@ const BasicForm = ({ step, setStep }) => {
                 </FormLabel>
                 <Input
                   type="text"
-                  placeholder="e.g 26, Beside Mouka foam, Mokola, Ibadan"
+                  placeholder={
+                    newEvent
+                      ? newEvent.venue
+                      : 'e.g 26, Beside Mouka foam, Mokola, Ibadan'
+                  }
                   fontSize={14}
-                  bg="#FAFAFA"
+                  bgColor="#FAFAFA"
                   color="black"
-                  _placeholder={{ color: '#8C8C8C' }}
+                  value={venue}
+                  _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setVenue(e.target.value)}
                 />
               </Box>
@@ -192,7 +228,7 @@ const BasicForm = ({ step, setStep }) => {
                   fontSize={14}
                   bg="#FAFAFA"
                   color="black"
-                  _placeholder={{ color: '#8C8C8C' }}
+                  _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setDate(e.target.value)}
                 />
               </Box>
@@ -208,11 +244,14 @@ const BasicForm = ({ step, setStep }) => {
                     </FormLabel>
                     <Input
                       type="time"
-                      placeholder="Start time"
+                      placeholder={
+                        newEvent ? newEvent.start_time : 'Start time'
+                      }
                       fontSize={14}
                       bg="#FAFAFA"
                       color="black"
-                      _placeholder={{ color: '#8C8C8C' }}
+                      _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
+                      value={startTime}
                       onChange={e => setStartTime(e.target.value)}
                     />
                   </Box>
@@ -222,11 +261,12 @@ const BasicForm = ({ step, setStep }) => {
                     </FormLabel>
                     <Input
                       type="time"
-                      placeholder="Start time"
+                      placeholder={newEvent ? newEvent.end_time : 'End time'}
                       fontSize={14}
                       bg="#FAFAFA"
                       color="black"
-                      _placeholder={{ color: '#8C8C8C' }}
+                      _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
+                      value={endTime}
                       onChange={e => setEndTime(e.target.value)}
                     />
                   </Box>

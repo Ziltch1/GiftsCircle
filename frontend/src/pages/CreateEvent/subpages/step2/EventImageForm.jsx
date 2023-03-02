@@ -14,28 +14,44 @@ import BackButton from '../BackButton';
 import galleryImage from '../../../../components/assets/gallery.svg';
 import FormFooter from '../FormFooter';
 import { useSelector } from 'react-redux';
+import { CreateEventApi2 } from '../../../../redux/axios/apis/events';
+import { dispatch } from '../../../../redux/store';
+import { setNewEvent } from '../../../../redux/features/events/eventSlice';
+import { createResponse } from '../../../../redux/utils/UtilSlice';
+import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 
-const EventImageForm = ({ step }) => {
+const EventImageForm = ({ step, setStep }) => {
   const { newEvent } = useSelector(state => state.event);
   const [image, setImage] = useState({});
   const [summary, setSummary] = useState('');
   const [descSummary, setDescSummary] = useState('');
+  
 
   const HandleSubmit = async () => {
     const formBody = {
       image,
       summary,
-      desc_summary : descSummary,
+      desc_summary: descSummary,
       id: newEvent.id,
     };
 
-    
+    try {
+
+      const res = await CreateEventApi2(formBody);
+      localStorage.setItem('newEvent', JSON.stringify(res.data));
+      dispatch(setNewEvent(res.data));
+      setStep(step + 1);
+    } catch (error) {
+      dispatch(createResponse(ErrorHandler(error)));
+    }
   };
+
+
   return (
     <>
       <Box mt="8" h="100%" overflow="auto" mb="20" maxW="750px" mx="auto">
         <Flex alignItems="start" justifyContent="space-between" flexWrap="wrap">
-          <BackButton />
+          <BackButton onClick={() => setStep(step - 1)} />
           <Box maxW="500px" mx="auto" fontSize={14}>
             <Box mb="5">
               <Heading mb="2" fontSize="25px">
@@ -127,7 +143,7 @@ const EventImageForm = ({ step }) => {
           </Box>
         </Flex>
       </Box>
-      <FormFooter action={() => console.log('hey')} step={step} />
+      <FormFooter action={HandleSubmit} step={step} />
     </>
   );
 };
