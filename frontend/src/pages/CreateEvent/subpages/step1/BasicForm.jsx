@@ -8,7 +8,7 @@ import {
   Text,
   Select,
   Button,
-  FormErrorMessage,
+  FormErrorMessage, FormHelperText
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import BackButton from '../BackButton';
@@ -37,7 +37,10 @@ const BasicForm = ({ step, setStep }) => {
     setOpenModal(true);
   };
 
-  const HandleSubmit = async () => {
+  const isError = title
+
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
     const formBody = {
       title,
       host: hosts,
@@ -59,6 +62,7 @@ const BasicForm = ({ step, setStep }) => {
     }
   };
 
+
   return (
     <Box mt="10">
       <Box h="100%" overflow="auto" mb="12" w="750px" mx="auto">
@@ -74,7 +78,7 @@ const BasicForm = ({ step, setStep }) => {
                 details that highlight what makes it unique.
               </Text>
             </Box>
-            <FormControl isRequired>
+            <FormControl isRequired isInvalid={isError}>
               <Box mb="5">
                 <FormLabel fontWeight="semibold" fontSize={13.5}>
                   Event title
@@ -88,6 +92,9 @@ const BasicForm = ({ step, setStep }) => {
                   _placeholder={{ color: '#8C8C8C' }}
                   onChange={e => setTitle(e.target.value)}
                 />
+                {!isError ? '' : (
+                  <FormErrorMessage>Email is required.</FormErrorMessage>
+                )}
               </Box>
 
               <Box mb="5">
