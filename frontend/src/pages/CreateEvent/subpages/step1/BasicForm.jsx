@@ -54,10 +54,9 @@ const BasicForm = ({ step, setStep }) => {
       userId: user.id,
     };
 
-    console.log(formBody);
     try {
       const res = await CreateEventApi1(formBody);
-      console.log(res.data);
+      localStorage.setItem("newEvent", JSON.stringify(res.data))
       dispatch(setNewEvent(res.data));
       setStep(step + 1);
     } catch (error) {

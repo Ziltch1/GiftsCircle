@@ -1117,10 +1117,6 @@
             "type": "object",
             "required": true
           },
-          "desc_celeb": {
-            "type": "string",
-            "required": true
-          },
           "desc_summary": {
             "type": "string",
             "required": true

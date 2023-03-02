@@ -76,20 +76,19 @@ const Update1 = async (data, image) => {
   });
 
   if (event) {
-    await prisma.event.update({
+    let res = await prisma.event.update({
       where: {
         id: data.id,
       },
       data: {
         image: image,
-        descCeleb: data.desc_celeb,
         descSummary: data.desc_summary,
         summary: data.summary,
       },
     });
 
     await prisma.$disconnect();
-    return data;
+    return res;
   }
   return null;
 };

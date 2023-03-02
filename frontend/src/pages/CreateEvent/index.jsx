@@ -11,7 +11,7 @@ import SummaryForm from './subpages/step5/SummaryForm';
 import Stepper from './subpages/Stepper';
 
 const Index = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   return (
     <Box py="4">
       <FormHeader step={step} />
