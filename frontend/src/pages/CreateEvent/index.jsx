@@ -18,7 +18,7 @@ const Index = () => {
       <Stepper step={step} />
       <Box>
         {step === 1 && <BasicForm step={step} setStep={setStep} />}
-        {step === 2 && <EventImageForm />}
+        {step === 2 && <EventImageForm step={step}/>}
         {step === 3 && <AddGiftForm />}
         {step === 4 && <DeliveryDetailsForm />}
         {step === 5 && <SummaryForm />}

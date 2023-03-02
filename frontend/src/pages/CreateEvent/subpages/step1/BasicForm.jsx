@@ -19,9 +19,14 @@ import { dispatch } from '../../../../redux/store';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import FormFooter from '../FormFooter';
+import { setNewEvent } from '../../../../redux/features/events/eventSlice';
+import { useNavigate } from 'react-router-dom';
+import { DeleteEvent } from '../../../../redux/features/events/service';
 
 const BasicForm = ({ step, setStep }) => {
+  const navigate = useNavigate();
   const { user } = useSelector(state => state.user);
+  const { newEvent } = useSelector(state => state.event);
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState('');
   const [hosts, setHosts] = useState('');
@@ -49,20 +54,26 @@ const BasicForm = ({ step, setStep }) => {
       userId: user.id,
     };
 
-    console.log(formBody)
+    console.log(formBody);
     try {
       const res = await CreateEventApi1(formBody);
       console.log(res.data);
+      dispatch(setNewEvent(res.data));
+      setStep(step + 1);
     } catch (error) {
       dispatch(createResponse(ErrorHandler(error)));
     }
+  };
+
+  const BackAction = () => {
+    navigate('/dashboard');
   };
 
   return (
     <Box mt="10">
       <Box h="100%" overflow="auto" mb="12" w="750px" mx="auto">
         <Flex alignItems="start" justifyContent="space-between">
-          <BackButton />
+          <BackButton action={BackAction} />
           <Box w="500px" mx="auto" fontSize={13}>
             <Box mb="6">
               <Heading fontWeight="bold" fontSize="25px" mb="3">
@@ -239,7 +250,7 @@ const BasicForm = ({ step, setStep }) => {
         {openModal && <HostModal setOpenModal={setOpenModal} />}
       </Box>
 
-      <FormFooter action={HandleSubmit} step={step}/>
+      <FormFooter action={HandleSubmit} step={step} />
     </Box>
   );
 };
