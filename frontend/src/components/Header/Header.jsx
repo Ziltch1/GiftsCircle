@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Box, Image, Avatar, Flex } from '@chakra-ui/react';
+import { Box, Image, Avatar, Flex, Menu, MenuButton, MenuList, MenuDivider, MenuItem } from '@chakra-ui/react';
 import logo from '../assets/event-circle.svg';
 import notification from '../assets/notification.svg';
 import { useSelector } from 'react-redux';
@@ -29,9 +29,20 @@ const Header = () => {
                  <Box onClick={showNotification}>
                     <Image src={notification} />
                  </Box>
-                 <Box>
+                
+
+                 <Menu>
+                  <MenuButton as={'button'} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0} border='none' outline='none'>
                     <Avatar size='sm' name={`${user.firstname} ${user.lastname}`} bg='#0C4C84' color='white' fontWeight={'semibold'} />
-                 </Box>
+                  </MenuButton>
+                  <MenuList zIndex={'overlay'}>
+                    <MenuItem fontSize={16} fontWeight={500}>Account</MenuItem>
+                    <MenuItem fontSize={16} fontWeight={500}>Security</MenuItem>
+                    <MenuDivider />
+                    <MenuItem color='#F5222D' fontSize={16} fontWeight={500}>Logout</MenuItem>
+                  </MenuList>
+                </Menu >
+
                </Flex>
             </Box>
           </Flex>
@@ -43,3 +54,6 @@ const Header = () => {
 };
 
 export default Header
+
+
+ 

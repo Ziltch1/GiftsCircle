@@ -10,7 +10,7 @@ import { GetUserEvents } from '../../redux/features/events/service';
 import EventItem from './components/EventItem';
 
 const Events = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const user = useSelector(state => state.auth.user);
   const { events } = useSelector(state => state.event);
@@ -43,23 +43,18 @@ const Events = () => {
         <Tabs />
         <Search />
         <Box textAlign={'center'} mt="20px">
-          {loading ? (
-            <Stack spacing="20px">
-              <Skeleton height="50px" width="100%" />
-              <Skeleton height="50px" width="75%" />
-              <Skeleton height="50px" width="50%" />
-            </Stack>
-          ) : (
             <>
               {data.length === 0 ? (
-                <Box>
-                  <Text fontSize={30} fontWeight="medium" mb="3">
-                    Create your first event
-                  </Text>
-                  <Text fontSize={14} mb="3">
-                    Don’t waste time, click the button at right corner to <br />{' '}
-                    create your event attatch your gift list
-                  </Text>
+                <Box minH='300px' display='flex' alignItems='center' justifyContent='center'>
+                  <Box>
+                    <Text fontSize={30} fontWeight="medium" mb="3">
+                      Create your first event
+                    </Text>
+                    <Text fontSize={14} mb="3">
+                      Don’t waste time, click the button at right corner to <br />{' '}
+                      create your event and attatch your gift list
+                    </Text>
+                  </Box>
                 </Box>
               ) : (
                 <Box>
@@ -77,7 +72,7 @@ const Events = () => {
                 </Box>
               )}
             </>
-          )}
+          
         </Box>
       </Box>
     </Box>

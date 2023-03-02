@@ -8,6 +8,7 @@ import {
   Text,
   Select,
   Button,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import BackButton from '../BackButton';
@@ -30,6 +31,8 @@ const BasicForm = () => {
   const showModal = () => {
     setOpenModal(true);
   };
+
+
 
   const HandleSubmit = () => {
     const formBody = {
@@ -62,7 +65,7 @@ const BasicForm = () => {
                 details that highlight what makes it unique.
               </Text>
             </Box>
-            <FormControl>
+            <FormControl isRequired>
               <Box mb="5">
                 <FormLabel fontWeight="semibold" fontSize={13.5}>
                   Event title
@@ -78,7 +81,7 @@ const BasicForm = () => {
                 />
               </Box>
 
-              <Box mb="3">
+              <Box mb="5">
                 <FormLabel fontWeight="semibold" fontSize={13.5}>
                   Who is hosting the event?
                 </FormLabel>
@@ -91,18 +94,6 @@ const BasicForm = () => {
                   _placeholder={{ color: '#8C8C8C' }}
                   onChange={e => setHosts(e.target.value)}
                 />
-                <Text fontWeight="semibold" fontSize={11}>
-                  Have more than one host?
-                  <Button
-                    bg="none"
-                    _hover={{ bg: 'none' }}
-                    color="#4ae"
-                    fontSize={11}
-                    onClick={showModal}
-                  >
-                    Add multiple hosts
-                  </Button>
-                </Text>
               </Box>
 
               <Box mb="8">
