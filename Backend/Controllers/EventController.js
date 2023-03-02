@@ -9,6 +9,7 @@ const {
   Update2,
   GetAllEvents,
   DeleteEvent,
+  Update3,
 } = require("../Services/Events");
 const router = express.Router();
 const multer = require("multer");
@@ -70,6 +71,20 @@ router.post("/create", EnsureAuthenticated, async (req, res) => {
   }
 });
 
+router.put("/create", EnsureAuthenticated, async (req, res) => {
+  try {
+    let data = await Update1(req.body);
+    if (data) {
+      return res.status(200).send(data);
+    }
+    return res.status(400).send(ResponseDTO("Failed", "Event not found"));
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send({ msg: "Request Failed" });
+  }
+});
+
 router.post(
   "/create2",
   upload.single("image"),
@@ -77,7 +92,7 @@ router.post(
   async (req, res) => {
     try {
       const image = req.file ? req.file.filename : null;
-      let data = await Update1(req.body, image);
+      let data = await Update2(req.body, image);
       if (data) {
         return res.status(200).send(data);
       }
@@ -92,7 +107,7 @@ router.post(
 
 router.post("/create3", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await Update2(req.body);
+    let data = await Update3(req.body);
     if (data) {
       return res.status(200).send(data);
     }

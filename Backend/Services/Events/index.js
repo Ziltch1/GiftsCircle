@@ -68,7 +68,8 @@ const Create = async (data) => {
   return null;
 };
 
-const Update1 = async (data, image) => {
+
+const Update1 = async (data) => {
   const event = await prisma.event.findUnique({
     where: {
       id: data.id,
@@ -76,25 +77,55 @@ const Update1 = async (data, image) => {
   });
 
   if (event) {
-    await prisma.event.update({
+   let event = await prisma.event.update({
+    where:{
+      id:data.id
+    },
+      data: {
+        title: data.title,
+        category: data.category,
+        venue: data.venue,
+        date: new Date(data.date),
+        start_time: data.start_time,
+        end_time: data.end_time,
+        timezone: data.timezone,
+        host: data.host,
+        created_at: new Date(Date.now()),
+      },
+    });
+
+    await prisma.$disconnect();
+    return event;
+  }
+  return null;
+};
+
+const Update2 = async (data, image) => {
+  const event = await prisma.event.findUnique({
+    where: {
+      id: data.id,
+    },
+  });
+
+  if (event) {
+    let res = await prisma.event.update({
       where: {
         id: data.id,
       },
       data: {
         image: image,
-        descCeleb: data.desc_celeb,
         descSummary: data.desc_summary,
         summary: data.summary,
       },
     });
 
     await prisma.$disconnect();
-    return data;
+    return res;
   }
   return null;
 };
 
-const Update2 = async (data) => {
+const Update3 = async (data) => {
   const event = await prisma.event.findUnique({
     where: {
       id: data.id,
@@ -130,4 +161,4 @@ const DeleteEvent = async (id) => {
   return event;
 };
 
-module.exports = { Create, Update1, Update2, GetEvent, GetAllEvents, GetUserEvents, DeleteEvent };
+module.exports = { Create, Update1, Update2, Update3, GetEvent, GetAllEvents, GetUserEvents, DeleteEvent };

@@ -304,6 +304,31 @@
         }
       }
     },
+    "/events//create": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/Update1" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
 
     "/event/UserEvents/{id}": {
       "get": {
@@ -1072,6 +1097,43 @@
           }
         }
       },
+      "Update1": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "required": true
+          },
+          "category": {
+            "type": "string",
+            "required": true
+          },
+          "venue": {
+            "type": "string",
+            "required": true
+          },
+          "date": {
+            "type": "string",
+            "required": true
+          },
+          "start_time": {
+            "type": "string",
+            "required": true
+          },
+          "end_time": {
+            "type": "string",
+            "required": true
+          },
+          "timezone": {
+            "type": "string",
+            "required": true
+          },
+          "host": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
       "EnableContribution": {
         "type": "object",
         "properties": {
@@ -1115,10 +1177,6 @@
           },
           "image": {
             "type": "object",
-            "required": true
-          },
-          "desc_celeb": {
-            "type": "string",
             "required": true
           },
           "desc_summary": {
