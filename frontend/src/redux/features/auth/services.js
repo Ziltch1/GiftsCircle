@@ -2,7 +2,8 @@ import { GoogleSignInApi, SignInApi } from '../../axios/apis/auth';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 import { dispatch } from '../../store';
 import { createResponse, setWelcomeModal } from '../../utils/UtilSlice';
-import { setToken, setUser } from './authSlice';
+import { setUser } from '../user/userSlice';
+import { setToken} from './authSlice';
 
 const GoogleSignIn = data => async () => {
   try {

@@ -43,7 +43,6 @@ router.delete("/:id", EnsureAuthenticated, async (req, res) => {
       .status(200)
       .send({ msg: `user with id ${req.params.id} deleted successfully` });
   } catch (err) {
-    console.log(err);
     await prisma.$disconnect();
     return res.status(400).send({ msg: "Record not found" });
   }

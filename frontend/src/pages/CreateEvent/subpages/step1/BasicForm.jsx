@@ -14,9 +14,14 @@ import BackButton from '../BackButton';
 import TimezoneSelect from 'react-timezone-select';
 import HostModal from './HostModal';
 import { useSelector } from 'react-redux';
+import { CreateEventApi1 } from '../../../../redux/axios/apis/events';
+import { dispatch } from '../../../../redux/store';
+import { createResponse } from '../../../../redux/utils/UtilSlice';
+import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
+import FormFooter from '../FormFooter';
 
-const BasicForm = () => {
-  const { user } = useSelector(state => state.auth);
+const BasicForm = ({ step, setStep }) => {
+  const { user } = useSelector(state => state.user);
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState('');
   const [hosts, setHosts] = useState('');
@@ -31,7 +36,7 @@ const BasicForm = () => {
     setOpenModal(true);
   };
 
-  const HandleSubmit = () => {
+  const HandleSubmit = async () => {
     const formBody = {
       title,
       host: hosts,
@@ -44,11 +49,17 @@ const BasicForm = () => {
       userId: user.id,
     };
 
-    
+    console.log(formBody)
+    try {
+      const res = await CreateEventApi1(formBody);
+      console.log(res.data);
+    } catch (error) {
+      dispatch(createResponse(ErrorHandler(error)));
+    }
   };
 
   return (
-    <Box mt='10'>
+    <Box mt="10">
       <Box h="100%" overflow="auto" mb="12" w="750px" mx="auto">
         <Flex alignItems="start" justifyContent="space-between">
           <BackButton />
@@ -73,7 +84,7 @@ const BasicForm = () => {
                   fontSize={14}
                   bg="#FAFAFA"
                   color="black"
-                  _placeholder={{ color: '#8C8C8C'}}
+                  _placeholder={{ color: '#8C8C8C' }}
                   onChange={e => setTitle(e.target.value)}
                 />
               </Box>
@@ -227,30 +238,8 @@ const BasicForm = () => {
 
         {openModal && <HostModal setOpenModal={setOpenModal} />}
       </Box>
-      <Box
-        borderTop="1px solid lightgray"
-        py="3"
-        h="65px"
-        position="fixed"
-        bottom="0"
-        w="100%"
-        bgColor="#FFF"
-      >
-        <Box textAlign="right" mr="5">
-          <Button mr="5" fontSize={12} fontWeight="semibold" bg="#EEEEEE">
-            Discard
-          </Button>
-          <Button
-            bg="#00BFB2"
-            fontSize={12}
-            fontWeight="semibold"
-            color="white"
-            onClick={() => HandleSubmit()}
-          >
-            Save and continue
-          </Button>
-        </Box>
-      </Box>
+
+      <FormFooter action={HandleSubmit} step={step}/>
     </Box>
   );
 };

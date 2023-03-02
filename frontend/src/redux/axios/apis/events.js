@@ -8,4 +8,8 @@ const GetEventGiftsApi = eventId => {
   return api.get(`gift/Get/EventGifts/${eventId}`);
 };
 
-export { GetUserEventsApi, GetEventGiftsApi };
+const CreateEventApi1 = data => {
+  return api.post(`/event/create`, data);
+};
+
+export { GetUserEventsApi, GetEventGiftsApi, CreateEventApi1 };

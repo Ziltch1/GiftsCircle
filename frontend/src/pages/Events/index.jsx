@@ -10,30 +10,14 @@ import { GetUserEvents } from '../../redux/features/events/service';
 import EventItem from './components/EventItem';
 
 const Events = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const user = useSelector(state => state.auth.user);
-  const { events } = useSelector(state => state.event);
+  const { user } = useSelector(state => state.user);
+  const { events, loading } = useSelector(state => state.event);
 
   useEffect(() => {
     if (user) {
       dispatch(GetUserEvents(user.id));
     }
   }, [user]);
-
-  useEffect(() => {
-    if (events) {
-      if (events.length > 0) {
-        setData(events);
-      }
-    }
-  }, [events]);
-
-  useEffect(() => {
-    if (data) {
-      setLoading(false);
-    }
-  }, [data]);
 
   return (
     <Box bg="#F5F5F5" h="100%" pb="8">
@@ -51,7 +35,7 @@ const Events = () => {
             </Stack>
           ) : (
             <>
-              {data.length === 0 ? (
+              {events.length === 0 ? (
                 <Box>
                   <Text fontSize={30} fontWeight="medium" mb="3">
                     Create your first event
@@ -63,7 +47,7 @@ const Events = () => {
                 </Box>
               ) : (
                 <Box>
-                  {data.map(event => (
+                  {events.map(event => (
                     <EventItem
                       key={event.id}
                       id={event.id}

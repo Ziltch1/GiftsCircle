@@ -38,7 +38,7 @@ const Create = async (data) => {
   });
 
   if (user) {
-    await prisma.event.create({
+   let event = await prisma.event.create({
       data: {
         id: CreateEventId(),
         title: data.title,
@@ -63,7 +63,7 @@ const Create = async (data) => {
     });
 
     await prisma.$disconnect();
-    return data;
+    return event;
   }
   return null;
 };
