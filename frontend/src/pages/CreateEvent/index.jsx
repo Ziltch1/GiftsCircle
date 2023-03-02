@@ -11,14 +11,14 @@ import SummaryForm from './subpages/step5/SummaryForm';
 import Stepper from './subpages/Stepper';
 
 const Index = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   return (
     <Box py="4">
       <FormHeader step={step} />
       <Stepper step={step} />
       <Box>
         {step === 1 && <BasicForm step={step} setStep={setStep} />}
-        {step === 2 && <EventImageForm step={step}/>}
+        {step === 2 && <EventImageForm step={step} setStep={setStep}/>}
         {step === 3 && <AddGiftForm />}
         {step === 4 && <DeliveryDetailsForm />}
         {step === 5 && <SummaryForm />}

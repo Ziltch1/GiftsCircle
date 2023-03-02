@@ -12,6 +12,10 @@ const CreateEventApi1 = data => {
   return api.post(`/event/create`, data);
 };
 
+const UpdateEventApi1 = data => {
+  return api.put(`/event/create`, data);
+};
+
 const CreateEventApi2 = data => {
   return api.post(`/event/create2`, data);
 };
@@ -24,6 +28,7 @@ export {
   GetUserEventsApi,
   GetEventGiftsApi,
   CreateEventApi1,
+  UpdateEventApi1,
   CreateEventApi2,
   DeleteEventApi,
 };
