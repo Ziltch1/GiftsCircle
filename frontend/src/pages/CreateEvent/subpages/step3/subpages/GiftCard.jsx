@@ -1,7 +1,6 @@
 import { Box, Image, Button, Text, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import giftImage from '../../../../assets/gift.svg';
 import GiftDetails from './GiftDetails';
 import axios from 'axios'
 import { AddGiftApi } from '../../../../../redux/axios/apis/events';
