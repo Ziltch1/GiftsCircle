@@ -3,7 +3,7 @@ import { Box, Heading, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const FormHeader = () => {
+const FormHeader = ({step}) => {
   const navigate = useNavigate();
   return (
     <Box w="80%" mx="auto" mb="3">
@@ -21,7 +21,7 @@ const FormHeader = () => {
           </Flex>
         </Box>
 
-        <Box fontSize={14}>Step 1/6 - Basic Info</Box>
+        <Box fontSize={14}>Step {step}/6 - Basic Info</Box>
       </Flex>
     </Box>
   );

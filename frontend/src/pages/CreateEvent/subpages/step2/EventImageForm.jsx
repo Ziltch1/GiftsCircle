@@ -1,50 +1,83 @@
-import {
-  Box,
-  Input,
-  FormLabel,
-  Text,
-  Heading,
-  Flex,
-  FormControl,
-  Image,
-  Textarea,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
-import BackButton from '../BackButton';
-import galleryImage from '../../../../components/assets/gallery.svg';
-import FormFooter from '../FormFooter';
+import { Box, Input, FormLabel, Text, Heading, Flex, FormControl, Image, Textarea, Progress, Spinner, useToast } from '@chakra-ui/react'
+import React, {useState, useEffect} from 'react'
+import BackButton from '../BackButton'
+import galleryImage from '../../../../components/assets/gallery.svg'
+import FormFooter from '../FormFooter'
+import { useSelector } from 'react-redux';
+import { CreateEventApi2 } from '../../../../redux/axios/apis/events';
+import axiosInstance from '../../../../redux/axios/axios';
 import { dispatch } from '../../../../redux/store';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
-import axiosInstance from '../../../../redux/axios/axios';
+import SuccessImg from '../../../assets/success.svg'
+import finalImg from '../../../assets/newSuccess.svg'
 
-const EventImageForm = ({ step, setStep }) => {
-  const [image, setImage] = useState(null);
+const EventImageForm = ({step, setStep}) => {
+  const { newEvent } = useSelector(state => state.event);
+  const [image, setImage] = useState('');
   const [summary, setSummary] = useState('');
-  const [descSummary, setDescSummary] = useState('');
+  const [description, setDescription] = useState('');
+  const [progress, setProgress] = useState(0)
+  const [uploading, setUploading] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(false);
+  const toast = useToast()
 
-  const HandleSubmit = async () => {
+  const uploadImage = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const progress = (event.loaded / event.total) * 100;
+        setProgress(progress);
+      }
+      setUploading(true)
+    };
+
+    // setIsUploaded(true)
+    reader.readAsDataURL(file);
+    setImage(e.target.files[0])
+    const timer = setTimeout(() => {
+      setIsUploaded(true)
+    }, 2000);
+    return () => clearTimeout(timer);
+  }
+
+  const handleSubmit = async () => {
     const formBody = new FormData();
     formBody.append('summary', summary);
-    formBody.append('desc_summary', descSummary);
+    formBody.append('desc_summary', description);
     formBody.append('id', '968008552534');
     formBody.append('image', image);
 
-    try {
-      const res = await axiosInstance.post('/event/create2', formBody, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+    if(image && summary && description){
+      try {
+        const res = await axiosInstance.post('/event/create2', formBody, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        localStorage.setItem('newEvent', JSON.stringify(res.data));
+        dispatch(setNewEvent(res.data));
+        setStep(step + 1);
+      } catch (error) {
+        dispatch(createResponse(ErrorHandler(error)));
+      }
+    }else{
+      toast({
+        title: 'Error!',
+        description: "Please fill all fields",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top'
       });
-      localStorage.setItem('newEvent', JSON.stringify(res.data));
-      dispatch(setNewEvent(res.data));
-      setStep(step + 1);
-    } catch (error) {
-      dispatch(createResponse(ErrorHandler(error)));
     }
-  };
+  }
+
 
   return (
     <>
+    
       <Box mt="8" h="100%" overflow="auto" mb="20" maxW="750px" mx="auto">
         <Flex alignItems="start" justifyContent="space-between" flexWrap="wrap">
           <BackButton onClick={() => setStep(step - 1)} />
@@ -58,90 +91,70 @@ const EventImageForm = ({ step, setStep }) => {
                 listing.
               </Text>
             </Box>
-
-            <FormControl>
-              <Box mb="8">
-                <FormLabel
-                  htmlFor="upload"
-                  w="500px"
-                  h="250px"
-                  bg="#FAFAFA"
-                  border="1.5px solid lightgray"
-                  borderRadius={5}
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Input
-                    type="file"
-                    id="upload"
-                    display="none"
-                    onChange={e => setImage(e.target.files[0])}
-                  />
-                  <Box textAlign="center" w="318px">
-                    <Image
-                      src={galleryImage}
-                      alt="event image"
-                      display="block"
-                      mx="auto"
-                    />
-                    <Text fontWeight="semibold" fontSize={13.5}>
-                      Drag and drop your file here or{' '}
-                      <strong style={{ color: '#00BFB2' }}>browse.</strong>
-                      <br />
-                      Maximum of 25mb
-                    </Text>
+          <FormControl >
+            <Box mb='8'>
+              <FormLabel mb='5' htmlFor='upload' w='500px' position='relative' h='260px' bg='#FAFAFA' border='1.5px solid lightgray' borderRadius={5} display='flex' justifyContent='center' alignItems='center'>
+                <Input type='file' id='upload' display='none' onChange={uploadImage} />
+                { !isUploaded ?
+                <Box>
+                  {!uploading ?
+                  <Box w='318px' mx='auto' display='flex' justifyContent='center' alignItems='center' mb='5'>
+                    <Box>
+                      <Image src={galleryImage} alt='event image' display='block' mx='auto' />
+                      <Text fontWeight='semibold' fontSize={13}>
+                        Drag and drop your file here or <strong style={{ color: '#00BFB2' }}>browse.</strong><br />
+                        Maximum of 25mb
+                      </Text> 
+                    </Box>
                   </Box>
-                </FormLabel>
-              </Box>
-
-              <Box>
-                <Box mb="5">
-                  <Heading mb="2" fontSize="25px">
-                    Description
-                  </Heading>
-                  <Text color="#717171">
-                    Add more details to your event like your schedule, sponsors,
-                    or featured guest
-                  </Text>
+                    :
+                  <Box textAlign='center'>
+                     <Box mb='4'>
+                        {progress === 100 ? 
+                            (
+                            <Image src={SuccessImg}  />
+                            )
+                            :
+                            (<Spinner
+                              thickness='4px'
+                              speed='0.65s'
+                              emptyColor='gray.200'
+                              color='#00BFB2'
+                              size='xl'
+                            />)
+                        }
+                     </Box>
+                  <Text fontSize={13} textAlign='center'>{progress === 100 ? 'Completed...' : 'Uploading your file...'} {progress}%</Text>
+                  <Progress width='500px' height='4px' value={progress} position='absolute' bottom='0' left='0px' colorScheme='teal' />
+                  </Box>  
+                  }
                 </Box>
-
-                <Box mb="7">
-                  <FormLabel fontWeight="semibold" fontSize={14}>
-                    Summary of event
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    placeholder="Write summary of your description here"
-                    color="black"
-                    _placeholder={{ color: '#8C8C8C' }}
-                    fontSize={14}
-                    bg="#FAFAFA"
-                    value={summary}
-                    onChange={e => setSummary(e.target.value)}
-                  />
+                :
+                <Box textAlign='center'>
+                  <Image src={finalImg} diaplay='block' mx='auto' h='120px' mb='-20px' />
+                  <Text mb='3'>{image.name}</Text>
+                      <FormLabel bg='#00BFB2' w='190px' h='40px' borderRadius={5} fontSize='14px' htmlFor='upload' color='white' textAlign='center' display='flex' justifyContent='center' alignItems='center'>
+                        <Text>Replace image</Text>
+                      </FormLabel>
                 </Box>
+                }
+              </FormLabel>
 
-                <FormLabel fontWeight="semibold" fontSize={14}>
-                  Description of event/Celebrant
-                </FormLabel>
-                <Textarea
-                  h="200px"
-                  resize="none"
-                  bg="#FAFAFA"
-                  placeholder="Write about your event here"
-                  fontSize={14}
-                  value={descSummary}
-                  onChange={e => setDescSummary(e.target.value)}
-                />
-              </Box>
-            </FormControl>
-          </Box>
-        </Flex>
-      </Box>
-      <FormFooter action={HandleSubmit} step={step} />
+             <Box mb='7'>
+              <FormLabel fontWeight='semibold' fontSize={14}>Summary of event</FormLabel>
+              <Input type='text' value={summary} onChange={(e) => setSummary(e.target.value)} placeholder='Write summary of your desctiption here' color='black' _placeholder={{color: '#8C8C8C'}} fontSize={14} bg='#FAFAFA' />
+             </Box>
+
+              <FormLabel fontWeight='semibold' fontSize={14}>Description of event/Celebrant</FormLabel>
+              <Textarea h='200px' value={description} onChange={(e) => setDescription(e.target.value)} resize='none' bg='#FAFAFA' placeholder='Write about your event here' fontSize={14} />
+            </Box>
+          </FormControl>
+        </Box>
+      </Flex>
+    </Box>
+      <FormFooter action={handleSubmit} step={step} />
     </>
-  );
-};
+  )
+}
 
-export default EventImageForm;
+export default EventImageForm

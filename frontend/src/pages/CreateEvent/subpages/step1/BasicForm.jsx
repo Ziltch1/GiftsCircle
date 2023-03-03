@@ -8,6 +8,7 @@ import {
   Text,
   Select,
   Button,
+  FormErrorMessage, FormHelperText, useToast
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import BackButton from '../BackButton';
@@ -38,52 +39,84 @@ const BasicForm = ({ step, setStep }) => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [selectedTimezone, setSelectedTimezone] = useState({});
+  const toast = useToast()
 
   const showModal = () => {
     setOpenModal(true);
   };
 
-  const HandleSubmit = async () => {
-    const formBody = {
-      title,
-      host: hosts,
-      category,
-      venue,
-      date,
-      start_time: startTime,
-      end_time: endTime,
-      timezone: selectedTimezone.label,
-      userId: user.id,
-    };
+  const HandleSubmit = async (e) => {
+    if(title && hosts && category && venue && date && startTime && endTime && selectedTimezone){
+       const formBody = {
+        title,
+        host: hosts,
+        category,
+        venue,
+        date,
+        start_time: startTime,
+        end_time: endTime,
+        timezone: selectedTimezone.label,
+        userId: user.id,
+      };
 
-    const UpdateForm = {
-      id: newEvent.id,
-      title: title === '' ? newEvent.title : title,
-      host: hosts === '' ? newEvent.hosts : hosts,
-      category: category === '' ? newEvent.category : category,
-      venue: venue === '' ? newEvent.venue : venue,
-      date: date === '' ? newEvent.date : date,
-      start_time: startTime === '' ? newEvent.start_time : startTime,
-      end_time: endTime === '' ? newEvent.end_time : endTime,
-      timezone: selectedTimezone.label,
-    };
-
-    try {
-      if (newEvent) {
-        const res = await UpdateEventApi1(UpdateForm);
-        localStorage.setItem('newEvent', JSON.stringify(res.data));
-        dispatch(setNewEvent(res.data));
-        setStep(step + 1);
-      } else {
-        const res = await CreateEventApi1(formBody);
-        localStorage.setItem('newEvent', JSON.stringify(res.data));
-        dispatch(setNewEvent(res.data));
-        setStep(step + 1);
+      try {
+        // if (newEvent) {
+          const res = await CreateEventApi1(formBody);
+          localStorage.setItem('newEvent', JSON.stringify(res.data));
+          dispatch(setNewEvent(res.data));
+          setStep(step + 1);
+          // const res = await UpdateEventApi1(UpdateForm);
+          // localStorage.setItem('newEvent', JSON.stringify(res.data));
+          // dispatch(setNewEvent(res.data));
+          // setStep(step + 1);
+        // } else {
+          // const res = await CreateEventApi1(formBody);
+          // localStorage.setItem('newEvent', JSON.stringify(res.data));
+          // dispatch(setNewEvent(res.data));
+          // setStep(step + 1);
+        // }
+      } catch (error) {
+        dispatch(createResponse(ErrorHandler(error)));
       }
-    } catch (error) {
-      dispatch(createResponse(ErrorHandler(error)));
-    }
-  };
+
+      // const UpdateForm = {
+      //   id: newEvent.id,
+      //   title: title === '' ? newEvent.title : title,
+      //   host: hosts === '' ? newEvent.hosts : hosts,
+      //   category: category === '' ? newEvent.category : category,
+      //   venue: venue === '' ? newEvent.venue : venue,
+      //   date: date === '' ? newEvent.date : date,
+      //   start_time: startTime === '' ? newEvent.start_time : startTime,
+      //   end_time: endTime === '' ? newEvent.end_time : endTime,
+      //   timezone: selectedTimezone.label,
+      // };
+
+      // try {
+      //   if (newEvent) {
+      //     const res = await UpdateEventApi1(UpdateForm);
+      //     localStorage.setItem('newEvent', JSON.stringify(res.data));
+      //     dispatch(setNewEvent(res.data));
+      //     setStep(step + 1);
+      //   } else {
+      //     const res = await CreateEventApi1(formBody);
+      //     localStorage.setItem('newEvent', JSON.stringify(res.data));
+      //     dispatch(setNewEvent(res.data));
+      //     setStep(step + 1);
+      //   }
+      // } catch (error) {
+      //   dispatch(createResponse(ErrorHandler(error)));
+      // }
+    }else{
+      toast({
+        title: 'Error!',
+        description: "Please fill all fields",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top'
+      }) 
+    };
+  }
 
   const BackAction = () => {
     navigate('/dashboard');
@@ -104,7 +137,7 @@ const BasicForm = ({ step, setStep }) => {
                 details that highlight what makes it unique.
               </Text>
             </Box>
-            <FormControl>
+            <FormControl isRequired>
               <Box mb="5">
                 <FormLabel fontWeight="semibold" fontSize={13.5}>
                   Event title
@@ -121,9 +154,12 @@ const BasicForm = ({ step, setStep }) => {
                   _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setTitle(e.target.value)}
                 />
+                {/* {!isError ? '' : (
+                  <FormErrorMessage>Email is required.</FormErrorMessage>
+                )} */}
               </Box>
 
-              <Box mb="3">
+              <Box mb="5">
                 <FormLabel fontWeight="semibold" fontSize={13.5}>
                   Who is hosting the event?
                 </FormLabel>
@@ -139,18 +175,6 @@ const BasicForm = ({ step, setStep }) => {
                   _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setHosts(e.target.value)}
                 />
-                <Text fontWeight="semibold" fontSize={11}>
-                  Have more than one host?
-                  <Button
-                    bg="none"
-                    _hover={{ bg: 'none' }}
-                    color="#4ae"
-                    fontSize={11}
-                    onClick={showModal}
-                  >
-                    Add multiple hosts
-                  </Button>
-                </Text>
               </Box>
 
               <Box mb="8">

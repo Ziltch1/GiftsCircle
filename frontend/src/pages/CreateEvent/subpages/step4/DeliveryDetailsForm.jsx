@@ -1,6 +1,7 @@
 import { Box, Flex, Text, Heading, Input, FormControl, FormLabel } from '@chakra-ui/react'
 import React, {useState} from 'react'
 import BackButton from '../BackButton'
+import axios from 'axios';
 
 const DeliveryDetailsForm = () => {
   const [address, setAddress] = useState('')
@@ -24,7 +25,7 @@ const DeliveryDetailsForm = () => {
           </Box>
 
           <Box>
-            <FormControl>
+            <FormControl isRequired>
               <Box mb='6'>
                 <FormLabel fontWeight='semibold' fontSize={15}>Address</FormLabel>
                 <Input type='text' value={address} onChange={(e) => setAddress(e.target.value)}  />
