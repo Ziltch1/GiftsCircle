@@ -1,14 +1,26 @@
 import { Box, Image, Button, Text, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import giftImage from '../../../../assets/gift.svg';
 import GiftDetails from './GiftDetails';
 
-const GiftCard = ({ openGiftDetails, setOpenGiftDetails }) => {
+const GiftCard = ({ openGiftDetails, setOpenGiftDetails, AddGift }) => {
   const { giftItems } = useSelector(state => state.gift);
-  const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const { newEvent } = useSelector(state => state.event);
+  const { user } = useSelector(state => state.user);
   const openDrawer = () => {
     setOpenGiftDetails(true);
+  };
+
+  const HandleSubmit = id => {
+    const giftModel = {
+      eventId: newEvent.id,
+      userId: user.id,
+      quantity: 0,
+      giftItemId: id,
+      complimentaryGift: '',
+    };
+
+    AddGift(giftModel);
   };
 
   return (
@@ -53,6 +65,7 @@ const GiftCard = ({ openGiftDetails, setOpenGiftDetails }) => {
                 color="white"
                 w="129px"
                 h="40px"
+                onClick={() => HandleSubmit(gift.id)}
               >
                 Add to list
               </Button>

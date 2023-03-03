@@ -23,7 +23,7 @@ const Index = () => {
       <Box>
         {step === 1 && <BasicForm step={step} setStep={setStep} />}
         {step === 2 && <EventImageForm step={step} setStep={setStep} />}
-        {step === 3 && <AddGiftForm />}
+        {step === 3 && <AddGiftForm step={step}/>}
         {step === 4 && <DeliveryDetailsForm />}
         {step === 5 && <SummaryForm />}
       </Box>
