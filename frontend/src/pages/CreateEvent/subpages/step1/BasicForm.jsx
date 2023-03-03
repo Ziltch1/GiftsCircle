@@ -24,7 +24,6 @@ import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import FormFooter from '../FormFooter';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { useNavigate } from 'react-router-dom';
-import { DeleteEvent } from '../../../../redux/features/events/service';
 
 const BasicForm = ({ step, setStep }) => {
   const navigate = useNavigate();
