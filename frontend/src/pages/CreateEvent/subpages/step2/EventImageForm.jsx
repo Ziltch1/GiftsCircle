@@ -1,10 +1,11 @@
-import { Box, Input, FormLabel, Text, Heading, Flex, FormControl, Image, Textarea, Progress, Spinner } from '@chakra-ui/react'
+import { Box, Input, FormLabel, Text, Heading, Flex, FormControl, Image, Textarea, Progress, Spinner, useToast } from '@chakra-ui/react'
 import React, {useState, useEffect} from 'react'
 import BackButton from '../BackButton'
 import galleryImage from '../../../../components/assets/gallery.svg'
 import FormFooter from '../FormFooter'
 import { useSelector } from 'react-redux';
 import { CreateEventApi2 } from '../../../../redux/axios/apis/events';
+import axiosInstance from '../../../../redux/axios/axios';
 import { dispatch } from '../../../../redux/store';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
@@ -19,35 +20,8 @@ const EventImageForm = ({step, setStep}) => {
   const [description, setDescription] = useState('');
   const [progress, setProgress] = useState(0)
   const [uploading, setUploading] = useState(false);
-  const [isUploaded, setIsUploaded] = useState(false)
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsUploaded(true)
-  //   }, 2500);
-  //   return () => clearTimeout(timer);
-  // }, []);
-
-  const handleSubmit = async () => {
-    const formBody = {
-      image,
-      summary,
-      desc_summary: description,
-      id: newEvent.id,
-    };
-
-    if(image && summary && description){
-      try {
-        const res = await CreateEventApi2(formBody);
-        localStorage.setItem('newEvent', JSON.stringify(res.data));
-        dispatch(setNewEvent(res.data));
-        setStep(step + 1);
-      } catch (error) {
-        dispatch(createResponse(ErrorHandler(error)));
-      }
-    }    
-  }
-
+  const [isUploaded, setIsUploaded] = useState(false);
+  const toast = useToast()
 
   const uploadImage = (e) => {
     const file = e.target.files[0];
@@ -69,6 +43,37 @@ const EventImageForm = ({step, setStep}) => {
     }, 2000);
     return () => clearTimeout(timer);
   }
+
+  const handleSubmit = async () => {
+    const formBody = new FormData();
+    formBody.append('summary', summary);
+    formBody.append('desc_summary', description);
+    formBody.append('id', '968008552534');
+    formBody.append('image', image);
+
+    if(image && summary && description){
+      try {
+        const res = await axiosInstance.post('/event/create2', formBody, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        localStorage.setItem('newEvent', JSON.stringify(res.data));
+        dispatch(setNewEvent(res.data));
+        setStep(step + 1);
+      } catch (error) {
+        dispatch(createResponse(ErrorHandler(error)));
+      }
+    }else{
+      toast({
+        title: 'Error!',
+        description: "Please fill all fields",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top'
+      });
+    }
+  }
+
 
   return (
     <>
@@ -137,7 +142,7 @@ const EventImageForm = ({step, setStep}) => {
 
              <Box mb='7'>
               <FormLabel fontWeight='semibold' fontSize={14}>Summary of event</FormLabel>
-              <Input type='text' value={summary} onChnage={(e) => setSummary(e.target.value)} placeholder='Write summary of your desctiption here' color='black' _placeholder={{color: '#8C8C8C'}} fontSize={14} bg='#FAFAFA' />
+              <Input type='text' value={summary} onChange={(e) => setSummary(e.target.value)} placeholder='Write summary of your desctiption here' color='black' _placeholder={{color: '#8C8C8C'}} fontSize={14} bg='#FAFAFA' />
              </Box>
 
               <FormLabel fontWeight='semibold' fontSize={14}>Description of event/Celebrant</FormLabel>
