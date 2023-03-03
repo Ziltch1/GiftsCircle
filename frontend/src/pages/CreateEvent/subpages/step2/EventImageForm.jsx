@@ -91,7 +91,7 @@ const EventImageForm = ({step, setStep}) => {
                 listing.
               </Text>
             </Box>
-          <FormControl isRequired>
+          <FormControl >
             <Box mb='8'>
               <FormLabel mb='5' htmlFor='upload' w='500px' position='relative' h='260px' bg='#FAFAFA' border='1.5px solid lightgray' borderRadius={5} display='flex' justifyContent='center' alignItems='center'>
                 <Input type='file' id='upload' display='none' onChange={uploadImage} />
