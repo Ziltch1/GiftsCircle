@@ -27,23 +27,18 @@ const Events = () => {
         <Tabs />
         <Search />
         <Box textAlign={'center'} mt="20px">
-          {loading ? (
-            <Stack spacing="20px">
-              <Skeleton height="50px" width="100%" />
-              <Skeleton height="50px" width="75%" />
-              <Skeleton height="50px" width="50%" />
-            </Stack>
-          ) : (
             <>
               {events.length === 0 ? (
-                <Box>
-                  <Text fontSize={30} fontWeight="medium" mb="3">
+                <Box minH={300} display='flex' alignItems='center' justifyContent='center'>
+                 <Box>
+                   <Text fontSize={30} fontWeight="medium" mb="3">
                     Create your first event
                   </Text>
                   <Text fontSize={14} mb="3">
                     Don’t waste time, click the button at right corner to <br />{' '}
                     create your event attatch your gift list
                   </Text>
+                 </Box>
                 </Box>
               ) : (
                 <Box>
@@ -61,7 +56,7 @@ const Events = () => {
                 </Box>
               )}
             </>
-          )}
+          
         </Box>
       </Box>
     </Box>

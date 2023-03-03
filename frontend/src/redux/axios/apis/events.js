@@ -24,6 +24,10 @@ const DeleteEventApi = id => {
   return api.delete(`/event/${id}`);
 };
 
+const AddGiftApi = data => {
+  return api.post(`/gift/create`, data);
+}
+
 export {
   GetUserEventsApi,
   GetEventGiftsApi,
@@ -31,4 +35,5 @@ export {
   UpdateEventApi1,
   CreateEventApi2,
   DeleteEventApi,
+  AddGiftApi,
 };
