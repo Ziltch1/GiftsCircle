@@ -13,31 +13,28 @@ import React, { useState } from 'react';
 import BackButton from '../BackButton';
 import galleryImage from '../../../../components/assets/gallery.svg';
 import FormFooter from '../FormFooter';
-import { useSelector } from 'react-redux';
-import { CreateEventApi2 } from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
+import axiosInstance from '../../../../redux/axios/axios';
 
 const EventImageForm = ({ step, setStep }) => {
-  const { newEvent } = useSelector(state => state.event);
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState(null);
   const [summary, setSummary] = useState('');
   const [descSummary, setDescSummary] = useState('');
-  
 
   const HandleSubmit = async () => {
-    const formBody = {
-      image,
-      summary,
-      desc_summary: descSummary,
-      id: newEvent.id,
-    };
+    const formBody = new FormData();
+    formBody.append('summary', summary);
+    formBody.append('desc_summary', descSummary);
+    formBody.append('id', '968008552534');
+    formBody.append('image', image);
 
     try {
-
-      const res = await CreateEventApi2(formBody);
+      const res = await axiosInstance.post('/event/create2', formBody, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       localStorage.setItem('newEvent', JSON.stringify(res.data));
       dispatch(setNewEvent(res.data));
       setStep(step + 1);
@@ -45,7 +42,6 @@ const EventImageForm = ({ step, setStep }) => {
       dispatch(createResponse(ErrorHandler(error)));
     }
   };
-
 
   return (
     <>
