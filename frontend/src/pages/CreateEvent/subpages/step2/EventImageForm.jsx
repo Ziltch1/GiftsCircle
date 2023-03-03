@@ -1,5 +1,5 @@
-import { Box, Input, FormLabel, Text, Heading, Flex, FormControl, Image, Textarea, Progress } from '@chakra-ui/react'
-import React, {useState} from 'react'
+import { Box, Input, FormLabel, Text, Heading, Flex, FormControl, Image, Textarea, Progress, Spinner } from '@chakra-ui/react'
+import React, {useState, useEffect} from 'react'
 import BackButton from '../BackButton'
 import galleryImage from '../../../../components/assets/gallery.svg'
 import FormFooter from '../FormFooter'
@@ -9,6 +9,8 @@ import { dispatch } from '../../../../redux/store';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
+import SuccessImg from '../../../assets/success.svg'
+import finalImg from '../../../assets/newSuccess.svg'
 
 const EventImageForm = ({step, setStep}) => {
   const { newEvent } = useSelector(state => state.event);
@@ -16,7 +18,15 @@ const EventImageForm = ({step, setStep}) => {
   const [summary, setSummary] = useState('');
   const [description, setDescription] = useState('');
   const [progress, setProgress] = useState(0)
-  const [uploading, setUploading] = useState(false)
+  const [uploading, setUploading] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(false)
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsUploaded(true)
+  //   }, 2500);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   const handleSubmit = async () => {
     const formBody = {
@@ -26,14 +36,16 @@ const EventImageForm = ({step, setStep}) => {
       id: newEvent.id,
     };
 
-    try {
-      const res = await CreateEventApi2(formBody);
-      localStorage.setItem('newEvent', JSON.stringify(res.data));
-      dispatch(setNewEvent(res.data));
-      setStep(step + 1);
-    } catch (error) {
-      dispatch(createResponse(ErrorHandler(error)));
-    }
+    if(image && summary && description){
+      try {
+        const res = await CreateEventApi2(formBody);
+        localStorage.setItem('newEvent', JSON.stringify(res.data));
+        dispatch(setNewEvent(res.data));
+        setStep(step + 1);
+      } catch (error) {
+        dispatch(createResponse(ErrorHandler(error)));
+      }
+    }    
   }
 
 
@@ -49,11 +61,17 @@ const EventImageForm = ({step, setStep}) => {
       setUploading(true)
     };
 
+    // setIsUploaded(true)
     reader.readAsDataURL(file);
     setImage(e.target.files[0])
+    const timer = setTimeout(() => {
+      setIsUploaded(true)
+    }, 2000);
+    return () => clearTimeout(timer);
   }
 
   return (
+    <>
     
       <Box mt="8" h="100%" overflow="auto" mb="20" maxW="750px" mx="auto">
         <Flex alignItems="start" justifyContent="space-between" flexWrap="wrap">
@@ -68,12 +86,13 @@ const EventImageForm = ({step, setStep}) => {
                 listing.
               </Text>
             </Box>
-          <FormControl>
+          <FormControl isRequired>
             <Box mb='8'>
-              <FormLabel htmlFor='upload' w='500px' position='relative' h='260px' bg='#FAFAFA' border='1.5px solid lightgray' borderRadius={5} display='flex' justifyContent='center' alignItems='center'>
+              <FormLabel mb='5' htmlFor='upload' w='500px' position='relative' h='260px' bg='#FAFAFA' border='1.5px solid lightgray' borderRadius={5} display='flex' justifyContent='center' alignItems='center'>
                 <Input type='file' id='upload' display='none' onChange={uploadImage} />
+                { !isUploaded ?
                 <Box>
-
+                  {!uploading ?
                   <Box w='318px' mx='auto' display='flex' justifyContent='center' alignItems='center' mb='5'>
                     <Box>
                       <Image src={galleryImage} alt='event image' display='block' mx='auto' />
@@ -83,10 +102,37 @@ const EventImageForm = ({step, setStep}) => {
                       </Text> 
                     </Box>
                   </Box>
-
-                  <Text fontSize={13} textAlign='center'>Uploading your file... {progress}%</Text>
+                    :
+                  <Box textAlign='center'>
+                     <Box mb='4'>
+                        {progress === 100 ? 
+                            (
+                            <Image src={SuccessImg}  />
+                            )
+                            :
+                            (<Spinner
+                              thickness='4px'
+                              speed='0.65s'
+                              emptyColor='gray.200'
+                              color='#00BFB2'
+                              size='xl'
+                            />)
+                        }
+                     </Box>
+                  <Text fontSize={13} textAlign='center'>{progress === 100 ? 'Completed...' : 'Uploading your file...'} {progress}%</Text>
                   <Progress width='500px' height='4px' value={progress} position='absolute' bottom='0' left='0px' colorScheme='teal' />
+                  </Box>  
+                  }
                 </Box>
+                :
+                <Box textAlign='center'>
+                  <Image src={finalImg} diaplay='block' mx='auto' h='120px' mb='-20px' />
+                  <Text mb='3'>{image.name}</Text>
+                      <FormLabel bg='#00BFB2' w='190px' h='40px' borderRadius={5} fontSize='14px' htmlFor='upload' color='white' textAlign='center' display='flex' justifyContent='center' alignItems='center'>
+                        <Text>Replace image</Text>
+                      </FormLabel>
+                </Box>
+                }
               </FormLabel>
 
              <Box mb='7'>
@@ -100,8 +146,9 @@ const EventImageForm = ({step, setStep}) => {
           </FormControl>
         </Box>
       </Flex>
-      <FormFooter action={handleSubmit} step={step} />
     </Box>
+      <FormFooter action={handleSubmit} step={step} />
+    </>
   )
 }
 
