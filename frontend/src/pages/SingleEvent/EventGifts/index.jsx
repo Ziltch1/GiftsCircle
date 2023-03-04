@@ -31,7 +31,7 @@ const Index = ({ newEvent }) => {
       <GiftHeader navPosition={navPosition} setNavPosition={setNavPosition} />
       <Box>
         {navPosition === 0 && <PurchaseHistory />}
-        {navPosition === 1 && <GiftLists />}
+        {navPosition === 1 && <GiftLists data={data}/>}
       </Box>
     </Box>
   );

@@ -5,20 +5,29 @@ import GiftHeader from './GiftHeader';
 import Search from './Search';
 import GiftCard from './subpages/GiftCard';
 import FormFooter from '../FormFooter';
+import { CreateManyGiftsApi } from '../../../../redux/axios/apis/gift';
+import { dispatch } from '../../../../redux/store';
+import { GetEventGifts } from '../../../../redux/features/events/service';
+import { useSelector } from 'react-redux';
 
-const Index = ({ step }) => {
+const Index = ({ step, setStep }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const [giftItems, setGiftItems] = useState([]);
+  const [addedGiftItems, setAddedGiftItems] = useState([]);
+  const { newEvent } = useSelector(state => state.event);
 
-  const AddGifts = data => {
-    setGiftItems(prev => [...prev, data]);
+  const HandleSubmit = async () => {
+    try {
+      const res = await CreateManyGiftsApi(giftItems);
+      console.log(res.data);
+      dispatch(GetEventGifts('530077123982'));
+      setStep(step + 1);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const HandleSubmit = () => {
-    console.log(giftItems);
-  };
-  console.log(giftItems)
+  console.log(giftItems, addedGiftItems);
   return (
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">
@@ -28,7 +37,9 @@ const Index = ({ step }) => {
         <GiftCard
           openGiftDetails={openGiftDetails}
           setOpenGiftDetails={setOpenGiftDetails}
-          AddGift={AddGifts}
+          setGiftItems={setGiftItems}
+          setAddedGiftItems={setAddedGiftItems}
+          addedGiftItems={addedGiftItems}
         />
       </Box>
       <FormFooter action={HandleSubmit} step={step} />

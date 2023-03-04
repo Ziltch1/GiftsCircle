@@ -1,4 +1,8 @@
-import { DeleteEventApi, GetUserEventsApi } from '../../axios/apis/events';
+import {
+  DeleteEventApi,
+  GetEventGiftsApi,
+  GetUserEventsApi,
+} from '../../axios/apis/events';
 import { dispatch } from '../../store';
 import { createResponse } from '../../utils/UtilSlice';
 import {
@@ -24,8 +28,8 @@ const GetUserEvents = id => async () => {
 
 const GetEventGifts = id => async () => {
   try {
-    const res = await GetEventGifts(id);
-
+    const res = await GetEventGiftsApi(id);
+    console.log(res.data)
     dispatch(setEventGifts(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));

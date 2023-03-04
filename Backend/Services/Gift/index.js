@@ -53,6 +53,10 @@ const Create = async (data) => {
 const CreateMany = async (data) => {
   data.forEach((element) => {
     element.id = uuidv4();
+    element.enableContribution = false,
+    element.purchased = false,
+    element.status = "UnPaid",
+    element.amountPaid = 0
     return element;
   });
   await prisma.gift.createMany({

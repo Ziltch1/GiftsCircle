@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  giftItems: []
+  giftItems: [],
 };
 
 const GiftSlice = createSlice({
@@ -14,7 +14,6 @@ const GiftSlice = createSlice({
   },
 });
 
-export const { setGiftItems,  } =
-  GiftSlice.actions;
+export const { setGiftItems } = GiftSlice.actions;
 
 export default GiftSlice.reducer;
