@@ -17,17 +17,19 @@ const Index = () => {
   const [newEvent, setNewEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { events } = useSelector(state => state.event);
-  const { user } = useSelector(state => state.auth);
-  let userId = user.id
+  const { events, eventGifts } = useSelector(state => state.event);
+  const { user } = useSelector(state => state.user);
+
+  let userId = user.id;
+
+  console.log(id);
 
   useEffect(() => {
     if (events.length > 0) {
       const specificEvent = events.filter(event => event.id === id)[0];
       setNewEvent(specificEvent);
-    }
-    else{
-      dispatch(GetUserEvents(userId))
+    } else {
+      dispatch(GetUserEvents(userId));
     }
   }, [events, id, userId]);
 
@@ -51,7 +53,7 @@ const Index = () => {
           <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
           <Box>
             {navPosition === 0 && <EventDetails newEvent={newEvent} />}
-            {navPosition === 1 && <EventGifts newEvent={newEvent} />}
+            {navPosition === 1 && <EventGifts newEvent={newEvent}/>}
             {navPosition === 2 && <EventMedia />}
             {navPosition === 3 && <EventGuests />}
           </Box>

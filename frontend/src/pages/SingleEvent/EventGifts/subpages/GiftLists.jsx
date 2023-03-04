@@ -10,7 +10,7 @@ import {
     TableContainer,
 } from '@chakra-ui/react'
 
-const GiftLists = () => {
+const GiftLists = ({data}) => {
     const gifts = [
         {
             id: 1,
@@ -48,7 +48,7 @@ const GiftLists = () => {
                       </Tr>
                   </Thead>
                   <Tbody>
-                      {gifts.map((gift, index) => {
+                      {data.map((gift, index) => {
                         return (
                             <>
                                 <Tr fontSize={14} _hover={{ bg: '#FAFAFA'}}>
