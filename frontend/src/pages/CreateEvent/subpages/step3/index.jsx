@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FilterButtons from './FilterButtons';
 import GiftHeader from './GiftHeader';
 import Search from './Search';
@@ -15,19 +15,22 @@ const Index = ({ step, setStep }) => {
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const [giftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
-  const { newEvent } = useSelector(state => state.event);
+  const {newEvent} = useSelector(state => state.event)
 
   const HandleSubmit = async () => {
     try {
-      const res = await CreateManyGiftsApi(giftItems);
-      console.log(res.data);
-      dispatch(GetEventGifts('530077123982'));
+      await CreateManyGiftsApi(giftItems);
+      dispatch(GetEventGifts(newEvent.id));
       setStep(step + 1);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(giftItems, addedGiftItems);
+
+  useEffect(() => {
+    dispatch(GetEventGifts('530077123982'));
+  }, []);
+
   return (
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">

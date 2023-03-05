@@ -37,7 +37,7 @@ const Create = async (data) => {
       enableContribution: false,
       purchased: false,
       eventId: data.eventId,
-      userId: data.userId,
+      purchasedBy: "",
       quantity: data.quantity ? data.quantity : 1,
       status: "UnPaid",
       amountPaid: 0,
@@ -53,10 +53,11 @@ const Create = async (data) => {
 const CreateMany = async (data) => {
   data.forEach((element) => {
     element.id = uuidv4();
-    element.enableContribution = false,
-    element.purchased = false,
-    element.status = "UnPaid",
-    element.amountPaid = 0
+    (element.enableContribution = false),
+      (element.purchased = false),
+      (element.status = "UnPaid"),
+      (element.amountPaid = 0);
+    element.purchasedBy = "";
     return element;
   });
   await prisma.gift.createMany({
@@ -102,7 +103,6 @@ const EnableContribution = async (data, id) => {
 };
 
 const Delete = async (id) => {
-
   let gift = await prisma.gift.delete({
     where: {
       id: id,
