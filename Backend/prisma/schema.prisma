@@ -19,9 +19,9 @@ model delivery {
   tel          String   @db.VarChar(255)
   tel2         String   @db.VarChar(255)
   status       String   @db.VarChar(255)
-  userId       String   @db.VarChar(255)
+  eventId      String   @db.VarChar(255)
 
-  @@index([userId], map: "Delivery_userId_fkey")
+  @@index([eventId], map: "Delivery_eventId_fkey")
 }
 
 model event {
@@ -47,8 +47,8 @@ model event {
   user_id         String
   created_at      DateTime
   host            String   @db.VarChar(255)
-  co_hosts        user[]
   gifts           gift[]
+  co_hosts        user[]
 
   @@index([host], map: "Event_userId_fkey")
 }
@@ -59,7 +59,7 @@ model gift {
   enableContribution Boolean
   purchased          Boolean
   quantity           Int
-  userId             String  @db.VarChar(255)
+  purchasedBy        String  @db.VarChar(255)
   status             String  @db.VarChar(255)
   complimentaryGift  String  @db.VarChar(255)
   amountPaid         Int
@@ -68,7 +68,7 @@ model gift {
 
   @@index([eventId], map: "Gift_eventId_fkey")
   @@index([giftItemId], map: "Gift_giftItemId_fkey")
-  @@index([userId], map: "Gift_userId_fkey")
+  @@index([purchasedBy], map: "Gift_purchasedBy_fkey")
 }
 
 model giftitem {
@@ -92,8 +92,8 @@ model user {
   emailVerified    Boolean?
   email            String   @unique(map: "User_email_key") @db.VarChar(255)
   password         String   @db.VarChar(255)
-  event            event?   @relation(fields: [eventId], references: [id])
   eventId          String?  @db.VarChar(255)
+  event            event?   @relation(fields: [eventId], references: [id])
 }
 
 model otp {

@@ -8,14 +8,12 @@ import FormFooter from '../FormFooter';
 import { CreateManyGiftsApi } from '../../../../redux/axios/apis/gift';
 import { dispatch } from '../../../../redux/store';
 import { GetEventGifts } from '../../../../redux/features/events/service';
-import { useSelector } from 'react-redux';
 
 const Index = ({ step, setStep }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const [giftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
-  const { newEvent, eventGifts } = useSelector(state => state.event);
 
   const HandleSubmit = async () => {
     try {

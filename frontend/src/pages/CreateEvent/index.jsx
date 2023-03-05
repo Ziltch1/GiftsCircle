@@ -1,6 +1,5 @@
 import { Box } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { GetEventGifts } from '../../redux/features/events/service';
 import { GetGiftItems } from '../../redux/features/gift/service';
 import { dispatch } from '../../redux/store';
 import FormHeader from './subpages/FormHeader';
@@ -12,7 +11,7 @@ import SummaryForm from './subpages/step5/SummaryForm';
 import Stepper from './subpages/Stepper';
 
 const Index = () => {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
 
   useEffect(() => {
     dispatch(GetGiftItems());
