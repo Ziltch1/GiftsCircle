@@ -37,7 +37,7 @@ const Create = async (data) => {
       enableContribution: false,
       purchased: false,
       eventId: data.eventId,
-      userId: data.userId,
+      purchasedBy: "",
       quantity: data.quantity ? data.quantity : 1,
       status: "UnPaid",
       amountPaid: 0,
@@ -57,6 +57,7 @@ const CreateMany = async (data) => {
       (element.purchased = false),
       (element.status = "UnPaid"),
       (element.amountPaid = 0);
+    element.purchasedBy = "";
     return element;
   });
   await prisma.gift.createMany({
