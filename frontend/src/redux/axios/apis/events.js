@@ -26,6 +26,10 @@ const DeleteEventApi = id => {
 
 const AddGiftApi = data => {
   return api.post(`/gift/create`, data);
+};
+
+const DeliveryDetailsApi = data => {
+  return api.post(`/delivery/create`, data)
 }
 
 export {
@@ -36,4 +40,5 @@ export {
   CreateEventApi2,
   DeleteEventApi,
   AddGiftApi,
+  DeliveryDetailsApi,
 };
