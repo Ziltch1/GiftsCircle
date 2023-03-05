@@ -1,10 +1,9 @@
 import { Box, Input, FormLabel, Text, Heading, Flex, FormControl, Image, Textarea, Progress, Spinner, useToast } from '@chakra-ui/react'
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import BackButton from '../BackButton'
 import galleryImage from '../../../../components/assets/gallery.svg'
 import FormFooter from '../FormFooter'
 import { useSelector } from 'react-redux';
-import { CreateEventApi2 } from '../../../../redux/axios/apis/events';
 import axiosInstance from '../../../../redux/axios/axios';
 import { dispatch } from '../../../../redux/store';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
@@ -48,8 +47,8 @@ const EventImageForm = ({step, setStep}) => {
     const formBody = new FormData();
     formBody.append('summary', summary);
     formBody.append('desc_summary', description);
-    formBody.append('id', '968008552534');
     formBody.append('image', image);
+    formBody.append("id", newEvent.id)
 
     if(image && summary && description){
       try {
