@@ -1,70 +1,51 @@
-import React from 'react'
+import React from 'react';
 import {
-    Box,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableContainer,
-} from '@chakra-ui/react'
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+} from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
-const GiftLists = ({data}) => {
-    const gifts = [
-        {
-            id: 1,
-        },
-        {
-            id: 2,
-        },
-        {
-            id: 3,
-        },
-        {
-            id: 4,
-        },
-        {
-            id: 5,
-        },
-        {
-            id: 6,
-        },
-        {
-            id: 7,
-        },
-    ]
-
+const GiftLists = ({ data }) => {
+  const { giftItems } = useSelector(state => state.gift);
   return (
     <Box>
-        <TableContainer bg='white'>
-              <Table variant='simple'>
-                  <Thead bg='#EEEEEE' px='17px' py='40px'>
-                      <Tr fontSize={14} color='black'>
-                          <Th>S/N</Th>
-                          <Th>Gift name</Th>
-                          <Th>Quantity purchased</Th>
-                          <Th>Action</Th>
-                      </Tr>
-                  </Thead>
-                  <Tbody>
-                      {data.map((gift, index) => {
-                        return (
-                            <>
-                                <Tr fontSize={14} _hover={{ bg: '#FAFAFA'}}>
-                                    <Td>{index + 1}</Td>
-                                    <Td>Iphone 14 pro max, black color</Td>
-                                    <Td>1</Td>
-                                    <Td color='#009F94'>Purchased</Td>
-                                </Tr>
-                            </>
-                        )
-                      })}
-                  </Tbody>
-              </Table>
-          </TableContainer>
+      <TableContainer bg="white">
+        <Table variant="simple">
+          <Thead bg="#EEEEEE" px="17px" py="40px">
+            <Tr fontSize={14} color="black">
+              <Th>S/N</Th>
+              <Th>Gift name</Th>
+              <Th>Quantity purchased</Th>
+              <Th>Action</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {data.map((gift, index) => {
+              const giftItem = giftItems.find(x => x.id === gift.giftItemId);
+              return (
+                <>
+                  <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
+                    <Td>{index + 1}</Td>
+                    <Td>{giftItem.title}</Td>
+                    <Td>1</Td>
+                    <Td color="#009F94">
+                      {gift.purchased ? 'Purchased' : 'Available'}
+                    </Td>
+                  </Tr>
+                </>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </TableContainer>
     </Box>
-  )
-}
+  );
+};
 
-export default GiftLists
+export default GiftLists;

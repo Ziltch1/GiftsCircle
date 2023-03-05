@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { GetEventGifts } from '../../redux/features/events/service';
 import { GetGiftItems } from '../../redux/features/gift/service';
 import { dispatch } from '../../redux/store';
 import FormHeader from './subpages/FormHeader';
@@ -23,7 +24,7 @@ const Index = () => {
       <Box>
         {step === 1 && <BasicForm step={step} setStep={setStep} />}
         {step === 2 && <EventImageForm step={step} setStep={setStep} />}
-        {step === 3 && <AddGiftForm step={step} setStep={setStep}/>}
+        {step === 3 && <AddGiftForm step={step} setStep={setStep} />}
         {step === 4 && <DeliveryDetailsForm />}
         {step === 5 && <SummaryForm />}
       </Box>
