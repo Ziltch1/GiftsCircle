@@ -8,8 +8,12 @@ const CreateManyGiftsApi = data => {
   return api.post('/gift/createMany', data);
 };
 
-const GetEventGiftsApi = id => {
-  return api.get(`/gift/Get/EventGifts/${id}`);
+const DeleteEventGiftApi = id => {
+  return api.delete(`/gift/${id}`);
 };
 
-export { GetGiftItemsApi, CreateManyGiftsApi, GetEventGiftsApi };
+export {
+  GetGiftItemsApi,
+  CreateManyGiftsApi,
+  DeleteEventGiftApi,
+};

@@ -1,37 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import {
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-    Button,
-    useDisclosure,
-    Box,
-    Text, Heading,
-} from '@chakra-ui/react'
-import GiftItem from './GiftItem'
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  Box,
+  Text,
+  Heading,
+} from '@chakra-ui/react';
+import GiftItem from './GiftItem';
+import { useSelector } from 'react-redux';
 
+const GiftDrawer = ({ setOpenDrawer }) => {
+  const { eventGifts } = useSelector(state => state.event);
+  const [data, setData] = useState([]);
 
-const GiftDrawer = ({setOpenDrawer}) => {
-
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true })
-  const btnRef = React.useRef()
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const btnRef = React.useRef();
   const closeModal = () => {
-    setOpenDrawer(false)
-  }
+    setOpenDrawer(false);
+  };
 
-  const lists = [1,2,3,4,5,6,7,8];
+  useEffect(() => {
+    setData(eventGifts);
+  }, [eventGifts]);
+
   return (
     <Box>
       <Drawer
         isOpen={isOpen}
-        placement='right'
+        placement="right"
         onClose={onClose}
         finalFocusRef={btnRef}
-        size='lg'
+        size="lg"
         closeOnOverlayClick={false}
       >
         <DrawerOverlay />
@@ -39,12 +43,18 @@ const GiftDrawer = ({setOpenDrawer}) => {
           <DrawerCloseButton onClick={closeModal} />
 
           <DrawerHeader>
-            <Heading fontWeight='medium' fontSize='25px' mb='2'>Gift List (25)</Heading>
-            <Text fontWeight='medium' fontSize='14px'>Find all the gifts you have added here...</Text>
+            <Heading fontWeight="medium" fontSize="25px" mb="2">
+              Gift List ({data.length})
+            </Heading>
+            <Text fontWeight="medium" fontSize="14px">
+              Find all the gifts you have added here...
+            </Text>
           </DrawerHeader>
 
-          <DrawerBody >
-            {lists.map(() => <GiftItem />)}
+          <DrawerBody>
+            {data.map(ele => (
+              <GiftItem gift={ele} key={data.indexOf(ele)} setData={setData} />
+            ))}
           </DrawerBody>
 
           {/* <DrawerFooter>
@@ -52,11 +62,10 @@ const GiftDrawer = ({setOpenDrawer}) => {
               Send message
             </Button>
           </DrawerFooter> */}
-
         </DrawerContent>
       </Drawer>
     </Box>
-  )
-}
+  );
+};
 
-export default GiftDrawer
+export default GiftDrawer;

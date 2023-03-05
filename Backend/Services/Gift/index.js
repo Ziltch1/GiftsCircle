@@ -53,10 +53,10 @@ const Create = async (data) => {
 const CreateMany = async (data) => {
   data.forEach((element) => {
     element.id = uuidv4();
-    element.enableContribution = false,
-    element.purchased = false,
-    element.status = "UnPaid",
-    element.amountPaid = 0
+    (element.enableContribution = false),
+      (element.purchased = false),
+      (element.status = "UnPaid"),
+      (element.amountPaid = 0);
     return element;
   });
   await prisma.gift.createMany({
@@ -102,7 +102,6 @@ const EnableContribution = async (data, id) => {
 };
 
 const Delete = async (id) => {
-
   let gift = await prisma.gift.delete({
     where: {
       id: id,
