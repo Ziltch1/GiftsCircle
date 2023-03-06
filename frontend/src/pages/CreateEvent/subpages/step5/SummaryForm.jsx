@@ -10,13 +10,22 @@ import {
   useDisclosure,
   ModalFooter,
   ModalHeader,
-  Avatar, AvatarBadge
+  Avatar, AvatarBadge, Center
 } from '@chakra-ui/react'
 import React, {useState} from 'react'
+import errorImg from '../../../assets/errorImg.svg'
+import defaultImg from '../../../assets/default-image.svg'
+import { useSelector } from 'react-redux'
 
 const SummaryForm = () => {
 
-  const [openModal, setOpenModal] = useState(false)
+  const { newEvent } = useSelector(state => state.event);
+  console.log(newEvent)
+  const [openModal, setOpenModal] = useState(false);
+  const [percentage, setPercentage] = useState('')
+  const [image, setImage] = useState(null);
+
+
 
   const showModal = () => {
     setOpenModal(true);
@@ -40,8 +49,8 @@ const SummaryForm = () => {
       </Flex>
 
 
-      <Box w='100%' bg='#EEEEEE' h='380px' borderRadius={5} mb='10'>
-
+      <Box w='100%' bg='#EEEEEE' h='380px' borderRadius={5} mb='10' display='Flex' alignItems='center' justifyContent='Center'>
+        <Image src={`https://giftcircle-ws.onrender.com/images/${newEvent.image}`} />
       </Box>
 
       <Box mb='10'>
@@ -59,9 +68,9 @@ const SummaryForm = () => {
       <Box w='500px' mb='12'>
         <Heading mb='4' fontWeight={600} fontSize={18}>Apply Donation to charity</Heading>
         <FormLabel fontWeight={550} fontSize={14}>How many percentage do you want to add?</FormLabel>
-        <Input type='text' bg='#F4F4F4' placeholder='e.g 2%' fontSize={15} mb='3' />
+        <Input type='text' bg='#F4F4F4' placeholder='e.g 2%' fontSize={15} mb='3' value={percentage} onChange={(e) => setPercentage(e.tagert.value)} />
         <Box mb='2' display='flex' alignItems='center' gap={2}>
-          <Checkbox />
+          <Checkbox isChecked={true} />
           <Text fontSize={14}>Apply 2% to all cost of items to be donated to charity homes</Text>
         </Box>
       </Box>
@@ -79,6 +88,11 @@ export default SummaryForm
 
 export const ConfirmationModal = ({setOpenModal}) => {
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const [ active, setActive ] = useState(false);
+
+  const setChecked = () => {
+    setActive(!active);
+  }
 
   const closeModal = () => {
     setOpenModal(false)
@@ -88,20 +102,24 @@ export const ConfirmationModal = ({setOpenModal}) => {
     <>
       <Modal closeOnOverlayClick={false} onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent maxW='500px' bg='white' pb='4'>
+        <ModalContent maxW='420px' bg='white' py='8' px='6'>
           <Box>
-            {/* <ModalHeader fontSize={14}></ModalHeader> */}
             <ModalCloseButton onClick={closeModal} />
             <ModalBody>
-              <Heading>Enable Donations</Heading>
-              <Text>Are you sure you want to add 2% to all items cost to be donated to charity homes?</Text>
-              <Text fontSize={14} color='#0C4C84'>Copy link to share with other hosts</Text>
-              <Box mb='2' display='flex' alignItems='center' gap={2}>
-                <Checkbox />
-                <Text fontSize={14}>Apply 2% to all cost of items to be donated to charity homes</Text>
+              <Image src={errorImg} display='block' mx='auto' mb='3' />
+              <Box textAlign='center' mb='4'>
+                <Heading fontWeight={600} fontSize='25px' mb='3'>Enable Donations</Heading>
+                <Text fontSize={14}>Are you sure you want to add 2% to all items cost to be donated to charity homes?</Text>
+              </Box>
+             
+              <Box mb='5' display='flex' alignItems='center' gap={2} >
+                <Checkbox isChecked={true} />
+                <Text fontSize={14}>I agree to Event Circle's terms and conditions</Text>
               </Box>
 
-              <Button>Yes add 2% of cost items</Button>
+              <Box textAlign='center'>
+                <Button fontWeight='medium' fontSize={14} color='white' bg={active ? '#00BFB2' : '#AAEAE5'}>Yes add 2% of cost items</Button>
+              </Box>
             </ModalBody>
           </Box>
         </ModalContent>

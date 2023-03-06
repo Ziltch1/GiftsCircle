@@ -11,7 +11,7 @@ import SummaryForm from './subpages/step5/SummaryForm';
 import Stepper from './subpages/Stepper';
 
 const Index = () => {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(5);
 
   useEffect(() => {
     dispatch(GetGiftItems());
@@ -23,8 +23,8 @@ const Index = () => {
       <Box>
         {step === 1 && <BasicForm step={step} setStep={setStep} />}
         {step === 2 && <EventImageForm step={step} setStep={setStep} />}
-        {step === 3 && <AddGiftForm step={step} setStep={setStep} />}
-        {step === 4 && <DeliveryDetailsForm />}
+        {step === 3 && <AddGiftForm step={step} setStep={setStep}/>}
+        {step === 4 && <DeliveryDetailsForm step={step} setStep={setStep} />}
         {step === 5 && <SummaryForm />}
       </Box>
     </Box>
