@@ -34,9 +34,9 @@ model event {
   end_time        String
   timezone        String?  @db.VarChar(255)
   image           String?  @db.VarChar(255)
-  descCeleb       String?  @db.VarChar(255)
-  summary         String?  @db.VarChar(255)
-  descSummary     String?  @db.VarChar(255)
+  descCeleb       String?  @db.VarChar
+  summary         String?  @db.VarChar
+  descSummary     String?  @db.VarChar
   published       Boolean
   applyDonation   Boolean
   percentDonation Int

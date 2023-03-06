@@ -14,6 +14,7 @@ import { CheckIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 
 const EventItem = ({ id, image, title, descSummary, published, date }) => {
+  console.log(image)
   return (
     <Box bg="white" mb="5" py="7" px="8" borderRadius={5} key={id}>
       <HStack justifyContent={'space-between'} alignItems="center">
