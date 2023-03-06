@@ -124,7 +124,7 @@ const SendResetPasswordEmail = async (email) => {
   if (user) {
     try {
       let token = GenerateToken(email, "30m");
-      let url = process.env.env === "development" ? "http://localhost:3000" :"https://giftscircle.netlify.app/"
+      let url = process.env.env === "development" ? "http://localhost:3000" :"https://giftscircle.netlify.app"
       let data = `${url}/change_password?token=${token}`;
       let result = await SendResetEmail(email, user.firstname, data);
       return result.response;

@@ -70,7 +70,7 @@ const SetPassword = () => {
       try {
         const res = await SetPasswordApi(formBody);
         if (res.status) {
-          navigate('/signup_loading');
+          navigate('/signin');
           localStorage.removeItem('newUser');
         }
       } catch (error) {
