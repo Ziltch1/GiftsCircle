@@ -1208,7 +1208,7 @@
             "type": "string",
             "required": true
           },
-          "userId": {
+          "purchasedBy": {
             "type": "string",
             "required": true
           },
@@ -1257,7 +1257,7 @@
             "type": "string",
             "required": true
           },
-          "userId": {
+          "eventId": {
             "type": "string",
             "required": true
           },
