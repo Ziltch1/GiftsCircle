@@ -1,13 +1,11 @@
 import { Box, Flex, Text, Heading, Input, FormControl, FormLabel, useToast } from '@chakra-ui/react'
 import React, {useState} from 'react'
 import BackButton from '../BackButton'
-import axios from 'axios';
 import FormFooter from '../FormFooter';
 import { DeliveryDetailsApi } from '../../../../redux/axios/apis/events';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../redux/store';import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
-import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 
 const DeliveryDetailsForm = ({step, setStep}) => {
   const toast = useToast()
@@ -18,7 +16,6 @@ const DeliveryDetailsForm = ({step, setStep}) => {
   const [postalCode, setPostalCode] = useState('')
   const [phoneNumber1, setPhoneNumber1] = useState('')
   const [phoneNumber2, setPhoneNumber2] = useState('');
-  const { user } = useSelector(state => state.user);
   const {newEvent} = useSelector(state => state.event);
 
   const handleSubmit = async() => {
