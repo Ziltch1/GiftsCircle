@@ -9,7 +9,6 @@ import { GetEventGifts } from '../../../redux/features/events/service';
 
 const Index = ({ newEvent }) => {
   const eventId = newEvent.id;
-  console.log(eventId);
   const [navPosition, setNavPosition] = useState(0);
   const [data, setData] = useState([]);
 

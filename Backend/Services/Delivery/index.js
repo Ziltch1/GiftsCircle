@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const Get = async (id) => {
   const delivery = await prisma.delivery.findFirst({
     where: {
-      userId: id,
+      eventId: id,
     },
   });
 
@@ -17,7 +17,7 @@ const Create = async (data) => {
   let id = uuidv4();
   const delivery = await prisma.delivery.findFirst({
     where: {
-      userId: data.userId,
+      eventId: data.eventId,
     },
   });
   if (!delivery) {
@@ -32,7 +32,7 @@ const Create = async (data) => {
         expectedDate: new Date(data.expectedDate),
         tel: data.tel,
         tel2: data.tel2,
-        userId: data.userId,
+        eventId: data.eventId,
         postalCode: data.postalCode,
         status: "Pending"
       },

@@ -10,7 +10,7 @@ const SendEmail = async (reciever, name, data) => {
       {
         From: {
           Email: "godwillonyewuchii@gmail.com",
-          Name: "GiftCircle",
+          Name: "EventCircle",
         },
         To: [
           {
@@ -18,7 +18,7 @@ const SendEmail = async (reciever, name, data) => {
             Name: name,
           },
         ],
-        TemplateID: 4551222,
+        TemplateID: 4630318,
         TemplateLanguage: true,
         Subject: "Verify Email",
         Variables: {
@@ -40,8 +40,8 @@ const SendResetEmail = async (reciever, name, data) => {
     Messages: [
       {
         From: {
-          Email: "godwillonyewuchii@gmail.com",
-          Name: "GiftCircle",
+          "Email": "godwillonyewuchii@gmail.com",
+					"Name": "EventCircle"
         },
         To: [
           {
@@ -49,7 +49,7 @@ const SendResetEmail = async (reciever, name, data) => {
             Name: name,
           },
         ],
-        TemplateID: 4560457,
+        TemplateID: 4630335,
         TemplateLanguage: true,
         Subject: "Reset Password",
         Variables: {

@@ -22,8 +22,6 @@ const Index = () => {
 
   let userId = user.id;
 
-  console.log(id);
-
   useEffect(() => {
     if (events.length > 0) {
       const specificEvent = events.filter(event => event.id === id)[0];
