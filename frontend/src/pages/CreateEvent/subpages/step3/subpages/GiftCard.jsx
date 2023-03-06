@@ -34,19 +34,6 @@ const GiftCard = ({
     }
   };
 
-  // const addGift = async (e) => {
-  //   const itemId = e.target.id;
-
-  //   try {
-  //     const res = await AddGiftApi(formBody);
-  //     localStorage.setItem('newEvent', JSON.stringify(res.data));
-  //     dispatch(setNewEvent(res.data));
-  //   } catch (error) {
-  //     dispatch(createResponse(ErrorHandler(error)));
-  //   }
-
-  // }
-
   const handleSubmit = () => {
     setStep(step + 1);
   };
@@ -65,8 +52,6 @@ const GiftCard = ({
           <GiftDetails setOpenGiftDetails={setOpenGiftDetails} />
         )}
         {data.map(gift => {
-          console.log(gift.image);
-
           return (
             <Box
               w="285px"

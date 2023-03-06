@@ -15,7 +15,7 @@ const Index = ({ step, setStep }) => {
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const [giftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
-  const {newEvent} = useSelector(state => state.event)
+  const { newEvent } = useSelector(state => state.event);
 
   const HandleSubmit = async () => {
     try {
@@ -34,7 +34,11 @@ const Index = ({ step, setStep }) => {
   return (
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">
-        <GiftHeader openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+        <GiftHeader
+          openDrawer={openDrawer}
+          setOpenDrawer={setOpenDrawer}
+          giftItems={giftItems}
+        />
         <Search />
         <FilterButtons />
         <GiftCard
