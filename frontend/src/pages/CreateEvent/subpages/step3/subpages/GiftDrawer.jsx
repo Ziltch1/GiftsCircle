@@ -56,12 +56,6 @@ const GiftDrawer = ({ setOpenDrawer }) => {
               <GiftItem gift={ele} key={data.indexOf(ele)} setData={setData} />
             ))}
           </DrawerBody>
-
-          {/* <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose} color='white' bg='#00BFB2' fontWeight='medium' fontSize='13px'>
-              Send message
-            </Button>
-          </DrawerFooter> */}
         </DrawerContent>
       </Drawer>
     </Box>

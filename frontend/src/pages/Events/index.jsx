@@ -47,21 +47,21 @@ const Events = () => {
                   </Text>
                 </Box>
               </Box>
-            ) : (
-              <Box>
-                {events.map(event => (
-                  <EventItem
-                    key={event.id}
-                    id={event.id}
-                    title={event.title}
-                    descSummary={event.descSummary}
-                    date={event.date}
-                    image={event.image}
-                    published={event.published}
-                  />
-                ))}
-              </Box>
-            )}
+              ) : (
+                <Box>
+                  {events.map(event => (
+                    <EventItem
+                      key={event.id}
+                      id={event.id}
+                      title={event.title}
+                      descSummary={event.descSummary}
+                      date={event.date}
+                      image={event?.image}
+                      published={event.published}
+                    />
+                  ))}
+                </Box>
+              )}
           </>
         </Box>
       </Box>
