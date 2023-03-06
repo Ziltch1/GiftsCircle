@@ -14,7 +14,6 @@ const GiftCard = ({
   addedGiftItems,
 }) => {
   const { giftItems } = useSelector(state => state.gift);
-  const { user } = useSelector(state => state.user);
   const { newEvent } = useSelector(state => state.event);
   const [data, setData] = useState([]);
 

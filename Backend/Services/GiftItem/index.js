@@ -14,7 +14,7 @@ const Get = async (id) => {
 };
 
 const GetAll = async () => {
-  const giftItems = await prisma.giftitem.findMany();
+  const giftItems = await prisma.giftitem.findMany({});
   await prisma.$disconnect();
   return giftItems;
 };

@@ -8,13 +8,9 @@ import {
   ModalCloseButton,
   Image,
   useDisclosure,
-  ModalFooter,
-  ModalHeader,
-  Avatar, AvatarBadge, Center
 } from '@chakra-ui/react'
 import React, {useState} from 'react'
 import errorImg from '../../../assets/errorImg.svg'
-import defaultImg from '../../../assets/default-image.svg'
 import { useSelector } from 'react-redux'
 
 const SummaryForm = () => {
@@ -23,7 +19,6 @@ const SummaryForm = () => {
   console.log(newEvent)
   const [openModal, setOpenModal] = useState(false);
   const [percentage, setPercentage] = useState('')
-  const [image, setImage] = useState(null);
 
 
 
@@ -87,7 +82,7 @@ export default SummaryForm
 
 
 export const ConfirmationModal = ({setOpenModal}) => {
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const [ active, setActive ] = useState(false);
 
   const setChecked = () => {
