@@ -23,25 +23,24 @@ const DeliveryDetailsForm = ({step, setStep}) => {
 
   const handleSubmit = async() => {
     const orderDate = new Date().toDateString();
-    console.log(orderDate);
     const formBody = {
-      address, 
-      city,
-      state,
-      orderDate,
+      address: address, 
+      city: city,
+      state: state,
+      orderDate: orderDate,
       expectedDate: orderDate,
       tel: phoneNumber1,
       tel2: phoneNumber2,
-      userId: user.id,
-      postalCode,
-      country,
+      eventId: newEvent.id,
+      postalCode: postalCode,
+      country: country,
     }
 
     if(address && city && state && country && postalCode && phoneNumber1 && phoneNumber2){
       try {
         const res = await DeliveryDetailsApi(formBody);
         localStorage.setItem('newEvent', JSON.stringify(res.data));
-        dispatch(setNewEvent(res.data));
+        console.log(res.data);
         setStep(step + 1);
       } catch (error) {
         dispatch(createResponse(ErrorHandler(error))) 
