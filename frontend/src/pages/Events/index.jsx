@@ -49,7 +49,7 @@ const Events = () => {
                       title={event.title}
                       descSummary={event.descSummary}
                       date={event.date}
-                      image={event.image}
+                      image={event?.image}
                       published={event.published}
                     />
                   ))}

@@ -58,6 +58,7 @@ const GiftCard = ({
     }
   }, [giftItems]);
 
+
   return (
     <>
       <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
@@ -65,6 +66,8 @@ const GiftCard = ({
           <GiftDetails setOpenGiftDetails={setOpenGiftDetails} />
         )}
         {data.map(gift => {
+          console.log(gift.image);
+
           return (
             <Box
               w="285px"
@@ -78,7 +81,7 @@ const GiftCard = ({
               key={gift.id}
             >
               <Image
-                src={`https://giftcircle-ws.onrender.com/images/giftItems/${gift.image}`}
+                src={`https://giftcircle-ws.onrender.com/images/giftItems/${gift?.image}`}
                 w="279"
                 h="142px"
                 borderRadius={10}

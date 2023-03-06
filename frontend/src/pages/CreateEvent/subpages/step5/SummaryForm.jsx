@@ -50,7 +50,7 @@ const SummaryForm = () => {
 
 
       <Box w='100%' bg='#EEEEEE' h='380px' borderRadius={5} mb='10' display='Flex' alignItems='center' justifyContent='Center'>
-        <Image src={`https://giftcircle-ws.onrender.com/images/${newEvent.image}`} />
+        <Image src={`https://giftcircle-ws.onrender.com/images/Events/${newEvent?.image}`} w='100%' h='100%' />
       </Box>
 
       <Box mb='10'>
