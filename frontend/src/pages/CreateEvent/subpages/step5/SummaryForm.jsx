@@ -31,6 +31,7 @@ const SummaryForm = () => {
   const showModal = () => {
     if (percentage && publish || publishLater) {
       setOpenModal(true);
+      console.log(percentage);
     }else{
       toast({
         title: 'Error!',
