@@ -35,9 +35,7 @@ const DeliveryDetailsForm = ({step, setStep}) => {
 
     if(address && city && state && country && postalCode && phoneNumber1 && phoneNumber2){
       try {
-        const res = await DeliveryDetailsApi(formBody);
-        localStorage.setItem('newEvent', JSON.stringify(res.data));
-        console.log(res.data);
+        await DeliveryDetailsApi(formBody);
         setStep(step + 1);
       } catch (error) {
         dispatch(createResponse(ErrorHandler(error))) 

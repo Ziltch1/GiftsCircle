@@ -16,15 +16,17 @@ import { useSelector } from 'react-redux'
 const SummaryForm = () => {
 
   const { newEvent } = useSelector(state => state.event);
-  console.log(newEvent)
   const [openModal, setOpenModal] = useState(false);
   const [percentage, setPercentage] = useState('')
+  const [publish, setPublished] = useState(false)
 
 
 
   const showModal = () => {
     setOpenModal(true);
   }
+
+  
 
   return (
     <Box mt='8' w='80%' mx='auto' mb='16'>
@@ -51,7 +53,7 @@ const SummaryForm = () => {
       <Box mb='10'>
         <Heading mb='4' fontWeight={600} fontSize={18}>When should we publish your event?</Heading>
         <Box mb='2' display='flex' alignItems='center' gap={2}>
-          <Checkbox colorScheme='teal' />
+          <Checkbox colorScheme='teal' onChange={(e) => setPublished(e.target.checked)}/>
           <Text fontSize={14}>Publish now</Text>
         </Box>
         <Box mb='2' display='flex' alignItems='center' gap={2}>
@@ -63,7 +65,7 @@ const SummaryForm = () => {
       <Box w='500px' mb='12'>
         <Heading mb='4' fontWeight={600} fontSize={18}>Apply Donation to charity</Heading>
         <FormLabel fontWeight={550} fontSize={14}>How many percentage do you want to add?</FormLabel>
-        <Input type='text' bg='#F4F4F4' placeholder='e.g 2%' fontSize={15} mb='3' value={percentage} onChange={(e) => setPercentage(e.tagert.value)} />
+        <Input type='text' bg='#F4F4F4' placeholder='e.g 2%' fontSize={15} mb='3' value={percentage} onChange={(e) => setPercentage(e.target.value)} />
         <Box mb='2' display='flex' alignItems='center' gap={2}>
           <Checkbox isChecked={true} />
           <Text fontSize={14}>Apply 2% to all cost of items to be donated to charity homes</Text>

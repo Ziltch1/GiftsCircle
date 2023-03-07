@@ -54,7 +54,7 @@ const Events = () => {
                       key={event.id}
                       id={event.id}
                       title={event.title}
-                      descSummary={event.descSummary}
+                      descSummary={event.summary}
                       date={event.date}
                       image={event?.image}
                       published={event.published}

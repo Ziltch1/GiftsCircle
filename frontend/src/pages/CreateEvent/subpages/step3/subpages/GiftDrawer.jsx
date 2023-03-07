@@ -14,7 +14,7 @@ import {
 import GiftItem from './GiftItem';
 import { useSelector } from 'react-redux';
 
-const GiftDrawer = ({ setOpenDrawer }) => {
+const GiftDrawer = ({ setOpenDrawer, giftItems }) => {
   const { eventGifts } = useSelector(state => state.event);
   const [data, setData] = useState([]);
 
@@ -25,8 +25,8 @@ const GiftDrawer = ({ setOpenDrawer }) => {
   };
 
   useEffect(() => {
-    setData(eventGifts);
-  }, [eventGifts]);
+    setData([...eventGifts, ...giftItems]);
+  }, [eventGifts, giftItems]);
 
   return (
     <Box>
