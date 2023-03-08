@@ -8,10 +8,12 @@ import {
   ModalCloseButton,
   Image,
   useDisclosure,
+  useToast
 } from '@chakra-ui/react'
 import React, {useState} from 'react'
 import errorImg from '../../../assets/errorImg.svg'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const SummaryForm = () => {
 
@@ -19,18 +21,34 @@ const SummaryForm = () => {
   const [openModal, setOpenModal] = useState(false);
   const [percentage, setPercentage] = useState('')
   const [publish, setPublished] = useState(false)
+  const [publishLater, setPublishLater] = useState(false);
+  const toast = useToast();
+
+ 
 
 
 
   const showModal = () => {
-    setOpenModal(true);
+    if (percentage && publish || publishLater) {
+      setOpenModal(true);
+      console.log(percentage);
+    }else{
+      toast({
+        title: 'Error!',
+        description: 'Please fill all empty fields',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+        status: 'error',
+      })
+    } 
   }
 
   
 
   return (
     <Box mt='8' w='80%' mx='auto' mb='16'>
-      {openModal && <ConfirmationModal setOpenModal={setOpenModal} />}
+      {openModal && <ConfirmationModal setOpenModal={setOpenModal} percentage={percentage} />}
       <Flex alignItems='center' justifyContent='space-between' mb='5'>
         <Box>
           <Heading mb='2' fontSize={30} fontWeight='semibold'>Summary</Heading>
@@ -53,11 +71,11 @@ const SummaryForm = () => {
       <Box mb='10'>
         <Heading mb='4' fontWeight={600} fontSize={18}>When should we publish your event?</Heading>
         <Box mb='2' display='flex' alignItems='center' gap={2}>
-          <Checkbox colorScheme='teal' onChange={(e) => setPublished(e.target.checked)}/>
+          <Checkbox colorScheme='teal' checked={publish} onChange={(e) => setPublished(e.target.checked)}/>
           <Text fontSize={14}>Publish now</Text>
         </Box>
         <Box mb='2' display='flex' alignItems='center' gap={2}>
-          <Checkbox colorScheme='teal' />
+          <Checkbox colorScheme='teal' checked={publishLater} onChange={(e) => setPublishLater(e.target.checked)} />
           <Text fontSize={14}>Schedule for later</Text>
         </Box>
       </Box>
@@ -68,7 +86,7 @@ const SummaryForm = () => {
         <Input type='text' bg='#F4F4F4' placeholder='e.g 2%' fontSize={15} mb='3' value={percentage} onChange={(e) => setPercentage(e.target.value)} />
         <Box mb='2' display='flex' alignItems='center' gap={2}>
           <Checkbox isChecked={true} />
-          <Text fontSize={14}>Apply 2% to all cost of items to be donated to charity homes</Text>
+          <Text fontSize={14}>Apply {percentage}% to all cost of items to be donated to charity homes</Text>
         </Box>
       </Box>
 
@@ -83,13 +101,9 @@ const SummaryForm = () => {
 export default SummaryForm
 
 
-export const ConfirmationModal = ({setOpenModal}) => {
+export const ConfirmationModal = ({setOpenModal, percentage}) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
-  const [ active, setActive ] = useState(false);
-
-  const setChecked = () => {
-    setActive(!active);
-  }
+  const [isChecked, setIsChecked] = useState(false)
 
   const closeModal = () => {
     setOpenModal(false)
@@ -106,16 +120,18 @@ export const ConfirmationModal = ({setOpenModal}) => {
               <Image src={errorImg} display='block' mx='auto' mb='3' />
               <Box textAlign='center' mb='4'>
                 <Heading fontWeight={600} fontSize='25px' mb='3'>Enable Donations</Heading>
-                <Text fontSize={14}>Are you sure you want to add 2% to all items cost to be donated to charity homes?</Text>
+                <Text fontSize={14}>Are you sure you want to add {percentage}% to all items cost to be donated to charity homes?</Text>
               </Box>
              
               <Box mb='5' display='flex' alignItems='center' gap={2} >
-                <Checkbox isChecked={true} />
+                <Checkbox checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
                 <Text fontSize={14}>I agree to Event Circle's terms and conditions</Text>
               </Box>
 
               <Box textAlign='center'>
-                <Button fontWeight='medium' fontSize={14} color='white' bg={active ? '#00BFB2' : '#AAEAE5'}>Yes add 2% of cost items</Button>
+                <Link to={isChecked && '/dashboard'}>
+                  <Button fontWeight='medium' fontSize={14} color='white' bg={isChecked ? '#00BFB2' : '#AAEAE5'}>Yes add {percentage}% of cost items</Button>
+                </Link>
               </Box>
             </ModalBody>
           </Box>
