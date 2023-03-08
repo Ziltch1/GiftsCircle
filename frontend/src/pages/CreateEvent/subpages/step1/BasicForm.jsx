@@ -6,9 +6,7 @@ import {
   FormLabel,
   Heading,
   Text,
-  Select,
-  Button,
-  FormErrorMessage, FormHelperText, useToast
+  Select, useToast
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import BackButton from '../BackButton';
@@ -17,7 +15,6 @@ import HostModal from './HostModal';
 import { useSelector } from 'react-redux';
 import {
   CreateEventApi1,
-  UpdateEventApi1,
 } from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
@@ -193,13 +190,13 @@ const BasicForm = ({ step, setStep }) => {
                   value={category}
                   onChange={e => setCategory(e.target.value)}
                 >
-                  <option value="gfgffgf">Birthday</option>
-                  <option value="gfgffgf">Naming Ceremony</option>
-                  <option value="gfgffgf">Retirement Ceremony</option>
-                  <option value="gfgffgf">Graduation Ceremony</option>
-                  <option value="gfgffgf">Induction Ceremony</option>
-                  <option value="gfgffgf">Wedding Ceremony</option>
-                  <option value="gfgffgf">Funeral Ceremony</option>
+                  <option value="Birthday">Birthday</option>
+                  <option value="Naming Ceremony">Naming Ceremony</option>
+                  <option value="Retirement Ceremony">Retirement Ceremony</option>
+                  <option value="Graduation">Graduation Ceremony</option>
+                  <option value="Induction">Induction Ceremony</option>
+                  <option value="Wedding">Wedding Ceremony</option>
+                  <option value="Funeral">Funeral Ceremony</option>
                 </Select>
               </Box>
 

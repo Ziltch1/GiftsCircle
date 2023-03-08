@@ -12,10 +12,11 @@ const {
   Update3,
 } = require("../Services/Events");
 const router = express.Router();
-const multer = require("multer");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
+const cloudinary = require("../config/Cloudinary");
+const { upload, dataUri } = require("../config/multer");
 
-const upload = multer({ dest: "images/Events/" });
+// const upload = new Multer.memoryStorage();
 const prisma = new PrismaClient();
 
 router.get("/:id", EnsureAuthenticated, async (req, res) => {
@@ -91,8 +92,12 @@ router.post(
   EnsureAuthenticated,
   async (req, res) => {
     try {
-      const image = req.file ? req.file.filename : null;
-      let data = await Update2(req.body, image);
+      const file = dataUri(req).content;
+      const response = await cloudinary.uploader.upload(file, {
+        folder: "eventcircle",
+      });
+
+      let data = await Update2(req.body, response.url);
       if (data) {
         return res.status(200).send(data);
       }

@@ -21,7 +21,7 @@ const EventItem = ({ id, image, title, descSummary, published, date }) => {
           <HStack gap={2.5}>
             <Box>
               <Image
-                src={`https://giftcircle-ws.onrender.com/images/Events/${image}`}
+                src={image}
                 w="120px"
                 h="110px"
                 borderRadius={5}
