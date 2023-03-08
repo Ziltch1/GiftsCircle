@@ -32,7 +32,7 @@ const Create = async (data, image) => {
     },
   });
 
-  await prisma.$disconnect();
+  await prisma.$disconnect();      
   return data;
 };
 

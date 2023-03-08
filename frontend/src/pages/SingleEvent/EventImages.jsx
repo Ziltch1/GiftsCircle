@@ -10,7 +10,7 @@ import defaultImage from '../../components/assets/default-image.svg'
 
 const EventImages = ({newEvent}) => {
     const image = newEvent.image;
-    const imageUrl = `https://giftcircle-ws.onrender.com/images/Events/${image}`
+    const imageUrl = image
   return (
         < Box mb = '6' >
             <Flex justifyContent={'space-between'} alignItems='center'>

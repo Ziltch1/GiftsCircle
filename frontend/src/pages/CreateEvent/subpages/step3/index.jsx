@@ -27,10 +27,6 @@ const Index = ({ step, setStep }) => {
     }
   };
 
-  useEffect(() => {
-    dispatch(GetEventGifts('530077123982'));
-  }, []);
-
   return (
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">
