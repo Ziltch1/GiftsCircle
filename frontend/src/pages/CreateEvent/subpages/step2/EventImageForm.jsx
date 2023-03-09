@@ -1,5 +1,5 @@
 import { Box, Input, FormLabel, Text, Heading, Flex, FormControl, Image, Textarea, Progress, Spinner, useToast } from '@chakra-ui/react'
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import BackButton from '../BackButton'
 import galleryImage from '../../../../components/assets/gallery.svg'
 import FormFooter from '../FormFooter'
@@ -11,6 +11,9 @@ import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import SuccessImg from '../../../assets/success.svg'
 import finalImg from '../../../assets/newSuccess.svg'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css';
+
 
 const EventImageForm = ({step, setStep}) => {
   const { newEvent } = useSelector(state => state.event);
@@ -20,7 +23,22 @@ const EventImageForm = ({step, setStep}) => {
   const [progress, setProgress] = useState(0)
   const [uploading, setUploading] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
-  const toast = useToast()
+  const toast = useToast();
+
+
+  //modules for react quill editor
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      [{ script: "sub" }, { script: "super" }],
+      ["blockquote",],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+      ["link", "image", "video"],
+    ],
+  };
 
   const uploadImage = (e) => {
     const file = e.target.files[0];
@@ -33,8 +51,6 @@ const EventImageForm = ({step, setStep}) => {
       }
       setUploading(true)
     };
-
-    // setIsUploaded(true)
     reader.readAsDataURL(file);
     setImage(e.target.files[0])
     const timer = setTimeout(() => {
@@ -77,7 +93,7 @@ const EventImageForm = ({step, setStep}) => {
   return (
     <>
     
-      <Box mt="8" h="100%" overflow="auto" mb="20" maxW="750px" mx="auto">
+      <Box mt="8" h="100%" mb='28' maxW="750px" mx="auto">
         <Flex alignItems="start" justifyContent="space-between" flexWrap="wrap">
           <BackButton onClick={() => setStep(step - 1)} />
           <Box maxW="500px" mx="auto" fontSize={14}>
@@ -145,7 +161,9 @@ const EventImageForm = ({step, setStep}) => {
              </Box>
 
               <FormLabel fontWeight='semibold' fontSize={14}>Description of event/Celebrant</FormLabel>
-              <Textarea h='200px' value={description} onChange={(e) => setDescription(e.target.value)} resize='none' bg='#FAFAFA' placeholder='Write about your event here' fontSize={14} />
+              <Box w='500px' h='300px' display='flex' flex={1} flexDirection='column' height='100%'>
+                <ReactQuill theme='snow' dangerouslySetInnerHTML={{__html: description}} onChange={setDescription} modules={modules} style={{height: '240px', borderRadius: '12px'}} />
+              </Box>
             </Box>
           </FormControl>
         </Box>

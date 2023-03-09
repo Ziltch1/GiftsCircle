@@ -14,6 +14,8 @@ const EventSchedule = ({ newEvent }) => {
     setOpenDrawer(true)
   }
 
+  console.log(newEvent);
+
   return (
     <Box mb="6">
       {openDrawer && <Fundraising setOpenDrawer={setOpenDrawer} />}
@@ -22,7 +24,8 @@ const EventSchedule = ({ newEvent }) => {
           <Heading fontWeight={500} fontSize="24px" mb="4">
             {newEvent.title}
           </Heading>
-          <Text fontSize={14} lineHeight="27px" mb="4">
+          <Text fontSize={14} lineHeight="27px" mb="4" dangerouslySetInnerHTML={{ __html: newEvent.descSummary }} />
+          {/* <Text fontSize={14} lineHeight="27px" mb="4">
             Become a pro copywriter in 4 weeks. <br />
             The NYC School of Copywriting is the only copy and content writing
             masterclass designed to teach writers, marketers, small business
@@ -44,11 +47,11 @@ const EventSchedule = ({ newEvent }) => {
             sales and marketing assets for every marketing channel, grow your
             business and quadruple your sales. <br />
             This course costs $1,000.00 per attendee.
-          </Text>
+          </Text> */}
 
           <Box w="610px" bg="#EEEEEE" h="270px" borderRadius={10} mb="7"></Box>
 
-          <Text fontSize={14} lineHeight="27px">
+          {/* <Text fontSize={14} lineHeight="27px">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et ut
             sodales semper consectetur sem. Commodo tristique eu ultrices
             eleifend commodo amet id. In orci, odio in eget viverra fermentum
@@ -57,7 +60,7 @@ const EventSchedule = ({ newEvent }) => {
             tortor, erat semper augue vel sit nisl, commodo. Sit sed urna mi,
             purus. Dui amet praesent et non morbi tincidunt tincidunt integer
             commodo. Eget turpis platea vitae tempor eget.
-          </Text>
+          </Text> */}
         </Box>
 
         <Box w="295px" h="auto">
