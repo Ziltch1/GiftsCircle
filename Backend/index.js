@@ -10,8 +10,11 @@ dotenv.config();
 
 // when you are using a fetch api or just ajax you need to add the line below for it to work
 app.use(express.json());
+// app.use(bodyParser.json());
+
 // assuming you are sending from a form you need to add the line below for it work.
 app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   cors({
@@ -22,7 +25,7 @@ app.use(
 app.get("/", async (req, res) => {
   return res.json({ msg: "hello world" });
 });
-app.use('/images', express.static('images'))
+// app.use('/images', express.static('images'))
 app.use("/api/user/", require("./Controllers/UserController"));
 app.use("/api/event/", require("./Controllers/EventController"));
 app.use("/api/giftItem/", require("./Controllers/GiftItemController"));

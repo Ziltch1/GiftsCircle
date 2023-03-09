@@ -2,10 +2,9 @@ const { PrismaClient } = require("@prisma/client");
 const express = require("express");
 const ResponseDTO = require("../DTO/Response");
 const router = express.Router();
-const multer = require("multer");
 const { Get, GetAll, Create, Update, Delete } = require("../Services/GiftItem");
-
-const upload = multer({ dest: "images/giftItems/" });
+const cloudinary = require("../config/Cloudinary");
+const { upload, dataUri } = require("../config/multer");
 const prisma = new PrismaClient();
 
 router.get("/:id", async (req, res) => {
@@ -35,8 +34,12 @@ router.get("/Get/All", async (req, res) => {
 
 router.post("/create", upload.single("image"), async (req, res) => {
   try {
-    const image = req.file.filename;
-    let data = await Create(req.body, image);
+    const file = dataUri(req).content;
+    const response = await cloudinary.uploader.upload(file, {
+      folder: "eventcircle",
+    });
+    let data = await Create(req.body, response.url);
+
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
@@ -45,10 +48,13 @@ router.post("/create", upload.single("image"), async (req, res) => {
   }
 });
 
-router.put("/:id", upload.single("image"), async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    const image = req.file ? req.file.filename : null;
-    let data = await Update(req.params.id, req.body, image);
+    const file = dataUri(req).content;
+    const response = await cloudinary.uploader.upload(file, {
+      folder: "eventcircle",
+    });
+    let data = await Update(req.params.id, req.body, response.url);
     if (data) {
       return res.status(200).send(data);
     }

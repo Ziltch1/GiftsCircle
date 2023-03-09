@@ -65,7 +65,7 @@ const GiftCard = ({
               key={gift.id}
             >
               <Image
-                src={`https://giftcircle-ws.onrender.com/images/giftItems/${gift?.image}`}
+                src={gift?.image}
                 w="279"
                 h="142px"
                 borderRadius={10}
@@ -80,7 +80,7 @@ const GiftCard = ({
               </Text>
               <Flex alignItems="center" justifyContent="space-between">
                 <Text color="#27272E" fontWeight={600} fontSize={18}>
-                  ₦ {gift.amount}
+                  ₦ {gift.amount} 
                 </Text>
                 <Button
                   fontSize={13}
