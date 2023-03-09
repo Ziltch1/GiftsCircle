@@ -60,52 +60,13 @@ const BasicForm = ({ step, setStep }) => {
       };
 
       try {
-        // if (newEvent) {
           const res = await CreateEventApi1(formBody);
           localStorage.setItem('newEvent', JSON.stringify(res.data));
           dispatch(setNewEvent(res.data));
           setStep(step + 1);
-          // const res = await UpdateEventApi1(UpdateForm);
-          // localStorage.setItem('newEvent', JSON.stringify(res.data));
-          // dispatch(setNewEvent(res.data));
-          // setStep(step + 1);
-        // } else {
-          // const res = await CreateEventApi1(formBody);
-          // localStorage.setItem('newEvent', JSON.stringify(res.data));
-          // dispatch(setNewEvent(res.data));
-          // setStep(step + 1);
-        // }
       } catch (error) {
         dispatch(createResponse(ErrorHandler(error)));
       }
-
-      // const UpdateForm = {
-      //   id: newEvent.id,
-      //   title: title === '' ? newEvent.title : title,
-      //   host: hosts === '' ? newEvent.hosts : hosts,
-      //   category: category === '' ? newEvent.category : category,
-      //   venue: venue === '' ? newEvent.venue : venue,
-      //   date: date === '' ? newEvent.date : date,
-      //   start_time: startTime === '' ? newEvent.start_time : startTime,
-      //   end_time: endTime === '' ? newEvent.end_time : endTime,
-      //   timezone: selectedTimezone.label,
-      // };
-
-      // try {
-      //   if (newEvent) {
-      //     const res = await UpdateEventApi1(UpdateForm);
-      //     localStorage.setItem('newEvent', JSON.stringify(res.data));
-      //     dispatch(setNewEvent(res.data));
-      //     setStep(step + 1);
-      //   } else {
-      //     const res = await CreateEventApi1(formBody);
-      //     localStorage.setItem('newEvent', JSON.stringify(res.data));
-      //     dispatch(setNewEvent(res.data));
-      //     setStep(step + 1);
-      //   }
-      // } catch (error) {
-      //   dispatch(createResponse(ErrorHandler(error)));
-      // }
     }else{
       toast({
         title: 'Error!',
@@ -154,9 +115,6 @@ const BasicForm = ({ step, setStep }) => {
                   _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setTitle(e.target.value)}
                 />
-                {/* {!isError ? '' : (
-                  <FormErrorMessage>Email is required.</FormErrorMessage>
-                )} */}
               </Box>
 
               <Box mb="5">

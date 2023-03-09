@@ -18,6 +18,7 @@ const Response = () => {
           status: response.type === 'Error' ? 'error' : 'success',
           duration: 9000,
           isClosable: true,
+          position: 'top'
         });
 
         dispatch(
