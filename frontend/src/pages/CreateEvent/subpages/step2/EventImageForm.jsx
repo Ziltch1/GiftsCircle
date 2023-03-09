@@ -15,6 +15,7 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
 
 
+
 const EventImageForm = ({step, setStep}) => {
   const { newEvent } = useSelector(state => state.event);
   const [image, setImage] = useState('');
