@@ -25,11 +25,9 @@ const SummaryForm = () => {
   const toast = useToast();
 
  
-
-
-
   const showModal = () => {
     if (percentage && publish || publishLater) {
+      
       setOpenModal(true);
       console.log(percentage);
     }else{
@@ -65,7 +63,7 @@ const SummaryForm = () => {
 
 
       <Box w='100%' bg='#EEEEEE' h='380px' borderRadius={5} mb='10' display='Flex' alignItems='center' justifyContent='Center'>
-        <Image src={newEvent?.image} w='100%' h='100%' />
+        <Image src={newEvent?.image} w='100%' h='100%' borderRadius={5} />
       </Box>
 
       <Box mb='10'>

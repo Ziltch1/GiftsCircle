@@ -35,7 +35,7 @@ const BasicForm = ({ step, setStep }) => {
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [selectedTimezone, setSelectedTimezone] = useState({});
+  const [selectedTimezone, setSelectedTimezone] = useState('');
   const toast = useToast()
 
   const showModal = () => {
@@ -56,6 +56,7 @@ const BasicForm = ({ step, setStep }) => {
         userId: user.id,
       };
 
+      console.log(selectedTimezone);
       try {
           const res = await CreateEventApi1(formBody);
           localStorage.setItem('newEvent', JSON.stringify(res.data));
