@@ -32,6 +32,10 @@ const DeliveryDetailsApi = data => {
   return api.post(`/delivery/create`, data)
 }
 
+const EventSummaryApi = data => {
+  return api.post(`/event/create3`, data)
+}
+
 export {
   GetUserEventsApi,
   GetEventGiftsApi,
@@ -41,4 +45,5 @@ export {
   DeleteEventApi,
   AddGiftApi,
   DeliveryDetailsApi,
+  EventSummaryApi,
 };

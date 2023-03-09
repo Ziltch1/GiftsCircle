@@ -7,12 +7,14 @@ import whatsapp from '../../components/assets/whatsapp.svg'
 import linkedin from '../../components/assets/linkedin.svg'
 import twitter from '../../components/assets/twitter.svg'
 import defaultImage from '../../components/assets/default-image.svg'
+import BackButton from '../CreateEvent/subpages/BackButton'
 
 const EventImages = ({newEvent}) => {
     const image = newEvent.image;
     const imageUrl = image
   return (
-        < Box mb = '6' >
+    <>
+        < Box mb = '6' mt='5'>
             <Flex justifyContent={'space-between'} alignItems='center'>
                 <Box bg='#EEEEEE' w='68%' h='444px' borderRadius={5} display='flex' alignItems={'center'} justifyContent='center' boxShadow={'md'}>
                   {newEvent.image ? <Image src={imageUrl} w='100%' h='100%' borderRadius={5} /> : <Image src={defaultImage} />}
@@ -80,6 +82,7 @@ const EventImages = ({newEvent}) => {
                 </Box>
             </Flex>
       </Box >
+    </>
   )
 }
 
