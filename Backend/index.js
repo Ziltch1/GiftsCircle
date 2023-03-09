@@ -25,7 +25,7 @@ app.use(
 app.get("/", async (req, res) => {
   return res.json({ msg: "hello world" });
 });
-app.use('/images', express.static('images'))
+// app.use('/images', express.static('images'))
 app.use("/api/user/", require("./Controllers/UserController"));
 app.use("/api/event/", require("./Controllers/EventController"));
 app.use("/api/giftItem/", require("./Controllers/GiftItemController"));
