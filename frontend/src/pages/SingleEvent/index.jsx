@@ -6,12 +6,14 @@ import EventGifts from './EventGifts';
 import EventGuests from './EventGuests';
 import { Box, Skeleton, Stack } from '@chakra-ui/react';
 import EventMedia from './EventMedia';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { GetUserEvents } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
+import BackButton from '../CreateEvent/subpages/BackButton';
 
 const Index = () => {
+  const navigate = useNavigate()
   const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
   const [newEvent, setNewEvent] = useState(null);
@@ -47,7 +49,10 @@ const Index = () => {
         </Stack>
       ) : (
         <>
-          <EventImages newEvent={newEvent} />
+          <Box>
+               <BackButton action={() => navigate(-1)} />
+                <EventImages newEvent={newEvent} />
+          </Box>
           <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
           <Box>
             {navPosition === 0 && <EventDetails newEvent={newEvent} />}

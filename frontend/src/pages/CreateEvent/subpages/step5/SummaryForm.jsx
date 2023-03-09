@@ -14,6 +14,11 @@ import React, {useState} from 'react'
 import errorImg from '../../../assets/errorImg.svg'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { EventSummaryApi } from '../../../../redux/axios/apis/events'
+import { dispatch } from '../../../../redux/store'
+import { createResponse } from '../../../../redux/utils/UtilSlice'
+import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler'
+
 
 const SummaryForm = () => {
 
@@ -27,7 +32,6 @@ const SummaryForm = () => {
  
   const showModal = () => {
     if (percentage && publish || publishLater) {
-      
       setOpenModal(true);
       console.log(percentage);
     }else{
@@ -46,7 +50,7 @@ const SummaryForm = () => {
 
   return (
     <Box mt='8' w='80%' mx='auto' mb='16'>
-      {openModal && <ConfirmationModal setOpenModal={setOpenModal} percentage={percentage} />}
+      {openModal && <ConfirmationModal setOpenModal={setOpenModal} percentage={percentage} publish={publish} publishLater={publishLater} />}
       <Flex alignItems='center' justifyContent='space-between' mb='5'>
         <Box>
           <Heading mb='2' fontSize={30} fontWeight='semibold'>Summary</Heading>
@@ -99,11 +103,25 @@ const SummaryForm = () => {
 export default SummaryForm
 
 
-export const ConfirmationModal = ({setOpenModal, percentage}) => {
+export const ConfirmationModal = ({setOpenModal, percentage, publish, publishLater}) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const [isChecked, setIsChecked] = useState(false)
+  const { newEvent } = useSelector(state => state.event);
 
-  const closeModal = () => {
+  const closeModal = async() => {
+    const formBody = {
+      id: newEvent.id,
+      published: publish,
+      percentDonation: percentage,
+      applyDonation: true
+    }
+    if(isChecked){
+      try {
+        await EventSummaryApi(formBody);
+      } catch (error) {
+        dispatch(createResponse(ErrorHandler(error))) 
+      }
+    }
     setOpenModal(false)
   }
 
