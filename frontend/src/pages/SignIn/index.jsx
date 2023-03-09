@@ -72,7 +72,7 @@ const SignIn = () => {
               lineHeight="40px"
               fontWeight="500"
             >
-              Welcome to Gift Circle!
+              Welcome to Event Circle!
             </Text>
 
             <Text
