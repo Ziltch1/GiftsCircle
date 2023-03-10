@@ -31,7 +31,7 @@ const Events = () => {
           <>
             {events.length === 0 ? (
               <Box
-                minH={300}
+                minH={320}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
