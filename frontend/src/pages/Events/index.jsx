@@ -24,7 +24,6 @@ const Events = () => {
   return (
     <Box bg="#F5F5F5" h="100%" pb="8">
       <WelcomeModal />
-      <Navbar />
       <Box w="90%" mx="auto">
         <Tabs />
         <Search />

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const Tabs = () => {
   return (
     <Box>
-            <Flex mt='8' justifyContent={'space-between'} alignItems='center' mb='8'>
+            <Flex pt='8' justifyContent={'space-between'} alignItems='center' mb='8'>
                   <Box>
                       <Heading size='lg'>Events</Heading>
                   </Box>

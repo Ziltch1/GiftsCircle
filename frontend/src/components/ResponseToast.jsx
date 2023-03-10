@@ -16,7 +16,7 @@ const Response = () => {
           title: response.title,
           description: response.message,
           status: response.type === 'Error' ? 'error' : 'success',
-          duration: 9000,
+          duration: 3000,
           isClosable: true,
           position: 'top'
         });
