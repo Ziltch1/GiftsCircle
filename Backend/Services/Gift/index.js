@@ -15,6 +15,7 @@ const Get = async (id) => {
 
 const GetAll = async () => {
   const gifts = await prisma.gift.findMany();
+
   await prisma.$disconnect();
   return gifts;
 };
@@ -23,6 +24,16 @@ const GetEventGifts = async (id) => {
   const gifts = await prisma.gift.findMany({
     where: {
       eventId: id,
+    },
+  });
+  await prisma.$disconnect();
+  return gifts;
+};
+
+const GetUserPurchasedGifts = async (id) => {
+  const gifts = await prisma.gift.findMany({
+    where: {
+      purchasedBy: id,
     },
   });
   await prisma.$disconnect();
@@ -121,4 +132,5 @@ module.exports = {
   Delete,
   CreateMany,
   EnableContribution,
+  GetUserPurchasedGifts
 };

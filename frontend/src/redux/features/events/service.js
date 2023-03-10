@@ -12,6 +12,7 @@ import {
   setNewEvent,
 } from './eventSlice';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
+import { GetUserPurchasedGiftsApi } from '../../axios/apis/gift';
 
 const GetUserEvents = id => async () => {
   dispatch(setLoading(false));
