@@ -17,7 +17,7 @@ const EventImages = ({newEvent}) => {
         < Box mb = '6' mt='5'>
             <Flex justifyContent={'space-between'} alignItems='center'>
                 <Box bg='#EEEEEE' w='68%' h='444px' borderRadius={5} display='flex' alignItems={'center'} justifyContent='center' boxShadow={'md'}>
-                  {newEvent.image ? <Image src={imageUrl} w='100%' h='100%' borderRadius={5} /> : <Image src={defaultImage} />}
+                  {newEvent.image ? <Image src={imageUrl} w='100%' h='100%' objectFit='cover' borderRadius={5} /> : <Image src={defaultImage} />}
                 </Box>
 
                 <Box w='30%' h='444px' bg='#EEEEEE' borderRadius={5} p='6' boxShadow='md'>
