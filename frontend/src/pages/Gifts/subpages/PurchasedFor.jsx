@@ -1,16 +1,22 @@
 import { Box, Heading, Text, HStack, Image, Flex, Button } from '@chakra-ui/react'
-import React from 'react'
+import React, {useEffect} from 'react'
 import calendarIcon from '../../../components/assets/calendar.svg';
 import giftIcon from '../../assets/giftIconSmall.svg';
 import image from '../../assets/sample.svg';
+import GiftDetails from './GiftDetails';
+import { useSelector } from "react-redux";
+import { GetUserEvents } from "../../../redux/features/events/service";
+import { GetGiftItems } from "../../../redux/features/gift/service";
+import { dispatch } from "../../../redux/store";
+import { Link } from 'react-router-dom';
 
 
-const PurchasedFor = () => {
-  const gifts = [1,2,3,4,5,6,7,8]
+const PurchasedFor = ({events}) => {
+
   return (
     <Box>
         {
-        gifts.length < 1 
+        events.length < 1 
             ? 
               <Box textAlign='center' w='100%' h='300px' display='flex' alignItems='center' justifyContent='center'>
                   <Box w='400px'>
@@ -20,7 +26,7 @@ const PurchasedFor = () => {
               </Box>
             :
             <Box w='100%' h='100%'>
-                {gifts.map((gift,index) => <GiftItem key={index} />)}
+                {events.map((event) => <GiftItem key={event.id} event={event} />)}
             </Box>
         }
     </Box>
@@ -30,7 +36,8 @@ const PurchasedFor = () => {
 export default PurchasedFor
 
 
-export const GiftItem = () => {
+export const GiftItem = ({event}) => {
+    const {title, date, descSummary,gifts, image, id} = event;
     return (
         <Box mt='8'>
             <Box bg="white" mb="5" py="7" px="8" borderRadius={5}>
@@ -53,33 +60,24 @@ export const GiftItem = () => {
                                         lineHeight={'26px'}
                                         mb="2"
                                     >
-                                        Wedding Ceremony of Andrew Tate
-                                        {/* {title} */}
+                                        {title}
                                     </Heading>
                                     <Text
                                         fontSize={14}
                                         textAlign="left"
                                         fontWeight={400}
                                         mb="2"
-                                    >
-                                        This is a playground
-                                    </Text>
+                                        dangerouslySetInnerHTML={{ __html: descSummary?.substr(0,100) }}
+                                    />
                                     <Flex fontSize={14} gap={5} color="#717171">
                                         <Flex alignItems={'center'} gap={1}>
                                             <Image src={calendarIcon} />
-                                            <Text>January 20th, 2025</Text>
-                                            {/* <Text>{new Date(date).toDateString()}</Text> */}
+                                            <Text>{new Date(date).toDateString()}</Text>
                                         </Flex>
                                         <Flex alignItems={'center'} gap={1}>
                                             <Image src={giftIcon} />
-                                            <Text>33 gift items attached</Text>
+                                            <Text>{gifts.length} gift items attached</Text>
                                         </Flex>
-                                        {/* <Flex alignItems={'center'} gap={1}>
-                                            <CheckIcon color={published ? '#00BFB2' : '#717171'} />{' '}
-                                            <Text color={published ? '#00BFB2' : '#717171'}>
-                                                {published ? 'Active' : 'saved to draft'}
-                                            </Text>
-                                        </Flex> */}
                                     </Flex>
                                 </Box>
                             </Box>
@@ -87,7 +85,7 @@ export const GiftItem = () => {
                     </Box>
 
                     <Box>
-                        {/* <Link to={`/dashboard/event_details/${id}`}> */}
+                        <Link to={`/dashboard/gift_details/${id}`}>
                             <Button
                                 bg="#00BFB2"
                                 color="white"
@@ -101,7 +99,7 @@ export const GiftItem = () => {
                             >
                                 View gifts
                             </Button>
-                        {/* </Link> */}
+                        </Link>
                     </Box>
                 </HStack>
             </Box>
