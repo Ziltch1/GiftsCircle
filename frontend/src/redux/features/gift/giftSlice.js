@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   giftItems: [],
+  userGiftItems : []
 };
 
 const GiftSlice = createSlice({
@@ -11,9 +12,12 @@ const GiftSlice = createSlice({
     setGiftItems: (state, action) => {
       state.giftItems = action.payload;
     },
+    setUserPurchasedGifts: (state, action) => {
+      state.userGiftItems = action.payload;
+    },
   },
 });
 
-export const { setGiftItems } = GiftSlice.actions;
+export const { setGiftItems, setUserPurchasedGifts } = GiftSlice.actions;
 
 export default GiftSlice.reducer;

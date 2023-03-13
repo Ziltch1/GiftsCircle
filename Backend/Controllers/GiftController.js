@@ -10,6 +10,7 @@ const {
   GetEventGifts,
   CreateMany,
   EnableContribution,
+  GetUserPurchasedGifts,
 } = require("../Services/Gift");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 
@@ -43,6 +44,17 @@ router.get("/Get/All", EnsureAuthenticated, async (req, res) => {
 router.get("/Get/EventGifts/:id", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await GetEventGifts(req.params.id);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send({ msg: "Request Failed" });
+  }
+});
+
+router.get("/Get/PurchasedBy/:id", EnsureAuthenticated, async (req, res) => {
+  try {
+    let data = await GetUserPurchasedGifts(req.params.id);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);

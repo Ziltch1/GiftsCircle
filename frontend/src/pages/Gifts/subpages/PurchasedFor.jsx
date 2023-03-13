@@ -30,10 +30,10 @@ const PurchasedFor = ({events}) => {
             </Box>
         }
     </Box>
-  )
-}
+  );
+};
 
-export default PurchasedFor
+export default PurchasedFor;
 
 
 export const GiftItem = ({event}) => {
