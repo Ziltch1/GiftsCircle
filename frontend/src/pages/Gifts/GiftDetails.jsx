@@ -9,12 +9,12 @@ import {
     Td,
     TableCaption,
     TableContainer, Skeleton, Heading, Stack } from "@chakra-ui/react";
-import Search from "../../../components/Search/Search";
-import BackButton from "../../CreateEvent/subpages/BackButton";
+import Search from "../../components/Search/Search";
+import BackButton from "../CreateEvent/subpages/BackButton";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { dispatch } from "../../../redux/store";
-import { GetUserEvents } from "../../../redux/features/events/service";
+import { dispatch } from "../../redux/store";
+import { GetUserEvents } from "../../redux/features/events/service";
 
 
 export default function GiftDetails() {
@@ -28,16 +28,17 @@ export default function GiftDetails() {
             const specificEvent = events.filter(event => event.id === id)[0];
             setNewEvent(specificEvent);
         } else {
+            console.log('something went wrong');
             // dispatch(GetUserEvents(userId));
         }
-    }, [events,]);
+    }, [events,id]);
 
     console.log(newEvent);
 
     return (
         <Box bg='#F5F5F5'>           
             <Box w='85%' mx='auto' pt='10' pb='5'>
-                <BackButton action={() => navigate('/dashboard')} />
+                <BackButton action={() => navigate(-1)} />
                 <Heading mb='7' mt='5' fontWeight='bold' fontSize={25}>{newEvent?.title}</Heading>
                 <Search />
 
