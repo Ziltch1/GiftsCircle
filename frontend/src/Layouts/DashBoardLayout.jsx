@@ -4,7 +4,7 @@ import Header from '../components/Header/Header';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Response from '../components/ResponseToast';
 import Navbar from '../components/Navbar/Navbar';
-import Gifts from '../pages/Gifts'
+import Gifts from '../pages/Gift'
 
 const DashboardLayout = () => {
   const token = sessionStorage.getItem('token');

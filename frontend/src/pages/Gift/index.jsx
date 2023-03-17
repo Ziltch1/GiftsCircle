@@ -9,6 +9,9 @@ import { dispatch } from '../../redux/store';
 import { GetUserEvents } from '../../redux/features/events/service';
 import EventItem from './components/EventItem';
 import { GetGiftItems } from '../../redux/features/gift/service';
+import GiftHeader from './GiftHeader';
+import GiftTabs from '../Gifts/GiftTabs';
+import SingleGift from '../Gifts'
 
 const Events = () => {
   const { user } = useSelector(state => state.user);
@@ -25,9 +28,11 @@ const Events = () => {
     <Box bg="#F5F5F5" h="100%" pb="8">
       <WelcomeModal />
       <Box w="90%" mx="auto">
-        <Tabs />
-        <Search />
-        <Box textAlign={'center'} mt="20px">
+        {/* <GiftHeader />
+        <GiftTabs />
+        <Search /> */}
+        <SingleGift />
+        {/* <Box textAlign={'center'} mt="20px">
           <>
             {events.length === 0 ? (
               <Box
@@ -50,6 +55,7 @@ const Events = () => {
               <Box>
                 {events.map(event => (
                   <EventItem
+                    event={event}
                     key={event.id}
                     id={event.id}
                     title={event.title}
@@ -62,7 +68,7 @@ const Events = () => {
               </Box>
             )}
           </>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );
