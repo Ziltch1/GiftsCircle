@@ -38,7 +38,7 @@ export default function GiftDetails() {
     return (
         <Box bg='#F5F5F5'>           
             <Box w='85%' mx='auto' pt='10' pb='5'>
-                <BackButton action={() => navigate(-1)} />
+                <BackButton action={() => navigate('/dashboard')} />
                 <Heading mb='7' mt='5' fontWeight='bold' fontSize={25}>{newEvent?.title}</Heading>
                 <Search />
 

@@ -5,6 +5,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Response from '../components/ResponseToast';
 import Navbar from '../components/Navbar/Navbar';
 import Gifts from '../pages/Gift'
+import Marketplace from '../pages/Marketplace'
 
 const DashboardLayout = () => {
   const token = sessionStorage.getItem('token');
@@ -26,6 +27,7 @@ const DashboardLayout = () => {
           <Navbar navPosition={navPosition} setNavPosition={setNavPosition} />
           {navPosition === 0 && <Outlet />}
           {navPosition === 1 && <Gifts />}
+          {navPosition === 2 && <Marketplace />}
         </Box>
       )}
     </>
