@@ -25,6 +25,7 @@ const EventItem = ({ id, image, title, descSummary, published, date }) => {
                 w="120px"
                 h="110px"
                 borderRadius={5}
+                objectFit='cover'
               />
             </Box>
             <Box>
