@@ -132,5 +132,5 @@ module.exports = {
   Delete,
   CreateMany,
   EnableContribution,
-  GetUserPurchasedGifts
+  GetUserPurchasedGifts,
 };

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   giftItems: [],
-  userGiftItems : []
+  userPurchasedGiftItems : []
 };
 
 const GiftSlice = createSlice({
@@ -13,7 +13,7 @@ const GiftSlice = createSlice({
       state.giftItems = action.payload;
     },
     setUserPurchasedGifts: (state, action) => {
-      state.userGiftItems = action.payload;
+      state.userPurchasedGiftItems = action.payload;
     },
   },
 });
