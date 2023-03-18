@@ -15,15 +15,14 @@ import EventDetails from './pages/SingleEvent';
 import Events from './pages/Events';
 import DashboardLayout from './Layouts/DashBoardLayout';
 import SingleEvent from './pages/SingleEvent';
-import CreateEvent from './pages/CreateEvent'
-import Gift from './pages/Gift'
+import CreateEvent from './pages/CreateEvent';
+import Gift from './pages/Gift';
 import GiftDetails from './pages/Gifts/GiftDetails';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        
         <Route path="/" element={<Homepage />} />
         <Route element={<AuthLayout />} path="/">
           <Route path="signin" element={<SignIn />} />
@@ -39,10 +38,16 @@ function App() {
         </Route>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index path="" element={<Events />} />
-          {/* <Route path='/dashboard/gifts' element={<Gift />} /> */}
+          <Route path="/dashboard/gifts" element={<Gift />} />
           <Route path="/dashboard/event_details" element={<EventDetails />} />
-          <Route path="/dashboard/event_details/:id" element={<SingleEvent />} />
-          <Route path="/dashboard/gift_details/:id" element={<GiftDetails />} />
+          <Route
+            path="/dashboard/event_details/:id"
+            element={<SingleEvent />}
+          />
+          <Route
+            path="/dashboard/gift/gift_details/:id"
+            element={<GiftDetails />}
+          />
         </Route>
         {/* <Route path="/gift_details/:id" element={<GiftDetails />} /> */}
         <Route path="/create_event" element={<CreateEvent />} />

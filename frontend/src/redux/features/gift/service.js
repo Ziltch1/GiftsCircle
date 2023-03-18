@@ -22,7 +22,6 @@ const GetGiftItems = () => async () => {
 const GetUserPurchasedGifts = id => async () => {
   try {
     const res = await GetUserPurchasedGiftsApi(id);
-    console.log(res.data);
     dispatch(setUserPurchasedGifts(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));

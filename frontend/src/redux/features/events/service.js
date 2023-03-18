@@ -12,7 +12,6 @@ import {
   setNewEvent,
 } from './eventSlice';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
-import { GetUserPurchasedGiftsApi } from '../../axios/apis/gift';
 
 const GetUserEvents = id => async () => {
   dispatch(setLoading(false));
@@ -30,7 +29,6 @@ const GetUserEvents = id => async () => {
 const GetEventGifts = id => async () => {
   try {
     const res = await GetEventGiftsApi(id);
-    console.log(res.data)
     dispatch(setEventGifts(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
