@@ -12,8 +12,12 @@ const GiftItem = ({ gift, setData }) => {
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
 
   const HandleDelete = () => {
-    dispatch(DeleteGiftItems(gift.id, gift.eventId));
-    setData(prev => prev.filter(x => x.id !== gift.id));
+    if (gift.id) {
+      dispatch(DeleteGiftItems(gift.id, gift.eventId));
+      setData(prev => prev.filter(x => x.id !== gift.id));
+    } else {
+      setData(prev => prev.filter(x => x.giftItemId !== giftItem.id));
+    }
   };
 
   return (

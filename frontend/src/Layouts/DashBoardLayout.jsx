@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 import Header from '../components/Header/Header';
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -8,7 +8,6 @@ import Navbar from '../components/Navbar/Navbar';
 const DashboardLayout = () => {
   const token = sessionStorage.getItem('token');
   const navigate = useNavigate();
-  const [navPosition, setNavPosition] = useState(0);
 
   useEffect(() => {
     if (!token) {
@@ -22,7 +21,7 @@ const DashboardLayout = () => {
         <Box>
           <Response />
           <Header />
-          <Navbar navPosition={navPosition} setNavPosition={setNavPosition} />
+          <Navbar />
           <Outlet />
         </Box>
       )}

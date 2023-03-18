@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, UnorderedList, ListItem, HStack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = ({ navPosition, setNavPosition }) => {
+const Navbar = () => {
   const navigate = useNavigate();
+  const [navPosition, setNavPosition] = useState(0);
   const tabs = ['Events', 'Gifts', 'Marketplace', 'Deliveries', 'Settings'];
   const handleClick = index => {
     setNavPosition(index);
@@ -22,6 +23,7 @@ const Navbar = ({ navPosition, setNavPosition }) => {
         break;
     }
   };
+
   return (
     <Box boxShadow={'md'} bg="white" w="100%" h="60px" pt="7">
       <Box w="90%" mx="auto">

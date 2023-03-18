@@ -6,19 +6,23 @@ import GiftDrawer from './subpages/GiftDrawer';
 
 const GiftHeader = ({ setOpenDrawer, openDrawer, giftItems }) => {
   const { eventGifts } = useSelector(state => state.event);
-  const [count, setCount] = useState(0);
+  const [data, setData] = useState([]);
   const showDrawer = () => {
     setOpenDrawer(true);
   };
 
   useEffect(() => {
-    setCount(eventGifts.length);
-  }, [eventGifts]);
+    setData([...eventGifts, ...giftItems]);
+  }, [eventGifts, giftItems]);
 
   return (
     <Box>
       {openDrawer && (
-        <GiftDrawer setOpenDrawer={setOpenDrawer} giftItems={giftItems} />
+        <GiftDrawer
+          setOpenDrawer={setOpenDrawer}
+          data={data}
+          setData={setData}
+        />
       )}
       <Flex mb="5" alignItems="center" justifyContent="space-between">
         <Box>
@@ -56,7 +60,7 @@ const GiftHeader = ({ setOpenDrawer, openDrawer, giftItems }) => {
                 alignItems="center"
                 justifyContent="center"
               >
-                {giftItems.length + count}
+                {data.length}
               </Text>
             </Button>
             <Button
