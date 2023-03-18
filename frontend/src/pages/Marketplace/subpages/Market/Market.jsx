@@ -10,11 +10,11 @@ const Market = () => {
             <Box mb='8'>
                 <Flex justifyContent='space-between' alignItems='center'>
                     <Box>
-                        <Heading fontWeight='semibold' fontSize={30} mb='2'>Marketplace</Heading>
-                        <Text fontSize={14}>This is where you can buy some things you need for your event for your self</Text>
+                        <Heading  fontSize={30} mb='2'>Marketplace</Heading>
+                        <Text fontSize={14} color='#717171'>This is where you can buy some things you need for your event for your self</Text>
                     </Box>
 
-                    <Box bg='#CCF2F0' w='155px' h='50px' py='4' px='6' cursor='pointer' borderRadius={5}>
+                    <Box bg='#CCF2F0' w='155px' h='45px' py='3' px='6' cursor='pointer' borderRadius={5}>
                     <Flex gap={2} fontSize={14}>
                         <Image src={cartIcon} />
                         <Text>Cart</Text>
