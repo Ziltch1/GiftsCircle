@@ -3,6 +3,7 @@ import React from 'react'
 import asoebi from '../assets/asoebi.svg'
 import sourvenir from '../assets/sourvenirs.svg'
 import giftImage from '../assets/giftImage.svg'
+import { Link } from 'react-router-dom'
 
 const MarketplaceOptions = () => {
   return (
@@ -13,9 +14,11 @@ const MarketplaceOptions = () => {
               <ImageCard image={giftImage} text='Gift items' />
         </Flex>
 
-        <Box textAlign='center'>
-            <Button fontWeight='medium' fontSize={14} color='white' bg='#00BFB2' h='50px' w='210px' _hover={{ bg: '#00BFB2' }}>Proceed to market</Button>
-        </Box>
+       <Link to='/dashboard/marketplace/market'>
+            <Box textAlign='center'>
+                <Button fontWeight='medium' fontSize={14} color='white' bg='#00BFB2' h='50px' w='210px' _hover={{ bg: '#00BFB2' }}>Proceed to market</Button>
+            </Box>
+        </Link>
     </Box>
   )
 }
