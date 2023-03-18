@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import FilterButtons from './FilterButtons';
 import GiftHeader from './GiftHeader';
 import Search from './Search';

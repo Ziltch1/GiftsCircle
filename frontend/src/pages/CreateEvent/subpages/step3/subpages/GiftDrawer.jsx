@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -12,21 +12,13 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import GiftItem from './GiftItem';
-import { useSelector } from 'react-redux';
 
-const GiftDrawer = ({ setOpenDrawer, giftItems }) => {
-  const { eventGifts } = useSelector(state => state.event);
-  const [data, setData] = useState([]);
-
+const GiftDrawer = ({ setOpenDrawer, data, setData }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const btnRef = React.useRef();
   const closeModal = () => {
     setOpenDrawer(false);
   };
-
-  useEffect(() => {
-    setData([...eventGifts, ...giftItems]);
-  }, [eventGifts, giftItems]);
 
   return (
     <Box>

@@ -6,22 +6,22 @@ import {
   FormLabel,
   Heading,
   Text,
-  Select, useToast
+  Select,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import BackButton from '../BackButton';
 import TimezoneSelect from 'react-timezone-select';
 import HostModal from './HostModal';
 import { useSelector } from 'react-redux';
-import {
-  CreateEventApi1,
-} from '../../../../redux/axios/apis/events';
+import { CreateEventApi1 } from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import FormFooter from '../FormFooter';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { useNavigate } from 'react-router-dom';
+import { GetEventGifts } from '../../../../redux/features/events/service';
 
 const BasicForm = ({ step, setStep }) => {
   const navigate = useNavigate();
@@ -36,15 +36,19 @@ const BasicForm = ({ step, setStep }) => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [selectedTimezone, setSelectedTimezone] = useState('');
-  const toast = useToast()
-
-  const showModal = () => {
-    setOpenModal(true);
-  };
-
-  const HandleSubmit = async (e) => {
-    if(title && hosts && category && venue && date && startTime && endTime && selectedTimezone){
-       const formBody = {
+  const toast = useToast();
+  const HandleSubmit = async e => {
+    if (
+      title &&
+      hosts &&
+      category &&
+      venue &&
+      date &&
+      startTime &&
+      endTime &&
+      selectedTimezone
+    ) {
+      const formBody = {
         title,
         host: hosts,
         category,
@@ -58,24 +62,25 @@ const BasicForm = ({ step, setStep }) => {
 
       console.log(selectedTimezone);
       try {
-          const res = await CreateEventApi1(formBody);
-          localStorage.setItem('newEvent', JSON.stringify(res.data));
-          dispatch(setNewEvent(res.data));
-          setStep(step + 1);
+        const res = await CreateEventApi1(formBody);
+        localStorage.setItem('newEvent', JSON.stringify(res.data));
+        dispatch(setNewEvent(res.data));
+        dispatch(GetEventGifts(res.data.id));
+        setStep(step + 1);
       } catch (error) {
         dispatch(createResponse(ErrorHandler(error)));
       }
-    }else{
+    } else {
       toast({
         title: 'Error!',
-        description: "Please fill all fields",
+        description: 'Please fill all fields',
         status: 'error',
         duration: 3000,
         isClosable: true,
-        position: 'top'
-      }) 
-    };
-  }
+        position: 'top',
+      });
+    }
+  };
 
   const BackAction = () => {
     navigate('/dashboard');
@@ -151,7 +156,9 @@ const BasicForm = ({ step, setStep }) => {
                 >
                   <option value="Birthday">Birthday</option>
                   <option value="Naming Ceremony">Naming Ceremony</option>
-                  <option value="Retirement Ceremony">Retirement Ceremony</option>
+                  <option value="Retirement Ceremony">
+                    Retirement Ceremony
+                  </option>
                   <option value="Graduation">Graduation Ceremony</option>
                   <option value="Induction">Induction Ceremony</option>
                   <option value="Wedding">Wedding Ceremony</option>
