@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Text } from '@chakra-ui/react';
 import Search from '../../components/Search/Search';
 import Navbar from '../../components/Navbar/Navbar';
@@ -9,10 +9,13 @@ import { dispatch } from '../../redux/store';
 import { GetUserEvents } from '../../redux/features/events/service';
 import EventItem from './components/EventItem';
 import { GetGiftItems } from '../../redux/features/gift/service';
+import Events from './components/Events'
+import EventHistory from './components/EventHistory';
 
-const Events = () => {
+const Index = () => {
   const { user } = useSelector(state => state.user);
   const { events } = useSelector(state => state.event);
+  const [navPosition, setNavPosition] = useState(0)
 
   useEffect(() => {
     if (user) {
@@ -25,47 +28,15 @@ const Events = () => {
     <Box bg="#F5F5F5" h="100%" pb="8">
       <WelcomeModal />
       <Box w="90%" mx="auto">
-        <Tabs />
+        <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
         <Search />
-        <Box textAlign={'center'} mt="20px">
-          <>
-            {events.length === 0 ? (
-              <Box
-                minH={320}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Box>
-                  <Text fontSize={30} fontWeight="medium" mb="3">
-                    Create your first event
-                  </Text>
-                  <Text fontSize={14} mb="3">
-                    Don’t waste time, click the button at right corner to <br />{' '}
-                    create your event attatch your gift list
-                  </Text>
-                </Box>
-              </Box>
-            ) : (
-              <Box>
-                {events.map(event => (
-                  <EventItem
-                    key={event.id}
-                    id={event.id}
-                    title={event.title}
-                    descSummary={event.summary}
-                    date={event.date}
-                    image={event?.image}
-                    published={event.published}
-                  />
-                ))}
-              </Box>
-            )}
-          </>
+        <Box>
+          {navPosition === 0 && <Events event={events} />}
+          {navPosition === 1 && <EventHistory events={events} />}
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default Events;
+export default Index;

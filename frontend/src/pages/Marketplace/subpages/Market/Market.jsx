@@ -1,9 +1,18 @@
 import { Box, Heading, Text, Image, Flex } from '@chakra-ui/react'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
 import Search from '../../../../components/Search/Search'
 import cartIcon from '../../../assets/cart.svg'
+import GiftCard from './GiftCard'
 
 const Market = () => {
+  const {giftItems} = useSelector(state => state.gift);
+  const [data, setData] = useState([]); 
+  useEffect(() => {
+    if(giftItems.length > 0){
+        setData([...giftItems]);
+    }
+  }, [giftItems])
   return (
     <Box bg='#F5F5F5'>
         <Box minH='600px' w='90%' mx='auto' pt='8'>
@@ -23,10 +32,17 @@ const Market = () => {
                     </Box>
                 </Flex>
             </Box>
-            <Search />
+            <Box mb='7'>
+                <Search />
+            </Box>
+            <Flex  justifyContent='space-between' alignItems='center'>
+                {data.map((gift) => <GiftCard id={gift.id} details={gift.details} image={gift.image} amount={gift.amount}  />)}
+            </Flex>
         </Box>
     </Box>
   )
 }
 
 export default Market
+
+

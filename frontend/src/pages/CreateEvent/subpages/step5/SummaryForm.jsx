@@ -15,7 +15,7 @@ import {
   ModalCloseButton,
   Image,
   useDisclosure,
-  useToast,
+  useToast, RadioGroup, Radio, Stack
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import errorImg from '../../../assets/errorImg.svg';
@@ -25,17 +25,18 @@ import { EventSummaryApi } from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
+import {DropdownList} from 'react-widgets'
+import "react-widgets/styles.css";
 
 const SummaryForm = () => {
   const { newEvent } = useSelector(state => state.event);
   const [openModal, setOpenModal] = useState(false);
   const [percentage, setPercentage] = useState('');
-  const [publish, setPublished] = useState(false);
-  const [publishLater, setPublishLater] = useState(false);
+  const [publish, setPublish] = useState('publish');
   const toast = useToast();
 
   const showModal = () => {
-    if ((percentage && publish) || publishLater) {
+    if (percentage && publish) {
       setOpenModal(true);
       console.log(percentage);
     } else {
@@ -57,7 +58,6 @@ const SummaryForm = () => {
           setOpenModal={setOpenModal}
           percentage={percentage}
           publish={publish}
-          publishLater={publishLater}
         />
       )}
       <Flex alignItems="center" justifyContent="space-between" mb="5">
@@ -95,22 +95,12 @@ const SummaryForm = () => {
         <Heading mb="4" fontWeight={600} fontSize={18}>
           When should we publish your event?
         </Heading>
-        <Box mb="2" display="flex" alignItems="center" gap={2}>
-          <Checkbox
-            colorScheme="teal"
-            checked={publish}
-            onChange={e => setPublished(e.target.checked)}
-          />
-          <Text fontSize={14}>Publish now</Text>
-        </Box>
-        <Box mb="2" display="flex" alignItems="center" gap={2}>
-          <Checkbox
-            colorScheme="teal"
-            checked={publishLater}
-            onChange={e => setPublishLater(e.target.checked)}
-          />
-          <Text fontSize={14}>Schedule for later</Text>
-        </Box>
+        <RadioGroup onChange={setPublish} value={publish} spacing={2}>
+          <Stack direction='column'>
+            <Radio value='publish'>Publish now</Radio>
+            <Radio value='publish later'>Publish later</Radio>
+          </Stack>
+        </RadioGroup>
       </Box>
 
       <Box w="500px" mb="12">
@@ -120,7 +110,14 @@ const SummaryForm = () => {
         <FormLabel fontWeight={550} fontSize={14}>
           How many percentage do you want to add?
         </FormLabel>
-        <Input
+        <Box w='250px' mb='3'>
+          <DropdownList
+            value={percentage}
+            onChange={(nextValue) => setPercentage(nextValue)}
+            data={["0.5%", "1%", "1.5%", '2%']}
+          />
+        </Box>
+        {/* <Input
           type="text"
           bg="#F4F4F4"
           placeholder="e.g 2%"
@@ -128,7 +125,7 @@ const SummaryForm = () => {
           mb="3"
           value={percentage}
           onChange={e => setPercentage(e.target.value)}
-        />
+        /> */}
         <Box mb="2" display="flex" alignItems="center" gap={2}>
           <Checkbox isChecked={true} />
           <Text fontSize={14}>
