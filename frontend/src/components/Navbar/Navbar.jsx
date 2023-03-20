@@ -15,6 +15,9 @@ const Navbar = () => {
       case 1:
         navigate('/dashboard/gifts');
         break;
+      case 2:
+        navigate('/dashboard/marketplace');
+        break;
 
       default:
         break;

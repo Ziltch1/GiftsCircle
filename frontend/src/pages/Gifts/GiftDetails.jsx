@@ -71,16 +71,16 @@ export default function GiftDetails() {
                     x => x.id === ele.giftItemId
                   )[0];
                   return (
-                    <Tr>
+                    <Tr fontSize={13} textAlign='center'>
                       <Td>{giftItem.title}</Td>
                       <Td>Taiwo</Td>
-                      <Td>01-10-2021</Td>
+                      <Td>June 12th, 2022</Td>
                       <Td>{ele.quantity}</Td>
                       <Td>{ele.status}</Td>
                       <Td isNumeric>
                         {parseInt(giftItem.amount) - ele.amountPaid}
                       </Td>
-                      <Td>inches</Td>
+                      <Td>Complete payment</Td>
                     </Tr>
                   );
                 })}

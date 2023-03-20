@@ -18,6 +18,8 @@ import SingleEvent from './pages/SingleEvent';
 import CreateEvent from './pages/CreateEvent';
 import Gift from './pages/Gift';
 import GiftDetails from './pages/Gifts/GiftDetails';
+import Marketplace from './pages/Marketplace'
+import Market from './pages/Marketplace/subpages/Market/Market'
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index path="" element={<Events />} />
           <Route path="/dashboard/gifts" element={<Gift />} />
+          <Route path="/dashboard/marketplace" element={<Marketplace />} />
+          <Route path="/dashboard/marketplace/market" element={<Market />} />
           <Route path="/dashboard/event_details" element={<EventDetails />} />
           <Route
             path="/dashboard/event_details/:id"
