@@ -53,12 +53,16 @@ const DeliveryDetailsForm = ({step, setStep}) => {
     }
   }
 
+  const backAction = () => {
+    setStep(3);
+  }
+
   return (
     <>
     <Box h="100%" overflow="auto" mb="16" mt='10' w="750px" mx="auto">
       <Flex alignItems="start" justifyContent="space-between">
         <Box>
-          <BackButton onClick={() => setStep(step - 1)} />
+          <BackButton action={backAction} />
         </Box>
 
         <Box w="500px" mx="auto">
