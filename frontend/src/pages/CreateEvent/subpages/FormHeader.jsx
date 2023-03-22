@@ -17,7 +17,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DeleteEventApi } from '../../../redux/axios/apis/events';
 import { setNewEvent } from '../../../redux/features/events/eventSlice';
-import { DeleteEvent } from '../../../redux/features/events/service';
 import { dispatch } from '../../../redux/store';
 import errorImg from '../../assets/errorImg.svg';
 
