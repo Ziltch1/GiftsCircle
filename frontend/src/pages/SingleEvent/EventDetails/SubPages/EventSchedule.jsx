@@ -24,8 +24,7 @@ const EventSchedule = ({ newEvent }) => {
           <Heading fontWeight={500} fontSize="24px" mb="4">
             {newEvent.title}
           </Heading>
-          <Text fontSize={14} lineHeight="27px" mb="4" dangerouslySetInnerHTML={{ __html: newEvent.descSummary }} />
-          <Box w="610px" bg="#EEEEEE" h="270px" borderRadius={10} mb="7"></Box>
+          <Text fontSize={14.5} lineHeight="27px" mb="4" dangerouslySetInnerHTML={{ __html: newEvent.descSummary }} />
         </Box>
 
         <Box w="295px" h="auto">
