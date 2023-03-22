@@ -12,7 +12,6 @@ import {
 import React, { useState } from 'react';
 import BackButton from '../BackButton';
 import TimezoneSelect from 'react-timezone-select';
-import HostModal from './HostModal';
 import { useSelector } from 'react-redux';
 import { CreateEventApi1 } from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
@@ -20,24 +19,22 @@ import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import FormFooter from '../FormFooter';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
-import { useNavigate } from 'react-router-dom';
 import { GetEventGifts } from '../../../../redux/features/events/service';
 import { CancelModal } from '../FormHeader';
-import {DropdownList, DatePicker} from 'react-widgets'
 
 const BasicForm = ({ step, setStep }) => {
-  const navigate = useNavigate();
+  const event = JSON.parse(localStorage.getItem('newEvent'));
   const { user } = useSelector(state => state.user);
   const { newEvent } = useSelector(state => state.event);
   const [openModal, setOpenModal] = useState(false);
-  const [title, setTitle] = useState('');
-  const [hosts, setHosts] = useState('');
-  const [category, setCategory] = useState('');
-  const [venue, setVenue] = useState('');
-  const [date, setDate] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [selectedTimezone, setSelectedTimezone] = useState('');
+  const [title, setTitle] = useState(event ? event.title : '');
+  const [hosts, setHosts] = useState(event ? event.host : '');
+  const [category, setCategory] = useState(event ? event.category : '');
+  const [venue, setVenue] = useState(event ? event.venue : '');
+  const [date, setDate] = useState(event ? event.date : '');
+  const [startTime, setStartTime] = useState(event ? event.startTime : '');
+  const [endTime, setEndTime] = useState(event ? event.endTime : '');
+  const [selectedTimezone, setSelectedTimezone] = useState(event ? event.timezone :'');
   const toast = useToast();
   const HandleSubmit = async e => {
     if (
@@ -110,9 +107,7 @@ const BasicForm = ({ step, setStep }) => {
                 </FormLabel>
                 <Input
                   type="text"
-                  placeholder={
-                    newEvent ? newEvent.title : 'Enter the name of the event'
-                  }
+                  placeholder="Enter the name of the event"
                   fontSize={14}
                   bg="#FAFAFA"
                   color="black"
