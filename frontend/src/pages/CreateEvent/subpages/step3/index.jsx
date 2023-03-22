@@ -9,6 +9,7 @@ import { CreateManyGiftsApi } from '../../../../redux/axios/apis/gift';
 import { dispatch } from '../../../../redux/store';
 import { GetEventGifts } from '../../../../redux/features/events/service';
 import { useSelector } from 'react-redux';
+import BackButton from '../BackButton';
 
 const Index = ({ step, setStep }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -27,9 +28,14 @@ const Index = ({ step, setStep }) => {
     }
   };
 
+  const BackAction = () => {
+    setStep(2);
+  };
+
   return (
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">
+        <BackButton action={BackAction} />
         <GiftHeader
           openDrawer={openDrawer}
           setOpenDrawer={setOpenDrawer}

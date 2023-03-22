@@ -1,8 +1,7 @@
 import { Box } from '@chakra-ui/react'
-import React, {useState} from 'react'
+import React from 'react'
 
 const Stepper = ({step}) => {
-  const [level, setLevel] = useState(step);
   const currentStep = step * 20;
   return (
     <Box w='100%' bg='lightgray' h='1.5px'>
