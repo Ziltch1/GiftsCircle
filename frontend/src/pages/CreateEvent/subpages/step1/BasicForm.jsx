@@ -22,6 +22,8 @@ import FormFooter from '../FormFooter';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { useNavigate } from 'react-router-dom';
 import { GetEventGifts } from '../../../../redux/features/events/service';
+import { CancelModal } from '../FormHeader';
+import {DropdownList, DatePicker} from 'react-widgets'
 
 const BasicForm = ({ step, setStep }) => {
   const navigate = useNavigate();
@@ -83,7 +85,7 @@ const BasicForm = ({ step, setStep }) => {
   };
 
   const BackAction = () => {
-    navigate('/dashboard');
+    setOpenModal(true);
   };
 
   return (
@@ -209,11 +211,18 @@ const BasicForm = ({ step, setStep }) => {
                 <FormLabel fontWeight="semibold" fontSize={13.5}>
                   Choose a date
                 </FormLabel>
+                {/* <DatePicker
+                  // defaultValue={new Date()}
+                  // valueFormat={{ dateStyle: "medium" }}
+                  value={date}
+                  onChange={value => setDate(value)}
+                /> */}
                 <Input
                   type="date"
                   fontSize={14}
                   bg="#FAFAFA"
                   color="black"
+                  value={date}
                   _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setDate(e.target.value)}
                 />
@@ -272,7 +281,7 @@ const BasicForm = ({ step, setStep }) => {
           </Box>
         </Flex>
 
-        {openModal && <HostModal setOpenModal={setOpenModal} />}
+        {openModal && <CancelModal setOpenModal={setOpenModal} />}
       </Box>
 
       <FormFooter action={HandleSubmit} step={step} />

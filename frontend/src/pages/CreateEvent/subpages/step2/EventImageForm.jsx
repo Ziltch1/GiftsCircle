@@ -96,7 +96,7 @@ const EventImageForm = ({step, setStep}) => {
     
       <Box mt="8" h="100%" mb='28' maxW="750px" mx="auto">
         <Flex alignItems="start" justifyContent="space-between" flexWrap="wrap">
-          <BackButton onClick={() => setStep(step - 1)} />
+          <BackButton onClick={() => setStep(1 )} />
           <Box maxW="500px" mx="auto" fontSize={14}>
             <Box mb="5">
               <Heading mb="2" fontSize="25px">

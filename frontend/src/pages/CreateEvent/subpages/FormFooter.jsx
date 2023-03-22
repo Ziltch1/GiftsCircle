@@ -1,22 +1,26 @@
 import { Box, Button } from '@chakra-ui/react';
-import React from 'react';
+import React,{useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { DeleteEvent } from '../../../redux/features/events/service';
 import { dispatch } from '../../../redux/store';
+import { CancelModal } from './FormHeader';
 
 const FormFooter = ({ step, action }) => {
   const navigate = useNavigate();
   const { newEvent } = useSelector(state => state.event);
+  const [openModal, setOpenModal] = useState(false);
   const DiscardAction = () => {
     if (newEvent) {
       dispatch(DeleteEvent(newEvent.id));
     }
-
-    navigate('/dashboard');
+    setOpenModal(true);
+    // navigate('/dashboard');
   };
 
   return (
+    <>
+      {openModal && <CancelModal setOpenModal={setOpenModal} />}
     <Box
       borderTop="1px solid lightgray"
       bgColor="#fff"
@@ -47,6 +51,7 @@ const FormFooter = ({ step, action }) => {
         </Button>
       </Box>
     </Box>
+    </>
   );
 };
 
