@@ -22,6 +22,7 @@ import errorImg from '../../assets/errorImg.svg';
 
 const FormHeader = ({ step }) => {
   const [openModal, setOpenModal] = useState(false);
+  const texts = ['Basic Info', 'Event Page', 'Add Gift list', 'Add delivery details', 'Event confirmation']
   return (
     <>
       {openModal && <CancelModal setOpenModal={setOpenModal} />}
@@ -39,7 +40,7 @@ const FormHeader = ({ step }) => {
               </Heading>
             </Flex>
           </Box>
-          <Box fontSize={14}>Step {step}/6 - Basic Info</Box>
+          <Box fontSize={14}>Step {step}/5 - <span style={{ color: '#00BFB2'}}>{texts[step-1]}</span></Box>
         </Flex>
       </Box>
     </>

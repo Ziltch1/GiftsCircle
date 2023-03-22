@@ -27,8 +27,9 @@ import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import {DropdownList} from 'react-widgets'
 import "react-widgets/styles.css";
+import BackButton from '../BackButton';
 
-const SummaryForm = () => {
+const SummaryForm = ({setStep}) => {
   const { newEvent } = useSelector(state => state.event);
   const [openModal, setOpenModal] = useState(false);
   const [percentage, setPercentage] = useState('');
@@ -51,6 +52,10 @@ const SummaryForm = () => {
     }
   };
 
+  const backAction = () => {
+    setStep(4);
+  }
+
   return (
     <Box mt="8" w="80%" mx="auto" mb="16">
       {openModal && (
@@ -60,7 +65,10 @@ const SummaryForm = () => {
           publish={publish}
         />
       )}
-      <Flex alignItems="center" justifyContent="space-between" mb="5">
+      <Box>
+        <BackButton action={backAction} />
+      </Box>
+      <Flex alignItems="center" justifyContent="space-between" mb="5" mt='3'>
         <Box>
           <Heading mb="2" fontSize={30} fontWeight="semibold">
             Summary
@@ -88,7 +96,7 @@ const SummaryForm = () => {
         alignItems="center"
         justifyContent="Center"
       >
-        <Image src={newEvent?.image} w="100%" h="100%" borderRadius={5} />
+        <Image src={newEvent?.image} w="100%" h="100%" borderRadius={5} objectFit='cover' />
       </Box>
 
       <Box mb="10">

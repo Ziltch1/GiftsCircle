@@ -16,7 +16,7 @@ const GiftHeader = ({ setOpenDrawer, openDrawer, giftItems }) => {
   }, [eventGifts, giftItems]);
 
   return (
-    <Box>
+    <Box my='5'>
       {openDrawer && (
         <GiftDrawer
           setOpenDrawer={setOpenDrawer}
