@@ -127,7 +127,10 @@ router.post("/sendResetEmail", async (req, res) => {
         .status(201)
         .send(ResponseDTO("Success", "Email sent successfully"));
     }
-    return res.status(400).send(ResponseDTO("Failed", "User not found"));
+    else{
+      return res.status(400).send(ResponseDTO("Failed", "User not found"));
+    }
+    
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

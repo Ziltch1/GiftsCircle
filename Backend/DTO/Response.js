@@ -1,5 +1,5 @@
-function ResponseDTO(status, message) {
-  return { status: status, message: message };
+function ResponseDTO(status, message){
+    return {status: status, message: message}
 }
 
-export default ResponseDTO;
+module.exports = ResponseDTO;
