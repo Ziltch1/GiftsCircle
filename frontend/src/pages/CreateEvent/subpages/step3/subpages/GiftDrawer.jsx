@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import GiftItem from './GiftItem';
 
-const GiftDrawer = ({ setOpenDrawer, data, setData }) => {
+const GiftDrawer = ({ setOpenDrawer, data, setData, setAddedGiftItems, setGiftItems }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const btnRef = React.useRef();
   const closeModal = () => {
@@ -45,7 +45,13 @@ const GiftDrawer = ({ setOpenDrawer, data, setData }) => {
 
           <DrawerBody>
             {data.map(ele => (
-              <GiftItem gift={ele} key={data.indexOf(ele)} setData={setData} />
+              <GiftItem
+                gift={ele}
+                key={data.indexOf(ele)}
+                setData={setData}
+                setAddedGiftItems={setAddedGiftItems}
+                setGiftItems={setGiftItems}
+              />
             ))}
           </DrawerBody>
         </DrawerContent>

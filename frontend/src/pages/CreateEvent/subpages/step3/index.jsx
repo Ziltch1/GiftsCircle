@@ -31,7 +31,6 @@ const Index = ({ step, setStep }) => {
   const BackAction = () => {
     setStep(2);
   };
-
   return (
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">
@@ -40,6 +39,8 @@ const Index = ({ step, setStep }) => {
           openDrawer={openDrawer}
           setOpenDrawer={setOpenDrawer}
           giftItems={giftItems}
+          setAddedGiftItems={setAddedGiftItems}
+          setGiftItems={setGiftItems}
         />
         <Search />
         <FilterButtons />

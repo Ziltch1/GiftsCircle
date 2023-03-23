@@ -6,7 +6,7 @@ import { DeleteGiftItems } from '../../../../../redux/features/gift/service';
 import { dispatch } from '../../../../../redux/store';
 import itemImage from '../../../../assets/giftItemImage.svg';
 
-const GiftItem = ({ gift, setData }) => {
+const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems }) => {
   const { giftItems } = useSelector(state => state.gift);
 
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
@@ -15,8 +15,11 @@ const GiftItem = ({ gift, setData }) => {
     if (gift.id) {
       dispatch(DeleteGiftItems(gift.id, gift.eventId));
       setData(prev => prev.filter(x => x.id !== gift.id));
+      setAddedGiftItems(prev => prev.filter(x => x !== giftItem.id));
     } else {
       setData(prev => prev.filter(x => x.giftItemId !== giftItem.id));
+      setAddedGiftItems(prev => prev.filter(x => x !== giftItem.id));
+      setGiftItems(prev => prev.filter(x => x.giftItemId !== giftItem.id));
     }
   };
 
