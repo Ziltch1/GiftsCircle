@@ -14,8 +14,6 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/event-circle.svg';
 import { CreateUserApi } from '../../../redux/axios/apis/user';
-import { dispatch } from '../../../redux/store';
-import { createResponse } from '../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 import AlertBox from '../../../components/Alert';
 

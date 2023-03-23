@@ -1,4 +1,4 @@
-import { GoogleSignInApi, SignInApi } from '../../axios/apis/auth';
+import { GoogleSignInApi} from '../../axios/apis/auth';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 import { dispatch } from '../../store';
 import { createResponse, setWelcomeModal } from '../../utils/UtilSlice';
