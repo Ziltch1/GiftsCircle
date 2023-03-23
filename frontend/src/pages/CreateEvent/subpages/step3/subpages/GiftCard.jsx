@@ -5,24 +5,26 @@ import GiftDetails from './GiftDetails';
 import FormFooter from '../../FormFooter';
 
 const GiftCard = ({
-  openGiftDetails,
-  setOpenGiftDetails,
   setGiftItems,
   step,
   setStep,
   setAddedGiftItems,
   addedGiftItems,
 }) => {
+  const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
   const { newEvent } = useSelector(state => state.event);
   const [data, setData] = useState([]);
+  const [currentGift, setCurrentGift] = useState(null);
 
-  const openDrawer = () => {
+  const openDrawer = gift => {
+    setCurrentGift(gift);
     setOpenGiftDetails(true);
   };
 
   const AddGift = id => {
     if (!addedGiftItems.includes(id)) {
+     
       const formBody = {
         eventId: newEvent.id,
         quantity: 1,
@@ -49,7 +51,13 @@ const GiftCard = ({
     <>
       <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
         {openGiftDetails && (
-          <GiftDetails setOpenGiftDetails={setOpenGiftDetails} />
+          <GiftDetails
+            setOpenGiftDetails={setOpenGiftDetails}
+            gift={currentGift}
+            added={addedGiftItems.includes(currentGift.id)}
+            setAddedGiftItems={setAddedGiftItems}
+            setGiftItems={setGiftItems}
+          />
         )}
         {data.map(gift => {
           return (
@@ -73,14 +81,14 @@ const GiftCard = ({
                 display="block"
                 mx="auto"
                 mb="2.5"
-                onClick={openDrawer}
+                onClick={() => openDrawer(gift)}
               />
               <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
                 {gift.details}
               </Text>
               <Flex alignItems="center" justifyContent="space-between">
                 <Text color="#27272E" fontWeight={600} fontSize={18}>
-                  ₦ {gift.amount} 
+                  ₦ {gift.amount}
                 </Text>
                 <Button
                   fontSize={13}
