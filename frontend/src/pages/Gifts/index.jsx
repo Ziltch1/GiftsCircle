@@ -13,6 +13,7 @@ import {
   GetUserPurchasedGifts,
 } from '../../redux/features/gift/service';
 import GiftTabs from './GiftTabs';
+import SkeletonLoader from '../../components/Skeleton';
 
 const Index = () => {
   const [navPosition, setNavPosition] = useState(0);
@@ -26,9 +27,15 @@ const Index = () => {
       dispatch(GetUserEvents(user.id));
       dispatch(GetUserPurchasedGifts(user.id));
       dispatch(GetGiftItems());
-      setLoading(false);
     }
   }, [user]);
+
+  
+  useEffect(() => {
+    if (events) {
+      setLoading(false);
+    }
+  }, [events]);
 
   return (
     <Box w="100%" bg="#f5f5f5" h="100%" pb="5">
@@ -44,9 +51,15 @@ const Index = () => {
       ) : (
         <>
           <Box w="100%" mx="auto">
-            {navPosition === 0 && <PurchasedFor events={events} />}
-            {navPosition === 1 && (
-              <PurchasedBy items={userPurchasedGiftItems} />
+            {loading ? (
+              <SkeletonLoader />
+            ) : (
+              <>
+                {navPosition === 0 && <PurchasedFor events={events} />}
+                {navPosition === 1 && (
+                  <PurchasedBy items={userPurchasedGiftItems} />
+                )}
+              </>
             )}
           </Box>
         </>
