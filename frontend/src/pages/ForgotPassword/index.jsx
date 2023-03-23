@@ -141,7 +141,7 @@ const ForgotPassword = () => {
             lineHeight="22px"
             fontWeight="500"
             _hover={{ bgColor: '55D4CC' }}
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
           >
             Send Reset Link <HiOutlineArrowNarrowRight />
           </Button>

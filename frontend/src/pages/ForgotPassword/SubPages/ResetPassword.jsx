@@ -218,7 +218,7 @@ const ResetPassword = () => {
             fontWeight="500"
             _hover={{ bgColor: '55D4CC' }}
             disabled={btnDisabled}
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
           >
             Change password <HiOutlineArrowNarrowRight />
           </Button>
