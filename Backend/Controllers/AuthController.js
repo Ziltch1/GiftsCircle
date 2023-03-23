@@ -1,6 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const express = require("express");
-const ResponseDTO = require("../DTO/Response").default;
+const ResponseDTO = require("../DTO/Response");
 const {
   GoogleSignIn,
   Login,
@@ -122,15 +122,13 @@ router.post("/sendVerifyEmail", async (req, res) => {
 router.post("/sendResetEmail", async (req, res) => {
   try {
     let data = await SendResetPasswordEmail(req.body.email);
-    if (data.status) {
+    if (data) {
       return res
         .status(201)
         .send(ResponseDTO("Success", "Email sent successfully"));
-    }
-    else{
+    } else {
       return res.status(400).send(ResponseDTO("Failed", "User not found"));
     }
-    
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
