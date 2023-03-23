@@ -13,7 +13,7 @@ import BackButton from '../BackButton';
 
 const Index = ({ step, setStep }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [openGiftDetails, setOpenGiftDetails] = useState(false);
+ 
   const [giftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
   const { newEvent } = useSelector(state => state.event);
@@ -45,8 +45,6 @@ const Index = ({ step, setStep }) => {
         <Search />
         <FilterButtons />
         <GiftCard
-          openGiftDetails={openGiftDetails}
-          setOpenGiftDetails={setOpenGiftDetails}
           setGiftItems={setGiftItems}
           setAddedGiftItems={setAddedGiftItems}
           addedGiftItems={addedGiftItems}
