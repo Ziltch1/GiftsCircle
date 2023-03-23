@@ -29,7 +29,7 @@ router.get("/:id", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -40,7 +40,7 @@ router.get("/Events/GetAll", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -54,7 +54,7 @@ router.get("/UserEvents/:id", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -68,7 +68,7 @@ router.post("/create", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -82,7 +82,7 @@ router.put("/create", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -105,7 +105,7 @@ router.post(
     } catch (err) {
       console.log(err);
       await prisma.$disconnect();
-      return res.status(400).send({ msg: "Request Failed" });
+      return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
     }
   }
 );
@@ -120,7 +120,7 @@ router.post("/create3", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -129,12 +129,17 @@ router.delete("/:id", EnsureAuthenticated, async (req, res) => {
     await DeleteEvent(req.params.id);
     return res
       .status(200)
-      .send({ msg: `Event with id ${req.params.id} deleted successfully` });
+      .send(
+        ResponseDTO(
+          "Success",
+          `Event with id ${req.params.id} deleted successfully`
+        )
+      );
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Record not found" });
-  }
+    return res.status(400).send(ResponseDTO("Failed", "Record Not Found"));
+}
 });
 
 module.exports = router;
