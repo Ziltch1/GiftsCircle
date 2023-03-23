@@ -1,6 +1,7 @@
 import { Box, Button } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { setNewEvent } from '../../../redux/features/events/eventSlice';
 import { DeleteEvent } from '../../../redux/features/events/service';
 import { dispatch } from '../../../redux/store';
 import { CancelModal } from './FormHeader';
@@ -11,6 +12,8 @@ const FormFooter = ({ step, action }) => {
   const DiscardAction = () => {
     if (newEvent) {
       dispatch(DeleteEvent(newEvent.id));
+      localStorage.removeItem('newEvent');
+      dispatch(setNewEvent(null));
     }
     setOpenModal(true);
     // navigate('/dashboard');

@@ -5,7 +5,6 @@ import {
   Text,
   Flex,
   Checkbox,
-  Input,
   FormLabel,
   Button,
   Modal,
@@ -15,7 +14,10 @@ import {
   ModalCloseButton,
   Image,
   useDisclosure,
-  useToast, RadioGroup, Radio, Stack
+  useToast,
+  RadioGroup,
+  Radio,
+  Stack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import errorImg from '../../../assets/errorImg.svg';
@@ -25,11 +27,12 @@ import { EventSummaryApi } from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
-import {DropdownList} from 'react-widgets'
-import "react-widgets/styles.css";
+import { DropdownList } from 'react-widgets';
+import 'react-widgets/styles.css';
 import BackButton from '../BackButton';
+import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 
-const SummaryForm = ({setStep}) => {
+const SummaryForm = ({ setStep }) => {
   const { newEvent } = useSelector(state => state.event);
   const [openModal, setOpenModal] = useState(false);
   const [percentage, setPercentage] = useState('');
@@ -54,7 +57,7 @@ const SummaryForm = ({setStep}) => {
 
   const backAction = () => {
     setStep(4);
-  }
+  };
 
   return (
     <Box mt="8" w="80%" mx="auto" mb="16">
@@ -68,7 +71,7 @@ const SummaryForm = ({setStep}) => {
       <Box>
         <BackButton action={backAction} />
       </Box>
-      <Flex alignItems="center" justifyContent="space-between" mb="5" mt='3'>
+      <Flex alignItems="center" justifyContent="space-between" mb="5" mt="3">
         <Box>
           <Heading mb="2" fontSize={30} fontWeight="semibold">
             Summary
@@ -96,7 +99,13 @@ const SummaryForm = ({setStep}) => {
         alignItems="center"
         justifyContent="Center"
       >
-        <Image src={newEvent?.image} w="100%" h="100%" borderRadius={5} objectFit='cover' />
+        <Image
+          src={newEvent?.image}
+          w="100%"
+          h="100%"
+          borderRadius={5}
+          objectFit="cover"
+        />
       </Box>
 
       <Box mb="10">
@@ -104,9 +113,9 @@ const SummaryForm = ({setStep}) => {
           When should we publish your event?
         </Heading>
         <RadioGroup onChange={setPublish} value={publish} spacing={2}>
-          <Stack direction='column'>
-            <Radio value='publish'>Publish now</Radio>
-            <Radio value='publish later'>Publish later</Radio>
+          <Stack direction="column">
+            <Radio value="publish">Publish now</Radio>
+            <Radio value="publish later">Publish later</Radio>
           </Stack>
         </RadioGroup>
       </Box>
@@ -118,26 +127,17 @@ const SummaryForm = ({setStep}) => {
         <FormLabel fontWeight={550} fontSize={14}>
           How many percentage do you want to add?
         </FormLabel>
-        <Box w='250px' mb='3'>
+        <Box w="250px" mb="3">
           <DropdownList
             value={percentage}
-            onChange={(nextValue) => setPercentage(nextValue)}
-            data={["0.5%", "1%", "1.5%", '2%']}
+            onChange={nextValue => setPercentage(nextValue)}
+            data={['0.5%', '1%', '1.5%', '2%']}
           />
         </Box>
-        {/* <Input
-          type="text"
-          bg="#F4F4F4"
-          placeholder="e.g 2%"
-          fontSize={15}
-          mb="3"
-          value={percentage}
-          onChange={e => setPercentage(e.target.value)}
-        /> */}
         <Box mb="2" display="flex" alignItems="center" gap={2}>
           <Checkbox isChecked={true} />
           <Text fontSize={14}>
-            Apply {percentage}% to all cost of items to be donated to charity
+            Apply {percentage} to all cost of items to be donated to charity
             homes
           </Text>
         </Box>
@@ -183,6 +183,8 @@ export const ConfirmationModal = ({
       try {
         await EventSummaryApi(formBody);
         localStorage.removeItem('newEvent');
+        localStorage.removeItem('delivery');
+        dispatch(setNewEvent(null));
       } catch (error) {
         dispatch(createResponse(ErrorHandler(error)));
       }
@@ -209,8 +211,8 @@ export const ConfirmationModal = ({
                   Enable Donations
                 </Heading>
                 <Text fontSize={14}>
-                  Are you sure you want to add {percentage}% to all items cost
-                  to be donated to charity homes?
+                  Are you sure you want to add {percentage} to all items cost to
+                  be donated to charity homes?
                 </Text>
               </Box>
 
@@ -232,7 +234,7 @@ export const ConfirmationModal = ({
                     color="white"
                     bg={isChecked ? '#00BFB2' : '#AAEAE5'}
                   >
-                    Yes add {percentage}% of cost items
+                    Yes add {percentage} of cost items
                   </Button>
                 </Link>
               </Box>
