@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const ResponseDTO = require("../../DTO/Response");
+const ResponseDTO = require("../../DTO/Response").default;
 const { SendEmail, SendResetEmail } = require("../../Utils/EmailService");
 const { comparePassword, GenerateOtp, GenerateToken } = require("./services");
 const { v4: uuidv4 } = require("uuid");

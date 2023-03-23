@@ -1,6 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const express = require("express");
-const ResponseDTO = require("../DTO/Response");
+const ResponseDTO = require("../DTO/Response").default;
 const {
   GoogleSignIn,
   Login,
@@ -24,7 +24,7 @@ router.post("/login", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -34,11 +34,11 @@ router.post("/register", async (req, res) => {
     if (data) {
       return res.status(201).send(data);
     }
-    return res.status(400).send({ msg: "User already exists" });
+    return res.status(400).send(ResponseDTO("Failed", "User already exists"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -52,7 +52,7 @@ router.post("/googleSignin", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -68,12 +68,12 @@ router.post("/setPassword", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
 router.post("/resetPassword", async (req, res) => {
-  console.log("enetered")
+  console.log("enetered");
   try {
     let data = await SetPassword(req.body, "RESET");
     if (data) {
@@ -85,7 +85,7 @@ router.post("/resetPassword", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -99,7 +99,7 @@ router.post("/verifyEmail", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -115,10 +115,9 @@ router.post("/sendVerifyEmail", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
-
 
 router.post("/sendResetEmail", async (req, res) => {
   try {
@@ -132,7 +131,7 @@ router.post("/sendResetEmail", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
