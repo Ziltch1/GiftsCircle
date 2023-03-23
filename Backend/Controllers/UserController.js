@@ -1,6 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const express = require("express");
-const ResponseDTO = require("../DTO/Response").default;
+const ResponseDTO = require("../DTO/Response");
 const {
   ChangePassword,
   GetUser,

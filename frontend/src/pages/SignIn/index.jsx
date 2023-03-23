@@ -19,10 +19,11 @@ import { useSelector } from 'react-redux';
 import { createResponse } from '../../redux/utils/UtilSlice';
 import ErrorHandler from '../../redux/axios/Utils/ErrorHandler';
 
-
 const SignIn = () => {
   const navigate = useNavigate();
+
   const { token } = useSelector(state => state.auth);
+ 
 
   const GoogleSignInHandler = () => {
     signInWithPopup(auth, provider)
@@ -35,7 +36,7 @@ const SignIn = () => {
       })
       .catch(error => {
         console.log(error);
-        dispatch(createResponse(ErrorHandler(error)))
+        dispatch(createResponse(ErrorHandler(error)));
       });
   };
 
@@ -86,6 +87,8 @@ const SignIn = () => {
             </Text>
           </Flex>
           <Flex direction="column" gap="20px">
+           
+
             <Button
               bgColor="#00BFB2"
               boxShadow="0px 8px 30px rgba(0, 191, 178, 0.1)"

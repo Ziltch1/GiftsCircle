@@ -17,6 +17,7 @@ import { CreateUserApi } from '../../../redux/axios/apis/user';
 import { dispatch } from '../../../redux/store';
 import { createResponse } from '../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
+import AlertBox from '../../../components/Alert';
 
 const SignWithEmail = () => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const SignWithEmail = () => {
   const [firstname, setFirstName] = useState('');
   const [emailTest, setEmailTest] = useState(false);
   const [lastname, setLastName] = useState('');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const EmailRegex =
@@ -50,7 +52,7 @@ const SignWithEmail = () => {
         }
       }
       catch(error){
-        dispatch(createResponse(ErrorHandler(error)))
+        setError(ErrorHandler(error))
       }
       
     }
@@ -60,7 +62,7 @@ const SignWithEmail = () => {
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="685px"
+      h={error  ? "720px": "685px"}
       w="559px"
       direction="column"
       gap="30px"
@@ -98,6 +100,7 @@ const SignWithEmail = () => {
             </Text>
           </Flex>
           <Flex direction="column" gap="20px">
+          {error && <AlertBox message={error.message} setError={setError} />}
             <FormControl gap="6px">
               <FormLabel
                 fontSize="14px"
