@@ -20,7 +20,7 @@ const GiftDetails = ({
   added,
   setGiftItems,
   setAddedGiftItems,
-  newEventId
+  newEventId,
 }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const btnRef = React.useRef();
@@ -54,11 +54,6 @@ const GiftDetails = ({
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton onClick={closeModal} />
-
-          {/* <DrawerHeader>
-            <Heading fontWeight='medium' fontSize='25px' mb='2'>Gift List (25)</Heading>
-            <Text fontWeight='medium' fontSize='14px'>Find all the gifts you have added here...</Text>
-          </DrawerHeader> */}
 
           <DrawerBody mt="16" mb="8">
             <Box w="600px">
@@ -101,7 +96,7 @@ const GiftDetails = ({
                     h="40px"
                     onClick={() => AddGift(gift.id)}
                   >
-                    Add to list
+                    {added ? 'Added' : 'Add to list'}
                   </Button>
                 </Flex>
               </Box>

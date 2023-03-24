@@ -9,6 +9,7 @@ import AddGiftForm from './subpages/step3';
 import DeliveryDetailsForm from './subpages/step4/DeliveryDetailsForm';
 import SummaryForm from './subpages/step5/SummaryForm';
 import Stepper from './subpages/Stepper';
+import EventPreview from './subpages/EventPreview'
 
 const Index = () => {
   const [step, setStep] = useState(1);
@@ -26,6 +27,7 @@ const Index = () => {
         {step === 3 && <AddGiftForm step={step} setStep={setStep}/>}
         {step === 4 && <DeliveryDetailsForm step={step} setStep={setStep} />}
         {step === 5 && <SummaryForm setStep={setStep} />}
+        {step === 6 && <EventPreview setStep={setStep} />}
       </Box>
     </Box>
   );
