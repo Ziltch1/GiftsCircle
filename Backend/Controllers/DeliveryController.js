@@ -24,7 +24,7 @@ router.get("/:id", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -40,7 +40,7 @@ router.post("/create", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -56,7 +56,7 @@ router.put("/:id", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -72,7 +72,7 @@ router.put("/:id/UpdateStatus", EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -81,11 +81,16 @@ router.delete("/:id", EnsureAuthenticated, async (req, res) => {
     await Delete(req.params.id);
     return res
       .status(200)
-      .send({ msg: `Delivery Details with id ${req.params.id} deleted successfully` });
+      .send(
+        ResponseDTO(
+          "Success",
+          `Delivery Details with id ${req.params.id} deleted successfully`
+        )
+      );
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Record not found" });
+    return res.status(400).send(ResponseDTO("Failed", "Record not found"));
   }
 });
 

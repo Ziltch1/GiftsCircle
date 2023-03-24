@@ -32,6 +32,10 @@ const DeliveryDetailsApi = data => {
   return api.post(`/delivery/create`, data)
 }
 
+const UpdateDeliveryDetailsApi = (data, id) => {
+  return api.put(`/delivery/${id}`, data)
+}
+
 const EventSummaryApi = data => {
   return api.post(`/event/create3`, data)
 }
@@ -46,4 +50,5 @@ export {
   AddGiftApi,
   DeliveryDetailsApi,
   EventSummaryApi,
+  UpdateDeliveryDetailsApi
 };

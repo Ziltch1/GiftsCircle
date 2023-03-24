@@ -25,6 +25,7 @@ const PurchasedFor = ({ events }) => {
         </Box>
       ) : (
         <Box w="100%" h="100%">
+          
           {events?.map(event => (
             <GiftItemList key={event.id} event={event} />
           ))}

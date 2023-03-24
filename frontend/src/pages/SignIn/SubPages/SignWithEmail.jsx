@@ -15,9 +15,12 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../../assets/event-circle.svg';
-import { EmailSignIn} from '../../../redux/features/auth/services';
+import { EmailSignIn } from '../../../redux/features/auth/services';
 import { dispatch } from '../../../redux/store';
 import { useSelector } from 'react-redux';
+import AlertBox from '../../../components/Alert';
+import { SignInApi } from '../../../redux/axios/apis/auth';
+import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 
 const SignInWithEmail = () => {
   const { token } = useSelector(state => state.auth);
@@ -26,9 +29,11 @@ const SignInWithEmail = () => {
   const [password, setPassword] = useState('');
   const [emailTest, setEmailTest] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const EmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const EmailRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (EmailRegex.test(email)) {
       setEmailTest(true);
     } else {
@@ -36,10 +41,15 @@ const SignInWithEmail = () => {
     }
   }, [email]);
 
-  const HandleSubmit = () => {
+  const HandleSubmit = async () => {
     if (emailTest) {
-      const formBody = {email,password,};
-      dispatch(EmailSignIn(formBody));
+      const formBody = { email, password };
+      try {
+        const res = await SignInApi(formBody);
+        dispatch(EmailSignIn(res.data));
+      } catch (error) {
+        setError(ErrorHandler(error));
+      }
     }
   };
 
@@ -53,7 +63,7 @@ const SignInWithEmail = () => {
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="628px"
+      h={error ? "670px":"628px"}
       w="559px"
       direction="column"
       gap="30px"
@@ -91,6 +101,7 @@ const SignInWithEmail = () => {
             </Text>
           </Flex>
           <Flex direction="column" gap="20px">
+            {error && <AlertBox message={error.message} setError={setError} />}
             <FormControl gap="6px">
               <FormLabel
                 fontSize="14px"

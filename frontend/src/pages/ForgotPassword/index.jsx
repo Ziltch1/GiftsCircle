@@ -12,12 +12,12 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/event-circle.svg';
 import { SendResetPasswordLink } from '../../redux/axios/apis/auth';
-import { dispatch } from '../../redux/store';
-import { createResponse } from '../../redux/utils/UtilSlice';
 import ErrorHandler from '../../redux/axios/Utils/ErrorHandler';
+import AlertBox from '../../components/Alert';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+  const [error, setError] = useState(null);
   const [emailTest, setEmailTest] = useState(false);
   const navigate = useNavigate();
 
@@ -37,11 +37,11 @@ const ForgotPassword = () => {
       const formBody = { email };
       try {
         await SendResetPasswordLink(formBody);
+        navigate('/forgot_password_mail');
       } catch (e) {
         console.log(e);
-        dispatch(createResponse(ErrorHandler(e)));
+        setError(ErrorHandler(e));
       }
-      navigate('/forgot_password_mail');
     }
   };
 
@@ -49,7 +49,7 @@ const ForgotPassword = () => {
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="467px"
+      h={error ? "520px": "467px"}
       w="559px"
       direction="column"
       gap="30px"
@@ -86,6 +86,7 @@ const ForgotPassword = () => {
             </Text>
           </Flex>
           <Flex direction="column" gap="20px">
+            {error && <AlertBox message={error.message} setError={setError} />}
             <FormControl gap="6px">
               <FormLabel
                 fontSize="14px"
@@ -141,7 +142,7 @@ const ForgotPassword = () => {
             lineHeight="22px"
             fontWeight="500"
             _hover={{ bgColor: '55D4CC' }}
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
           >
             Send Reset Link <HiOutlineArrowNarrowRight />
           </Button>

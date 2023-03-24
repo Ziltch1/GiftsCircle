@@ -17,11 +17,11 @@ router.get("/:id", EnsureAuthenticated, async (req, res) => {
     if (data) {
       return res.status(200).send({ user: data });
     }
-    return res.status(400).send({ msg: "User not found" });
+    return res.status(400).send(ResponseDTO("Failed", "User not Found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -32,7 +32,7 @@ router.get("/users/GetAll", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -41,14 +41,19 @@ router.delete("/:id", EnsureAuthenticated, async (req, res) => {
     await DeleteUser(req.params.id);
     return res
       .status(200)
-      .send({ msg: `user with id ${req.params.id} deleted successfully` });
+      .send(
+        ResponseDTO(
+          "Success",
+          `user with id ${req.params.id} deleted successfully`
+        )
+      );
   } catch (err) {
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Record not found" });
+    return res.status(400).send(ResponseDTO("Failed", "User not found"));
   }
 });
 
-router.post("/changePassword",EnsureAuthenticated, async (req, res) => {
+router.post("/changePassword", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await ChangePassword(req.body);
     if (data) {
@@ -60,7 +65,7 @@ router.post("/changePassword",EnsureAuthenticated, async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 

@@ -4,7 +4,13 @@ import { useSelector } from 'react-redux';
 import GiftIcon from '../../../assets/giftIcon.svg';
 import GiftDrawer from './subpages/GiftDrawer';
 
-const GiftHeader = ({ setOpenDrawer, openDrawer, giftItems }) => {
+const GiftHeader = ({
+  setOpenDrawer,
+  openDrawer,
+  giftItems,
+  setAddedGiftItems,
+  setGiftItems,
+}) => {
   const { eventGifts } = useSelector(state => state.event);
   const [data, setData] = useState([]);
   const showDrawer = () => {
@@ -16,12 +22,14 @@ const GiftHeader = ({ setOpenDrawer, openDrawer, giftItems }) => {
   }, [eventGifts, giftItems]);
 
   return (
-    <Box my='5'>
+    <Box my="5">
       {openDrawer && (
         <GiftDrawer
           setOpenDrawer={setOpenDrawer}
           data={data}
           setData={setData}
+          setAddedGiftItems={setAddedGiftItems}
+          setGiftItems={setGiftItems}
         />
       )}
       <Flex mb="5" alignItems="center" justifyContent="space-between">

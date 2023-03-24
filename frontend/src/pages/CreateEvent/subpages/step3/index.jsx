@@ -13,7 +13,7 @@ import BackButton from '../BackButton';
 
 const Index = ({ step, setStep }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [openGiftDetails, setOpenGiftDetails] = useState(false);
+ 
   const [giftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
   const { newEvent } = useSelector(state => state.event);
@@ -31,7 +31,6 @@ const Index = ({ step, setStep }) => {
   const BackAction = () => {
     setStep(2);
   };
-
   return (
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">
@@ -40,12 +39,12 @@ const Index = ({ step, setStep }) => {
           openDrawer={openDrawer}
           setOpenDrawer={setOpenDrawer}
           giftItems={giftItems}
+          setAddedGiftItems={setAddedGiftItems}
+          setGiftItems={setGiftItems}
         />
         <Search />
         <FilterButtons />
         <GiftCard
-          openGiftDetails={openGiftDetails}
-          setOpenGiftDetails={setOpenGiftDetails}
           setGiftItems={setGiftItems}
           setAddedGiftItems={setAddedGiftItems}
           addedGiftItems={addedGiftItems}

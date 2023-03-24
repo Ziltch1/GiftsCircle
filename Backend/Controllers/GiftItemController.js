@@ -17,7 +17,7 @@ router.get("/:id", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -28,7 +28,7 @@ router.get("/Get/All", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -44,7 +44,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -62,7 +62,7 @@ router.put("/:id", async (req, res) => {
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send({ msg: "Request Failed" });
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 
@@ -71,7 +71,12 @@ router.delete("/:id", async (req, res) => {
     await Delete(req.params.id);
     return res
       .status(200)
-      .send({ msg: `GiftItem with id ${req.params.id} deleted successfully` });
+      .send(
+        ResponseDTO(
+          "Success",
+          `GiftItem with id ${req.params.id} deleted successfully`
+        )
+      );
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

@@ -7,12 +7,11 @@ import {
   Flex,
   FormControl,
   Image,
-  Textarea,
   Progress,
   Spinner,
   useToast,
 } from '@chakra-ui/react';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import BackButton from '../BackButton';
 import galleryImage from '../../../../components/assets/gallery.svg';
 import FormFooter from '../FormFooter';
@@ -28,10 +27,13 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const EventImageForm = ({ step, setStep }) => {
+  const event = JSON.parse(localStorage.getItem('newEvent'));
   const { newEvent } = useSelector(state => state.event);
-  const [image, setImage] = useState('');
-  const [summary, setSummary] = useState('');
-  const [description, setDescription] = useState('');
+  const [image, setImage] = useState(event ? event.image : '');
+  const [summary, setSummary] = useState(event ? event.summary : '');
+  const [description, setDescription] = useState(
+    event ? event.desc_summary : ''
+  );
   const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -121,18 +123,16 @@ const EventImageForm = ({ step, setStep }) => {
             </Box>
             <FormControl>
               <Box mb="8">
-                <Box
-                  display="flex"
-                  backgroundImage="url('http://res.cloudinary.com/dhh5pzwvo/image/upload/v1679464933/eventcircle/jhylwxrbpmoaixouer1v.png')"
-                  backgroundSize="450px"
-                >
+                <Box width="500px" height="260px" display="flex">
                   <FormLabel
                     mb="5"
                     htmlFor="upload"
                     w="500px"
                     position="relative"
                     h="260px"
-                    // bg="#FAFAFA"
+                    backgroundImage={`url(${image})`}
+                    backgroundRepeat="no-repeat"
+                    backgroundSize="inherit"
                     border="1.5px solid lightgray"
                     borderRadius={5}
                     display="flex"
@@ -236,7 +236,7 @@ const EventImageForm = ({ step, setStep }) => {
                   </FormLabel>
                 </Box>
 
-                <Box mb="7">
+                <Box mb="7" mt="3">
                   <FormLabel fontWeight="semibold" fontSize={14}>
                     Summary of event
                   </FormLabel>
@@ -267,6 +267,7 @@ const EventImageForm = ({ step, setStep }) => {
                     theme="snow"
                     dangerouslySetInnerHTML={{ __html: description }}
                     onChange={setDescription}
+                    value={description}
                     modules={modules}
                     style={{ height: '240px', borderRadius: '12px' }}
                   />
