@@ -100,7 +100,7 @@ const GiftCard = ({
                   onClick={() => AddGift(gift.id)}
                   id={gift.id}
                 >
-                  Add to list
+                  {addedGiftItems.includes(gift.id) ? 'Added' : 'Add to list'}
                 </Button>
               </Flex>
             </Box>
