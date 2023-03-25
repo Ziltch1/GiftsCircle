@@ -82,14 +82,14 @@ const SummaryForm = ({ setStep }) => {
         </Box>
 
         <Box>
-          <Link to={`/create_event/${newEvent?.id}/preview`}>
+          {/* <Link to={`/create_event/${newEvent?.id}/preview`}> */}
               <Button color="#00BFB2" bg='none' onClick={() => setStep(6)}>
                 <Flex alignItems="center" gap={2}>
                   <Text>Preview your event</Text>
                   <ExternalLinkIcon />
                 </Flex>
               </Button>
-          </Link>
+          {/* </Link> */}
         </Box>
       </Flex>
 

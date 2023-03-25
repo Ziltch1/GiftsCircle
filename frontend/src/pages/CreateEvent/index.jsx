@@ -10,17 +10,23 @@ import DeliveryDetailsForm from './subpages/step4/DeliveryDetailsForm';
 import SummaryForm from './subpages/step5/SummaryForm';
 import Stepper from './subpages/Stepper';
 import EventPreview from './subpages/EventPreview'
+import { useLocation } from 'react-router-dom';
 
 const Index = () => {
   const [step, setStep] = useState(1);
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(GetGiftItems());
   }, []);
   return (
-    <Box py="4">
-      <FormHeader step={step} />
-      <Stepper step={step} />
+    <Box py={step !==6 ? '4' : '0'}>
+      {step !== 6 && 
+        <>
+        <FormHeader step={step} setStep={setStep} />
+        <Stepper step={step} />
+        </> 
+      }
       <Box>
         {step === 1 && <BasicForm step={step} setStep={setStep} />}
         {step === 2 && <EventImageForm step={step} setStep={setStep} />}
