@@ -17,38 +17,38 @@ const Index = () => {
   const navigate = useNavigate()
   const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
-  const [newEvent, setNewEvent] = useState(null);
+  // const [newEvent, setNewEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { events, eventGifts } = useSelector(state => state.event);
+  const { events, eventGifts, newEvent } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
 
-  let userId = user.id;
+  // let userId = user.id;
 
-  useEffect(() => {
-    if (events?.length > 0) {
-      const specificEvent = events.filter(event => event.id === id)[0];
-      setNewEvent(specificEvent);
-    } else {
-      dispatch(GetUserEvents(userId));
-    }
-  }, [events, id, userId]);
+  // useEffect(() => {
+  //   if (events?.length > 0) {
+  //     const specificEvent = events.filter(event => event.id === id)[0];
+  //     setNewEvent(specificEvent);
+  //   } else {
+  //     dispatch(GetUserEvents(userId));
+  //   }
+  // }, [events, id, userId]);
 
-  useEffect(() => {
-    if (newEvent) {
-      setLoading(false);
-    }
-  }, [newEvent]);
+  // useEffect(() => {
+  //   if (newEvent) {
+  //     setLoading(false);
+  //   }
+  // }, [newEvent]);
 
   return (
     <Box w="80%" mx="auto" pt="3" pb="7">
-      {loading ? (
+      {/* {loading ? (
         <Stack spacing="20px">
           <Skeleton height="50px" width="100%" />
           <Skeleton height="50px" width="75%" />
           <Skeleton height="50px" width="50%" />
         </Stack>
-      ) : (
+      ) : ( */}
         <>
           <Box>
                 <EventImages newEvent={newEvent} />
@@ -61,7 +61,7 @@ const Index = () => {
             {navPosition === 3 && <EventGuests />}
           </Box>
         </>
-      )}
+      {/* )} */}
     </Box>
   );
 };

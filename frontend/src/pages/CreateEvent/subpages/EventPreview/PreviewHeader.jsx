@@ -8,7 +8,7 @@ const PreviewHeader = ({setStep}) => {
     console.log(setStep);
     const backButton = () => {
         navigate('/create_event');
-        setStep(4);
+        setStep(5);
     }
   return (
     <Box borderBottom='1.5px solid lightgray'>
