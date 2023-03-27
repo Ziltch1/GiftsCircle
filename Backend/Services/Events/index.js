@@ -1,6 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const { CreateEventId, CreateCoHostId, CreateGuestId } = require("./service");
 const prisma = new PrismaClient();
+const { v4: uuidv4 } = require("uuid");
+const ResponseDTO = require("../../DTO/Response");
 
 const GetEvent = async (id) => {
   const event = await prisma.event.findUnique({
@@ -25,13 +27,13 @@ const GetUserEvents = async (id) => {
     where: {
       user_id: id,
     },
-    include:{
+    include: {
       gifts: {
         select: {
-          giftItemId: true
-        }
-      }
-    }
+          giftItemId: true,
+        },
+      },
+    },
   });
   await prisma.$disconnect();
   return events;
@@ -45,7 +47,7 @@ const Create = async (data) => {
   });
 
   if (user) {
-   let event = await prisma.event.create({
+    let event = await prisma.event.create({
       data: {
         id: CreateEventId(),
         title: data.title,
@@ -75,7 +77,6 @@ const Create = async (data) => {
   return null;
 };
 
-
 const Update1 = async (data) => {
   const event = await prisma.event.findUnique({
     where: {
@@ -84,10 +85,10 @@ const Update1 = async (data) => {
   });
 
   if (event) {
-   let event = await prisma.event.update({
-    where:{
-      id:data.id
-    },
+    let event = await prisma.event.update({
+      where: {
+        id: data.id,
+      },
       data: {
         title: data.title,
         category: data.category,
@@ -168,4 +169,71 @@ const DeleteEvent = async (id) => {
   return event;
 };
 
-module.exports = { Create, Update1, Update2, Update3, GetEvent, GetAllEvents, GetUserEvents, DeleteEvent };
+const AddGuest = async (data) => {
+  const event = await prisma.event.findUnique({
+    where: {
+      id: data.eventId,
+    },
+  });
+
+  if (event) {
+    if (event.guestCode === data.guestCode && data.userId !== event.host) {
+      const id = uuidv4();
+      let Data = await prisma.guests.create({
+        data: {
+          id: id,
+          userId: data.userId,
+          eventId: data.eventId,
+          coHost: data.coHost,
+        },
+      });
+
+      await prisma.$disconnect();
+      return Data;
+    } else {
+      return ResponseDTO("Failed", "Incorrect Guest Code");
+    }
+  }
+
+  return null;
+};
+
+const GetEventGuests = async (id) => {
+  const event = await prisma.event.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  if (event) {
+    const data = await prisma.guests.findMany({
+      where: {
+        eventId: id,
+      },
+      include: {
+        user: {
+          select: {
+            firstname: true,
+            lastname: true,
+          },
+        },
+      },
+    });
+    return data;
+  }
+
+  return null;
+};
+
+module.exports = {
+  Create,
+  Update1,
+  Update2,
+  Update3,
+  GetEvent,
+  GetAllEvents,
+  GetUserEvents,
+  DeleteEvent,
+  AddGuest,
+  GetEventGuests,
+};
