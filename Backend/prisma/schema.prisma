@@ -94,6 +94,7 @@ model user {
   password         String   @db.VarChar(255)
   eventId          String?  @db.VarChar(255)
   event            event?   @relation(fields: [eventId], references: [id])
+  Guests           Guests[]
 }
 
 model otp {
@@ -101,4 +102,12 @@ model otp {
   code    String   @db.VarChar(5)
   expires DateTime
   user    String   @db.VarChar(100)
+}
+
+model Guests {
+  id      String  @id @db.VarChar(50)
+  user    user    @relation(fields: [userId], references: [id])
+  eventId String  @db.VarChar(50)
+  coHost  Boolean
+  userId  String  @db.VarChar(255)
 }

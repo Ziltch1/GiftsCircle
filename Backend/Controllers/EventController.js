@@ -10,6 +10,8 @@ const {
   GetAllEvents,
   DeleteEvent,
   Update3,
+  AddGuest,
+  GetEventGuests,
 } = require("../Services/Events");
 const router = express.Router();
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
@@ -139,7 +141,29 @@ router.delete("/:id", EnsureAuthenticated, async (req, res) => {
     console.log(err);
     await prisma.$disconnect();
     return res.status(400).send(ResponseDTO("Failed", "Record Not Found"));
-}
+  }
+});
+
+router.post("/addGuest", EnsureAuthenticated, async (req, res) => {
+  try {
+    const data = await AddGuest(req.body);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Event Not Found"));
+  }
+});
+
+router.get("/:id/guests", EnsureAuthenticated, async (req, res) => {
+  try {
+    const data = await GetEventGuests(req.params.id);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Event Not Found"));
+  }
 });
 
 module.exports = router;

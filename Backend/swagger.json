@@ -356,6 +356,32 @@
         }
       }
     },
+    "/event/{id}/guests": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/event/create2": {
       "post": {
         "description": "",
@@ -417,6 +443,32 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/event/addGuest": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/AddGuest" }
           }
         ],
         "security": [
@@ -1198,6 +1250,27 @@
           },
           "summary": {
             "type": "string",
+            "required": true
+          }
+        }
+      },
+      "AddGuest": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "required": true
+          },
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+          "guestCode": {
+            "type": "string",
+            "required": true
+          },
+          "coHost": {
+            "type": "boolean",
             "required": true
           }
         }
