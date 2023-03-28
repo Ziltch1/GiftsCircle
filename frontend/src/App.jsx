@@ -20,7 +20,8 @@ import Gift from './pages/Gift';
 import GiftDetails from './pages/Gifts/GiftDetails';
 import Marketplace from './pages/Marketplace'
 import Market from './pages/Marketplace/subpages/Market/Market'
-// import EventPreview from './pages/CreateEvent/subpages/EventPreview'
+import JoinEvent from './pages/JoinEvent'
+import ViewEvent from './pages/Guest'
 
 function App() {
   return (
@@ -54,6 +55,8 @@ function App() {
             element={<GiftDetails />}
           />
         </Route>
+        <Route path="/join" element={<JoinEvent />} />
+        <Route path="/view_event" element={<ViewEvent />} />
         {/* <Route path="/gift_details/:id" element={<GiftDetails />} /> */}
         <Route path="/create_event" element={<CreateEvent />} />
         {/* <Route path="/create_event/:id/preview" element={<EventPreview />} /> */}
