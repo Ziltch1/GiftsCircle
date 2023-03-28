@@ -50,7 +50,7 @@ const EventSchedule = ({ newEvent }) => {
           <Box fontSize={14} mb="5" bg="#EEEEEE" borderRadius={5} p="5">
             <Image src={location} mb="2" />
             <Text lineHeight="25px" fontSize="14px">
-              {newDate} at {newEvent?.venue}
+              {newEvent?.venue}
             </Text>
           </Box>
         </Box>
