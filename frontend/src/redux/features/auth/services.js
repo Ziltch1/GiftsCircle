@@ -1,4 +1,4 @@
-import { GoogleSignInApi} from '../../axios/apis/auth';
+import { GoogleSignInApi } from '../../axios/apis/auth';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 import { dispatch } from '../../store';
 import { createResponse, setWelcomeModal } from '../../utils/UtilSlice';
@@ -27,4 +27,11 @@ const EmailSignIn = data => async () => {
   dispatch(setWelcomeModal(true));
 };
 
-export { GoogleSignIn, EmailSignIn };
+const GuestSignIn = data => async () => {
+  sessionStorage.setItem('token', data.token);
+  sessionStorage.setItem('user', JSON.stringify(data.user));
+  dispatch(setToken(data.token));
+  dispatch(setUser(data.user));
+};
+
+export { GoogleSignIn, EmailSignIn, GuestSignIn };
