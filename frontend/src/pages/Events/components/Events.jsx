@@ -3,6 +3,7 @@ import { Box, Text } from '@chakra-ui/react';
 import EventItem from './EventItem';
 
 const Events = ({event}) => {
+    
   return (
       <Box textAlign={'center'} mt="20px">
           <>

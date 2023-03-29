@@ -60,7 +60,10 @@ const GetUserEvents = async (id) => {
 
   const selectedEvents = [];
   guestEvents.map((ele) => selectedEvents.push(ele.event));
-  const data = [...selectedEvents, ...events];
+  const data = [...selectedEvents, ...events].sort(
+    (a, b) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
   await prisma.$disconnect();
   return data;
 };
