@@ -4,4 +4,8 @@ const CreateUserApi = data => {
   return api.post('/register', data);
 };
 
-export { CreateUserApi };
+const GetUserApi = id => {
+  return api.get(`/user/${id}`);
+};
+
+export { CreateUserApi, GetUserApi };
