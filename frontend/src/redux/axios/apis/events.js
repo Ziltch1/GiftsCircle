@@ -4,6 +4,10 @@ const GetUserEventsApi = id => {
   return api.get(`/event/UserEvents/${id}`);
 };
 
+const GetEventApi = id => {
+  return api.get(`/event/${id}`);
+};
+
 const GetEventGiftsApi = eventId => {
   return api.get(`gift/Get/EventGifts/${eventId}`);
 };
@@ -29,16 +33,20 @@ const AddGiftApi = data => {
 };
 
 const DeliveryDetailsApi = data => {
-  return api.post(`/delivery/create`, data)
-}
+  return api.post(`/delivery/create`, data);
+};
 
 const UpdateDeliveryDetailsApi = (data, id) => {
-  return api.put(`/delivery/${id}`, data)
-}
+  return api.put(`/delivery/${id}`, data);
+};
 
 const EventSummaryApi = data => {
-  return api.post(`/event/create3`, data)
-}
+  return api.post(`/event/create3`, data);
+};
+
+const JoinEventGuestApi = data => {
+  return api.post(`/event/addGuest`, data);
+};
 
 export {
   GetUserEventsApi,
@@ -50,5 +58,7 @@ export {
   AddGiftApi,
   DeliveryDetailsApi,
   EventSummaryApi,
-  UpdateDeliveryDetailsApi
+  UpdateDeliveryDetailsApi,
+  GetEventApi,
+  JoinEventGuestApi,
 };

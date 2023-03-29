@@ -41,7 +41,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Co-host link</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='12'>https://www.giftcircle.com/e/i-am</Heading>
+                            <Heading fontWeight={'medium'} fontSize='12'>{`https://www.giftcircle.com/event/join/${newEvent.host}`}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>

@@ -170,6 +170,17 @@ const DeleteEvent = async (id) => {
 };
 
 const AddGuest = async (data) => {
+  const guest = await prisma.guests.findFirst({
+    where: {
+      eventId: data.eventId,
+      userId: data.userId,
+    },
+  });
+
+  if (guest) {
+    return guest;
+  }
+
   const event = await prisma.event.findUnique({
     where: {
       id: data.eventId,
@@ -177,7 +188,7 @@ const AddGuest = async (data) => {
   });
 
   if (event) {
-    if (event.guestCode === data.guestCode && data.userId !== event.host) {
+    if (event.guestCode === data.guestCode && data.userId !== event.user_id) {
       const id = uuidv4();
       let Data = await prisma.guests.create({
         data: {
