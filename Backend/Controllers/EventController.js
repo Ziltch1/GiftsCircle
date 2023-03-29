@@ -147,6 +147,9 @@ router.delete("/:id", EnsureAuthenticated, async (req, res) => {
 router.post("/addGuest", EnsureAuthenticated, async (req, res) => {
   try {
     const data = await AddGuest(req.body);
+    if (data.status === "Failed") {
+      return res.status(400).send(ResponseDTO("Failed", data.message));
+    }
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
