@@ -35,8 +35,34 @@ const GetUserEvents = async (id) => {
       },
     },
   });
+
+  const guestEvents = await prisma.guests.findMany({
+    where: {
+      userId: id,
+    },
+    select: {
+      event: {
+        select: {
+          id: true,
+          title: true,
+          summary: true,
+          descSummary: true,
+          date: true,
+          venue: true,
+          timezone: true,
+          start_time: true,
+          end_time: true,
+          image: true,
+        },
+      },
+    },
+  });
+
+  const selectedEvents = [];
+  guestEvents.map((ele) => selectedEvents.push(ele.event));
+  const data = [...selectedEvents, ...events];
   await prisma.$disconnect();
-  return events;
+  return data;
 };
 
 const Create = async (data) => {
@@ -188,19 +214,23 @@ const AddGuest = async (data) => {
   });
 
   if (event) {
-    if (event.guestCode === data.guestCode && data.userId !== event.user_id) {
-      const id = uuidv4();
-      let Data = await prisma.guests.create({
-        data: {
-          id: id,
-          userId: data.userId,
-          eventId: data.eventId,
-          coHost: data.coHost,
-        },
-      });
+    if (event.guestCode === data.guestCode) {
+      if (data.userId !== event.user_id) {
+        const id = uuidv4();
+        let Data = await prisma.guests.create({
+          data: {
+            id: id,
+            userId: data.userId,
+            eventId: data.eventId,
+            coHost: data.coHost,
+          },
+        });
 
-      await prisma.$disconnect();
-      return ResponseDTO("Success", Data);
+        await prisma.$disconnect();
+        return ResponseDTO("Success", Data);
+      } else {
+        return ResponseDTO("Failed", "Event Owner can't join as Guest");
+      }
     } else {
       return ResponseDTO("Failed", "Incorrect Guest Code");
     }

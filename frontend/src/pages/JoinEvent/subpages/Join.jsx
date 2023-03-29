@@ -13,22 +13,23 @@ import {
   auth,
   provider,
 } from '../../../redux/axios/Utils/Firebase';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleSignInApi } from '../../../redux/axios/apis/auth';
 import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 import { JoinEventGuestApi } from '../../../redux/axios/apis/events';
 import { CreateUserApi } from '../../../redux/axios/apis/user';
+import { useNavigate } from 'react-router-dom';
+import { createResponse } from '../../../redux/utils/UtilSlice';
+import { dispatch } from '../../../redux/store';
+import { GuestSignIn } from '../../../redux/features/auth/services';
+import { useSelector } from 'react-redux';
 
 const Join = ({ event, user }) => {
+  const navigate = useNavigate();
   const [guestCode, setGuestCode] = useState('');
+  const [guestId, setGuestId] = useState('');
   const toast = useToast();
-
-  const data = {
-    eventId: event.id,
-    userId: '',
-    guestCode: localStorage.getItem('guestCode'),
-    coHost: false,
-  };
+  const { token } = useSelector(state => state.auth);
 
   const GoogleSignInHandler = async () => {
     signInWithPopup(auth, provider)
@@ -38,10 +39,10 @@ const Join = ({ event, user }) => {
         };
 
         const res = await GoogleSignInApi(formBody);
+
         if (res.data) {
-          data.userId = res.data.user.id;
-          const res2 = await JoinEventGuestApi(data);
-          console.log(res2.data);
+          setGuestId(res.data.user.id);
+          dispatch(GuestSignIn(res.data));
         } else {
           const formBody = {
             firstname: result.user.displayName?.split(' ')[1],
@@ -55,9 +56,26 @@ const Join = ({ event, user }) => {
       })
       .catch(error => {
         console.log(error);
-        console.log(ErrorHandler(error));
+        createResponse(ErrorHandler(error));
       });
   };
+
+  useEffect(() => {
+    if (token) {
+      let data = {
+        eventId: event.id,
+        userId: guestId,
+        guestCode: guestCode,
+        coHost: false,
+      };
+      const AddGuest = async () => {
+        await JoinEventGuestApi(data);
+        navigate(`/view_event`);
+      };
+
+      AddGuest();
+    }
+  }, [token]);
 
   const handleClick = () => {
     if (guestCode === '') {

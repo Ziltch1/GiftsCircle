@@ -9,7 +9,8 @@ const headers = {
 };
 
 axios.defaults.baseURL = 'https://giftcircle-ws.onrender.com/api';
-//' http://localhost:4000/api
+//'http://localhost:4000/api
+//https://giftcircle-ws.onrender.com/api
 //user_id 56ebdd0a-e340-486a-a918-fb7452bdfe4a
 const axiosInstance = axios.create({
   headers,

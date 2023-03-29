@@ -49,6 +49,7 @@ model event {
   host            String   @db.VarChar(255)
   gifts           gift[]
   co_hosts        user[]
+  Guests          Guests[]
 
   @@index([host], map: "Event_userId_fkey")
 }
@@ -109,5 +110,6 @@ model Guests {
   user    user    @relation(fields: [userId], references: [id])
   eventId String  @db.VarChar(50)
   coHost  Boolean
+  event   event   @relation(fields: [eventId], references: [id])
   userId  String  @db.VarChar(255)
 }

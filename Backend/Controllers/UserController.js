@@ -11,7 +11,7 @@ const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get("/:id", EnsureAuthenticated, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     let data = await GetUser(req.params.id);
     if (data) {
