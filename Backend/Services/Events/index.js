@@ -178,7 +178,7 @@ const AddGuest = async (data) => {
   });
 
   if (guest) {
-    return guest;
+    return ResponseDTO("Success", guest);
   }
 
   const event = await prisma.event.findUnique({
@@ -200,7 +200,7 @@ const AddGuest = async (data) => {
       });
 
       await prisma.$disconnect();
-      return Data;
+      return ResponseDTO("Success", Data);
     } else {
       return ResponseDTO("Failed", "Incorrect Guest Code");
     }

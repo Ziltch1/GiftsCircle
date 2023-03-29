@@ -17,6 +17,7 @@ import React, { useState } from 'react';
 import { GoogleSignInApi } from '../../../redux/axios/apis/auth';
 import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 import { JoinEventGuestApi } from '../../../redux/axios/apis/events';
+import { CreateUserApi } from '../../../redux/axios/apis/user';
 
 const Join = ({ event, user }) => {
   const [guestCode, setGuestCode] = useState('');
@@ -24,7 +25,7 @@ const Join = ({ event, user }) => {
 
   const data = {
     eventId: event.id,
-    userId: user.id,
+    userId: '',
     guestCode: localStorage.getItem('guestCode'),
     coHost: false,
   };
@@ -38,7 +39,17 @@ const Join = ({ event, user }) => {
 
         const res = await GoogleSignInApi(formBody);
         if (res.data) {
-          const res = await JoinEventGuestApi(data);
+          data.userId = res.data.user.id;
+          const res2 = await JoinEventGuestApi(data);
+          console.log(res2.data);
+        } else {
+          const formBody = {
+            firstname: result.user.displayName?.split(' ')[1],
+            lastname: result.user.displayName?.split(' ')[0],
+            email: result.user.email,
+          };
+
+          const res = await CreateUserApi(formBody);
           console.log(res.data);
         }
       })
