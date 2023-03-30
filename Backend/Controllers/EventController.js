@@ -94,16 +94,28 @@ router.post(
   EnsureAuthenticated,
   async (req, res) => {
     try {
-      const file = dataUri(req).content;
-      const response = await cloudinary.uploader.upload(file, {
-        folder: "eventcircle",
-      });
-
-      let data = await Update2(req.body, response.url);
-      if (data) {
-        return res.status(200).send(data);
+      if(req.file){
+        const file = dataUri(req).content;
+        const response = await cloudinary.uploader.upload(file, {
+          folder: "eventcircle",
+        });
+  
+        let data = await Update2(req.body, response.url);
+        if (data) {
+          return res.status(200).send(data);
+        }
+        return res.status(400).send(ResponseDTO("Failed", "Event not found"));
       }
-      return res.status(400).send(ResponseDTO("Failed", "Event not found"));
+      else{
+        let data = await Update2(req.body, req.body.image);
+        if (data) {
+          return res.status(200).send(data);
+        }
+        return res.status(400).send(ResponseDTO("Failed", "Event not found"));
+      }
+      
+      
+      
     } catch (err) {
       console.log(err);
       await prisma.$disconnect();
