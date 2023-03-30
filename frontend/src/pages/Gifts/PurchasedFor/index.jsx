@@ -3,7 +3,6 @@ import React from 'react'
 import PurchasedFor from './subpages/PurchasedFor'
 
 const index = ({events}) => {
-  
   return (
     <Box>
       <PurchasedFor events={events} />
