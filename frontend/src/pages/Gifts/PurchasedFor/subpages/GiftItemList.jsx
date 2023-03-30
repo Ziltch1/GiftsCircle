@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 
 const GiftItemList = ({ event }) => {
   const { image, title, id, gifts, descSummary, date } = event;
+  console.log(event);
   return (
     <Box mt="8">
       <Box bg="white" mb="5" py="7" px="8" borderRadius={5}>
