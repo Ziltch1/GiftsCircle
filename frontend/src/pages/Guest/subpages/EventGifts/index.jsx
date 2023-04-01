@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import GiftHeader from './subpages/GiftHeader';
-import PurchaseHistory from './subpages/PurchaseHistory';
 import { Box } from '@chakra-ui/react';
-import GiftLists from './subpages/GiftLists';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../redux/store';
 import { GetEventGifts } from '../../../../redux/features/events/service';
+import ComplimentaryModal from './subpages/ComplimentaryModal';
 import GiftCard from './subpages/GiftCard';
+import GiftListDrawer from './subpages/GiftListDrawer';
 
 const Index = ({ newEvent }) => {
   const eventId = newEvent?.id;
-  const [navPosition, setNavPosition] = useState(0);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [showListDrawer, setShowListDrawer] = useState(false)
   const [data, setData] = useState([]);
-
   const { eventGifts } = useSelector(state => state.event);
 
   useEffect(() => {
@@ -27,10 +27,10 @@ const Index = ({ newEvent }) => {
 
   return (
     <Box>
-      <GiftHeader navPosition={navPosition} setNavPosition={setNavPosition} />
+      {openDrawer && <ComplimentaryModal setOpenDrawer={setOpenDrawer} />}
+      {showListDrawer && <GiftListDrawer setShowListDrawer={setShowListDrawer} />}
+      <GiftHeader setOpenDrawer={setOpenDrawer} setShowListDrawer={setShowListDrawer}  />
       <Box>
-        {/* {navPosition === 0 && <PurchaseHistory data={data}/>}
-        {navPosition === 1 && <GiftLists data={data}/>} */}
         <GiftCard />
       </Box>
     </Box>
