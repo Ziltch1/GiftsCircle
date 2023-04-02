@@ -25,7 +25,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Event ID</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent.id}</Heading>
+                            <Heading fontWeight={'medium'} fontSize='14'>{newEvent.id}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>
@@ -33,7 +33,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Co-host Code</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent.coHostCode}</Heading>
+                            <Heading fontWeight={'medium'} fontSize='14'>{newEvent.coHostCode}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>
@@ -41,7 +41,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Co-host link</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='12'>{`https://giftscircle.netlify.app/event/join/${newEvent.id}`}</Heading>
+                            <Heading fontWeight={'medium'} fontSize='12' w='220px' lineHeight={5}>{`https://giftscircle.netlify.app/event/join/${newEvent.id}`}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>
@@ -49,7 +49,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Event Guest Code</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='16'>{newEvent.guestCode}</Heading>
+                            <Heading fontWeight={'medium'} fontSize='14'>{newEvent.guestCode}</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>
@@ -57,7 +57,7 @@ const EventImages = ({newEvent}) => {
                     <Box mb='4'>
                         <Text fontSize={14} mb='1'>Event URl</Text>
                         <Flex justifyContent={'space-between'}>
-                            <Heading fontWeight={'medium'} fontSize='12'>https://www.giftcircle.com/e/i-am</Heading>
+                            <Heading fontWeight={'medium'} fontSize='12' w='220px' lineHeight={5}>https://www.giftcircle.com/e/i-am</Heading>
                             <Image src={copyIcon} w='20px' h='20px' />
                         </Flex>
                     </Box>

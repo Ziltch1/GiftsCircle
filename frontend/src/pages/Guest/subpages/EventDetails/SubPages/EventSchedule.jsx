@@ -18,7 +18,7 @@ const EventSchedule = ({ newEvent }) => {
 
   return (
     <Box mb="6">
-      {openDrawer && <Fundraising setOpenDrawer={setOpenDrawer} />}
+      {/* {openDrawer && <Fundraising setOpenDrawer={setOpenDrawer} />} */}
       <Flex justifyContent="space-between" alignItems="flex-start">
         <Box w="610px">
           <Heading fontWeight={500} fontSize="24px" mb="4">
@@ -28,7 +28,7 @@ const EventSchedule = ({ newEvent }) => {
         </Box>
 
         <Box w="295px" h="auto">
-          <Button
+          {/* <Button
             w="100%"
             mb="4"
             fontWeight={550}
@@ -38,7 +38,7 @@ const EventSchedule = ({ newEvent }) => {
             onClick={showDrawer}
           >
             Start a fund raising
-          </Button>
+          </Button> */}
           <Box fontSize={14} mb="5" bg="#EEEEEE" borderRadius={5} p="5">
             <Image src={clock} mb="2" />
             <Text>{newDate}</Text>
