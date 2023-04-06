@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const ResponseDTO = require("../../DTO/Response").default;
+const ResponseDTO = require("../../DTO/Response");
 const { SendEmail, SendResetEmail } = require("../../Utils/EmailService");
 const { comparePassword, GenerateOtp, GenerateToken } = require("./services");
 const { v4: uuidv4 } = require("uuid");
@@ -54,7 +54,7 @@ const SendVerifyEmail = async (email) => {
       expires.setMinutes(expires.getMinutes() + 10);
       expires = new Date(expires);
 
-      await prisma.otp.create({
+      let data = await prisma.otp.create({
         data: {
           id: uuidv4(),
           user: user.email,
@@ -63,6 +63,7 @@ const SendVerifyEmail = async (email) => {
         },
       });
 
+      console.log(data)
       let result = await SendEmail(email, user.firstname, otp);
       return result.response;
     } catch (error) {
@@ -75,9 +76,9 @@ const SendVerifyEmail = async (email) => {
 const VerifyOtp = async (data) => {
   const otp = await prisma.otp.findFirst({
     where: {
-      code: data.code,
-    },
-  });
+      code: data.code
+    }
+  })
 
   if (otp && data.user === otp.user) {
     try {

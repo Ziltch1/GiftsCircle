@@ -18,7 +18,9 @@ const GiftHeader = ({
   };
 
   useEffect(() => {
-    setData([...eventGifts, ...giftItems]);
+    if (eventGifts) {
+      setData([...eventGifts, ...giftItems]);
+    }
   }, [eventGifts, giftItems]);
 
   return (

@@ -70,11 +70,16 @@ const SetPassword = () => {
       try {
         const res = await SetPasswordApi(formBody);
         if (res.status) {
-          navigate('/signin');
-          localStorage.removeItem('newUser');
+          const guest = JSON.parse(localStorage.getItem('guestSignUp'));
+          if (guest) {
+            navigate('/');
+          } else {
+            navigate('/signin');
+            localStorage.removeItem('newUser');
+          }
         }
       } catch (error) {
-        dispatch(createResponse(ErrorHandler(error)))
+        dispatch(createResponse(ErrorHandler(error)));
       }
     }
   };

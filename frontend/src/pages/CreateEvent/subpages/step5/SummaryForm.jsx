@@ -188,6 +188,7 @@ export const ConfirmationModal = ({
         await EventSummaryApi(formBody);
         localStorage.removeItem('newEvent');
         localStorage.removeItem('delivery');
+      
         dispatch(setNewEvent(null));
       } catch (error) {
         dispatch(createResponse(ErrorHandler(error)));
