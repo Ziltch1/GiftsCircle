@@ -1,4 +1,4 @@
-import { Box, Text, Heading, Button, Image, Flex } from '@chakra-ui/react';
+import { Box, Text, Heading, Button, Image, Flex, Switch } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GiftIcon from '../../../assets/giftIcon.svg';

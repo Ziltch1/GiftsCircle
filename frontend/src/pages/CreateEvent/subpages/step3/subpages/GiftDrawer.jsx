@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -9,17 +9,23 @@ import {
   useDisclosure,
   Box,
   Text,
-  Heading,
+  Heading, DrawerFooter, Switch, Flex
 } from '@chakra-ui/react';
 import GiftItem from './GiftItem';
 
 const GiftDrawer = ({ setOpenDrawer, data, setData, setAddedGiftItems, setGiftItems }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const [enableContribution, setEnableContribution] = useState(false);
   const btnRef = React.useRef();
   const closeModal = () => {
     setOpenDrawer(false);
   };
 
+  const handleClick = () => {
+    setEnableContribution(!enableContribution)
+    console.log('clicked', enableContribution);
+  }
+  console.log(enableContribution);
   return (
     <Box>
       <Drawer
@@ -54,6 +60,21 @@ const GiftDrawer = ({ setOpenDrawer, data, setData, setAddedGiftItems, setGiftIt
               />
             ))}
           </DrawerBody>
+          <Box textAlign='left' p='8'>
+           <Flex direction='column'>
+              <Box mb='5'>
+                <Text>Total price: </Text>
+              </Box>
+              <Box>
+                <Flex alignItems='center' justifyContent='space-between'>
+                  <Text>Enable contribution</Text>
+                  <Box onClick={handleClick}>
+                    <Switch colorScheme='teal' />
+                  </Box>
+                </Flex>
+              </Box>
+           </Flex>
+          </Box>
         </DrawerContent>
       </Drawer>
     </Box>
