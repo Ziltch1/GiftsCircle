@@ -6,12 +6,9 @@ import { DeleteGiftItems } from '../../../../../redux/features/gift/service';
 import { dispatch } from '../../../../../redux/store';
 import itemImage from '../../../../assets/giftItemImage.svg';
 
-const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems }) => {
+const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems}) => {
   const { giftItems } = useSelector(state => state.gift);
-
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
-  const [items, setItems] = useState([giftItem]);
-  const [totalAmount, setTotalAmount] = useState('')
 
   const HandleDelete = () => {
     if (gift.id) {
@@ -24,21 +21,6 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems }) => {
       setGiftItems(prev => prev.filter(x => x.giftItemId !== giftItem.id));
     }
   };
-
-  // setItems(giftItem);
-  console.log(items);
-
-
-  const sumOfAmount = items.reduce((accumulator, currentValue) => {
-    let sum = 0;
-    for (let amount in currentValue) {
-      sum += currentValue[amount];
-    }
-    return accumulator + sum;
-  }, 0);
-  // setTotalAmount(sumOfAmount)
-  
-
 
   return (
     <Box
