@@ -1,4 +1,11 @@
-import { Box, Text, Heading, Button, Image, Flex, Switch } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Heading,
+  Button,
+  Image,
+  Flex,
+} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GiftIcon from '../../../assets/giftIcon.svg';
@@ -7,21 +14,32 @@ import GiftDrawer from './subpages/GiftDrawer';
 const GiftHeader = ({
   setOpenDrawer,
   openDrawer,
-  giftItems,
+  GiftItems,
   setAddedGiftItems,
   setGiftItems,
 }) => {
   const { eventGifts } = useSelector(state => state.event);
+  const { giftItems } = useSelector(state => state.gift);
   const [data, setData] = useState([]);
+  const [totalAddedAmount, setTotalAddedAmount] = useState(0);
   const showDrawer = () => {
     setOpenDrawer(true);
   };
+  useEffect(() => {
+    if (eventGifts) {
+      setData([...eventGifts, ...GiftItems]);
+    } else {
+      setData([...GiftItems]);
+    }
+  }, [eventGifts, GiftItems]);
 
   useEffect(() => {
-    if(eventGifts){
-      setData([...eventGifts, ...giftItems]);
-    }
-  }, [eventGifts, giftItems]);
+    let amount = 0;
+    data.forEach(ele => {
+      amount += giftItems.find(x => x.id === ele.giftItemId).amount;
+    });
+    setTotalAddedAmount(amount);
+  }, [data]);
 
   return (
     <Box my="5">
@@ -32,6 +50,7 @@ const GiftHeader = ({
           setData={setData}
           setAddedGiftItems={setAddedGiftItems}
           setGiftItems={setGiftItems}
+          totalAmount={totalAddedAmount}
         />
       )}
       <Flex mb="5" alignItems="center" justifyContent="space-between">
