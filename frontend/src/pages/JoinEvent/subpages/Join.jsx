@@ -38,20 +38,23 @@ const Join = ({ event, user }) => {
           email: result.user.email,
         };
 
-        const res = await GoogleSignInApi(formBody);
+        try {
+          const res = await GoogleSignInApi(formBody);
 
-        if (res.data) {
-          setGuestId(res.data.user.id);
-          dispatch(GuestSignIn(res.data));
-        } else {
-          const formBody = {
-            firstname: result.user.displayName?.split(' ')[1],
-            lastname: result.user.displayName?.split(' ')[0],
-            email: result.user.email,
+          if (res.data) {
+            setGuestId(res.data.user.id);
+            dispatch(GuestSignIn(res.data));
+          }
+        } catch (error) {
+          let data = {
+            eventId: event.id,
+            userId: guestId,
+            guestCode: guestCode,
+            coHost: false,
           };
-
-          const res = await CreateUserApi(formBody);
-          console.log(res.data);
+          console.log(data);
+          localStorage.setItem('guestSignUp', JSON.stringify(data));
+          navigate('/signup');
         }
       })
       .catch(error => {

@@ -30,6 +30,7 @@ const GiftCard = ({
         quantity: 1,
         giftItemId: id,
         complimentaryGift: 'none',
+        enableContribution: false
       };
       setGiftItems(prev => [...prev, formBody]);
       setAddedGiftItems(prev => [...prev, id]);

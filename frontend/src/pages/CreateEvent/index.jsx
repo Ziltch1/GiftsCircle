@@ -10,7 +10,6 @@ import DeliveryDetailsForm from './subpages/step4/DeliveryDetailsForm';
 import SummaryForm from './subpages/step5/SummaryForm';
 import Stepper from './subpages/Stepper';
 import EventPreview from './subpages/EventPreview';
-import { useLocation } from 'react-router-dom';
 
 const Index = () => {
   const [step, setStep] = useState(3);
