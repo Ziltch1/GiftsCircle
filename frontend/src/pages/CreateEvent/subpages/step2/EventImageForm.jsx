@@ -141,6 +141,7 @@ const EventImageForm = ({ step, setStep }) => {
                   >
                     <Input
                       type="file"
+                      accept='image/*'
                       id="upload"
                       display="none"
                       onChange={uploadImage}

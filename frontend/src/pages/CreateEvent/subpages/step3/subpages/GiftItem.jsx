@@ -1,14 +1,13 @@
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DeleteGiftItems } from '../../../../../redux/features/gift/service';
 import { dispatch } from '../../../../../redux/store';
 import itemImage from '../../../../assets/giftItemImage.svg';
 
-const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems }) => {
+const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems}) => {
   const { giftItems } = useSelector(state => state.gift);
-
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
 
   const HandleDelete = () => {
@@ -59,6 +58,10 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems }) => {
               Remove from list
             </Text>
           </Button>
+        </Box>
+
+        <Box>
+          <Text>₦{giftItem.amount}</Text>
         </Box>
       </Flex>
     </Box>

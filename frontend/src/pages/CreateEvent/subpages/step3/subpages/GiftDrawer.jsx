@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -9,17 +9,47 @@ import {
   useDisclosure,
   Box,
   Text,
-  Heading,
+  Heading, DrawerFooter, Switch, Flex
 } from '@chakra-ui/react';
 import GiftItem from './GiftItem';
+import { useSelector } from 'react-redux';
 
 const GiftDrawer = ({ setOpenDrawer, data, setData, setAddedGiftItems, setGiftItems }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const [enableContribution, setEnableContribution] = useState(false);
+  const {giftItems} = useSelector(state => state.gift)
+  const [filteredGifts, setFilteredGifts] = useState([]);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    const filtered = giftItems.filter(k =>
+      data.some(j => j.giftItemId === k.id)
+    );
+    setFilteredGifts(filtered);
+
+    const sumOfAmount = filtered.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.amount;
+    }, 0);
+
+    if (sumOfAmount !== amount) {
+      setAmount(sumOfAmount)
+    }
+  }, [giftItems, data, amount]);
+
+
   const btnRef = React.useRef();
   const closeModal = () => {
     setOpenDrawer(false);
   };
 
+
+
+  const handleClick = () => {
+    setEnableContribution(!enableContribution)
+    console.log('clicked', enableContribution);
+  }
+  
+  console.log(enableContribution);
   return (
     <Box>
       <Drawer
@@ -54,6 +84,21 @@ const GiftDrawer = ({ setOpenDrawer, data, setData, setAddedGiftItems, setGiftIt
               />
             ))}
           </DrawerBody>
+          <Box textAlign='left' p='8'>
+           <Flex direction='column'>
+              <Box mb='5'>
+                <Text fontWeight={600} fontSize={18}>Total price: ₦{amount}</Text>
+              </Box>
+              <Box>
+                <Flex alignItems='center' justifyContent='space-between'>
+                  <Text fontWeight={600} fontSize={18}>Enable contribution</Text>
+                  <Box onClick={handleClick}>
+                    <Switch colorScheme='teal' />
+                  </Box>
+                </Flex>
+              </Box>
+           </Flex>
+          </Box>
         </DrawerContent>
       </Drawer>
     </Box>
