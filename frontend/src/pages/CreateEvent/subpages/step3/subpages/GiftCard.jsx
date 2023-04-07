@@ -23,14 +23,14 @@ const GiftCard = ({
   };
 
   const AddGift = id => {
+    
     if (!addedGiftItems.includes(id)) {
-     
       const formBody = {
         eventId: newEvent.id,
         quantity: 1,
         giftItemId: id,
         complimentaryGift: 'none',
-        enableContribution: false
+        enableContribution: false,
       };
       setGiftItems(prev => [...prev, formBody]);
       setAddedGiftItems(prev => [...prev, id]);
@@ -46,7 +46,6 @@ const GiftCard = ({
       setData([...giftItems]);
     }
   }, [giftItems]);
-
 
   return (
     <>

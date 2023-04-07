@@ -13,14 +13,14 @@ import BackButton from '../BackButton';
 
 const Index = ({ step, setStep }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
- 
-  const [giftItems, setGiftItems] = useState([]);
+
+  const [GiftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
   const { newEvent } = useSelector(state => state.event);
 
   const HandleSubmit = async () => {
     try {
-      await CreateManyGiftsApi(giftItems);
+      await CreateManyGiftsApi(GiftItems);
       dispatch(GetEventGifts(newEvent.id));
       setStep(step + 1);
     } catch (error) {
@@ -38,7 +38,7 @@ const Index = ({ step, setStep }) => {
         <GiftHeader
           openDrawer={openDrawer}
           setOpenDrawer={setOpenDrawer}
-          giftItems={giftItems}
+          GiftItems={GiftItems}
           setAddedGiftItems={setAddedGiftItems}
           setGiftItems={setGiftItems}
         />

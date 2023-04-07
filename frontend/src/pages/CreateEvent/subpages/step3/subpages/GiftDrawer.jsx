@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -9,47 +9,33 @@ import {
   useDisclosure,
   Box,
   Text,
-  Heading, DrawerFooter, Switch, Flex
+  Heading,
+  Switch,
+  Flex,
 } from '@chakra-ui/react';
 import GiftItem from './GiftItem';
-import { useSelector } from 'react-redux';
 
-const GiftDrawer = ({ setOpenDrawer, data, setData, setAddedGiftItems, setGiftItems }) => {
+const GiftDrawer = ({
+  setOpenDrawer,
+  data,
+  setData,
+  setAddedGiftItems,
+  setGiftItems,
+  totalAmount,
+}) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const [enableContribution, setEnableContribution] = useState(false);
-  const {giftItems} = useSelector(state => state.gift)
-  const [filteredGifts, setFilteredGifts] = useState([]);
-  const [amount, setAmount] = useState(0);
-
-  useEffect(() => {
-    const filtered = giftItems.filter(k =>
-      data.some(j => j.giftItemId === k.id)
-    );
-    setFilteredGifts(filtered);
-
-    const sumOfAmount = filtered.reduce((accumulator, currentValue) => {
-      return accumulator + currentValue.amount;
-    }, 0);
-
-    if (sumOfAmount !== amount) {
-      setAmount(sumOfAmount)
-    }
-  }, [giftItems, data, amount]);
-
 
   const btnRef = React.useRef();
   const closeModal = () => {
     setOpenDrawer(false);
   };
 
-
-
   const handleClick = () => {
-    setEnableContribution(!enableContribution)
+    setEnableContribution(!enableContribution);
     console.log('clicked', enableContribution);
-  }
-  
-  console.log(enableContribution);
+  };
+
   return (
     <Box>
       <Drawer
@@ -84,20 +70,24 @@ const GiftDrawer = ({ setOpenDrawer, data, setData, setAddedGiftItems, setGiftIt
               />
             ))}
           </DrawerBody>
-          <Box textAlign='left' p='8'>
-           <Flex direction='column'>
-              <Box mb='5'>
-                <Text fontWeight={600} fontSize={18}>Total price: ₦{amount}</Text>
+          <Box textAlign="left" p="8">
+            <Flex direction="column">
+              <Box mb="5">
+                <Text fontWeight={600} fontSize={18}>
+                  Total price: ₦{totalAmount}
+                </Text>
               </Box>
               <Box>
-                <Flex alignItems='center' justifyContent='space-between'>
-                  <Text fontWeight={600} fontSize={18}>Enable contribution</Text>
+                <Flex alignItems="center" justifyContent="space-between">
+                  <Text fontWeight={600} fontSize={18}>
+                    Enable contribution
+                  </Text>
                   <Box onClick={handleClick}>
-                    <Switch colorScheme='teal' />
+                    <Switch colorScheme="teal" />
                   </Box>
                 </Flex>
               </Box>
-           </Flex>
+            </Flex>
           </Box>
         </DrawerContent>
       </Drawer>
