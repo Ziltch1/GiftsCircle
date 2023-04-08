@@ -14,6 +14,8 @@ import {
 } from '../../redux/features/gift/service';
 import GiftTabs from './GiftTabs';
 import SkeletonLoader from '../../components/Skeleton';
+import Navbar from '../../components/Navbar/Navbar';
+
 
 const Index = () => {
   const [navPosition, setNavPosition] = useState(0);
@@ -39,6 +41,8 @@ const Index = () => {
 
   return (
     <Box w="100%" bg="#f5f5f5" h="100%" pb="5">
+      {/* <Navbar /> */}
+      <Box w='90%' mx='auto'>
       <GiftHeader />
       <GiftTabs navPosition={navPosition} setNavPosition={setNavPosition} />
       <Search />
@@ -64,6 +68,7 @@ const Index = () => {
           </Box>
         </>
       )}
+      </Box>
     </Box>
   );
 };
