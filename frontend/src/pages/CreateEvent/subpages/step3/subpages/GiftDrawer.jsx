@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -22,9 +22,9 @@ const GiftDrawer = ({
   setAddedGiftItems,
   setGiftItems,
   totalAmount,
+  setEnableContribution,
 }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
-  const [enableContribution, setEnableContribution] = useState(false);
 
   const btnRef = React.useRef();
   const closeModal = () => {
@@ -32,8 +32,7 @@ const GiftDrawer = ({
   };
 
   const handleClick = () => {
-    setEnableContribution(!enableContribution);
-    console.log('clicked', enableContribution);
+    setEnableContribution(prev => !prev);
   };
 
   return (
@@ -82,8 +81,8 @@ const GiftDrawer = ({
                   <Text fontWeight={600} fontSize={18}>
                     Enable contribution
                   </Text>
-                  <Box onClick={handleClick}>
-                    <Switch colorScheme="teal" />
+                  <Box>
+                    <Switch colorScheme="teal" onChange={() => handleClick()}/>
                   </Box>
                 </Flex>
               </Box>

@@ -1307,8 +1307,8 @@
             "type": "string",
             "required": true
           },
-          "purchasedBy": {
-            "type": "string",
+          "enableContribution": {
+            "type": "boolean",
             "required": true
           },
           "quantity": {

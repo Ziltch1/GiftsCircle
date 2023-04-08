@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FilterButtons from './FilterButtons';
 import GiftHeader from './GiftHeader';
 import Search from './Search';
@@ -16,6 +16,7 @@ const Index = ({ step, setStep }) => {
 
   const [GiftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
+  const [enableContribution, setEnableContribution] = useState(false);
   const { newEvent } = useSelector(state => state.event);
 
   const HandleSubmit = async () => {
@@ -27,6 +28,24 @@ const Index = ({ step, setStep }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (enableContribution) {
+      setGiftItems(
+        GiftItems.map(ele => {
+          ele.enableContribution = true;
+          return ele;
+        })
+      );
+    } else {
+      setGiftItems(
+        GiftItems.map(ele => {
+          ele.enableContribution = false;
+          return ele;
+        })
+      );
+    }
+  }, [enableContribution]);
 
   const BackAction = () => {
     setStep(2);
@@ -41,6 +60,7 @@ const Index = ({ step, setStep }) => {
           GiftItems={GiftItems}
           setAddedGiftItems={setAddedGiftItems}
           setGiftItems={setGiftItems}
+          setEnableContribution={setEnableContribution}
         />
         <Search />
         <FilterButtons />
