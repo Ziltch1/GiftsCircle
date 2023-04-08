@@ -42,6 +42,7 @@ const Join = ({ event, user }) => {
         try {
           const res = await GoogleSignInApi(formBody);
 
+          console.log(res.data);
           if (res.data) {
             setGuestId(res.data.user.id);
             dispatch(GuestSignIn(res.data));
@@ -53,7 +54,6 @@ const Join = ({ event, user }) => {
             guestCode: guestCode,
             coHost: false,
           };
-          console.log(data);
           localStorage.setItem('guestSignUp', JSON.stringify(data));
           navigate('/signup');
         }
@@ -65,7 +65,8 @@ const Join = ({ event, user }) => {
   };
 
   useEffect(() => {
-    if (token) {
+    if (token && guestId !== '') {
+      console.log(guestId);
       let data = {
         eventId: event.id,
         userId: guestId,
@@ -74,12 +75,13 @@ const Join = ({ event, user }) => {
       };
       const AddGuest = async () => {
         await JoinEventGuestApi(data);
+        localStorage.clear();
         navigate(`/view_event`);
       };
 
       AddGuest();
     }
-  }, [token]);
+  }, [token, guestId]);
 
   const handleClick = () => {
     if (guestCode === '' && !guestSignup) {

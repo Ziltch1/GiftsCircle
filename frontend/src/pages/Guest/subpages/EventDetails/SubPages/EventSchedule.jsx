@@ -14,8 +14,6 @@ const EventSchedule = ({ newEvent }) => {
     setOpenDrawer(true)
   }
 
-  console.log(newEvent);
-
   return (
     <Box mb="6">
       {/* {openDrawer && <Fundraising setOpenDrawer={setOpenDrawer} />} */}
