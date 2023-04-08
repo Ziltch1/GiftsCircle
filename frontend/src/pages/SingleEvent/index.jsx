@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import { GetUserEvents } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../CreateEvent/subpages/BackButton';
-import GuestView from '../Guest'
 
 const Index = () => {
   const navigate = useNavigate()
@@ -43,7 +42,7 @@ const Index = () => {
   console.log(newEvent);
 
   return (
-    <Box w="76%" mx="auto" pt="8" pb="7">
+    <Box w="76%" mx="auto" pt="8" pb="7" bg='#F5F5F5'>
       {loading ? (
         <Stack spacing="20px">
           <Skeleton height="50px" width="100%" />
@@ -52,24 +51,17 @@ const Index = () => {
         </Stack>
       ) : (
         <>
-          {newEvent.user_id === userId ? 
-            ( <>
-                  <Box>
-                    <BackButton action={() => navigate(-1)} />
-                    <EventImages newEvent={newEvent} />
-                  </Box>
-                  <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
-                  <Box>
-                    {navPosition === 0 && <EventDetails newEvent={newEvent} />}
-                    {navPosition === 1 && <EventGifts newEvent={newEvent} />}
-                    {navPosition === 2 && <EventMedia />}
-                    {navPosition === 3 && <EventGuests />}
-                  </Box>
-              </> 
-            ) 
-            : 
-            ( <GuestView event={newEvent} />) 
-          }
+            <Box>
+              <BackButton action={() => navigate(-1)} />
+              <EventImages newEvent={newEvent} />
+            </Box>
+            <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
+            <Box>
+              {navPosition === 0 && <EventDetails newEvent={newEvent} />}
+              {navPosition === 1 && <EventGifts newEvent={newEvent} />}
+              {navPosition === 2 && <EventMedia />}
+              {navPosition === 3 && <EventGuests />}
+            </Box>
         </>
       )}
     </Box>

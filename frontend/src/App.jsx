@@ -22,6 +22,7 @@ import Marketplace from './pages/Marketplace';
 import Market from './pages/Marketplace/subpages/Market/Market';
 import JoinEvent from './pages/JoinEvent';
 import ViewEvent from './pages/Guest';
+import UserCheck from './UserCheck';
 
 function App() {
   return (
@@ -48,7 +49,7 @@ function App() {
           <Route path="/dashboard/event_details" element={<EventDetails />} />
           <Route
             path="/dashboard/event_details/:id"
-            element={<SingleEvent />}
+            element={<UserCheck />}
           />
           <Route
             path="/dashboard/gift/gift_details/:id"

@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 import { GetUserEvents } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../CreateEvent/subpages/BackButton';
-import Header from '../../components/Header/Header';
 
 const Index = () => {
   const navigate = useNavigate()
@@ -41,16 +40,14 @@ const Index = () => {
 
   return (
     <Box bg='#F5F5F5'>
-      <Header />
-    
       <Box w="76%" mx="auto" pt="8" pb="7">
-      {/* {loading ? (
+      {loading ? (
         <Stack spacing="20px">
           <Skeleton height="50px" width="100%" />
           <Skeleton height="50px" width="75%" />
           <Skeleton height="50px" width="50%" />
         </Stack>
-      ) : ( */}
+      ) : (
         <>
           <Box>
                <BackButton action={() => navigate(-1)} />
@@ -63,7 +60,7 @@ const Index = () => {
             {navPosition === 2 && <EventMedia />}
           </Box>
         </>
-      {/* )} */}
+      )}
     </Box>
     </Box>
   );
