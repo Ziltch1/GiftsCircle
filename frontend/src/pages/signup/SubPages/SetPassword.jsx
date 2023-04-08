@@ -72,7 +72,7 @@ const SetPassword = () => {
         if (res.status) {
           const guest = JSON.parse(localStorage.getItem('guestSignUp'));
           if (guest) {
-            navigate('/');
+            navigate(`/event/join/${guest.eventId}`);
           } else {
             navigate('/signin');
             localStorage.removeItem('newUser');
