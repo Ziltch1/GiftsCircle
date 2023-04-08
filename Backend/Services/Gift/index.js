@@ -62,10 +62,9 @@ const Create = async (data) => {
 };
 
 const CreateMany = async (data) => {
-  data.gifts.forEach((element) => {
+  data.forEach((element) => {
     element.id = uuidv4();
-    (element.enableContribution = data.enableContribution),
-      (element.purchased = false),
+    (element.purchased = false),
       (element.status = "UnPaid"),
       (element.amountPaid = 0);
     element.purchasedBy = "";
