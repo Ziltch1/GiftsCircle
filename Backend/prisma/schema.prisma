@@ -95,7 +95,6 @@ model user {
   password         String   @db.VarChar(255)
   eventId          String?  @db.VarChar(255)
   event            event?   @relation(fields: [eventId], references: [id])
-  Guests           Guests[]
 }
 
 model otp {
@@ -107,7 +106,6 @@ model otp {
 
 model Guests {
   id      String  @id @db.VarChar(50)
-  user    user    @relation(fields: [userId], references: [id])
   eventId String  @db.VarChar(50)
   coHost  Boolean
   event   event   @relation(fields: [eventId], references: [id])

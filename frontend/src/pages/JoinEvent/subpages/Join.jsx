@@ -17,7 +17,6 @@ import React, { useState, useEffect } from 'react';
 import { GoogleSignInApi } from '../../../redux/axios/apis/auth';
 import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 import { JoinEventGuestApi } from '../../../redux/axios/apis/events';
-import { CreateUserApi } from '../../../redux/axios/apis/user';
 import { useNavigate } from 'react-router-dom';
 import { createResponse } from '../../../redux/utils/UtilSlice';
 import { dispatch } from '../../../redux/store';
@@ -31,6 +30,8 @@ const Join = ({ event, user }) => {
   const toast = useToast();
   const { token } = useSelector(state => state.auth);
 
+  const guestSignup = JSON.parse(localStorage.getItem('guestSignUp'));
+
   const GoogleSignInHandler = async () => {
     signInWithPopup(auth, provider)
       .then(async result => {
@@ -41,6 +42,7 @@ const Join = ({ event, user }) => {
         try {
           const res = await GoogleSignInApi(formBody);
 
+          console.log(res.data);
           if (res.data) {
             setGuestId(res.data.user.id);
             dispatch(GuestSignIn(res.data));
@@ -52,7 +54,6 @@ const Join = ({ event, user }) => {
             guestCode: guestCode,
             coHost: false,
           };
-          console.log(data);
           localStorage.setItem('guestSignUp', JSON.stringify(data));
           navigate('/signup');
         }
@@ -64,24 +65,26 @@ const Join = ({ event, user }) => {
   };
 
   useEffect(() => {
-    if (token) {
+    if (token && guestId !== '') {
+      console.log(guestId);
       let data = {
         eventId: event.id,
         userId: guestId,
-        guestCode: guestCode,
+        guestCode: guestSignup ? guestSignup.guestCode : guestCode,
         coHost: false,
       };
       const AddGuest = async () => {
         await JoinEventGuestApi(data);
+        localStorage.clear();
         navigate(`/view_event`);
       };
 
       AddGuest();
     }
-  }, [token]);
+  }, [token, guestId]);
 
   const handleClick = () => {
-    if (guestCode === '') {
+    if (guestCode === '' && !guestSignup) {
       toast({
         title: 'Error!',
         description: 'Please enter a guest code',
@@ -91,7 +94,6 @@ const Join = ({ event, user }) => {
         position: 'top',
       });
     } else {
-      localStorage.setItem('guestCode', guestCode);
       GoogleSignInHandler();
     }
   };
@@ -100,18 +102,22 @@ const Join = ({ event, user }) => {
       <Heading textAlign="center" mb="6" fontWeight="medium" fontSize={25}>
         Join {`${user.firstname}'s`} Event
       </Heading>
+
       <FormControl>
-        <Box mb="5">
-          <FormLabel>Enter Guest Code</FormLabel>
-          <Input
-            placeholder="Please enter the guest code"
-            bg="#F4F4F4"
-            fontSize={14}
-            _placeholder={{ color: '#A8A8A8' }}
-            value={guestCode}
-            onChange={e => setGuestCode(e.target.value)}
-          />
-        </Box>
+        {!guestSignup && (
+          <Box mb="5">
+            <FormLabel>Enter Guest Code</FormLabel>
+            <Input
+              placeholder="Please enter the guest code"
+              bg="#F4F4F4"
+              fontSize={14}
+              _placeholder={{ color: '#A8A8A8' }}
+              value={guestCode}
+              onChange={e => setGuestCode(e.target.value)}
+            />
+          </Box>
+        )}
+
         <Text fontSize={14} mb="5" fontWeight="medium">
           By clicking "Join", you agree to our Terms of Services and Privacy
           Statement
