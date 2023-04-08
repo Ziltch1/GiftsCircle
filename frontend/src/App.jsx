@@ -47,15 +47,16 @@ function App() {
           <Route path="/dashboard/marketplace" element={<Marketplace />} />
           <Route path="/dashboard/marketplace/market" element={<Market />} />
           <Route path="/dashboard/event_details" element={<EventDetails />} />
-          <Route
-            path="/dashboard/event_details/:id"
-            element={<UserCheck />}
-          />
+         
           <Route
             path="/dashboard/gift/gift_details/:id"
             element={<GiftDetails />}
           />
         </Route>
+        <Route
+          path="/dashboard/event_details/:id"
+          element={<UserCheck />}
+        />
         <Route path="/event/join/:id" element={<JoinEvent />} />
         <Route path="/view_event" element={<ViewEvent />} />
         {/* <Route path="/gift_details/:id" element={<GiftDetails />} /> */}

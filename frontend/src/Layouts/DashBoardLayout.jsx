@@ -22,7 +22,7 @@ const DashboardLayout = () => {
         <Box>
           <Response />
           <Header />
-          <Navbar /> 
+          <Navbar />
           <Outlet />
         </Box>
       )}
