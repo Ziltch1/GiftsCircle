@@ -22,6 +22,10 @@ const Navbar = () => {
         navigate('/dashboard/marketplace');
         setNavPosition(2);
         break;
+      case 4:
+        navigate('/dashboard/settings');
+        setNavPosition(4)
+        break;
 
       default:
         break;
@@ -39,6 +43,9 @@ const Navbar = () => {
       case '/dashboard/marketplace':
         setNavPosition(2);
         break;
+      case '/dashboard/settings':
+        setNavPosition(4);
+        break;
 
       default:
         setNavPosition(0);
@@ -47,7 +54,7 @@ const Navbar = () => {
   }, [pathname]);
 
   return (
-    <Box boxShadow={'md'} bg="white" w="100%" h="60px" pt="7">
+    <Box boxShadow={'lg'} bg="white" w="100%" h="60px" pt="7" borderBottom='0.1px solid lightgray'>
       <Box w="90%" mx="auto">
         <UnorderedList
           listStyleType={'none'}
