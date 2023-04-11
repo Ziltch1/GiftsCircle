@@ -43,8 +43,9 @@ const Index = () => {
   console.log(newEvent);
 
   return (
-    <Box w="76%" mx="auto" pt="8" pb="7" bg='#F5F5F5'>
+    <Box bg='#F5F5F5'>
       <Header />
+      <Box w="76%" mx="auto" pt='8' pb="7">
       {loading ? (
         <Stack spacing="20px">
           <Skeleton height="50px" width="100%" />
@@ -66,6 +67,7 @@ const Index = () => {
             </Box>
         </>
       )}
+    </Box>
     </Box>
   );
 };
