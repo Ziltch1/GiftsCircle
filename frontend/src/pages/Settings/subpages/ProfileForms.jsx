@@ -2,7 +2,7 @@ import { Box, Input, FormControl, FormLabel, Select, Button, Flex } from '@chakr
 import React, {useState} from 'react'
 
 const ProfileForms = () => {
-  const [edited, setEdited] = useState(true)
+  const [edited, setEdited] = useState(false)
   return (
     <Box w='100%' h='auto' bg='white' p={{base: 5, md: 7}} borderRadius={5}>
         <Flex justifyContent='space-between' flexWrap='wrap-reverse'>
@@ -16,7 +16,11 @@ const ProfileForms = () => {
                             </Box>
                             <Box w={{base: '250px', md: '300px'}} mb='5'>
                                 <FormLabel fontSize={14}>Gender</FormLabel>
-                                <Input type='text' w='100%' bg='#EEEEEE' placeholder='Robert' border='1px solid #C6C6C6' disabled />
+                                <Select type='text' w='100%' bg='#EEEEEE' placeholder='Male' border='1px solid #C6C6C6' disabled>
+                                    <option value="lagos">Male</option>
+                                    <option value="lagos">Female</option>
+                                    <option value="lagos">Prefer not to say</option>
+                                </Select>
                             </Box>
                             <Box w={{base: '250px', md: '300px'}} mb='5'>
                                 <FormLabel fontSize={14}>Email address</FormLabel>
@@ -38,11 +42,11 @@ const ProfileForms = () => {
                             </Box>
                             <Box w={{base: '250px', md: '300px'}} mb='5'>
                                 <FormLabel fontSize={14}>Phone number</FormLabel>
-                                <Input type='text' w='100%' bg='#EEEEEE' placeholder='ayanwumi101@gmail.com' border='1px solid #C6C6C6' disabled />
+                                <Input type='text' w='100%' bg='#EEEEEE' placeholder='08127671686' border='1px solid #C6C6C6' disabled />
                             </Box>
                             <Box w={{base: '250px', md: '300px'}} mb='5'>
                                 <FormLabel fontSize={14}>State of residence</FormLabel>
-                                <Select type='text' w='100%' bg='#EEEEEE' placeholder='ayanwumi101@gmail.com' border='1px solid #C6C6C6' disabled>
+                                <Select type='text' w='100%' bg='#EEEEEE' placeholder='Lagos' border='1px solid #C6C6C6' disabled>
                                     <option value="lagos">Lagos</option>
                                     <option value="lagos">Lagos</option>
                                     <option value="lagos">Lagos</option>

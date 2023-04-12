@@ -5,13 +5,11 @@ import UploadedMedia from './subpages/UploadedMedia'
 import ReceivedMedia from './subpages/ReceivedMedia'
 
 const Index = () => {
-  const [navPosition, setNavPosition] = useState(0);
   return (
     <Box>
-          <MediaHeader navPosition={navPosition} setNavPosition={setNavPosition} />
+          <MediaHeader />
           <Box>
-              {navPosition === 0 && <UploadedMedia />}
-              {navPosition === 1 && <ReceivedMedia />}
+            <UploadedMedia />
           </Box>
     </Box>
   )
