@@ -22,6 +22,10 @@ const Navbar = () => {
         navigate('/dashboard/marketplace');
         setNavPosition(2);
         break;
+      case 3:
+        navigate('/dashboard/deliveries');
+        setNavPosition(3);
+        break;
       case 4:
         navigate('/dashboard/settings');
         setNavPosition(4)
@@ -42,6 +46,9 @@ const Navbar = () => {
         break;
       case '/dashboard/marketplace':
         setNavPosition(2);
+        break;
+      case '/dashboard/deliveries':
+        setNavPosition(3);
         break;
       case '/dashboard/settings':
         setNavPosition(4);

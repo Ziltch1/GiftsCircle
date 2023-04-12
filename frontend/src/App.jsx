@@ -24,6 +24,7 @@ import JoinEvent from './pages/JoinEvent';
 import ViewEvent from './pages/Guest';
 import UserCheck from './UserCheck';
 import Settings from './pages/Settings'
+import Deliveries from './pages/Deliveries'
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/dashboard/marketplace/market" element={<Market />} />
           <Route path="/dashboard/event_details" element={<EventDetails />} />
           <Route path="/dashboard/settings" element={<Settings />} />
+          <Route path="/dashboard/deliveries" element={<Deliveries />} />
           <Route
             path="/dashboard/gift/gift_details/:id"
             element={<GiftDetails />}

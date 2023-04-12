@@ -26,7 +26,7 @@ const UploadedMedia = () => {
 
         <FormLabel htmlFor='upload' w='200px' mx='auto' color='white' bg='#00BFB2' fontSize={14} borderRadius='5px' px='28px' py='11px' textAlign='center'>
           Upload file
-          <Input type='file' id='upload' display='none' onchange={(e) => setImage(e.target.files[0])}  />
+          <Input type='file' id='upload' accept='image/*' display='none' onchange={(e) => setImage(e.target.files[0])}  />
         </FormLabel>
 
       </VStack>
