@@ -76,7 +76,7 @@ const Join = ({ event, user }) => {
       const AddGuest = async () => {
         await JoinEventGuestApi(data);
         localStorage.clear();
-        navigate(`/view_event`);
+        navigate(`/view_event/${event.id}`);
       };
 
       AddGuest();
