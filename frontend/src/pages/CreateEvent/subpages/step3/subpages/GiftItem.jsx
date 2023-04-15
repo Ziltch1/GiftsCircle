@@ -21,6 +21,7 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems}) => {
       setGiftItems(prev => prev.filter(x => x.giftItemId !== giftItem.id));
     }
   };
+  
 
   return (
     <Box

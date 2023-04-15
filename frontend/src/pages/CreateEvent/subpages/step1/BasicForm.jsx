@@ -160,6 +160,7 @@ const BasicForm = ({ step, setStep }) => {
                   <option value="Induction">Induction Ceremony</option>
                   <option value="Wedding">Wedding Ceremony</option>
                   <option value="Funeral">Funeral Ceremony</option>
+                  <option value="Others">Others</option>
                 </Select>
               </Box>
 
