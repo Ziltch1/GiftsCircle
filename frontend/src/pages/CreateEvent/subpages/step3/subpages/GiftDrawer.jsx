@@ -23,6 +23,7 @@ const GiftDrawer = ({
   setGiftItems,
   totalAmount,
   setEnableContribution,
+  enableContribution
 }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
@@ -82,7 +83,7 @@ const GiftDrawer = ({
                     Enable contribution
                   </Text>
                   <Box>
-                    <Switch colorScheme="teal" onChange={() => handleClick()}/>
+                    <Switch colorScheme="teal" isChecked={enableContribution} onChange={() => handleClick()}/>
                   </Box>
                 </Flex>
               </Box>

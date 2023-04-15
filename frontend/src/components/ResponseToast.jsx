@@ -8,6 +8,8 @@ const Response = () => {
   const toast = useToast();
   const { response } = useSelector(state => state.util);
 
+  console.log(response);
+
   useEffect(() => {
     if (response.message !== null) {
       let id = response.message;
@@ -18,7 +20,7 @@ const Response = () => {
           status: response.type === 'Error' ? 'error' : 'success',
           duration: 3000,
           isClosable: true,
-          position: 'top'
+          position: 'top',
         });
 
         dispatch(

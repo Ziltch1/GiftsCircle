@@ -11,6 +11,7 @@ const GiftHeader = ({
   setAddedGiftItems,
   setGiftItems,
   setEnableContribution,
+  enableContribution
 }) => {
   const { eventGifts } = useSelector(state => state.event);
   const { giftItems } = useSelector(state => state.gift);
@@ -46,6 +47,7 @@ const GiftHeader = ({
           setAddedGiftItems={setAddedGiftItems}
           setGiftItems={setGiftItems}
           totalAmount={totalAddedAmount}
+          enableContribution={enableContribution}
         />
       )}
       <Flex mb="5" alignItems="center" justifyContent="space-between">

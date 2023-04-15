@@ -1,11 +1,12 @@
 import { Box, Spinner } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../../components/Header/Header';
+import Header from './components/Header';
 import { GetEventApi } from '../../redux/axios/apis/events';
 import { GetUserApi } from '../../redux/axios/apis/user';
 import ErrorHandler from '../../redux/axios/Utils/ErrorHandler';
 import Join from './subpages/Join';
+import Response from '../../components/ResponseToast';
 
 const JoinEvent = () => {
   const { id } = useParams();
@@ -32,7 +33,8 @@ const JoinEvent = () => {
 
   return (
     <Box>
-      {/* <Header /> */}
+      <Header />
+      <Response />
       <Box display="flex" alignItems="center" justifyContent="center" h="90vh">
         {loading ? (
           <Spinner
