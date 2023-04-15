@@ -22,6 +22,7 @@ const GiftCard = ({
     setOpenGiftDetails(true);
   };
 
+  
   const AddGift = id => {
     
     if (!addedGiftItems.includes(id)) {
@@ -84,7 +85,7 @@ const GiftCard = ({
                 onClick={() => openDrawer(gift)}
               />
               <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
-                {gift.details}
+                {gift.title}
               </Text>
               <Flex alignItems="center" justifyContent="space-between">
                 <Text color="#27272E" fontWeight={600} fontSize={18}>

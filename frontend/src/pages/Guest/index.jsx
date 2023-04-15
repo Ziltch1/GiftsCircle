@@ -52,7 +52,7 @@ const Index = () => {
       ) : (
         <>
           <Box>
-               <BackButton action={() => navigate(-1)} />
+               <BackButton action={() => navigate('/dashboard')} />
                 <EventImages newEvent={newEvent} />
           </Box>
           <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
