@@ -21,7 +21,7 @@ const { upload, dataUri } = require("../config/multer");
 // const upload = new Multer.memoryStorage();
 const prisma = new PrismaClient();
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await GetEvent(req.params.id);
     if (data) {

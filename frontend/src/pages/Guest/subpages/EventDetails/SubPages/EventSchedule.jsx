@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
-import { Box, Text, Heading, Button, Flex, Image } from '@chakra-ui/react';
+import React from 'react';
+import { Box, Text, Heading, Flex, Image } from '@chakra-ui/react';
 import clock from '../../../../../components/assets/clock.svg';
 import location from '../../../../../components/assets/map-pin.svg';
-import Fundraising from './Fundraising';
 
 const EventSchedule = ({ newEvent }) => {
   const date = newEvent?.date;
   const dateString = date;
   const newDate = new Date(dateString).toDateString();
-  const [openDrawer, setOpenDrawer] = useState(false)
+  // const [openDrawer, setOpenDrawer] = useState(false)
 
-  const showDrawer = () => {
-    setOpenDrawer(true)
-  }
+  // const showDrawer = () => {
+  //   setOpenDrawer(true)
+  // }
 
   return (
     <Box mb="6">
