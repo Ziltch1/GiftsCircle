@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Button, Flex, Image, Text, Box } from '@chakra-ui/react'
 import ContributionModal from '../../ContributionModal'
+import cardImg from '../../../../assets/giftItemImage.svg'
 
-const GiftCard = ({gift}) => {
+const GiftCard = ({gift, setOpenDrawer}) => {
   const [openModal, setOpenModal] = useState(false);
   return (
     <>
@@ -19,15 +20,16 @@ const GiftCard = ({gift}) => {
           key={gift?.id}
       >
           <Image
-              src={gift?.image}
-              w="279"
+              src={cardImg}
+              w="100%"
               h="142px"
               borderRadius={10}
+              objectFit='cover'
               alt="gift item image"
               display="block"
               mx="auto"
               mb="2.5"
-            //   onClick={() => openDrawer(gift)}
+              onClick={() => setOpenDrawer(true)}
           />
           <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
               {/* {gift?.details} */}
@@ -40,7 +42,6 @@ const GiftCard = ({gift}) => {
               <Button
                   fontSize={13}
                   fontWeight={500}
-                //   bg={addedGiftItems.includes(gift?.id) ? 'grey' : '#00BFB2'}
                   bg="#00BFB2"
                   color="white"
                   w="129px"
@@ -50,7 +51,6 @@ const GiftCard = ({gift}) => {
                   id={gift?.id}
               >
                 Purchase
-                  {/* {addedGiftItems.includes(gift?.id) ? 'Added' : 'Add to list'} */}
               </Button>
           </Flex>
       </Box>

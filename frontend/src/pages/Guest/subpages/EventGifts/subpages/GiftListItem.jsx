@@ -1,6 +1,7 @@
 import React from 'react'
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
+import cardImg from '../../../../assets/giftItemImage.svg'
 
 const GiftListItem = ({giftItem}) => {
   return (
@@ -15,7 +16,7 @@ const GiftListItem = ({giftItem}) => {
       >
           <Flex gap={3}>
               <Image
-                //   src={itemImage}
+                  src={cardImg}
                   w="90px"
                   h="90px"
                   borderRadius={5}

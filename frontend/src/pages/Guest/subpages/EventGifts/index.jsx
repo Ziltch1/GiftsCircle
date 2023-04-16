@@ -31,7 +31,7 @@ const Index = ({ newEvent }) => {
       {showListDrawer && <GiftListDrawer setShowListDrawer={setShowListDrawer} />}
       <GiftHeader setOpenDrawer={setOpenDrawer} setShowListDrawer={setShowListDrawer}  />
       <Box>
-        <GiftCard />
+        <GiftCard setOpenDrawer={setOpenDrawer} />
       </Box>
     </Box>
   );
