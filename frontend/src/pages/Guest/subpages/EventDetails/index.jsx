@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
 import EventSchedule from './SubPages/EventSchedule';
-import EventHosts from './SubPages/EventHosts';
+// import EventHosts from './SubPages/EventHosts';
 
 const Index = ({ newEvent }) => {
   return (

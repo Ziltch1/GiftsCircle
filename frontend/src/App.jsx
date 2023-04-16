@@ -23,9 +23,10 @@ import Market from './pages/Marketplace/subpages/Market/Market';
 import JoinEvent from './pages/JoinEvent';
 import ViewEvent from './pages/Guest';
 import UserCheck from './UserCheck';
-import Settings from './pages/Settings'
-import Deliveries from './pages/Deliveries'
 import JoinEvent2 from './pages/JoinEvent2'
+import Settings from './pages/Settings';
+import Deliveries from './pages/Deliveries';
+import JoinFromDashboard from './pages/JoinEvent/subpages/JoinFromDashboard';
 
 function App() {
   return (
@@ -61,7 +62,9 @@ function App() {
           path="/dashboard/event_details/:id"
           element={<UserCheck />}
         />
-        <Route path="/dashboard/event/join" element={<JoinEvent2 />} />
+        {/* <Route path="/dashboard/event/join" element={<JoinEvent2 />} /> */}
+        {/* <Route path="/dashboard/event_details/:id" element={<UserCheck />} /> */}
+        <Route path="/event/join" element={<JoinFromDashboard />} />
         <Route path="/event/join/:id" element={<JoinEvent />} />
         <Route path="/view_event/:id" element={<ViewEvent />} />
         {/* <Route path="/gift_details/:id" element={<GiftDetails />} /> */}
