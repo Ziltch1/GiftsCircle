@@ -8,8 +8,6 @@ const Response = () => {
   const toast = useToast();
   const { response } = useSelector(state => state.util);
 
-  console.log(response);
-
   useEffect(() => {
     if (response.message !== null) {
       let id = response.message;
