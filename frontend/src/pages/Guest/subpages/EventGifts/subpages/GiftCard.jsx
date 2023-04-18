@@ -7,7 +7,7 @@ const GiftCard = ({ gift }) => {
   const [openModal, setOpenModal] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
 
-  const giftItem = giftItems.find(x => x.id === gift.giftItemId);
+  const giftItem = giftItems.find(x => x.id === gift?.giftItemId);
   return (
     <>
       {openModal && <ContributionModal setOpenModal={setOpenModal} />}

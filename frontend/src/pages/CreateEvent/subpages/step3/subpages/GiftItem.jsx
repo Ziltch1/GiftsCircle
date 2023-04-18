@@ -34,11 +34,12 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems}) => {
     >
       <Flex gap={3}>
         <Image
-          src={itemImage}
+          src={giftItem.image}
           w="90px"
           h="90px"
           borderRadius={5}
           alt="gift item image"
+          objectFit='cover'
         />
         <Box w="390px">
           <Heading fontWeight="medium" fontSize="15px" lineHeight={6}>
