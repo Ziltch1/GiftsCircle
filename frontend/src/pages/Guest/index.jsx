@@ -37,6 +37,8 @@ const Index = () => {
     }
   }, [event]);
 
+  console.log(event);
+
   return (
     <Box bg="#F5F5F5">
       <Header />
@@ -56,7 +58,7 @@ const Index = () => {
             <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
             <Box>
               {navPosition === 0 && <EventDetails newEvent={event} />}
-              {navPosition === 1 && <EventGifts />}
+              {navPosition === 1 && <EventGifts event={event} />}
               {navPosition === 2 && <EventMedia />}
             </Box>
           </>

@@ -14,9 +14,10 @@ import {
 } from '@chakra-ui/react';
 import errorImg from '../../assets/errorImg.svg'
 
-const ContributionModal = ({setOpenModal}) => {
+const ContributionModal = ({setOpenModal, event}) => {
   const { isOpen, onOpen, onClose } = useDisclosure({defaultIsOpen: true });
   const [contribution, setContribution] = useState(false)
+  console.log(event);
   return (
     <Box>
         {contribution && <ContributionAmount setContribution={setContribution} setOpenModal={setOpenModal} />}
@@ -32,10 +33,10 @@ const ContributionModal = ({setOpenModal}) => {
                   <ModalCloseButton onClick={() => setOpenModal(false)} />
                   <ModalBody>
                       <Image src={errorImg} mb='3' display='block' mx='auto' />
-                      <Text mb='3' textAlign='center'>Contribution is enabled for this product, you can pay in full or contribute to pay part of the total cost</Text>
+                      <Text mb='3' textAlign='center'>If contribution is enabled for this product, you can contribute to pay part of the total cost or you can pay in full</Text>
                       <Flex direction='column' w='85%' mx='auto'>
                           <Button mb='3' bg='#00BFB2' fontSize={14} fontWeight='medium' color='white'>Pay in full </Button>
-                          <Button fontSize={14} fontWeight='medium' onClick={() => setContribution(true)}>Contribute</Button>
+                          {event.applyDonation && (<Button fontSize={14} fontWeight='medium' onClick={() => setContribution(true)}>Contribute</Button>)}
                       </Flex>
                   </ModalBody>
             </ModalContent>
