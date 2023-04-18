@@ -968,6 +968,180 @@
           }
         }
       }
+    },
+    "/fundRaising/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/fundRaising/create": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/FundRaising" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/fundRaising/UpdateStatus": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/fundRaising/UpdateAmount": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "properties": {
+                "amount": {
+                  "type": "number"
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/fundRaising/Donate": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/FundDonate" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/fundRaising/GetFundDonors/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1362,6 +1536,48 @@
           },
           "postalCode": {
             "type": "string",
+            "required": true
+          }
+        }
+      },
+      "FundRaising": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "required": true
+          },
+          "amount": {
+            "type": "number",
+            "required": true
+          }
+        }
+      },
+      "FundDonate": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "required": true
+          },
+          "lastName": {
+            "type": "string",
+            "required": true
+          },
+          "email": {
+            "type": "string",
+            "required": true
+          },
+          "tel": {
+            "type": "string",
+            "required": true
+          },
+          "fundId": {
+            "type": "string",
+            "required": true
+          },
+          "amount": {
+            "type": "number",
             "required": true
           }
         }

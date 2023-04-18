@@ -73,7 +73,7 @@ const ContributionModal = ({ setOpenModal, contribute }) => {
 export default ContributionModal;
 
 export const ContributionAmount = ({ setContribution, setOpenModal }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const closeModal = () => {
     // setOpenModal(false)
     setContribution(false);

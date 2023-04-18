@@ -18,7 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001", "https://giftscircle.netlify.app"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://giftscircle.netlify.app",
+    ],
   })
 );
 
@@ -31,6 +35,7 @@ app.use("/api/event/", require("./Controllers/EventController"));
 app.use("/api/giftItem/", require("./Controllers/GiftItemController"));
 app.use("/api/gift/", require("./Controllers/GiftController"));
 app.use("/api/delivery/", require("./Controllers/DeliveryController"));
+app.use("/api/fundRaising/", require("./Controllers/FundRaising"));
 app.use("/api/", require("./Controllers/AuthController"));
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
