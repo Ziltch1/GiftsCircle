@@ -10,7 +10,7 @@ const Header = () => {
         <Flex justifyContent='space-between'>
           <Box>
             <Link to="/">
-              <Image src={logo} w="100%" />
+              <Image src={logo} w="70%" />
             </Link>
           </Box>
         </Flex>
