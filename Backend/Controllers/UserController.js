@@ -6,6 +6,7 @@ const {
   GetUser,
   GetUsers,
   DeleteUser,
+  UpdateUser,
 } = require("../Services/Users");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const router = express.Router();
@@ -62,6 +63,20 @@ router.post("/changePassword", EnsureAuthenticated, async (req, res) => {
         .send(ResponseDTO("Success", "Password changed successfully"));
     }
     return res.status(400).send(ResponseDTO("Failed", "Password is Incorrect"));
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.put("/:id", EnsureAuthenticated, async (req, res) => {
+  try {
+    let data = await UpdateUser(req.body, req.params.id);
+    if (data) {
+      return res.status(201).send(data);
+    }
+    return res.status(400).send(ResponseDTO("Failed", "User not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

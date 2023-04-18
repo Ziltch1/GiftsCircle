@@ -23,7 +23,6 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const { token } = useSelector(state => state.auth);
- 
 
   const GoogleSignInHandler = () => {
     signInWithPopup(auth, provider)
@@ -39,6 +38,34 @@ const SignIn = () => {
         dispatch(createResponse(ErrorHandler(error)));
       });
   };
+
+  // const AppleSignInHandler = () => {
+  //   signInWithPopup(auth, appleProvider)
+  //     .then(result => {
+  //       console.log(result);
+  //       // The signed-in user info.
+  //       const user = result.user;
+
+  //       // Apple credential
+  //       const credential = OAuthProvider.credentialFromResult(result);
+  //       const accessToken = credential.accessToken;
+  //       const idToken = credential.idToken;
+
+  //       // IdP data available using getAdditionalUserInfo(result)
+  //       // ...
+  //     })
+  //     .catch(error => {
+  //       // Handle Errors here.
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       // The email of the user's account used.
+  //       const email = error.customData.email;
+  //       // The credential that was used.
+  //       const credential = OAuthProvider.credentialFromError(error);
+
+  //       // ...
+  //     });
+  // };
 
   useEffect(() => {
     if (token) {
@@ -87,8 +114,6 @@ const SignIn = () => {
             </Text>
           </Flex>
           <Flex direction="column" gap="20px">
-           
-
             <Button
               bgColor="#00BFB2"
               boxShadow="0px 8px 30px rgba(0, 191, 178, 0.1)"
@@ -151,6 +176,7 @@ const SignIn = () => {
               alignItems="center"
               _hover={{ bgColor: '#ffffff' }}
               cursor="pointer"
+              // onClick={() => AppleSignInHandler()}
             >
               <img src={Apple} alt="google" />
               <Text

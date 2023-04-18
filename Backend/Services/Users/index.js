@@ -137,11 +137,42 @@ const DeleteUser = async (id) => {
   return user;
 };
 
+const UpdateUser = async (data, id) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  if (user) {
+    let updatedUser = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        gender: data.gender ? data.gender : user.gender,
+        dob: data.dob ? data.dob : user.dob,
+        tel: data.tel ? data.tel : user.tel,
+        state: data.state ? data.state : user.state,
+        placeOfResidence: data.residence
+          ? data.residence
+          : user.placeOfResidence,
+      },
+    });
+
+    await prisma.$disconnect();
+    return updatedUser;
+  }
+
+  return null;
+};
+
 module.exports = {
   Create,
   GetUser,
   SetPassword,
   ChangePassword,
   GetUsers,
+  UpdateUser,
   DeleteUser,
 };
