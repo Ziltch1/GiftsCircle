@@ -99,7 +99,7 @@ const Join = ({ event, user }) => {
   };
   return (
     <Box w={{ base: '350px', md: '500px', lg: '500px' }} mx="auto" h="auto">
-      <Heading textAlign="center" mb="6" fontWeight="medium" fontSize={25}>
+      <Heading textAlign="center" mb="6" fontWeight="medium" fontSize={25} textTransform='capitalize'>
         Join {`${user.firstname}'s`} Event
       </Heading>
 
