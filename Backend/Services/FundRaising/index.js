@@ -125,6 +125,13 @@ const GetFundDonors = async (id) => {
     where: {
       fundId: id,
     },
+    select: {
+      firstName: true,
+      lastName: true,
+      amount: true,
+      id: true,
+      date: true,
+    },
   });
 
   await prisma.$disconnect();
@@ -137,5 +144,5 @@ module.exports = {
   UpdateAmount,
   UpdateStatus,
   Donate,
-  GetFundDonors
+  GetFundDonors,
 };

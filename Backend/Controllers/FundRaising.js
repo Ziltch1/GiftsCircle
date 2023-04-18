@@ -59,7 +59,7 @@ router.put("/UpdateAmount", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.post("/UpdateStatus", EnsureAuthenticated, async (req, res) => {
+router.put("/UpdateStatus", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await UpdateStatus(req.body);
     if (data) {

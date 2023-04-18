@@ -228,6 +228,32 @@
         }
       }
     },
+    "/user///{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/UpdateUser" }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/user/changePassword": {
       "post": {
         "description": "",
@@ -1578,6 +1604,31 @@
           },
           "amount": {
             "type": "number",
+            "required": true
+          }
+        }
+      },
+      "UpdateUser": {
+        "type": "object",
+        "properties": {
+          "gender": {
+            "type": "string",
+            "required": true
+          },
+          "tel": {
+            "type": "string",
+            "required": true
+          },
+          "dob": {
+            "type": "string",
+            "required": true
+          },
+          "residence": {
+            "type": "string",
+            "required": true
+          },
+          "state": {
+            "type": "string",
             "required": true
           }
         }
