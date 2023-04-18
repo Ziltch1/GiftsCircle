@@ -8,9 +8,15 @@ const GiftCard = ({ gift, event }) => {
   const { giftItems } = useSelector(state => state.gift);
 
   const giftItem = giftItems.find(x => x.id === gift?.giftItemId);
+
   return (
     <>
-      {openModal && <ContributionModal setOpenModal={setOpenModal} event={event} />}
+      {openModal && (
+        <ContributionModal
+          setOpenModal={setOpenModal}
+          contribute={gift.enableContribution}
+        />
+      )}
       <Box
         w="285px"
         minH="250px"
