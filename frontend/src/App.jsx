@@ -23,7 +23,6 @@ import Market from './pages/Marketplace/subpages/Market/Market';
 import JoinEvent from './pages/JoinEvent';
 import ViewEvent from './pages/Guest';
 import UserCheck from './UserCheck';
-import JoinEvent2 from './pages/JoinEvent2'
 import Settings from './pages/Settings';
 import Deliveries from './pages/Deliveries';
 import JoinFromDashboard from './pages/JoinEvent/subpages/JoinFromDashboard';
