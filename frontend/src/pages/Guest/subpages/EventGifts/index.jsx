@@ -25,6 +25,7 @@ const Index = () => {
         <GiftListDrawer setShowListDrawer={setShowListDrawer} />
       )}
       <GiftHeader
+        giftCount={data.length}
         setOpenDrawer={setOpenDrawer}
         setShowListDrawer={setShowListDrawer}
       />
