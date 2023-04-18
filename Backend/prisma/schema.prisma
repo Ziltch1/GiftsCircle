@@ -25,31 +25,32 @@ model delivery {
 }
 
 model event {
-  id              String   @id @db.VarChar(255)
-  title           String?  @db.VarChar(255)
-  category        String   @db.VarChar(255)
-  venue           String   @db.VarChar(255)
+  id              String        @id @db.VarChar(255)
+  title           String?       @db.VarChar(255)
+  category        String        @db.VarChar(255)
+  venue           String        @db.VarChar(255)
   date            DateTime
   start_time      String
   end_time        String
-  timezone        String?  @db.VarChar(255)
-  image           String?  @db.VarChar(255)
-  descCeleb       String?  @db.VarChar
-  summary         String?  @db.VarChar
-  descSummary     String?  @db.VarChar
+  timezone        String?       @db.VarChar(255)
+  image           String?       @db.VarChar(255)
+  descCeleb       String?       @db.VarChar
+  summary         String?       @db.VarChar
+  descSummary     String?       @db.VarChar
   published       Boolean
   applyDonation   Boolean
   percentDonation Int
-  coHostCode      String   @db.VarChar(6)
-  coHostLink      String   @db.VarChar(100)
-  eventLink       String   @db.VarChar(100)
-  guestCode       String   @db.VarChar(6)
+  coHostCode      String        @db.VarChar(6)
+  coHostLink      String        @db.VarChar(100)
+  eventLink       String        @db.VarChar(100)
+  guestCode       String        @db.VarChar(6)
   user_id         String
   created_at      DateTime
-  host            String   @db.VarChar(255)
+  host            String        @db.VarChar(255)
   gifts           gift[]
   co_hosts        user[]
   Guests          Guests[]
+  FundRaising     FundRaising[]
 
   @@index([host], map: "Event_userId_fkey")
 }
@@ -110,4 +111,26 @@ model Guests {
   coHost  Boolean
   event   event   @relation(fields: [eventId], references: [id])
   userId  String  @db.VarChar(255)
+}
+
+model FundRaising {
+  id                  String                @id @db.VarChar(50)
+  eventId             String                @db.VarChar(50)
+  event               event                 @relation(fields: [eventId], references: [id])
+  amount              Int
+  amountPaid          Int
+  active              Boolean
+  FundRaisingDonation FundRaisingDonation[]
+}
+
+model FundRaisingDonation {
+  id        String      @id @db.VarChar(50)
+  fundId    String      @db.VarChar(50)
+  fund      FundRaising @relation(fields: [fundId], references: [id])
+  firstName String      @db.VarChar(50)
+  lastName  String      @db.VarChar(50)
+  email     String      @db.VarChar(50)
+  phone     String      @db.VarChar(50)
+  amount    Int
+  date      DateTime
 }
