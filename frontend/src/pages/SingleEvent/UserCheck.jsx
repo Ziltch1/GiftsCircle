@@ -1,16 +1,15 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Guest from './pages/Guest'
-import Host from './pages/SingleEvent'
+import Guest from '../Guest';
+import Host from '.';
 import { Box } from '@chakra-ui/react';
-import { dispatch } from './redux/store';
-import { GetUserEvents } from './redux/features/events/service';
-
+import { dispatch } from '../../redux/store';
+import { GetUserEvents } from '../../redux/features/events/service';
 
 const UserCheck = () => {
   const { id } = useParams();
-  const { events, } = useSelector(state => state.event);
+  const { events } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
   const [newEvent, setNewEvent] = useState(null);
 
@@ -25,12 +24,7 @@ const UserCheck = () => {
     }
   }, [events, id, userId]);
 
+  return <Box>{newEvent?.user_id === userId ? <Host /> : <Guest />}</Box>;
+};
 
-  return (
-    <Box>
-        {newEvent?.user_id === userId ? <Host /> : <Guest />}
-    </Box>
-  )
-}
-
-export default UserCheck
+export default UserCheck;

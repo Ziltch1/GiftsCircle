@@ -37,8 +37,6 @@ const Index = () => {
     }
   }, [event]);
 
-  console.log(event);
-
   return (
     <Box bg="#F5F5F5">
       <Header />

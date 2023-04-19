@@ -40,8 +40,6 @@ const Index = () => {
     }
   }, [newEvent]);
 
-  console.log(newEvent);
-
   return (
     <Box bg='#F5F5F5'>
       <Header />

@@ -20,33 +20,39 @@ import { CheckIcon } from '@chakra-ui/icons';
 const EventImages = ({ newEvent }) => {
   const image = newEvent.image;
   const imageUrl = image;
-  const toast = useToast();
   const [copyElement, setCopyElement] = useState('');
 
-  const copyEventId = async id => {
-    setCopyElement('EVENTID');
-    await navigator.clipboard.writeText(id);
+  const HandleCopy = async (target, text) => {
+    switch (target) {
+      case 'EVENTID':
+        setCopyElement('EVENTID');
+        await navigator.clipboard.writeText(text);
+        break;
+
+      case 'COHOST_CODE':
+        setCopyElement('COHOST_CODE');
+        await navigator.clipboard.writeText(text);
+        break;
+
+      case 'COHOST_LINK':
+        setCopyElement('COHOST_LINK');
+        await navigator.clipboard.writeText(text);
+        break;
+
+      case 'GUEST_CODE':
+        setCopyElement('GUEST_CODE');
+        await navigator.clipboard.writeText(text);
+        break;
+      case 'GUEST_LINK':
+        setCopyElement('GUEST_LINK');
+        await navigator.clipboard.writeText(text);
+        break;
+
+      default:
+        break;
+    }
   };
 
-  const copyCoHostCode = async code => {
-    setCopyElement('COHOST_CODE');
-    await navigator.clipboard.writeText(code);
-  };
-
-  const copyCoHostLink = async link => {
-    setCopyElement('COHOST_LINK');
-    await navigator.clipboard.writeText(link);
-  };
-
-  const copyGuestCode = async code => {
-    setCopyElement('GUEST_CODE');
-    await navigator.clipboard.writeText(code);
-  };
-
-  const copyGuestLink = async link => {
-    setCopyElement('GUEST_LINK');
-    await navigator.clipboard.writeText(link);
-  };
   return (
     <>
       <Box mb="6" mt="5">
@@ -97,7 +103,7 @@ const EventImages = ({ newEvent }) => {
                     src={copyIcon}
                     w="20px"
                     h="20px"
-                    onClick={() => copyEventId(newEvent.id)}
+                    onClick={() => HandleCopy('EVENTID', newEvent.id)}
                   />
                 )}
               </Flex>
@@ -118,7 +124,9 @@ const EventImages = ({ newEvent }) => {
                     src={copyIcon}
                     w="20px"
                     h="20px"
-                    onClick={() => copyCoHostCode(newEvent.coHostCode)}
+                    onClick={() =>
+                      HandleCopy('COHOST_CODE', newEvent.coHostCode)
+                    }
                   />
                 )}
               </Flex>
@@ -143,7 +151,8 @@ const EventImages = ({ newEvent }) => {
                     w="20px"
                     h="20px"
                     onClick={() =>
-                      copyCoHostLink(
+                      HandleCopy(
+                        'COHOST_LINK',
                         `https://giftscircle.netlify.app/event/join/${newEvent.id}`
                       )
                     }
@@ -167,7 +176,7 @@ const EventImages = ({ newEvent }) => {
                     src={copyIcon}
                     w="20px"
                     h="20px"
-                    onClick={() => copyGuestCode(newEvent.guestCode)}
+                    onClick={() => HandleCopy('GUEST_CODE', newEvent.guestCode)}
                   />
                 )}
               </Flex>
@@ -192,7 +201,8 @@ const EventImages = ({ newEvent }) => {
                     w="20px"
                     h="20px"
                     onClick={() =>
-                      copyGuestLink(
+                      HandleCopy(
+                        'GUEST_LINK',
                         `https://giftscircle.netlify.app/event/join/${newEvent.id}`
                       )
                     }

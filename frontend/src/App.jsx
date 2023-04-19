@@ -22,7 +22,7 @@ import Marketplace from './pages/Marketplace';
 import Market from './pages/Marketplace/subpages/Market/Market';
 import JoinEvent from './pages/JoinEvent';
 import ViewEvent from './pages/Guest';
-import UserCheck from './UserCheck';
+import UserCheck from './pages/SingleEvent/UserCheck';
 import Settings from './pages/Settings';
 import Deliveries from './pages/Deliveries';
 import JoinFromDashboard from './pages/JoinEvent/subpages/JoinFromDashboard';
@@ -57,10 +57,7 @@ function App() {
             element={<GiftDetails />}
           />
         </Route>
-        <Route
-          path="/dashboard/event_details/:id"
-          element={<UserCheck />}
-        />
+        <Route path="/dashboard/event_details/:id" element={<UserCheck />} />
         {/* <Route path="/dashboard/event/join" element={<JoinEvent2 />} /> */}
         {/* <Route path="/dashboard/event_details/:id" element={<UserCheck />} /> */}
         <Route path="/event/join" element={<JoinFromDashboard />} />
