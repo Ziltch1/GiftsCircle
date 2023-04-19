@@ -6,13 +6,15 @@ import EventGifts from './subpages/EventGifts';
 import { Box, Skeleton, Stack } from '@chakra-ui/react';
 import EventMedia from './subpages/EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { GetEventGifts } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../CreateEvent/subpages/BackButton';
 import Header from '../../components/Header/Header';
 import { GetEventApi } from '../../redux/axios/apis/events';
-import { GetGiftItems } from '../../redux/features/gift/service';
+import {
+  GetComplimentaryGiftItems,
+  GetGiftItems,
+} from '../../redux/features/gift/service';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const Index = () => {
     GetEvent();
     dispatch(GetEventGifts(id));
     dispatch(GetGiftItems());
+    dispatch(GetComplimentaryGiftItems());
   }, [id]);
 
   useEffect(() => {
