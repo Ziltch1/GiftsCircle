@@ -1168,6 +1168,130 @@
           }
         }
       }
+    },
+    "/complimentaryGift/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+
+    "/complimentaryGift/Get/All": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+
+    "/complimentaryGift/create": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/ComplimentaryGift" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/complimentaryGift//{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/ComplimentaryGift" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+
+    "/complimentaryGift///{id}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1629,6 +1753,31 @@
           },
           "state": {
             "type": "string",
+            "required": true
+          }
+        }
+      },
+      "ComplimentaryGift": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "required": true
+          },
+          "image": {
+            "type": "object",
+            "required": true
+          },
+          "category": {
+            "type": "string",
+            "required": true
+          },
+          "details": {
+            "type": "string",
+            "required": true
+          },
+          "amount": {
+            "type": "number",
             "required": true
           }
         }
