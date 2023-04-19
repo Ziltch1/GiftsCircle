@@ -3,7 +3,7 @@ import { Button, Flex, Image, Text, Box } from '@chakra-ui/react';
 import ContributionModal from '../../ContributionModal';
 import { useSelector } from 'react-redux';
 
-const GiftCard = ({ gift }) => {
+const GiftCard = ({ gift, event }) => {
   const [openModal, setOpenModal] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
 
