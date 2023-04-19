@@ -3,25 +3,25 @@ const { v4: uuidv4 } = require("uuid");
 const prisma = new PrismaClient();
 
 const Get = async (id) => {
-  const giftItem = await prisma.giftitem.findUnique({
+  const complimentaryItem = await prisma.complimentarygift.findUnique({
     where: {
       id: id,
     },
   });
 
   await prisma.$disconnect();
-  return giftItem;
+  return complimentaryItem;
 };
 
 const GetAll = async () => {
-  const giftItems = await prisma.giftitem.findMany({});
+  const complimentaryItems = await prisma.complimentarygift.findMany({});
   await prisma.$disconnect();
-  return giftItems;
+  return complimentaryItems;
 };
 
 const Create = async (data, image) => {
   let id = uuidv4();
-  let Data = await prisma.giftitem.create({
+  let Data = await prisma.complimentarygift.create({
     data: {
       id: id,
       title: data.title,
@@ -37,41 +37,41 @@ const Create = async (data, image) => {
 };
 
 const Update = async (id, data, image) => {
-  const giftItem = await prisma.giftitem.findUnique({
+  const complimentaryItem = await prisma.complimentarygift.findUnique({
     where: {
       id: id,
     },
   });
 
-  if (giftItem) {
-    await prisma.giftitem.update({
+  if (complimentaryItem) {
+    let Data = await prisma.complimentarygift.update({
       where: {
         id: id,
       },
       data: {
-        image: image ? image : giftItem.image,
-        amount: data.amount ? parseInt(data.amount) : giftItem.amount,
-        details: data.details ? data.details : giftItem.details,
-        category: data.category ? data.category : giftItem.category,
-        title: data.title ? data.title : giftItem.title,
+        image: image ? image : complimentaryItem.image,
+        amount: data.amount ? parseInt(data.amount) : complimentaryItem.amount,
+        details: data.details ? data.details : complimentaryItem.details,
+        category: data.category ? data.category : complimentaryItem.category,
+        title: data.title ? data.title : complimentaryItem.title,
       },
     });
 
     await prisma.$disconnect();
-    return data;
+    return Data;
   }
   return null;
 };
 
 const Delete = async (id) => {
-  let giftItem = await prisma.giftitem.delete({
+  let complimentarygift = await prisma.complimentarygift.delete({
     where: {
       id: id,
     },
   });
 
   await prisma.$disconnect();
-  return giftItem;
+  return complimentarygift;
 };
 
 module.exports = { Create, Get, GetAll, Update, Delete };

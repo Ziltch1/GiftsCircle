@@ -82,6 +82,15 @@ model giftitem {
   amount   Int
 }
 
+model complimentarygift {
+  id       String  @id @db.VarChar(255)
+  title    String? @db.VarChar(255)
+  category String  @db.VarChar(255)
+  image    String? @db.VarChar(255)
+  details  String? @db.VarChar(255)
+  amount   Int
+}
+
 model user {
   id               String   @id @db.VarChar(255)
   firstname        String   @db.VarChar(255)
