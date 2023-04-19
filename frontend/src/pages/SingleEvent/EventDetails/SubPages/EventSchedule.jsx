@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Box, Text, Heading, Button, Flex, Image } from '@chakra-ui/react';
 import clock from '../../../../components/assets/clock.svg';
 import location from '../../../../components/assets/map-pin.svg';
@@ -8,13 +8,11 @@ const EventSchedule = ({ newEvent }) => {
   const date = newEvent.date;
   const dateString = date;
   const newDate = new Date(dateString).toDateString();
-  const [openDrawer, setOpenDrawer] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const showDrawer = () => {
-    setOpenDrawer(true)
-  }
-
-  console.log(newEvent);
+    setOpenDrawer(true);
+  };
 
   return (
     <Box mb="6">
@@ -24,7 +22,12 @@ const EventSchedule = ({ newEvent }) => {
           <Heading fontWeight={500} fontSize="24px" mb="4">
             {newEvent.title}
           </Heading>
-          <Text fontSize={14.5} lineHeight="27px" mb="4" dangerouslySetInnerHTML={{ __html: newEvent.descSummary }} />
+          <Text
+            fontSize={14.5}
+            lineHeight="27px"
+            mb="4"
+            dangerouslySetInnerHTML={{ __html: newEvent.descSummary }}
+          />
         </Box>
 
         <Box w="295px" h="auto">
