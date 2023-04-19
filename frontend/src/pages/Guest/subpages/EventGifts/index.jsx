@@ -6,11 +6,12 @@ import ComplimentaryModal from './subpages/ComplimentaryModal';
 import GiftCard from './subpages/GiftCard';
 import GiftListDrawer from './subpages/GiftListDrawer';
 
-const Index = ({event}) => {
+const Index = ({ event }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [data, setData] = useState([]);
   const { eventGifts } = useSelector(state => state.event);
+  const { complimentaryGifts } = useSelector(state => state.gift);
 
   useEffect(() => {
     if (eventGifts) {
@@ -20,7 +21,12 @@ const Index = ({event}) => {
 
   return (
     <Box>
-      {openDrawer && <ComplimentaryModal setOpenDrawer={setOpenDrawer} />}
+      {openDrawer && (
+        <ComplimentaryModal
+          setOpenDrawer={setOpenDrawer}
+          data={complimentaryGifts}
+        />
+      )}
       {showListDrawer && (
         <GiftListDrawer setShowListDrawer={setShowListDrawer} />
       )}

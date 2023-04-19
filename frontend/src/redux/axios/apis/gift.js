@@ -4,7 +4,11 @@ const GetGiftItemsApi = () => {
   return api.get('/giftItem/Get/All');
 };
 
-const GetUserPurchasedGiftsApi = (id) => {
+const GetComplimentaryGiftItemsApi = () => {
+  return api.get('/complimentaryGift/Get/All');
+};
+
+const GetUserPurchasedGiftsApi = id => {
   return api.get(`/gift/Get/PurchasedBy/${id}`);
 };
 
@@ -18,7 +22,8 @@ const DeleteEventGiftApi = id => {
 
 export {
   GetGiftItemsApi,
+  GetComplimentaryGiftItemsApi,
   CreateManyGiftsApi,
   DeleteEventGiftApi,
-  GetUserPurchasedGiftsApi
+  GetUserPurchasedGiftsApi,
 };
