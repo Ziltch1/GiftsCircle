@@ -6,7 +6,7 @@ import ComplimentaryModal from './subpages/ComplimentaryModal';
 import GiftCard from './subpages/GiftCard';
 import GiftListDrawer from './subpages/GiftListDrawer';
 
-const Index = () => {
+const Index = ({event}) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [data, setData] = useState([]);
@@ -31,7 +31,7 @@ const Index = () => {
       />
       <Flex alignItems="center" flexWrap="wrap">
         {data.map(item => (
-          <GiftCard key={data.indexOf(item)} gift={item} />
+          <GiftCard event={event} key={data.indexOf(item)} gift={item} />
         ))}
       </Flex>
     </Box>
