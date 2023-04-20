@@ -1,6 +1,5 @@
 import { Box, Text, Image, Heading, Button, Flex } from '@chakra-ui/react';
 import React from 'react';
-import placeHolder from '../../../assets/asoebi.svg';
 import { useSelector } from 'react-redux';
 
 const FundraisingCard = () => {

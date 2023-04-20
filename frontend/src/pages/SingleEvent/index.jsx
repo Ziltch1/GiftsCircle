@@ -24,7 +24,7 @@ const Index = () => {
   const [newEvent, setNewEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { events, eventGifts } = useSelector(state => state.event);
+  const { events } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
 
   let userId = user.id;

@@ -18,8 +18,6 @@ import {
   Checkbox,
   FormControl,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import { CreateFundraisingApi } from '../../../../redux/axios/apis/fundraising';
 import axiosInstance from '../../../../redux/axios/axios';
 import { setFundRaising } from '../../../../redux/features/events/eventSlice';
 import { dispatch } from '../../../../redux/store';
