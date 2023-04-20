@@ -12,6 +12,7 @@ import { GetUserEvents } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../CreateEvent/subpages/BackButton';
 import Header from '../../components/Header/Header';
+import Fundraising from './Fundraising'
 
 const Index = () => {
   const navigate = useNavigate()
@@ -62,6 +63,7 @@ const Index = () => {
               {navPosition === 1 && <EventGifts newEvent={newEvent} />}
               {navPosition === 2 && <EventMedia />}
               {navPosition === 3 && <EventGuests />}
+              {navPosition === 4 && <Fundraising />}
             </Box>
         </>
       )}

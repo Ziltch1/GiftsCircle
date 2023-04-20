@@ -11,7 +11,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
     <Box mb='5'>
         <Flex justifyContent='space-between'>
               <Heading mb='5' fontWeight={'medium'} fontSize={24}>Media</Heading>
-              <FormLabel htmlFor='upload' w='200px' color='white' bg='#00BFB2' fontSize={14} borderRadius='5px' px='28px' py='11px' textAlign='center'>
+              <FormLabel htmlFor='upload' w='210px' color='white' bg='#00BFB2' fontSize={14} borderRadius='5px' px='28px' py='11px' textAlign='center'>
                 Upload images/videos
                 <Input type='file' id='upload' display='none' />
               </FormLabel>
