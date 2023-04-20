@@ -11,21 +11,36 @@ import {
     useDisclosure,
     Image,
     Box,
-    Text, Heading, Textarea, Input, FormLabel, Checkbox, FormControl
+    Text, Heading, Textarea, Input, FormLabel, Checkbox, FormControl,
 } from '@chakra-ui/react'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
+import { CreateFundraisingApi } from '../../../../redux/axios/apis/fundraising'
 
 const Fundraising = ({setOpenDrawer}) => {
   const { isOpen, onOpen, onClose } = useDisclosure({defaultIsOpen: true});
+  const {newEvent} = useSelector(state => state.event);
+  const {token} = useSelector(state => state.auth)
   const [amount, setAmount] = useState('')
-  const btnRef = React.useRef()
+  const btnRef = React.useRef();
+
   const closeModal = () => {
     setOpenDrawer(false)
   }
 
-  const handleClick = () => {
-    axios.post('', {})
+  const formData = {eventId: newEvent.id, amount: amount};
+
+  const handleClick = async () => {
+    if(amount){
+      try { 
+        const res = await CreateFundraisingApi(formData);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
+
   return (
       <>
           <Drawer
@@ -73,7 +88,7 @@ const Fundraising = ({setOpenDrawer}) => {
                       </DrawerBody>
 
                       <DrawerFooter>
-                          <Button variant='outline' onCLick={handleClick} mr={3} onClick={onClose} color='white' bg='#00BFB2' fontWeight='medium' fontSize='13px'>
+                          <Button variant='outline' onClick={handleClick} mr={3} color='white' bg='#00BFB2' fontWeight='medium' fontSize='13px'>
                               Start fundraising
                           </Button>
                       </DrawerFooter>

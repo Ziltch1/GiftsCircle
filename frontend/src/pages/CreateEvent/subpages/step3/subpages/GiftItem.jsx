@@ -1,12 +1,12 @@
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
+import { Box, Flex, Button, Text, Image, Heading, Switch } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DeleteGiftItems } from '../../../../../redux/features/gift/service';
 import { dispatch } from '../../../../../redux/store';
 import itemImage from '../../../../assets/giftItemImage.svg';
 
-const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems}) => {
+const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems, setEnableContribution, enableContribution}) => {
   const { giftItems } = useSelector(state => state.gift);
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
 
@@ -20,6 +20,10 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems}) => {
       setAddedGiftItems(prev => prev.filter(x => x !== giftItem.id));
       setGiftItems(prev => prev.filter(x => x.giftItemId !== giftItem.id));
     }
+  };
+
+  const handleClick = (e) => {
+    setEnableContribution(prev => !prev);
   };
   
 
@@ -42,9 +46,15 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems}) => {
           objectFit='cover'
         />
         <Box w="390px">
-          <Heading fontWeight="medium" fontSize="15px" lineHeight={6}>
+          <Heading fontWeight="medium" fontSize="15px" lineHeight={6} mb='2'>
             {giftItem.title}
           </Heading>
+          <Box w='100%'>
+            <Flex gap={12}>
+              <Text fontSize={14}>Enable contribution</Text>
+              <Switch size='sm' colorScheme="teal" isChecked={enableContribution} onChange={(e) => handleClick(e)} />
+            </Flex>
+          </Box>
           <Button
             bg="none"
             p="0"
@@ -56,7 +66,7 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems}) => {
             onClick={() => HandleDelete()}
           >
             <DeleteIcon fontSize={17} />
-            <Text fontWeight="medium" fontSize={15}>
+            <Text fontWeight="medium" fontSize={14}>
               Remove from list
             </Text>
           </Button>
