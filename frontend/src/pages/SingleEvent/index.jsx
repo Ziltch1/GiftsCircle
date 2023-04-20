@@ -8,14 +8,17 @@ import { Box, Skeleton, Stack } from '@chakra-ui/react';
 import EventMedia from './EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { GetUserEvents } from '../../redux/features/events/service';
+import {
+  GetEventFundRaising,
+  GetUserEvents,
+} from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../CreateEvent/subpages/BackButton';
 import Header from '../../components/Header/Header';
-import Fundraising from './Fundraising'
+import Fundraising from './Fundraising';
 
 const Index = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
   const [newEvent, setNewEvent] = useState(null);
@@ -37,22 +40,23 @@ const Index = () => {
 
   useEffect(() => {
     if (newEvent) {
+      dispatch(GetEventFundRaising(newEvent.id));
       setLoading(false);
     }
   }, [newEvent]);
 
   return (
-    <Box bg='#F5F5F5'>
+    <Box bg="#F5F5F5">
       <Header />
-      <Box w="76%" mx="auto" pt='8' pb="7">
-      {loading ? (
-        <Stack spacing="20px">
-          <Skeleton height="50px" width="100%" />
-          <Skeleton height="50px" width="75%" />
-          <Skeleton height="50px" width="50%" />
-        </Stack>
-      ) : (
-        <>
+      <Box w="76%" mx="auto" pt="8" pb="7">
+        {loading ? (
+          <Stack spacing="20px">
+            <Skeleton height="50px" width="100%" />
+            <Skeleton height="50px" width="75%" />
+            <Skeleton height="50px" width="50%" />
+          </Stack>
+        ) : (
+          <>
             <Box>
               <BackButton action={() => navigate(-1)} />
               <EventImages newEvent={newEvent} />
@@ -65,9 +69,9 @@ const Index = () => {
               {navPosition === 3 && <EventGuests />}
               {navPosition === 4 && <Fundraising />}
             </Box>
-        </>
-      )}
-    </Box>
+          </>
+        )}
+      </Box>
     </Box>
   );
 };

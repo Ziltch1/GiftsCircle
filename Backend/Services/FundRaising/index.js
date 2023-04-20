@@ -1,20 +1,18 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const { v4: uuidv4 } = require("uuid");
-const ResponseDTO = require("../../DTO/Response");
 
 const GetFundRaising = async (id) => {
-  const fundRaising = await prisma.fundRaising.findUnique({
+  const fundRaising = await prisma.fundRaising.findFirst({
     where: {
-      id: id,
+      eventId: id,
     },
   });
-
   await prisma.$disconnect();
   return fundRaising;
 };
 
-const Create = async (data) => {
+const Create = async (data, image) => {
   const event = await prisma.event.findUnique({
     where: {
       id: data.eventId,
@@ -22,13 +20,24 @@ const Create = async (data) => {
   });
 
   if (event) {
+    const FundRaising = await prisma.fundRaising.findFirst({
+      where: {
+        eventId: data.eventId,
+      },
+    });
+    if (FundRaising) {
+      return FundRaising;
+    }
     let fundRaising = await prisma.fundRaising.create({
       data: {
         id: uuidv4(),
         eventId: data.eventId,
-        amount: data.amount,
+        amount: parseInt(data.amount),
         amountPaid: 0,
         active: true,
+        image: image,
+        title: data.title,
+        description: data.description,
       },
     });
 
@@ -138,6 +147,17 @@ const GetFundDonors = async (id) => {
   return donors;
 };
 
+const DeleteFundRaising = async (id) => {
+  let fundRaising = await prisma.fundRaising.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  await prisma.$disconnect();
+  return fundRaising;
+};
+
 module.exports = {
   Create,
   GetFundRaising,
@@ -145,4 +165,5 @@ module.exports = {
   UpdateStatus,
   Donate,
   GetFundDonors,
+  DeleteFundRaising,
 };
