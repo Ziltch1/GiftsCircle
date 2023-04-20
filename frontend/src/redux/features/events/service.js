@@ -8,10 +8,12 @@ import { createResponse } from '../../utils/UtilSlice';
 import {
   setEventGifts,
   setEvents,
+  setFundRaising,
   setLoading,
   setNewEvent,
 } from './eventSlice';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
+import { GetFundraisingApi } from '../../axios/apis/fundraising';
 
 const GetUserEvents = id => async () => {
   dispatch(setLoading(false));
@@ -36,6 +38,16 @@ const GetEventGifts = id => async () => {
   }
 };
 
+const GetEventFundRaising = id => async () => {
+  try {
+    const res = await GetFundraisingApi(id);
+    dispatch(setFundRaising(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
 const DeleteEvent = id => async () => {
   try {
     await DeleteEventApi(id);
@@ -47,4 +59,4 @@ const DeleteEvent = id => async () => {
   }
 };
 
-export { GetUserEvents, GetEventGifts, DeleteEvent };
+export { GetUserEvents, GetEventGifts, DeleteEvent, GetEventFundRaising };

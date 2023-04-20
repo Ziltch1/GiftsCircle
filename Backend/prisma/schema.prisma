@@ -129,6 +129,9 @@ model FundRaising {
   amount              Int
   amountPaid          Int
   active              Boolean
+  title               String                @default("") @db.VarChar(255)
+  description         String                @default("") @db.VarChar(255)
+  image               String                @default("") @db.VarChar(255)
   FundRaisingDonation FundRaisingDonation[]
 }
 

@@ -10,7 +10,10 @@ const {
   UpdateStatus,
   Donate,
   GetFundDonors,
+  DeleteFundRaising,
 } = require("../Services/FundRaising");
+const cloudinary = require("../config/Cloudinary");
+const { upload, dataUri } = require("../config/multer");
 const prisma = new PrismaClient();
 
 router.get("/:id", EnsureAuthenticated, async (req, res) => {
@@ -29,19 +32,28 @@ router.get("/:id", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.post("/create", EnsureAuthenticated, async (req, res) => {
-  try {
-    let data = await Create(req.body);
-    if (data) {
-      return res.status(200).send(data);
+router.post(
+  "/create",
+  upload.single("image"),
+  EnsureAuthenticated,
+  async (req, res) => {
+    try {
+      const file = dataUri(req).content;
+      const response = await cloudinary.uploader.upload(file, {
+        folder: "eventcircle",
+      });
+      let data = await Create(req.body, response.url);
+      if (data) {
+        return res.status(200).send(data);
+      }
+      return res.status(400).send(ResponseDTO("Failed", "Event not found"));
+    } catch (err) {
+      console.log(err);
+      await prisma.$disconnect();
+      return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
     }
-    return res.status(400).send(ResponseDTO("Failed", "Event not found"));
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
-});
+);
 
 router.put("/UpdateAmount", EnsureAuthenticated, async (req, res) => {
   try {
@@ -100,6 +112,24 @@ router.get("/GetFundDonors/:id", EnsureAuthenticated, async (req, res) => {
     console.log(err);
     await prisma.$disconnect();
     return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.delete("/:id", EnsureAuthenticated, async (req, res) => {
+  try {
+    await DeleteFundRaising(req.params.id);
+    return res
+      .status(200)
+      .send(
+        ResponseDTO(
+          "Success",
+          `FundRaising with id ${req.params.id} deleted successfully`
+        )
+      );
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send({ msg: "Record not found" });
   }
 });
 
