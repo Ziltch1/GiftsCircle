@@ -32,10 +32,6 @@ const GiftDrawer = ({
     setOpenDrawer(false);
   };
 
-  const handleClick = () => {
-    setEnableContribution(prev => !prev);
-  };
-
   return (
     <Box>
       <Drawer
@@ -67,6 +63,8 @@ const GiftDrawer = ({
                 setData={setData}
                 setAddedGiftItems={setAddedGiftItems}
                 setGiftItems={setGiftItems}
+                enableContribution={enableContribution}
+                setEnableContribution={setEnableContribution}
               />
             ))}
           </DrawerBody>
@@ -76,16 +74,6 @@ const GiftDrawer = ({
                 <Text fontWeight={600} fontSize={18}>
                   Total price: ₦{totalAmount}
                 </Text>
-              </Box>
-              <Box>
-                <Flex alignItems="center" justifyContent="space-between">
-                  <Text fontWeight={600} fontSize={18}>
-                    Enable contribution
-                  </Text>
-                  <Box>
-                    <Switch colorScheme="teal" isChecked={enableContribution} onChange={() => handleClick()}/>
-                  </Box>
-                </Flex>
               </Box>
             </Flex>
           </Box>
