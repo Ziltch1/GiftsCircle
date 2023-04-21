@@ -8,4 +8,8 @@ const GetFundraisingApi = id => {
     return api.get(`/fundRaising/${id}`)
 };
 
-export {CreateFundraisingApi, GetFundraisingApi};
+const UpdateFundraisingStatusApi = data => {
+    return api.put(`/fundRaising/UpdateStatus`, data)
+};
+
+export {CreateFundraisingApi, GetFundraisingApi, UpdateFundraisingStatusApi};
