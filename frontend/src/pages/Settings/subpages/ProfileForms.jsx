@@ -60,6 +60,7 @@ const ProfileForms = () => {
                     bg="#EEEEEE"
                     border="1px solid #C6C6C6"
                     disabled={true}
+                    fontSize={15}
                   />
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
@@ -73,10 +74,11 @@ const ProfileForms = () => {
                     border="1px solid #C6C6C6"
                     disabled={!edited ? 'disabled' : null}
                     placeholder="Select Gender"
+                    fontSize={15}
                   >
                     <option value="lagos">Male</option>
                     <option value="lagos">Female</option>
-                    <option value="lagos">Prefer not to say</option>
+                    <option value="lagos">Others</option>
                   </Select>
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
@@ -89,6 +91,7 @@ const ProfileForms = () => {
                     onChange={e => setEmail(e.target.value)}
                     border="1px solid #C6C6C6"
                     disabled={true}
+                    fontSize={15}
                   />
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
@@ -101,6 +104,7 @@ const ProfileForms = () => {
                     onChange={e => setResidence(e.target.value)}
                     border="1px solid #C6C6C6"
                     disabled={!edited ? 'disabled' : null}
+                    fontSize={15}
                   />
                 </Box>
               </Box>
@@ -115,6 +119,7 @@ const ProfileForms = () => {
                     onChange={e => setLastName(e.target.value)}
                     border="1px solid #C6C6C6"
                     disabled={true}
+                    fontSize={15}
                   />
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
@@ -127,6 +132,7 @@ const ProfileForms = () => {
                     onChange={e => setDateOfBirth(e.target.value)}
                     border="1px solid #C6C6C6"
                     disabled={!edited ? 'disabled' : null}
+                    fontSize={15}
                   />
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
@@ -139,6 +145,7 @@ const ProfileForms = () => {
                     onChange={e => setPhoneNumber(e.target.value)}
                     border="1px solid #C6C6C6"
                     disabled={!edited ? 'disabled' : null}
+                    fontSize={15}
                   />
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
@@ -152,6 +159,7 @@ const ProfileForms = () => {
                     border="1px solid #C6C6C6"
                     disabled={!edited ? 'disabled' : null}
                     placeholder="Select State"
+                    fontSize={15}
                   >
                     <option>Select State...</option>
                     {states.map(ele => (
