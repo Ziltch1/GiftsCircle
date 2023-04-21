@@ -13,7 +13,10 @@ import {
   setNewEvent,
 } from './eventSlice';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
-import { GetFundraisingApi } from '../../axios/apis/fundraising';
+import {
+  GetFundraisingApi,
+  UpdateFundraisingStatusApi,
+} from '../../axios/apis/fundraising';
 
 const GetUserEvents = id => async () => {
   dispatch(setLoading(false));
@@ -48,6 +51,16 @@ const GetEventFundRaising = id => async () => {
   }
 };
 
+const StopFundRaising = data => async () => {
+  try {
+    const res = await UpdateFundraisingStatusApi(data);
+    dispatch(setFundRaising(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
 const DeleteEvent = id => async () => {
   try {
     await DeleteEventApi(id);
@@ -59,4 +72,10 @@ const DeleteEvent = id => async () => {
   }
 };
 
-export { GetUserEvents, GetEventGifts, DeleteEvent, GetEventFundRaising };
+export {
+  GetUserEvents,
+  GetEventGifts,
+  DeleteEvent,
+  GetEventFundRaising,
+  StopFundRaising,
+};

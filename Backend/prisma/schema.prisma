@@ -130,7 +130,7 @@ model FundRaising {
   amountPaid          Int
   active              Boolean
   title               String                @default("") @db.VarChar(255)
-  description         String                @default("") @db.VarChar(255)
+  description         String                @default("") @db.VarChar
   image               String                @default("") @db.VarChar(255)
   FundRaisingDonation FundRaisingDonation[]
 }
@@ -145,4 +145,36 @@ model FundRaisingDonation {
   phone     String      @db.VarChar(50)
   amount    Int
   date      DateTime
+}
+
+model asoebiitem {
+  id                String              @id @db.VarChar(255)
+  title             String?             @db.VarChar(255)
+  category          String              @db.VarChar(255)
+  image             String?             @db.VarChar(255)
+  details           String?             @db.VarChar
+  amount            Int
+  asoebiTransaction asoebiTransaction[]
+}
+
+model asoebi {
+  id         String  @id @db.VarChar(255)
+  asoebiItem String  @db.VarChar(255)
+  quantity   Int
+  amountPaid Int
+  eventId    String? @db.VarChar(255)
+  userId     String? @db.VarChar(255)
+  increment  Int
+}
+
+model asoebiTransaction {
+  id           String     @id @db.VarChar(50)
+  aseobi       asoebiitem @relation(fields: [asoebiitemId], references: [id])
+  amount       Int
+  date         DateTime
+  asoebiitemId String     @db.VarChar(255)
+  purchasedBy  String     @db.VarChar(50)
+  quantity     Int
+  delivered    Boolean    @default(false)
+  eventId      String     @db.VarChar(50)
 }

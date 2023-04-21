@@ -1,6 +1,8 @@
 import { Box, Text, Image, Heading, Button, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { dispatch } from '../../../../redux/store';
+import { StopFundRaising } from '../../../../redux/features/events/service';
 
 const FundraisingCard = () => {
   const { fundRaising } = useSelector(state => state.event);
@@ -10,6 +12,14 @@ const FundraisingCard = () => {
   });
 
   const percentagePaid = ((fundRaising?.amountPaid * 100)/fundRaising?.amount)
+  const StopFundraising = () => {
+    const formBody = {
+      id: fundRaising.id,
+      status: true,
+    };
+
+    dispatch(StopFundRaising(formBody));
+  };
   return (
     <Box bg="white" borderRadius={5} p="5" w="100%" mb="8">
       <Flex gap={4}>
@@ -67,8 +77,11 @@ const FundraisingCard = () => {
                   color="white"
                   fontWeight="normal"
                   fontSize={13}
+                  onClick={() => StopFundraising()}
                 >
-                  Stop fundraising
+                  {fundRaising.active
+                    ? 'Stop Fundraising'
+                    : 'Start FundRaising'}
                 </Button>
               </Box>
             </Flex>
