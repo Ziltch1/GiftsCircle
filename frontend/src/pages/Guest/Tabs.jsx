@@ -1,11 +1,17 @@
 import React from 'react'
 import { Box, Flex, Button } from '@chakra-ui/react'
+import { useSelector } from 'react-redux';
 
 const Tabs = ({navPosition, setNavPosition}) => {
 
+    const { fundRaising } = useSelector(state => state.event);
     const links = ['About event', 'Gift List', 'Media'];
     const handleClick = (index) => {
         setNavPosition(index);
+    }
+
+    if (fundRaising) {
+        links.push('Fundraising');
     }
 
     return (
