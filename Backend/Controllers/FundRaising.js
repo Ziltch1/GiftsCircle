@@ -40,7 +40,7 @@ router.post(
     try {
       const file = dataUri(req).content;
       const response = await cloudinary.uploader.upload(file, {
-        folder: "eventcircle",
+        folder: "eventcircle/fundRaising",
       });
       let data = await Create(req.body, response.url);
       if (data) {
