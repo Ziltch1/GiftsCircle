@@ -110,9 +110,10 @@ const Fundraising = ({ setOpenDrawer, id }) => {
                   fontSize="14px"
                   placeholder="Tell your readers why you need their help and what you plan to use your donations for."
                   size="lg"
-                  fontWeight="medium"
+                  fontWeight="normal"
                   h="100px"
                   bg="#F4f4f4"
+                  maxLength='255'
                   value={description}
                   onChange={e => setDesciption(e.target.value)}
                 />
