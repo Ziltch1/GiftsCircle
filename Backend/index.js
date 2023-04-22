@@ -33,6 +33,7 @@ app.get("/", async (req, res) => {
 app.use("/api/user/", require("./Controllers/UserController"));
 app.use("/api/event/", require("./Controllers/EventController"));
 app.use("/api/giftItem/", require("./Controllers/GiftItemController"));
+app.use("/api/asoebiItem/", require("./Controllers/AsoebiItemController"));
 app.use("/api/complimentaryGift/", require("./Controllers/ComplimentaryGift"));
 app.use("/api/gift/", require("./Controllers/GiftController"));
 app.use("/api/delivery/", require("./Controllers/DeliveryController"));
