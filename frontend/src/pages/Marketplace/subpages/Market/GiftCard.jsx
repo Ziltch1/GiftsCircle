@@ -24,6 +24,7 @@ const GiftCard = ({ details, image, id, amount }) => {
               display="block"
               mx="auto"
               mb="2.5"
+              objectFit='cover'
             //   onClick={openDrawer}
           />
           <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
@@ -44,7 +45,7 @@ const GiftCard = ({ details, image, id, amount }) => {
                 //   onClick={() => AddGift(id)}
                   id={id}
               >
-                  Add to list
+                  Add to cart
               </Button>
           </Flex>
       </Box>

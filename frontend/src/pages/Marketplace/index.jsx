@@ -7,7 +7,6 @@ import Navbar from '../../components/Navbar/Navbar'
 const index = () => {
   return (
     <Box>
-    {/* <Navbar /> */}
     <Box bg='#F5F5F5' minH='580px' display='flex' alignItems='center' justifyContent='center'>
        <Box w='90%' mx='auto'>
               <Box textAlign='center' maxW='540px' mx='auto' mb='8'>
