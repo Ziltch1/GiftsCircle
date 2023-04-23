@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../redux/store';
 import { StopFundRaising } from '../../../../redux/features/events/service';
 
-const FundraisingCard = () => {
+const FundraisingCard = ({openModal, setOpenModal}) => {
   const { fundRaising } = useSelector(state => state.event);
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -17,8 +17,8 @@ const FundraisingCard = () => {
       id: fundRaising.id,
       status: true,
     };
-
     dispatch(StopFundRaising(formBody));
+    setOpenModal(true);
   };
   return (
     <Box bg="white" borderRadius={5} p="5" w="100%" mb="8">
@@ -79,7 +79,7 @@ const FundraisingCard = () => {
                   fontSize={13}
                   onClick={() => StopFundraising()}
                 >
-                  {fundRaising.active
+                  {fundRaising?.active
                     ? 'Stop Fundraising'
                     : 'Start FundRaising'}
                 </Button>

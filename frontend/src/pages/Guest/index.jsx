@@ -15,6 +15,7 @@ import {
   GetComplimentaryGiftItems,
   GetGiftItems,
 } from '../../redux/features/gift/service';
+import FundraisingCard from './subpages/Fundraising/FundraisingCard';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ const Index = () => {
               {navPosition === 0 && <EventDetails newEvent={event} />}
               {navPosition === 1 && <EventGifts event={event} />}
               {navPosition === 2 && <EventMedia />}
+              {navPosition === 3 && <FundraisingCard />}
             </Box>
           </>
         )}
