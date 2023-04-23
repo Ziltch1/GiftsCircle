@@ -42,12 +42,12 @@ const GetEventAsoebi = async (id) => {
 
 const Create = async (data) => {
   let id = uuidv4();
-  await prisma.asoebi.create({
+  let Data = await prisma.asoebi.create({
     data: {
       id: id,
       quantity: 0,
       amountPaid: 0,
-      asoebiItem: data.asoebiItemId,
+      asoebiItem: data.asoebiItem,
       userId: data.userId,
       eventId: data.eventId,
       increment: data.increment,
@@ -55,13 +55,14 @@ const Create = async (data) => {
   });
 
   await prisma.$disconnect();
-  return data;
+  return Data;
 };
 
 const CreateMany = async (data) => {
   data.forEach((element) => {
     element.id = uuidv4();
     element.amountPaid = 0;
+    element.quantity = 0;
     return element;
   });
   await prisma.asoebi.createMany({
@@ -96,12 +97,13 @@ const Buy = async (data) => {
       data: {
         id: uuidv4(),
         amount: data.amount,
-        asoebiitemId: data.asoebiId,
+        asoebiId: data.asoebiId,
         purchasedBy: data.purchasedBy,
         eventId: data.eventId,
         quantity: data.quantity,
         date: new Date(Date.now()),
         delivered: false,
+        asoebiitemId: asoebi.asoebiItem,
       },
     });
 
@@ -124,7 +126,7 @@ const Buy = async (data) => {
 const GetAsoebiBuyers = async (id) => {
   let buyers = await prisma.asoebiTransaction.findMany({
     where: {
-      asoebiitemId: id,
+      asoebiId: id,
     },
     select: {
       amount: true,
