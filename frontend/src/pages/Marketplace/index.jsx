@@ -17,7 +17,6 @@ const Index = () => {
       const res = await GetAsoebiItemsApi();
       const data = await res.data;
       setAsoebiItems(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +28,6 @@ const Index = () => {
       const res = await GetGiftItemsApi();
       const data = await res.data;
       setGifts(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -59,7 +57,7 @@ const Index = () => {
           : 
           <>
             {position === 0 && <Market />}
-            {position === 1 && <Market giftItems={asoebiItems} setShowProducts={setShowProducts} setPosition={setPosition} />}
+            {position === 1 && <Market giftItems={asoebiItems} setShowProducts={setShowProducts} />}
             {position === 2 && <Market giftItems={gifts} setShowProducts={setShowProducts} />}
           </>}
        </Box>
