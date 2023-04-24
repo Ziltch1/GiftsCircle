@@ -158,23 +158,26 @@ model asoebiitem {
 }
 
 model asoebi {
-  id         String  @id @db.VarChar(255)
-  asoebiItem String  @db.VarChar(255)
-  quantity   Int
-  amountPaid Int
-  eventId    String? @db.VarChar(255)
-  userId     String? @db.VarChar(255)
-  increment  Int
+  id                String              @id @db.VarChar(255)
+  asoebiItem        String              @db.VarChar(255)
+  quantity          Int
+  amountPaid        Int
+  eventId           String?             @db.VarChar(255)
+  userId            String?             @db.VarChar(255)
+  increment         Int
+  asoebiTransaction asoebiTransaction[]
 }
 
 model asoebiTransaction {
-  id           String     @id @db.VarChar(50)
-  aseobi       asoebiitem @relation(fields: [asoebiitemId], references: [id])
+  id           String      @id @db.VarChar(50)
+  aseobi       asoebi      @relation(fields: [asoebiId], references: [id])
   amount       Int
   date         DateTime
-  asoebiitemId String     @db.VarChar(255)
-  purchasedBy  String     @db.VarChar(50)
+  asoebiId     String      @db.VarChar(255)
+  purchasedBy  String      @db.VarChar(50)
   quantity     Int
-  delivered    Boolean    @default(false)
-  eventId      String     @db.VarChar(50)
+  delivered    Boolean     @default(false)
+  eventId      String      @db.VarChar(50)
+  asoebiitem   asoebiitem? @relation(fields: [asoebiitemId], references: [id])
+  asoebiitemId String?     @db.VarChar(255)
 }

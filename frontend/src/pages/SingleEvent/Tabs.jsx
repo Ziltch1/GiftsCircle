@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 const Tabs = ({navPosition, setNavPosition}) => {
 
     const { fundRaising } = useSelector(state => state.event);
-    console.log(fundRaising);
     const links = ['About event', 'Gift', 'Media', 'Guests'];
     const handleClick = (index) => {
         setNavPosition(index);
@@ -16,7 +15,6 @@ const Tabs = ({navPosition, setNavPosition}) => {
         links.push('Fundraising');
     }
 
-    console.log(links)
 
     return (
         <Box>
