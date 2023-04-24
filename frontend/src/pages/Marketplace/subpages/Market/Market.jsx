@@ -4,19 +4,18 @@ import { useSelector } from 'react-redux'
 import Search from '../../../../components/Search/Search'
 import cartIcon from '../../../assets/cart.svg'
 import GiftCard from './GiftCard'
+import BackButton from '../../../CreateEvent/subpages/BackButton'
 
-const Market = () => {
-  const {giftItems} = useSelector(state => state.gift);
-  const [data, setData] = useState([]); 
-  useEffect(() => {
-    if(giftItems.length > 0){
-        setData([...giftItems]);
-    }
-  }, [giftItems])
+const Market = ({giftItems, setShowProducts,}) => {
+  const [data, setData] = useState(giftItems);
+  const showOptions = () => {
+    setShowProducts(false);
+  }
   return (
     <Box bg='#F5F5F5'>
-        <Box minH='600px' w='90%' mx='auto' pt='8'>
-            <Box mb='8'>
+        <Box minH='600px' w='95%' mx='auto' pt='8'>
+            <BackButton action={showOptions} />
+            <Box mb='8' mt='5'>
                 <Flex justifyContent='space-between' alignItems='center'>
                     <Box>
                         <Heading  fontSize={30} mb='2'>Marketplace</Heading>
@@ -35,7 +34,7 @@ const Market = () => {
             <Box mb='7'>
                 <Search />
             </Box>
-            <Flex  justifyContent='space-between' alignItems='center'>
+            <Flex  justifyContent='space-between' alignItems='center' flexWrap='wrap'>
                 {data.map((gift) => <GiftCard id={gift.id} details={gift.details} image={gift.image} amount={gift.amount}  />)}
             </Flex>
         </Box>
