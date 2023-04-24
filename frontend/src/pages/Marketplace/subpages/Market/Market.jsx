@@ -6,14 +6,14 @@ import cartIcon from '../../../assets/cart.svg'
 import GiftCard from './GiftCard'
 import BackButton from '../../../CreateEvent/subpages/BackButton'
 
-const Market = ({giftItems, setShowproducts, showProducts}) => {
+const Market = ({giftItems, setShowProducts,}) => {
   const [data, setData] = useState(giftItems);
   const showOptions = () => {
-    setShowproducts(!showProducts);
+    setShowProducts(false);
   }
   return (
     <Box bg='#F5F5F5'>
-        <Box minH='600px' w='90%' mx='auto' pt='8'>
+        <Box minH='600px' w='95%' mx='auto' pt='8'>
             <BackButton action={showOptions} />
             <Box mb='8' mt='5'>
                 <Flex justifyContent='space-between' alignItems='center'>

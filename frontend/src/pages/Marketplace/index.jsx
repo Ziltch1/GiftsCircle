@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
+import { Box, Heading, Text, Button } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import MarketplaceOptions from './MarketplaceOptions'
 import Navbar from '../../components/Navbar/Navbar'
@@ -17,6 +17,7 @@ const Index = () => {
       const res = await GetAsoebiItemsApi();
       const data = await res.data;
       setAsoebiItems(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -28,6 +29,7 @@ const Index = () => {
       const res = await GetGiftItemsApi();
       const data = await res.data;
       setGifts(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -35,29 +37,29 @@ const Index = () => {
   }
 
   useEffect(() => {
-    if(position === 1) {
       getAsoebi();
-    }else{
       getGiftItems();
-    }
   }, [])
 
   return (
     <Box>
     <Box bg='#F5F5F5' minH='580px' display='flex' alignItems='center' justifyContent='center'>
-       <Box w='95%' mx='auto'>
+       <Box w='90%' mx='auto'>
           {!showProducts ?
           <Box>
               <Box textAlign='center' maxW='540px' mx='auto' mb='8'>
                 <Heading fontSize={36} mb='5'>Welcome to marketplace</Heading>
                 <Text fontSize={14}>We have created this page so you could find things that you need for your event and easily order for it for yourself.</Text>
               </Box>
-              <MarketplaceOptions setShowProducts={setShowProducts} />
+              <MarketplaceOptions setPosition={setPosition} setShowProducts={setShowProducts}  />
+              <Box textAlign='center' onClick={() => setShowProducts(true)}>
+                <Button fontWeight='medium' fontSize={14} color='white' bg='#00BFB2' h='50px' w='210px' _hover={{ bg: '#00BFB2' }}> Proceed to market</Button>
+              </Box>
           </Box>
           : 
           <>
             {position === 0 && <Market />}
-            {position === 1 && <Market giftItems={asoebiItems} showProducts={showProducts} setShowProducts={setShowProducts} />}
+            {position === 1 && <Market giftItems={asoebiItems} setShowProducts={setShowProducts} setPosition={setPosition} />}
             {position === 2 && <Market giftItems={gifts} setShowProducts={setShowProducts} />}
           </>}
        </Box>
