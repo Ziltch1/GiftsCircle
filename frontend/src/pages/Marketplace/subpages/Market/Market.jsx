@@ -6,7 +6,7 @@ import cartIcon from '../../../assets/cart.svg'
 import GiftCard from './GiftCard'
 import BackButton from '../../../CreateEvent/subpages/BackButton'
 
-const Market = ({giftItems, setShowProducts,}) => {
+const Market = ({giftItems, setShowProducts, setShowCart}) => {
   const [data, setData] = useState(giftItems);
   const showOptions = () => {
     setShowProducts(false);
@@ -22,12 +22,12 @@ const Market = ({giftItems, setShowProducts,}) => {
                         <Text fontSize={14} color='#717171'>This is where you can buy some things you need for your event for your self</Text>
                     </Box>
 
-                    <Box bg='#CCF2F0' w='155px' h='45px' py='3' px='6' cursor='pointer' borderRadius={5}>
-                    <Flex gap={2} fontSize={14}>
-                        <Image src={cartIcon} />
-                        <Text>Cart</Text>
-                        <Text bg='#00BFB2' color='white' w='33px' h='21px' borderRadius='100px' textAlign='center' pb='4px' px='3px'>34</Text>
-                    </Flex>
+                    <Box bg='#CCF2F0' w='155px' h='45px' py='3' px='6' cursor='pointer' borderRadius={5} onClick={() => setShowCart(true)}>
+                        <Flex gap={2} fontSize={14}>
+                            <Image src={cartIcon} />
+                            <Text>Cart</Text>
+                            <Text bg='#00BFB2' color='white' w='33px' h='21px' borderRadius='100px' textAlign='center' pb='4px' px='3px'>34</Text>
+                        </Flex>
                     </Box>
                 </Flex>
             </Box>
