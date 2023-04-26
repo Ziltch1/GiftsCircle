@@ -60,7 +60,7 @@ const Index = () => {
           <>
            {showCart 
            ? 
-           <Cart /> 
+           <Cart setShowCart={setShowCart} /> 
            :
            <Box>
                 {position === 0 && <Market />}
