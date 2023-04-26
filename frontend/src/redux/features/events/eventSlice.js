@@ -5,7 +5,8 @@ const initialState = {
   eventGifts: null,
   newEvent: JSON.parse(localStorage.getItem('newEvent')) || null,
   loading: true,
-  fundRaising : null
+  fundRaising: null,
+  fundRaisingDonors: null,
 };
 
 const EventSlice = createSlice({
@@ -24,13 +25,22 @@ const EventSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    setFundRaising : (state, action) => {
+    setFundRaising: (state, action) => {
       state.fundRaising = action.payload;
+    },
+    setFundRaisingDonors: (state, action) => {
+      state.fundRaisingDonors = action.payload;
     },
   },
 });
 
-export const { setEvents, setEventGifts, setNewEvent, setLoading, setFundRaising } =
-  EventSlice.actions;
+export const {
+  setEvents,
+  setEventGifts,
+  setNewEvent,
+  setLoading,
+  setFundRaising,
+  setFundRaisingDonors
+} = EventSlice.actions;
 
 export default EventSlice.reducer;
