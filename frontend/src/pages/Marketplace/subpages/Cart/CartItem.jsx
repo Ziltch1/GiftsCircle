@@ -3,7 +3,7 @@ import React from 'react'
 import cartItemImg from '../../../assets/giftItemImage.svg'
 import { DeleteIcon, MinusIcon, AddIcon } from '@chakra-ui/icons'
 
-const CartItem = () => {
+const CartItem = ({setShowModal}) => {
   return (
     <Box w='100%' h='130px' bg='#FAFAFA' p='4' mb='5'>
       <Flex alignItems='center'>
@@ -17,7 +17,7 @@ const CartItem = () => {
             <Text fontWeight={600} fontSize={16}>₦ 285,455</Text>
           </Box>
           <Box display='flex' justifyContent='space-between'>
-            <Text color='#F5222D' fontSize={14} cursor='pointer'><DeleteIcon/> Remove from list</Text>
+            <Text color='#F5222D' fontSize={14} cursor='pointer' onClick={() => setShowModal(true)}><DeleteIcon/> Remove from list</Text>
             <Box display='flex' justifyContent='space-between' alignItems='center' bg='#00BFB2' borderRadius={3} color='white' w='120px'>
               <Button bg='none' _hover={{ bg: 'none' }} fontSize={15}><MinusIcon/></Button>
               <Text>2</Text>

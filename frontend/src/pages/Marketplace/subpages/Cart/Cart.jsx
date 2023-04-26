@@ -1,10 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import CartItem from './CartItem'
 import BackButton from '../../../CreateEvent/subpages/BackButton'
 import { Box, Heading, Text, Flex, Divider, Button } from '@chakra-ui/react'
+import CloseModal from '../../CloseModal'
 
 const Cart = ({setShowCart}) => {
+  const [showModal, setShowModal] = useState(false);
+  const items = [1,2,3,4,5,6,7,8]
   return (
+    <>
+    {showModal && <CloseModal setShowModal={setShowModal} />}
     <Box minH='600px' w='95%' mx='auto' pt='8' mb='10'>
       <BackButton action={() => setShowCart(false)} />
       <Box mt='3' mb='10'>
@@ -15,11 +20,7 @@ const Cart = ({setShowCart}) => {
       <Box>
         <Flex justifyContent='space-between' alignItems='flex-start'>
           <Box w='750px' bg='white' p='5' borderRadius={5} minH='400px' boxShadow='sm' border='1px solid #EEEEEE'>
-            <CartItem/>
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
+            {items.map((item) => <CartItem setShowModal={setShowModal} />)}
           </Box>
           <Box w='350px' bg='white' borderRadius={5} minH='200px' boxShadow='sm' border='1px solid #EEEEEE'>
             <Heading fontSize={18} p='5' fontWeight={600}>Cart summary</Heading>
@@ -38,6 +39,7 @@ const Cart = ({setShowCart}) => {
         </Flex>
       </Box>
     </Box>
+    </>
   )
 }
 
