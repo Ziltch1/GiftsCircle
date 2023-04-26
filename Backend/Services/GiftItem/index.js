@@ -44,7 +44,7 @@ const Update = async (id, data, image) => {
   });
 
   if (giftItem) {
-    await prisma.giftitem.update({
+   let Data = await prisma.giftitem.update({
       where: {
         id: id,
       },
@@ -58,7 +58,7 @@ const Update = async (id, data, image) => {
     });
 
     await prisma.$disconnect();
-    return data;
+    return Data;
   }
   return null;
 };

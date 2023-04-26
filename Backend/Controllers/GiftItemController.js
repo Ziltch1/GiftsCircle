@@ -48,17 +48,26 @@ router.post("/create", upload.single("image"), async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", upload.single("image"), async (req, res) => {
   try {
-    const file = dataUri(req).content;
-    const response = await cloudinary.uploader.upload(file, {
-      folder: "eventcircle",
-    });
-    let data = await Update(req.params.id, req.body, response.url);
-    if (data) {
-      return res.status(200).send(data);
+    let data = null;
+    if (req.file) {
+      const file = dataUri(req).content;
+      const response = await cloudinary.uploader.upload(file, {
+        folder: "eventcircle",
+      });
+      data = await Update(req.params.id, req.body, response.url);
+      if (data) {
+        return res.status(200).send(data);
+      }
+      return res.status(400).send(ResponseDTO("Failed", "GiftItem not found"));
+    } else {
+      data = await Update(req.params.id, req.body, null);
+      if (data) {
+        return res.status(200).send(data);
+      }
+      return res.status(400).send(ResponseDTO("Failed", "GiftItem not found"));
     }
-    return res.status(400).send(ResponseDTO("Failed", "GiftItem not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

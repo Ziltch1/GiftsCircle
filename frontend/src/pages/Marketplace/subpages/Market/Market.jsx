@@ -34,7 +34,7 @@ const Market = ({giftItems, setShowProducts, setShowCart}) => {
             <Box mb='7'>
                 <Search />
             </Box>
-            <Flex  justifyContent='space-between' alignItems='center' flexWrap='wrap'>
+            <Flex  gap="24px" alignItems='center' flexWrap='wrap'>
                 {data.map((gift) => <GiftCard id={gift.id} details={gift.details} image={gift.image} amount={gift.amount}  />)}
             </Flex>
         </Box>
