@@ -1,14 +1,16 @@
 import { Box, Heading, Text, Button } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import MarketplaceOptions from './MarketplaceOptions'
-import Navbar from '../../components/Navbar/Navbar'
 import Market from './subpages/Market/Market'
 import { GetAsoebiItemsApi } from '../../redux/axios/apis/asoebi'
 import { GetGiftItemsApi } from '../../redux/axios/apis/gift'
+import Cart from './subpages/Cart/Cart'
+
 
 const Index = () => {
   const [position, setPosition] = useState(-1);
   const [showProducts, setShowProducts] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const [asoebiItems, setAsoebiItems] = useState([]);
   const [gifts, setGifts] = useState([]);
 
@@ -56,9 +58,15 @@ const Index = () => {
           </Box>
           : 
           <>
-            {position === 0 && <Market />}
-            {position === 1 && <Market giftItems={asoebiItems} setShowProducts={setShowProducts} />}
-            {position === 2 && <Market giftItems={gifts} setShowProducts={setShowProducts} />}
+           {showCart 
+           ? 
+           <Cart setShowCart={setShowCart} /> 
+           :
+           <Box>
+                {position === 0 && <Market />}
+                {position === 1 && <Market giftItems={asoebiItems} setShowProducts={setShowProducts} setShowCart={setShowCart} />}
+                {position === 2 && <Market giftItems={gifts} setShowProducts={setShowProducts} setShowCart={setShowCart} />}
+           </Box>}
           </>}
        </Box>
     </Box>
