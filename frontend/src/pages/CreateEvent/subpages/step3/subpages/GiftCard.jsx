@@ -50,7 +50,7 @@ const GiftCard = ({
 
   return (
     <>
-      <Flex alignItems="center" justifyContent="space-between" flexWrap="wrap">
+      <Flex alignItems="center" gap="24px" flexWrap="wrap">
         {openGiftDetails && (
           <GiftDetails
             setOpenGiftDetails={setOpenGiftDetails}
