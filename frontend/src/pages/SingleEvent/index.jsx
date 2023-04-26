@@ -10,12 +10,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   GetEventFundRaising,
+  GetEventFundRaisingDonors,
   GetUserEvents,
 } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../CreateEvent/subpages/BackButton';
 import Header from '../../components/Header/Header';
 import Fundraising from './Fundraising';
+import { setFundRaising } from '../../redux/features/events/eventSlice';
+import { GetFundraisingDonorsApi } from '../../redux/axios/apis/fundraising';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -24,7 +27,7 @@ const Index = () => {
   const [newEvent, setNewEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { events } = useSelector(state => state.event);
+  const { events, fundRaising } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
 
   let userId = user.id;
@@ -44,6 +47,16 @@ const Index = () => {
       setLoading(false);
     }
   }, [newEvent]);
+
+  useEffect(() => {
+    if (fundRaising && newEvent) {
+      if (fundRaising.eventId !== newEvent.id) {
+        dispatch(setFundRaising(null));
+      }
+      dispatch(GetEventFundRaisingDonors(fundRaising.id));
+      console.log(fundRaising.eventId, newEvent.id);
+    }
+  }, [fundRaising, newEvent]);
 
   return (
     <Box bg="#F5F5F5">

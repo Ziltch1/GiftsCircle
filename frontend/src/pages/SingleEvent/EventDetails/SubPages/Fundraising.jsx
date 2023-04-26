@@ -25,7 +25,7 @@ import { dispatch } from '../../../../redux/store';
 const Fundraising = ({ setOpenDrawer, id }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState(0);
   const [title, setTitle] = useState('');
   const [description, setDesciption] = useState('');
   const [image, setImage] = useState(null);
@@ -113,7 +113,7 @@ const Fundraising = ({ setOpenDrawer, id }) => {
                   fontWeight="normal"
                   h="100px"
                   bg="#F4f4f4"
-                  maxLength='255'
+                  maxLength="255"
                   value={description}
                   onChange={e => setDesciption(e.target.value)}
                 />
@@ -152,10 +152,10 @@ const Fundraising = ({ setOpenDrawer, id }) => {
                   Enter amount
                 </FormLabel>
                 <Input
-                  type="text"
+                  type="number"
                   color="#000"
                   fontSize="14px"
-                  placeholder="e.g ₦ 587,500"
+                  placeholder="e.g 550000"
                   bg="#F4F4F4"
                   value={amount}
                   onChange={e => setAmount(e.target.value)}
@@ -163,7 +163,7 @@ const Fundraising = ({ setOpenDrawer, id }) => {
               </Box>
 
               <Box fontSize={'13px'} mb="5">
-                <Checkbox colorScheme="green" defaultChecked>
+                <Checkbox colorScheme="green" isChecked={true}>
                   <Text fontSize={12}>
                     I agree to Event circle’s Terms and Privacy Policy on
                     raising funds.

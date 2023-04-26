@@ -3,11 +3,13 @@ import { Box, Text, Heading, Button, Flex, Image } from '@chakra-ui/react';
 import clock from '../../../../components/assets/clock.svg';
 import location from '../../../../components/assets/map-pin.svg';
 import Fundraising from './Fundraising';
+import { useSelector } from 'react-redux';
 
 const EventSchedule = ({ newEvent }) => {
   const date = newEvent.date;
   const dateString = date;
   const newDate = new Date(dateString).toDateString();
+  const { fundRaising } = useSelector(state => state.event);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const showDrawer = () => {
@@ -33,17 +35,20 @@ const EventSchedule = ({ newEvent }) => {
         </Box>
 
         <Box w="295px" h="auto">
-          <Button
-            w="100%"
-            mb="4"
-            fontWeight={550}
-            bg="#EEEEEE"
-            fontSize={14}
-            boxShadow="md"
-            onClick={() => showDrawer()}
-          >
-            Start a fund raising
-          </Button>
+          {!fundRaising && (
+            <Button
+              w="100%"
+              mb="4"
+              fontWeight={550}
+              bg="#EEEEEE"
+              fontSize={14}
+              boxShadow="md"
+              onClick={() => showDrawer()}
+            >
+              Start a fund raising
+            </Button>
+          )}
+
           <Box fontSize={14} mb="5" bg="#EEEEEE" borderRadius={5} p="5">
             <Image src={clock} mb="2" />
             <Text>{newDate}</Text>
