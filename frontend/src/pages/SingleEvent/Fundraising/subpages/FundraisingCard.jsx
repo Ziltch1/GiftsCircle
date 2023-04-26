@@ -1,23 +1,17 @@
 import { Box, Text, Image, Heading, Button, Flex } from '@chakra-ui/react';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { dispatch } from '../../../../redux/store';
-import { StopFundRaising } from '../../../../redux/features/events/service';
 
-const FundraisingCard = ({openModal, setOpenModal}) => {
-  const { fundRaising } = useSelector(state => state.event);
+const FundraisingCard = ({ openModal, setOpenModal, fundRaising }) => {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'NGN',
   });
 
-  const percentagePaid = ((fundRaising?.amountPaid * 100)/fundRaising?.amount)
+  const percentagePaid = (fundRaising?.amountPaid * 100) / fundRaising?.amount;
   const StopFundraising = () => {
-    const formBody = {
-      id: fundRaising.id,
-      status: true,
-    };
-    dispatch(StopFundRaising(formBody));
+    if(fundRaising.active === false){
+      return
+    }
     setOpenModal(true);
   };
   return (
@@ -44,8 +38,8 @@ const FundraisingCard = ({openModal, setOpenModal}) => {
               </Box>
               <Box>
                 <Text
-                  color="#237804"
-                  bg="#D9F7BE"
+                  color={fundRaising?.active ? "#237804" : '#000'}
+                  bg={fundRaising?.active ? '#D9F7BE' : 'red.300'}
                   py="5px"
                   px="10px"
                   fontSize={13}
@@ -61,9 +55,14 @@ const FundraisingCard = ({openModal, setOpenModal}) => {
             <Flex alignItems="center" justifyContent="space-between">
               <Box>
                 <Box w="450px">
-                    <Box w='100%' bg="#EEEEEE" h="8px" borderRadius={5} mb="3">
-                  <Box w={`${percentagePaid}%`} bg="#00BFB2" h="8px" borderRadius={5}></Box>
-                </Box>
+                  <Box w="100%" bg="#EEEEEE" h="8px" borderRadius={5} mb="3">
+                    <Box
+                      w={`${percentagePaid}%`}
+                      bg="#00BFB2"
+                      h="8px"
+                      borderRadius={5}
+                    ></Box>
+                  </Box>
                 </Box>
                 <Text fontSize={14}>
                   <strong>{formatter.format(fundRaising?.amountPaid)}</strong>{' '}
@@ -81,7 +80,7 @@ const FundraisingCard = ({openModal, setOpenModal}) => {
                 >
                   {fundRaising?.active
                     ? 'Stop Fundraising'
-                    : 'Start FundRaising'}
+                    : 'FundRaising Ended'}
                 </Button>
               </Box>
             </Flex>
