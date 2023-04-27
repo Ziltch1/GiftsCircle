@@ -1,10 +1,28 @@
 import { Box, Text, Image, Heading, Button, Flex } from '@chakra-ui/react';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
+import { GetFundraisingApi } from '../../../../redux/axios/apis/fundraising';
+import ContributionDrawer from './ContributionDrawer';
 
-const FundraisingCard = () => {
+const FundraisingCard = ({event}) => {
+    const [fundRaising, setFundRaising] = useState(null);
+    const [showDrawer, setShowDrawer] = useState(false)
 
-    const { fundRaising } = useSelector(state => state.event);
+    const getFundraising = async() => {
+        try {
+            const response = await GetFundraisingApi(event.id);
+            const data = await response.data;
+            setFundRaising(data);
+        } catch (error) {
+            
+        }
+    }
+
+    console.log(fundRaising);
+
+    useEffect(() => {
+        getFundraising();
+    }, [])
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'NGN',
@@ -13,6 +31,8 @@ const FundraisingCard = () => {
     const percentagePaid = ((fundRaising?.amountPaid * 100) / fundRaising?.amount)
 
   return (
+    <>
+    {showDrawer && <ContributionDrawer setShowDrawer={setShowDrawer} fundRaising={fundRaising} />}
       <Box bg="white" borderRadius={5} p="5" w="100%" mb="8">
           <Flex gap={4}>
               <Box w="180px" h="140px">
@@ -36,8 +56,8 @@ const FundraisingCard = () => {
                           </Box>
                           <Box>
                               <Text
-                                  color="#237804"
-                                  bg="#D9F7BE"
+                                  color={fundRaising?.active ? "#237804" : '#717171'}
+                                  bg={fundRaising?.active ? '#D9F7BE' : '#EEEEEE'}
                                   py="5px"
                                   px="10px"
                                   fontSize={13}
@@ -69,8 +89,10 @@ const FundraisingCard = () => {
                                   color="white"
                                   fontWeight="normal"
                                   fontSize={13}
+                                  isDisabled={!fundRaising?.active ? 'disabled' : null}
+                                  onClick={() => setShowDrawer(true)}
                               >
-                                  Contributte
+                                  Contribute
                               </Button>
                           </Box>
                       </Flex>
@@ -78,6 +100,7 @@ const FundraisingCard = () => {
               </Box>
           </Flex>
       </Box>
+      </>
   )
 }
 

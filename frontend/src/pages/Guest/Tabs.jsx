@@ -1,16 +1,30 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Box, Flex, Button } from '@chakra-ui/react'
 import { useSelector } from 'react-redux';
+import { GetEventApi } from '../../redux/axios/apis/events';
+import { GetFundraisingApi } from '../../redux/axios/apis/fundraising';
 
-const Tabs = ({navPosition, setNavPosition}) => {
+const Tabs = ({navPosition, setNavPosition, event}) => {
 
-    const { fundRaising } = useSelector(state => state.event);
     const links = ['About event', 'Gift List', 'Media'];
+    const [fundraising, setFundraising] = useState([])
+
+    const checkFundraising = async() => {
+        try {
+            const checkFundraising = await GetFundraisingApi(event.id);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        checkFundraising()
+    }, [])
+
     const handleClick = (index) => {
         setNavPosition(index);
     }
 
-    if (fundRaising) {
+    if (fundraising) {
         links.push('Fundraising');
     }
 

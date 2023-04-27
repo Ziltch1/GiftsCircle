@@ -15,7 +15,7 @@ import {
   GetComplimentaryGiftItems,
   GetGiftItems,
 } from '../../redux/features/gift/service';
-import FundraisingCard from './subpages/Fundraising/FundraisingCard';
+import Fundraising from './subpages/Fundraising';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -57,12 +57,12 @@ const Index = () => {
               <BackButton action={() => navigate('/dashboard')} />
               <EventImages newEvent={event} />
             </Box>
-            <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
+            <Tabs navPosition={navPosition} setNavPosition={setNavPosition} event={event} />
             <Box>
               {navPosition === 0 && <EventDetails newEvent={event} />}
               {navPosition === 1 && <EventGifts event={event} />}
               {navPosition === 2 && <EventMedia />}
-              {navPosition === 3 && <FundraisingCard />}
+              {navPosition === 3 && <Fundraising event={event} />}
             </Box>
           </>
         )}
