@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import FilterButtons from './FilterButtons';
 import GiftHeader from './GiftHeader';
 import Search from './Search';
@@ -20,6 +20,14 @@ const Index = ({ step, setStep }) => {
   const [addedGiftItems, setAddedGiftItems] = useState([]);
   const { newEvent } = useSelector(state => state.event);
 
+  const contextValue = useMemo(
+    () => ({
+      GiftItems,
+      addedGiftItems,
+    }),
+    [GiftItems, addedGiftItems]
+  );
+
   const HandleSubmit = async () => {
     try {
       await CreateManyGiftsApi(GiftItems);
@@ -38,7 +46,7 @@ const Index = ({ step, setStep }) => {
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">
         <GiftContext.Provider
-          value={{ addedGiftItems, GiftItems, setAddedGiftItems, setGiftItems }}
+          value={{ ...contextValue, setAddedGiftItems, setGiftItems }}
         >
           <BackButton action={BackAction} />
           <GiftHeader openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />

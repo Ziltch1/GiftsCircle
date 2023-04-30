@@ -33,6 +33,7 @@ const GiftItem = ({ gift, setData, data }) => {
       setGiftItems(prev => prev.filter(x => x.giftItemId !== giftItem.id));
     }
   };
+  console.log(data)
 
   useEffect(() => {
     data.map(ele => {
