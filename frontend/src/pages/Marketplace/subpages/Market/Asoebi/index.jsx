@@ -8,7 +8,6 @@ const Index = ({setShowProducts, setShowCart, giftItems}) => {
   const [showAsoebi, setShowAsoebi] = useState(false)
 
   const handleClick = () => {
-        console.log(eventId);
         setShowAsoebi(true);
   }
   return (
@@ -25,7 +24,7 @@ const Index = ({setShowProducts, setShowCart, giftItems}) => {
                   <Box mb="5">
                       <FormLabel>Enter Event Id</FormLabel>
                       <Input
-                          placeholder="Please enter the guest code"
+                          placeholder="Please enter the event Id"
                           bg="#F4F4F4"
                           fontSize={14}
                           _placeholder={{ color: '#A8A8A8' }}
