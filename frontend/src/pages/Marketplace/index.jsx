@@ -5,6 +5,7 @@ import Market from './subpages/Market/Market'
 import { GetAsoebiItemsApi } from '../../redux/axios/apis/asoebi'
 import { GetGiftItemsApi } from '../../redux/axios/apis/gift'
 import Cart from './subpages/Cart/Cart'
+import Asoebi from './subpages/Market/Asoebi'
 
 
 const Index = () => {
@@ -64,7 +65,7 @@ const Index = () => {
            :
            <Box>
                 {position === 0 && <Market />}
-                {position === 1 && <Market giftItems={asoebiItems} setShowProducts={setShowProducts} setShowCart={setShowCart} />}
+                {position === 1 && <Asoebi giftItems={asoebiItems} setShowProducts={setShowProducts} setShowCart={setShowCart} />}
                 {position === 2 && <Market giftItems={gifts} setShowProducts={setShowProducts} setShowCart={setShowCart} />}
            </Box>}
           </>}
