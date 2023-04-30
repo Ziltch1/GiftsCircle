@@ -5,6 +5,7 @@ import userReducer from './features/user/userSlice';
 import eventReducer from './features/events/eventSlice';
 import giftReducer from './features/gift/giftSlice';
 
+
 const store = configureStore({
   reducer: {
     auth: authReducer,

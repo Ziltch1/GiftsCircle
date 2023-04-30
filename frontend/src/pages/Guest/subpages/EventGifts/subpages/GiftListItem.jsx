@@ -2,8 +2,17 @@ import React from 'react'
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import cardImg from '../../../../assets/giftItemImage.svg'
+import { useSelector } from 'react-redux';
 
-const GiftListItem = ({giftItem}) => {
+const GiftListItem = ({item, giftCart, setGiftCart}) => {
+
+    const {eventGifts} = useSelector(state => state.event);
+    console.log(eventGifts, giftCart);
+    const handleDelete = (id) => {
+        const filteredArray = giftCart.filter(obj => obj !== id);
+        setGiftCart(filteredArray);
+        console.log(id);
+    }
   return (
       <Box
           bg="#FAFAFA"
@@ -16,15 +25,16 @@ const GiftListItem = ({giftItem}) => {
       >
           <Flex gap={3}>
               <Image
-                  src={cardImg}
+                  src={item?.image}
                   w="90px"
                   h="90px"
                   borderRadius={5}
                   alt="gift item image"
+                  objectFit='cover'
               />
               <Box w="350px">
                   <Heading fontWeight="medium" fontSize="14px" lineHeight={6} mb='2'>
-                      XIAOMI Redmi Note 11S, 8GB/128GB, 5000 MAh Battery - Twilight Blue
+                      {item?.details}
                   </Heading>
                   <Button
                       bg="none"
@@ -34,7 +44,7 @@ const GiftListItem = ({giftItem}) => {
                       alignItems="center"
                       gap={3}
                       color="#F5222D"
-                    //   onClick={() => HandleDelete()}
+                      onClick={() => handleDelete(item?.id)}
                   >
                       <DeleteIcon fontSize={16} />
                       <Text fontWeight="medium" fontSize={14}>
@@ -43,7 +53,7 @@ const GiftListItem = ({giftItem}) => {
                   </Button>
               </Box>
               <Box>
-                  <Text fontWeight='bold' fontSize={15}>₦ 285,455</Text>
+                  <Text fontWeight='bold' fontSize={15}>₦ {item?.amount}</Text>
               </Box>
           </Flex>
       </Box>
