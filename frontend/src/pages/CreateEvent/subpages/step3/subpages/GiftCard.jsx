@@ -1,16 +1,13 @@
 import { Box, Image, Button, Text, Flex } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import GiftDetails from './GiftDetails';
 import FormFooter from '../../FormFooter';
+import { GiftContext } from '..';
 
-const GiftCard = ({
-  setGiftItems,
-  step,
-  setStep,
-  setAddedGiftItems,
-  addedGiftItems,
-}) => {
+const GiftCard = ({ step, setStep }) => {
+  const { setAddedGiftItems, addedGiftItems, setGiftItems } =
+    useContext(GiftContext);
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
   const { newEvent } = useSelector(state => state.event);
@@ -22,7 +19,7 @@ const GiftCard = ({
     setOpenGiftDetails(true);
   };
 
-  const AddGift = (id) => {
+  const AddGift = id => {
     if (!addedGiftItems.includes(id)) {
       const formBody = {
         eventId: newEvent.id,

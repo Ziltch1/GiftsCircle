@@ -1,16 +1,15 @@
 import { Box, Text, Heading, Button, Image, Flex } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GiftIcon from '../../../assets/giftIcon.svg';
 import GiftDrawer from './subpages/GiftDrawer';
+import { GiftContext } from '.';
 
 const GiftHeader = ({
   setOpenDrawer,
   openDrawer,
-  GiftItems,
-  setAddedGiftItems,
-  setGiftItems,
 }) => {
+  const { GiftItems } = useContext(GiftContext);
   const { eventGifts } = useSelector(state => state.event);
   const { giftItems } = useSelector(state => state.gift);
   const [data, setData] = useState([]);
@@ -41,8 +40,6 @@ const GiftHeader = ({
           setOpenDrawer={setOpenDrawer}
           data={data}
           setData={setData}
-          setAddedGiftItems={setAddedGiftItems}
-          setGiftItems={setGiftItems}
           totalAmount={totalAddedAmount}
         />
       )}

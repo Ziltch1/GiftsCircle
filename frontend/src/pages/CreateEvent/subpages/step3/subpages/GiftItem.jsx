@@ -8,12 +8,14 @@ import {
   Heading,
   Switch,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DeleteGiftItems } from '../../../../../redux/features/gift/service';
 import { dispatch } from '../../../../../redux/store';
+import { GiftContext } from '..';
 
-const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems, data }) => {
+const GiftItem = ({ gift, setData, data }) => {
+  const { setAddedGiftItems, setGiftItems } = useContext(GiftContext);
   const { giftItems } = useSelector(state => state.gift);
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
   const [enableContribution, setEnableContribution] = useState(
@@ -31,6 +33,7 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems, data }) => {
       setGiftItems(prev => prev.filter(x => x.giftItemId !== giftItem.id));
     }
   };
+  console.log(data)
 
   useEffect(() => {
     data.map(ele => {
