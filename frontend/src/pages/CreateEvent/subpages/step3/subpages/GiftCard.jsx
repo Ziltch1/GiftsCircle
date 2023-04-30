@@ -25,7 +25,7 @@ const GiftCard = ({
   const AddGift = (id) => {
     if (!addedGiftItems.includes(id)) {
       const formBody = {
-        eventId: "newEvent.id",
+        eventId: newEvent.id,
         quantity: 1,
         giftItemId: id,
         complimentaryGift: 'none',
