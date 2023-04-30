@@ -10,8 +10,6 @@ const GiftHeader = ({
   GiftItems,
   setAddedGiftItems,
   setGiftItems,
-  setEnableContribution,
-  enableContribution
 }) => {
   const { eventGifts } = useSelector(state => state.event);
   const { giftItems } = useSelector(state => state.gift);
@@ -40,14 +38,12 @@ const GiftHeader = ({
     <Box my="5">
       {openDrawer && (
         <GiftDrawer
-          setEnableContribution={setEnableContribution}
           setOpenDrawer={setOpenDrawer}
           data={data}
           setData={setData}
           setAddedGiftItems={setAddedGiftItems}
           setGiftItems={setGiftItems}
           totalAmount={totalAddedAmount}
-          enableContribution={enableContribution}
         />
       )}
       <Flex mb="5" alignItems="center" justifyContent="space-between">
