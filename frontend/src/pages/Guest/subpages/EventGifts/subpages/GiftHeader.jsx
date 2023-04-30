@@ -2,8 +2,10 @@ import React from 'react';
 import { Box, Heading, Flex, Button, Image } from '@chakra-ui/react';
 import GiftIcon from '../../../../assets/giftIconSmall.svg';
 
-const GiftHeader = ({ setOpenDrawer, setShowListDrawer, giftCount }) => {
+
+const GiftHeader = ({ setOpenDrawer, setShowListDrawer, giftCount, giftCart, complimentaryCart }) => {
   const actionBtns = ['Purchase history', 'Gift list'];
+ 
   return (
     <Box mb="5">
       <Flex justifyContent="space-between" alignItems="center">
@@ -31,7 +33,7 @@ const GiftHeader = ({ setOpenDrawer, setShowListDrawer, giftCount }) => {
             ml="5"
             onClick={() => setShowListDrawer(true)}
           >
-            <Image src={GiftIcon} mr="1" /> Gift list
+            <Image src={GiftIcon} mr="1" /> Gift list ({giftCart.length + complimentaryCart.length})
           </Button>
         </Box>
       </Flex>

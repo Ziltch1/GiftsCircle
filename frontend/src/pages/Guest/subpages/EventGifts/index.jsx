@@ -12,6 +12,8 @@ const Index = ({ event }) => {
   const [data, setData] = useState([]);
   const { eventGifts } = useSelector(state => state.event);
   const { complimentaryGifts } = useSelector(state => state.gift);
+  const [giftCart, setGiftCart] = useState([]);
+  const [complimentaryCart, setComplimentaryCart] = useState([]);
 
   useEffect(() => {
     if (eventGifts) {
@@ -25,19 +27,28 @@ const Index = ({ event }) => {
         <ComplimentaryModal
           setOpenDrawer={setOpenDrawer}
           data={complimentaryGifts}
+          complimentaryCart={complimentaryCart}
+          setComplimentaryCart={setComplimentaryCart}
         />
       )}
       {showListDrawer && (
-        <GiftListDrawer setShowListDrawer={setShowListDrawer} />
+        <GiftListDrawer 
+          setShowListDrawer={setShowListDrawer} 
+          giftCart={giftCart} setGiftCart={setGiftCart} 
+          complimentaryCart={complimentaryCart}
+          data={complimentaryGifts}
+          setComplimentaryCart={setComplimentaryCart} />
       )}
       <GiftHeader
         giftCount={data.length}
         setOpenDrawer={setOpenDrawer}
         setShowListDrawer={setShowListDrawer}
+        giftCart={giftCart}
+        complimentaryCart={complimentaryCart}
       />
       <Flex alignItems="center" flexWrap="wrap">
         {data.map(item => (
-          <GiftCard event={event} key={data.indexOf(item)} gift={item} />
+          <GiftCard event={event} key={data.indexOf(item)} gift={item} giftCart={giftCart} setGiftCart={setGiftCart} />
         ))}
       </Flex>
     </Box>

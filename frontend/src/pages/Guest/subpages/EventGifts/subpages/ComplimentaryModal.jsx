@@ -17,12 +17,13 @@ import {
 } from '@chakra-ui/react';
 import ContributionModal from '../../ContributionModal';
 
-const ComplimentaryModal = ({ setOpenDrawer, data }) => {
+const ComplimentaryModal = ({ setOpenDrawer, data, setComplimentaryCart, complimentaryCart }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const btnRef = React.useRef();
   const closeModal = () => {
     setOpenDrawer(false);
   };
+  console.log(data);
 
   return (
     <Box>
@@ -47,7 +48,7 @@ const ComplimentaryModal = ({ setOpenDrawer, data }) => {
           <DrawerBody>
             <Flex justifyContent="space-between" flexWrap="wrap">
               {data.map(ele => (
-                <GiftCard gift={ele} key={data.indexOf(ele)} />
+                <GiftCard gift={ele} key={data.indexOf(ele)} complimentaryCart={complimentaryCart} setComplimentaryCart={setComplimentaryCart} />
               ))}
             </Flex>
           </DrawerBody>
@@ -61,6 +62,7 @@ const ComplimentaryModal = ({ setOpenDrawer, data }) => {
               Skip
             </Button>
             <Button
+              onClick={closeModal}
               fontSize={13}
               color="white"
               ml="5"
@@ -77,8 +79,15 @@ const ComplimentaryModal = ({ setOpenDrawer, data }) => {
   );
 };
 
-const GiftCard = ({ gift }) => {
+const GiftCard = ({ gift, complimentaryCart, setComplimentaryCart }) => {
   const [openModal, setOpenModal] = useState(false);
+
+  const addGift = (id) => {
+    console.log(id, complimentaryCart);
+    setComplimentaryCart([...complimentaryCart, id]);
+  };
+
+  console.log(complimentaryCart);
 
   return (
     <>
@@ -120,17 +129,15 @@ const GiftCard = ({ gift }) => {
           <Button
             fontSize={13}
             fontWeight={500}
-            //   bg={addedGiftItems.includes(gift?.id) ? 'grey' : '#00BFB2'}
-            bg="#00BFB2"
+            bg={complimentaryCart.includes(gift?.id) ? 'grey' : '#00BFB2'}
             color="white"
             w="129px"
             h="40px"
-            onClick={() => setOpenModal(true)}
-            //   onClick={() => AddGift(gift?.id)}
+            // onClick={() => setOpenModal(true)}
+            onClick={() => addGift(gift?.id)}
             id={gift?.id}
           >
-            Purchase
-            {/* {addedGiftItems.includes(gift?.id) ? 'Added' : 'Add to list'} */}
+            {complimentaryCart.includes(gift?.id) ? 'Added to cart' : 'Purchase'}
           </Button>
         </Flex>
       </Box>

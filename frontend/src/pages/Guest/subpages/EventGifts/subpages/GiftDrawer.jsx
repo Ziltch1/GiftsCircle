@@ -12,14 +12,17 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import GiftItem from './GiftItem';
+import { useSelector } from 'react-redux';
 
-const GiftDrawer = ({ setOpenDrawer, data, setData, setAddedGiftItems, setGiftItems }) => {
+const GiftDrawer = ({ setOpenDrawer, data, setData, setAddedGiftItems, setGiftItems, giftCart }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const btnRef = React.useRef();
   const closeModal = () => {
     setOpenDrawer(false);
   };
+ 
 
+  
   return (
     <Box>
       <Drawer
