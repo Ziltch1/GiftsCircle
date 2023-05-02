@@ -10,21 +10,11 @@ import {
   Box,
   Text,
   Heading,
-  Switch,
   Flex,
 } from '@chakra-ui/react';
 import GiftItem from './GiftItem';
 
-const GiftDrawer = ({
-  setOpenDrawer,
-  data,
-  setData,
-  setAddedGiftItems,
-  setGiftItems,
-  totalAmount,
-  setEnableContribution,
-  enableContribution
-}) => {
+const GiftDrawer = ({ setOpenDrawer, data, setData, totalAmount }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   const btnRef = React.useRef();
@@ -61,10 +51,7 @@ const GiftDrawer = ({
                 gift={ele}
                 key={data.indexOf(ele)}
                 setData={setData}
-                setAddedGiftItems={setAddedGiftItems}
-                setGiftItems={setGiftItems}
-                enableContribution={enableContribution}
-                setEnableContribution={setEnableContribution}
+                data={data}
               />
             ))}
           </DrawerBody>

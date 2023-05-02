@@ -1,14 +1,26 @@
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Box, Flex, Button, Text, Image, Heading, Switch } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import {
+  Box,
+  Flex,
+  Button,
+  Text,
+  Image,
+  Heading,
+  Switch,
+} from '@chakra-ui/react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DeleteGiftItems } from '../../../../../redux/features/gift/service';
 import { dispatch } from '../../../../../redux/store';
-import itemImage from '../../../../assets/giftItemImage.svg';
+import { GiftContext } from '..';
 
-const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems, setEnableContribution, enableContribution}) => {
+const GiftItem = ({ gift, setData, data }) => {
+  const { setAddedGiftItems, setGiftItems } = useContext(GiftContext);
   const { giftItems } = useSelector(state => state.gift);
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
+  const [enableContribution, setEnableContribution] = useState(
+    gift.enableContribution
+  );
 
   const HandleDelete = () => {
     if (gift.id) {
@@ -21,11 +33,21 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems, setEnableCon
       setGiftItems(prev => prev.filter(x => x.giftItemId !== giftItem.id));
     }
   };
+  console.log(data)
 
-  const handleClick = (e) => {
-    setEnableContribution(prev => !prev);
-  };
-  
+  useEffect(() => {
+    data.map(ele => {
+      if (ele.giftItemId === gift.giftItemId) {
+        if (enableContribution) {
+          ele.enableContribution = true;
+        } else {
+          ele.enableContribution = false;
+        }
+      }
+      return ele;
+    });
+    setGiftItems(data);
+  }, [enableContribution]);
 
   return (
     <Box
@@ -43,16 +65,25 @@ const GiftItem = ({ gift, setData, setAddedGiftItems, setGiftItems, setEnableCon
           h="90px"
           borderRadius={5}
           alt="gift item image"
-          objectFit='cover'
+          objectFit="cover"
         />
         <Box w="390px">
-          <Heading fontWeight="medium" fontSize="15px" lineHeight={6} mb='2'>
+          <Heading fontWeight="medium" fontSize="15px" lineHeight={6} mb="2">
             {giftItem.title}
           </Heading>
-          <Box w='100%'>
+          <Box w="100%">
             <Flex gap={12}>
               <Text fontSize={14}>Enable contribution</Text>
-              <Switch size='sm' colorScheme="teal" isChecked={enableContribution} onChange={(e) => handleClick(e)} />
+              <Switch
+                size="sm"
+                colorScheme="teal"
+                isChecked={giftItem.amount > 20000 ? enableContribution : false}
+                onChange={e =>
+                  giftItem.amount > 20000
+                    ? setEnableContribution(e.target.checked)
+                    : null
+                }
+              />
             </Flex>
           </Box>
           <Button

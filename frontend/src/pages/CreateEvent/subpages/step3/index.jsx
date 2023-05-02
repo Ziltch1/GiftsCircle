@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import FilterButtons from './FilterButtons';
 import GiftHeader from './GiftHeader';
 import Search from './Search';
@@ -11,13 +11,22 @@ import { GetEventGifts } from '../../../../redux/features/events/service';
 import { useSelector } from 'react-redux';
 import BackButton from '../BackButton';
 
+export const GiftContext = createContext(null);
+
 const Index = ({ step, setStep }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const [GiftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
-  const [enableContribution, setEnableContribution] = useState(false);
   const { newEvent } = useSelector(state => state.event);
+
+  const contextValue = useMemo(
+    () => ({
+      GiftItems,
+      addedGiftItems,
+    }),
+    [GiftItems, addedGiftItems]
+  );
 
   const HandleSubmit = async () => {
     try {
@@ -29,24 +38,6 @@ const Index = ({ step, setStep }) => {
     }
   };
 
-  useEffect(() => {
-    if (enableContribution) {
-      setGiftItems(
-        GiftItems.map(ele => {
-          ele.enableContribution = true;
-          return ele;
-        })
-      );
-    } else {
-      setGiftItems(
-        GiftItems.map(ele => {
-          ele.enableContribution = false;
-          return ele;
-        })
-      );
-    }
-  }, [enableContribution]);
-
   const BackAction = () => {
     setStep(2);
   };
@@ -54,23 +45,15 @@ const Index = ({ step, setStep }) => {
   return (
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">
-        <BackButton action={BackAction} />
-        <GiftHeader
-          openDrawer={openDrawer}
-          setOpenDrawer={setOpenDrawer}
-          GiftItems={GiftItems}
-          setAddedGiftItems={setAddedGiftItems}
-          setGiftItems={setGiftItems}
-          setEnableContribution={setEnableContribution}
-          enableContribution={enableContribution}
-        />
-        <Search />
-        <FilterButtons />
-        <GiftCard
-          setGiftItems={setGiftItems}
-          setAddedGiftItems={setAddedGiftItems}
-          addedGiftItems={addedGiftItems}
-        />
+        <GiftContext.Provider
+          value={{ ...contextValue, setAddedGiftItems, setGiftItems }}
+        >
+          <BackButton action={BackAction} />
+          <GiftHeader openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+          <Search />
+          <FilterButtons />
+          <GiftCard />
+        </GiftContext.Provider>
       </Box>
       <FormFooter action={HandleSubmit} step={step} />
     </Box>
