@@ -1,8 +1,7 @@
 import { Box, Flex, Button, Text, Image, GridItem } from '@chakra-ui/react'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { AddEventAsoebiApi } from '../../../../redux/axios/apis/asoebi'
-
+import { AddEventAsoebiApi } from '../../../../../redux/axios/apis/asoebi'
 
 const GiftCard = ({ details, image, id, amount, eventId }) => {
   const {user} = useSelector(state => state.user);

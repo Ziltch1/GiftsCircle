@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import CartItem from './CartItem'
-import BackButton from '../../../CreateEvent/subpages/BackButton'
 import { Box, Heading, Text, Flex, Divider, Button } from '@chakra-ui/react'
-import CloseModal from '../../CloseModal'
-import { GetAddedAsoebiItemsApi } from '../../../../redux/axios/apis/asoebi'
+import BackButton from '../../../../CreateEvent/subpages/BackButton'
+import CloseModal from '../../../CloseModal'
+import { GetAddedAsoebiItemsApi } from '../../../../../redux/axios/apis/asoebi'
 
-const Cart = ({setShowCart, eventId}) => {
+const Cart = ({setShowAsoebiCart, eventId}) => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
   const items = [1,2,3,4,5,6,7,8]
@@ -27,7 +27,7 @@ const Cart = ({setShowCart, eventId}) => {
     <>
     {showModal && <CloseModal setShowModal={setShowModal} />}
     <Box minH='600px' w='95%' mx='auto' pt='8' mb='10'>
-      <BackButton action={() => setShowCart(false)} />
+      <BackButton action={() => setShowAsoebiCart(false)} />
       <Box mt='3' mb='10'>
         <Heading mb='2' fontWeight={600} fontSize={30}>Your Cart</Heading>
         <Text color='#717171' fontSize={14}>This is where you can buy some things you need for your event for your self</Text>
