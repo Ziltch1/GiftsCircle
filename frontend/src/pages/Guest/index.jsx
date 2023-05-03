@@ -25,6 +25,18 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let check = localStorage.getItem('Cart');
+    if (!check) {
+      localStorage.setItem(
+        'Cart',
+        JSON.stringify({
+          giftItems: [],
+        })
+      );
+    }
+  }, []);
+
+  useEffect(() => {
     const GetEvent = async () => {
       const res = await GetEventApi(id);
       setEvent(res.data);
@@ -57,7 +69,11 @@ const Index = () => {
               <BackButton action={() => navigate('/dashboard')} />
               <EventImages newEvent={event} />
             </Box>
-            <Tabs navPosition={navPosition} setNavPosition={setNavPosition} event={event} />
+            <Tabs
+              navPosition={navPosition}
+              setNavPosition={setNavPosition}
+              event={event}
+            />
             <Box>
               {navPosition === 0 && <EventDetails newEvent={event} />}
               {navPosition === 1 && <EventGifts event={event} />}

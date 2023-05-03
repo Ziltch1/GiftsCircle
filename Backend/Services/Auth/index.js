@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require("uuid");
 const prisma = new PrismaClient();
 
 const Login = async (data) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email: data.email,
     },
@@ -26,7 +26,7 @@ const Login = async (data) => {
 };
 
 const GoogleSignIn = async (data) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email: data.email,
     },
@@ -41,7 +41,7 @@ const GoogleSignIn = async (data) => {
 };
 
 const SendVerifyEmail = async (email) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email: email,
     },
@@ -115,7 +115,7 @@ const VerifyOtp = async (data) => {
 };
 
 const SendResetPasswordEmail = async (email) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email: email,
     },
