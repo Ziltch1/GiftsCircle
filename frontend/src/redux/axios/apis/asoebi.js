@@ -9,4 +9,8 @@ const GetAsoebiItemsApi = () => {
     return api.get('/asoebiItem/Get/All');
 }
 
-export {GetAsoebiItemsApi};
+const GetAddedAsoebiItemsApi = (id) => {
+  return api.get(`/asoebi/Get/EventAsoebi/${id}`);
+};
+
+export {GetAsoebiItemsApi, AddEventAsoebiApi, GetAddedAsoebiItemsApi};
