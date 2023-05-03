@@ -1470,7 +1470,7 @@
         }
       }
     },
-    "/gift/Get/AsoebiBuyers/{id}": {
+    "/asoebi/Get/AsoebiBuyers/{id}": {
       "get": {
         "description": "",
         "parameters": [
