@@ -3,9 +3,10 @@ import React, {useState} from 'react'
 import Search from '../../../../../components/Search/Search'
 import BackButton from '../../../../CreateEvent/subpages/BackButton'
 import cartIcon from '../../../../assets/cart.svg'
-import GiftCard from '../GiftCard'
+import GiftCard from './GiftCard'
+import { AddEventAsoebiApi } from '../../../../../redux/axios/apis/asoebi'
 
-const AsoebiMarket = ({setShowProducts, giftItems, setShowCart}) => {
+const AsoebiMarket = ({setShowProducts, giftItems, setShowAsoebiCart, eventId}) => {
   const [data, setData] = useState(giftItems);
   return (
       <Box bg='#F5F5F5'>
@@ -18,7 +19,7 @@ const AsoebiMarket = ({setShowProducts, giftItems, setShowCart}) => {
                           <Text fontSize={14} color='#717171'>This is where you can buy some things you need for your event for your self</Text>
                       </Box>
 
-                      <Box bg='#CCF2F0' w='155px' h='45px' py='3' px='6' cursor='pointer' borderRadius={5} onClick={() => setShowCart(true)}>
+                      <Box bg='#CCF2F0' w='155px' h='45px' py='3' px='6' cursor='pointer' borderRadius={5} onClick={() => setShowAsoebiCart(true)}>
                           <Flex gap={2} fontSize={14}>
                               <Image src={cartIcon} />
                               <Text>Cart</Text>

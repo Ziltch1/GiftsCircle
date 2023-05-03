@@ -58,14 +58,10 @@ function App() {
           />
         </Route>
         <Route path="/dashboard/event_details/:id" element={<UserCheck />} />
-        {/* <Route path="/dashboard/event/join" element={<JoinEvent2 />} /> */}
-        {/* <Route path="/dashboard/event_details/:id" element={<UserCheck />} /> */}
         <Route path="/event/join" element={<JoinFromDashboard />} />
         <Route path="/event/join/:id" element={<JoinEvent />} />
         <Route path="/view_event/:id" element={<ViewEvent />} />
-        {/* <Route path="/gift_details/:id" element={<GiftDetails />} /> */}
         <Route path="/create_event" element={<CreateEvent />} />
-        {/* <Route path="/create_event/:id/preview" element={<EventPreview />} /> */}
       </Routes>
     </BrowserRouter>
   );
