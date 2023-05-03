@@ -14,13 +14,13 @@ const ErrorHandler = err => {
         type: 'Error',
         message: err.response.data.message
           ? err.response.data.message
-          : 'Something went wrong',
+          : null,
         title: 'Error',
       };
     } else {
       return {
         type: 'Error',
-        message: 'Something went wrong',
+        message: null,
         title: 'Error',
       };
     }
@@ -31,20 +31,20 @@ const ErrorHandler = err => {
         type: 'Error',
         message: err.response.data.message
           ? err.response.data.message
-          : 'Something went wrong',
+          : null,
         title: 'Error',
       };
     } else {
       return {
         type: 'Error',
-        message: 'Something went wrong',
+        message: null,
         title: 'Error',
       };
     }
   }
   return {
     type: 'Error',
-    message: 'Something went wrong',
+    message: null,
     title: 'Error',
   };
 };

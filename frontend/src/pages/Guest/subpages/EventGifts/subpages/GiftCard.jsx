@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Flex, Image, Text, Box } from '@chakra-ui/react';
 import ContributionModal from '../../ContributionModal';
 import { useSelector } from 'react-redux';
+import { CartContext } from '..';
 
-const GiftCard = ({ gift, event, giftCart, setGiftCart }) => {
+const GiftCard = ({ gift, event, setGiftCart }) => {
+  const { giftCart, gifts } = useContext(CartContext);
   const [openModal, setOpenModal] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
 
   const giftItem = giftItems.find(x => x.id === gift?.giftItemId);
 
-  const addGift = (id) => {
-    console.log(id, giftCart);
-    setGiftCart([...giftCart, id])
-  }
+  const addGift = id => {
+    setGiftCart([...giftCart, id]);
+  };
 
   return (
     <>
@@ -57,8 +58,7 @@ const GiftCard = ({ gift, event, giftCart, setGiftCart }) => {
             color="white"
             w="129px"
             h="40px"
-            // onClick={() => setOpenModal(true)}
-              onClick={() => addGift(gift?.giftItemId)}
+            onClick={() => addGift(gift?.giftItemId)}
             id={gift?.id}
           >
             {giftCart.includes(gift?.giftItemId) ? 'Added to cart' : 'Purchase'}
