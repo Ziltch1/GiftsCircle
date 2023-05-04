@@ -6,8 +6,8 @@ import giftImage from '../assets/giftImage.svg'
 import { Link } from 'react-router-dom'
 
 const MarketplaceOptions = ({ setPosition, setShowProducts}) => {
-  const marketOptions = ['Sourvenirs', 'Asoebi', 'Gift items']
-  const optionImages = [sourvenir, asoebi, giftImage];
+  const marketOptions = ['Asoebi', 'Gift Items', 'Sourvenirs'];
+  const optionImages = [asoebi, giftImage, sourvenir];
   const cardImage = optionImages.map((item) => item);
 
   const handleClick = (index) => {

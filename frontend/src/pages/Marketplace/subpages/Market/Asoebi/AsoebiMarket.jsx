@@ -19,11 +19,11 @@ const AsoebiMarket = ({setShowProducts, giftItems, setShowAsoebiCart, eventId}) 
                           <Text fontSize={14} color='#717171'>This is where you can buy some things you need for your event for your self</Text>
                       </Box>
 
-                      <Box bg='#CCF2F0' w='155px' h='45px' py='3' px='6' cursor='pointer' borderRadius={5} onClick={() => setShowAsoebiCart(true)}>
+                      <Box bg='#CCF2F0' w='110px' h='45px' py='3' px='6' cursor='pointer' borderRadius={5} onClick={() => setShowAsoebiCart(true)}>
                           <Flex gap={2} fontSize={14}>
                               <Image src={cartIcon} />
                               <Text>Cart</Text>
-                              <Text bg='#00BFB2' color='white' w='33px' h='21px' borderRadius='100px' textAlign='center' pb='4px' px='3px'>34</Text>
+                              {/* <Text bg='#00BFB2' color='white' w='33px' h='21px' borderRadius='100px' textAlign='center' pb='4px' px='3px'>{giftItems.length}</Text> */}
                           </Flex>
                       </Box>
                   </Flex>
@@ -32,7 +32,7 @@ const AsoebiMarket = ({setShowProducts, giftItems, setShowAsoebiCart, eventId}) 
                   <Search />
               </Box>
               <Flex gap="24px" alignItems='center' flexWrap='wrap'>
-                  {data?.map((gift) => <GiftCard id={gift.id} details={gift.details} image={gift.image} amount={gift.amount} />)}
+                  {data?.map((gift) => <GiftCard id={gift.id} details={gift.details} image={gift.image} amount={gift.amount} eventId={eventId} />)}
               </Flex>
           </Box>
       </Box>
