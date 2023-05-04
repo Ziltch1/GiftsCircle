@@ -27,6 +27,7 @@ const Cart = ({setShowAsoebiCart, eventId}) => {
     try {
       const response = await GetAddedAsoebiItemsApi(eventId);
       const data = response.data;
+      console.log(data);
       setData(data)
     } catch (error) {
       console.log(error);
@@ -39,8 +40,10 @@ const Cart = ({setShowAsoebiCart, eventId}) => {
   }, [])
 
   useEffect(() => {
-    const filteredArray = asoebiItems.filter(obj => data.some(item => item.asoebiItem === obj.id));
-    setNewData(filteredArray);
+    if(asoebiItems && data){
+      const filteredArray = asoebiItems.filter(obj => data.some(item => item.asoebiItem === obj.id));
+      setNewData(filteredArray);
+    }
   }, [])
 
   const giftAmount = newData?.reduce((acc, curr) => acc + curr.amount, 0);
@@ -62,7 +65,7 @@ const Cart = ({setShowAsoebiCart, eventId}) => {
       <Box>
         <Flex justifyContent='space-between' alignItems='flex-start'>
           <Box w='750px' bg='white' p='5' borderRadius={5} minH='400px' boxShadow='sm' border='1px solid #EEEEEE'>
-            {newData.map((item) => <CartItem setShowModal={setShowModal} item={item} key={item?.id} />)}
+            {newData.map((item) => <CartItem setShowModal={setShowModal} item={item} key={item?.id} data={data} setData={setData} />)}
           </Box>
           <Box w='350px' bg='white' borderRadius={5} minH='200px' boxShadow='sm' border='1px solid #EEEEEE'>
             <Heading fontSize={18} p='5' fontWeight={600}>Cart summary</Heading>
@@ -70,11 +73,11 @@ const Cart = ({setShowAsoebiCart, eventId}) => {
             <Box p='5'>
               <Box mb='7'>
                 <Text fontSize={13} fontWeight={400} color='#8C8C8C' mb='2'>Subtotal</Text>
-                <Heading fontSize={18} fontWeight={600} mb='2'>₦ 285,455</Heading>
+                <Heading fontSize={18} fontWeight={600} mb='2'>₦ {giftAmount}</Heading>
                 <Text fontSize={13} fontWeight={400} color='#555555'>Delivery fees not included yet.</Text>
               </Box>
               <Box>
-                <Button w='100%' fontSize={13} fontWeight={400} color='white' bg='#00BFB2'>Checkout (<strong>₦ 285,455</strong>)</Button>
+                <Button w='100%' fontSize={13} fontWeight={400} color='white' bg='#00BFB2'>Checkout (<strong>₦ {giftAmount}</strong>)</Button>
               </Box>
             </Box>
           </Box>
