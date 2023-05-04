@@ -5,6 +5,7 @@ import BackButton from '../../../../CreateEvent/subpages/BackButton';
 import cartIcon from '../../../../assets/cart.svg';
 import GiftCard from './GiftCard';
 import { AsoebiContext } from '.';
+import AsoebiDrawer from './AsoebiDrawer';
 
 const AsoebiMarket = ({
   setShowProducts,
@@ -13,11 +14,12 @@ const AsoebiMarket = ({
   eventId,
 }) => {
   const [data, setData] = useState(giftItems);
-  const { AsoebiItems } =
-  useContext(AsoebiContext);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { AsoebiItems } = useContext(AsoebiContext);
 
   return (
     <Box bg="#F5F5F5">
+      <AsoebiDrawer openDrawer={drawerOpen} setOpenDrawer={setDrawerOpen} />
       <Box minH="600px" w="95%" mx="auto" pt="8">
         <BackButton action={() => setShowProducts(false)} />
         <Box mb="8" mt="5">
@@ -34,19 +36,18 @@ const AsoebiMarket = ({
 
             <Box
               bg="#CCF2F0"
-              w="110px"
+              w="130px"
               h="45px"
               py="3"
               px="6"
               cursor="pointer"
               borderRadius={5}
-              onClick={() => setShowAsoebiCart(true)}
+              onClick={() => setDrawerOpen(true)}
             >
               <Flex gap={2} fontSize={14}>
                 <Image src={cartIcon} />
                 <Text>Cart </Text>
                 <Text>{AsoebiItems.length} </Text>
-                {/* <Text bg='#00BFB2' color='white' w='33px' h='21px' borderRadius='100px' textAlign='center' pb='4px' px='3px'>{giftItems.length}</Text> */}
               </Flex>
             </Box>
           </Flex>
