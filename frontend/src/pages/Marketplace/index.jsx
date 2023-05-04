@@ -64,8 +64,8 @@ const Index = () => {
            <Cart setShowCart={setShowCart} /> 
            :
            <Box>
-                {position === 0 && <Market />}
-                {position === 1 && <Asoebi giftItems={asoebiItems} setShowProducts={setShowProducts} setShowCart={setShowCart} />}
+                {position === 1 && <Market />}
+                {position === 0 && <Asoebi giftItems={asoebiItems} setShowProducts={setShowProducts} setShowCart={setShowCart} />}
                 {position === 2 && <Market giftItems={gifts} setShowProducts={setShowProducts} setShowCart={setShowCart} />}
            </Box>}
           </>}
