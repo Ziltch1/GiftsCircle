@@ -9,17 +9,21 @@ import AsoebiDrawer from './AsoebiDrawer';
 
 const AsoebiMarket = ({
   setShowProducts,
-  giftItems,
+  asoebiItems,
   setShowAsoebiCart,
   eventId,
 }) => {
-  const [data, setData] = useState(giftItems);
+  const [Data, setData] = useState(asoebiItems);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { AsoebiItems } = useContext(AsoebiContext);
+  const { AsoebiItems, data } = useContext(AsoebiContext);
 
   return (
     <Box bg="#F5F5F5">
-      <AsoebiDrawer openDrawer={drawerOpen} setOpenDrawer={setDrawerOpen} />
+      <AsoebiDrawer
+        openDrawer={drawerOpen}
+        setOpenDrawer={setDrawerOpen}
+        eventId={eventId}
+      />
       <Box minH="600px" w="95%" mx="auto" pt="8">
         <BackButton action={() => setShowProducts(false)} />
         <Box mb="8" mt="5">
@@ -47,7 +51,7 @@ const AsoebiMarket = ({
               <Flex gap={2} fontSize={14}>
                 <Image src={cartIcon} />
                 <Text>Cart </Text>
-                <Text>{AsoebiItems.length} </Text>
+                <Text>{data.length} </Text>
               </Flex>
             </Box>
           </Flex>
@@ -57,10 +61,10 @@ const AsoebiMarket = ({
         </Box>
 
         <Flex gap="24px" alignItems="center" flexWrap="wrap">
-          {data?.map(gift => (
+          {Data?.map(gift => (
             <GiftCard
               id={gift.id}
-              details={gift.details}
+              title={gift.title}
               image={gift.image}
               amount={gift.amount}
               eventId={eventId}

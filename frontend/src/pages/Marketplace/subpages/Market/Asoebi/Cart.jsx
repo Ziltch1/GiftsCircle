@@ -5,7 +5,7 @@ import BackButton from '../../../../CreateEvent/subpages/BackButton';
 import CloseModal from '../../../CloseModal';
 import { AsoebiContext } from '.';
 
-const Cart = ({ setShowAsoebiCart, eventId }) => {
+const Cart = ({ setShowAsoebiCart, }) => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
 
