@@ -28,6 +28,17 @@ const CartItem = ({ setShowModal, item }) => {
   const { asoebiItems } = useSelector(state => state.event);
   const asoebiItem = asoebiItems.find(x => x.id === item.asoebiItem);
 
+  const MarkUpAsoebi = () => {
+    AsoebiItems.map(ele => {
+      if (ele.asoebiItem === item.asoebiItem) {
+        ele.increment = increment;
+      }
+      return ele;
+    });
+    setAsoebiItems(AsoebiItems);
+    setModalOpen(false);
+  };
+
   const removeItem = id => {
     const filteredAsoebi = AsoebiItems.filter(obj => obj.asoebiItem !== id);
     const filteredIdList = addedAsoebiItems.filter(obj => obj !== id);
@@ -42,6 +53,7 @@ const CartItem = ({ setShowModal, item }) => {
         setModalOpen={setModalOpen}
         setIncrement={setIncrement}
         increment={increment}
+        handleSubmit={MarkUpAsoebi}
       />
       <Flex alignItems="center">
         <Box w="20%" m="3">
@@ -61,6 +73,15 @@ const CartItem = ({ setShowModal, item }) => {
             </Text>
             <Text fontWeight={600} fontSize={16}>
               ₦ {asoebiItem.amount}
+            </Text>
+          </Box>
+
+          <Box mb="2" display="flex" justifyContent="space-between">
+            <Text w="75%" fontWeight={400} fontSize={16}>
+              Purchase Price
+            </Text>
+            <Text fontWeight={400} fontSize={16}>
+              ₦ {asoebiItem.amount + item.increment}
             </Text>
           </Box>
 
@@ -93,6 +114,7 @@ export const ContributionAmount = ({
   increment,
   setModalOpen,
   isOpen,
+  handleSubmit,
 }) => {
   const { onClose } = useDisclosure({ defaultIsOpen: true });
 
@@ -151,11 +173,11 @@ export const ContributionAmount = ({
             <Box mb="5">
               <FormLabel fontSize={14}>Type amount here</FormLabel>
               <Input
-                type="text"
+                type="number"
                 placeholder="Amount"
                 fontSize={14}
                 value={increment}
-                onChange={e => setIncrement(e.target.value)}
+                onChange={e => setIncrement(parseInt(e.target.value))}
               />
             </Box>
             <Box textAlign="center">
@@ -166,7 +188,7 @@ export const ContributionAmount = ({
                 fontSize={14}
                 fontWeight="medium"
                 color="white"
-                onClick={() => setModalOpen(false)}
+                onClick={() => handleSubmit()}
               >
                 Proceed
               </Button>

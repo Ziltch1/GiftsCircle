@@ -1,4 +1,4 @@
-import { Box, Flex, Button, Text, Image, GridItem } from '@chakra-ui/react';
+import { Box, Flex, Button, Text, Image } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { AsoebiContext } from '.';
@@ -64,7 +64,7 @@ const GiftCard = ({ details, image, id, amount, eventId }) => {
             onClick={() => AddAsoebi(id)}
             id={id}
           >
-           {addedAsoebiItems.includes(id) ? 'Added to Cart' : 'Add to Cart'}
+            {addedAsoebiItems.includes(id) ? 'Added to Cart' : 'Add to Cart'}
           </Button>
         </Flex>
       </Box>

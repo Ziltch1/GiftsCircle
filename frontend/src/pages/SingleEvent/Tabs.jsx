@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { Box, Flex, Button } from '@chakra-ui/react'
 import { useSelector } from 'react-redux';
 
