@@ -64,7 +64,7 @@ const GiftCard = ({ details, image, id, amount, eventId }) => {
             onClick={() => AddAsoebi(id)}
             id={id}
           >
-            Add to cart
+           {addedAsoebiItems.includes(id) ? 'Added to Cart' : 'Add to Cart'}
           </Button>
         </Flex>
       </Box>
