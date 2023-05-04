@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { AsoebiContext } from '.';
 
-const GiftCard = ({ details, image, id, amount, eventId }) => {
+const GiftCard = ({ title, image, id, amount, eventId }) => {
   const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems } =
     useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
@@ -47,7 +47,7 @@ const GiftCard = ({ details, image, id, amount, eventId }) => {
           //   onClick={openDrawer}
         />
         <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
-          {details}
+          {title}
         </Text>
         <Flex alignItems="center" justifyContent="space-between">
           <Text color="#27272E" fontWeight={600} fontSize={18}>

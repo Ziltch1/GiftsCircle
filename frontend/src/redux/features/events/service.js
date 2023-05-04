@@ -7,6 +7,7 @@ import { dispatch } from '../../store';
 import { createResponse } from '../../utils/UtilSlice';
 import {
   setAsoebisItems,
+  setEventAsoebis,
   setEventGifts,
   setEvents,
   setFundRaising,
@@ -21,6 +22,7 @@ import {
   UpdateFundraisingStatusApi,
 } from '../../axios/apis/fundraising';
 import {
+  DeleteAsoebiApi,
   GetAddedAsoebiItemsApi,
   GetAsoebiItemsApi,
 } from '../../axios/apis/asoebi';
@@ -61,7 +63,7 @@ const GetAsoebiItems = () => async () => {
 const GetEventAsoebis = id => async () => {
   try {
     const res = await GetAddedAsoebiItemsApi(id);
-    dispatch(setEventGifts(res.data));
+    dispatch(setEventAsoebis(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
     dispatch(createResponse(ErrorHandler(error)));
@@ -109,6 +111,16 @@ const DeleteEvent = id => async () => {
   }
 };
 
+const DeleteAsoebi = (id, eventId) => async () => {
+  try {
+    await DeleteAsoebiApi(id);
+    dispatch(GetEventAsoebis(eventId));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
 export {
   GetUserEvents,
   GetEventGifts,
@@ -118,4 +130,5 @@ export {
   StopFundRaising,
   GetEventFundRaisingDonors,
   GetAsoebiItems,
+  DeleteAsoebi,
 };

@@ -18,6 +18,8 @@ import React, { useContext, useState } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { AsoebiContext } from '.';
 import { useSelector } from 'react-redux';
+import { dispatch } from '../../../../../redux/store';
+import { DeleteAsoebi } from '../../../../../redux/features/events/service';
 
 const CartItem = ({ setShowModal, item }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -39,11 +41,17 @@ const CartItem = ({ setShowModal, item }) => {
     setModalOpen(false);
   };
 
-  const removeItem = id => {
-    const filteredAsoebi = AsoebiItems.filter(obj => obj.asoebiItem !== id);
-    const filteredIdList = addedAsoebiItems.filter(obj => obj !== id);
-    setAddedAsoebiItems(filteredIdList);
-    setAsoebiItems(filteredAsoebi);
+  const removeItem = asoebi => {
+    if (asoebi.id) {
+      dispatch(DeleteAsoebi(asoebi.id, asoebi.eventId));
+      setAsoebiItems(prev => prev.filter(x => x.id !== asoebi.id));
+      setAddedAsoebiItems(prev => prev.filter(x => x.id !== asoebiItem.id));
+    } else {
+      setAsoebiItems(prev => prev.filter(x => x.asoebiItem !== asoebiItem.id));
+      setAddedAsoebiItems(prev =>
+        prev.filter(x => x.asoebiItem !== asoebiItem.id)
+      );
+    }
   };
 
   return (
@@ -96,7 +104,7 @@ const CartItem = ({ setShowModal, item }) => {
               color="#F5222D"
               fontSize={14}
               cursor="pointer"
-              onClick={() => removeItem(item.asoebiItem)}
+              onClick={() => removeItem(item)}
             >
               <DeleteIcon /> Remove from list
             </Text>

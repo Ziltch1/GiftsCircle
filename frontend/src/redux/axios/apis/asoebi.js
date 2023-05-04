@@ -16,9 +16,14 @@ const GetAddedAsoebiItemsApi = id => {
   return api.get(`/asoebi/Get/EventAsoebi/${id}`);
 };
 
+const DeleteAsoebiApi = id => {
+  return api.delete(`/asoebi/${id}`);
+};
+
 export {
   GetAsoebiItemsApi,
   AddEventAsoebiApi,
   GetAddedAsoebiItemsApi,
   AddManyEventAsoebiApi,
+  DeleteAsoebiApi,
 };

@@ -7,7 +7,7 @@ const initialState = {
   loading: true,
   fundRaising: null,
   fundRaisingDonors: null,
-  eventAsoebis: null,
+  eventAsoebis: [],
   asoebiItems: null
 };
 

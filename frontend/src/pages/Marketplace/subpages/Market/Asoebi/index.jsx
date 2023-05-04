@@ -12,26 +12,27 @@ import {
 import AsoebiMarket from './AsoebiMarket';
 import Cart from './Cart';
 import BackButton from '../../../../CreateEvent/subpages/BackButton';
-import { AddManyEventAsoebiApi } from '../../../../../redux/axios/apis/asoebi';
+import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../../redux/store';
 import { GetEventAsoebis } from '../../../../../redux/features/events/service';
-import { useSelector } from 'react-redux';
 
 export const AsoebiContext = createContext(null);
 
 const Index = ({ setShowProducts, setShowCart }) => {
-  const { asoebiItems } = useSelector(state => state.event);
+  const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
   const [AsoebiItems, setAsoebiItems] = useState([]);
   const [addedAsoebiItems, setAddedAsoebiItems] = useState([]);
+  const [data, setData] = useState([]);
   const [amount, setAmount] = useState(0);
 
   const contextValue = useMemo(
     () => ({
+      data: [...AsoebiItems, ...eventAsoebis],
       AsoebiItems,
       addedAsoebiItems,
       amount,
     }),
-    [AsoebiItems, addedAsoebiItems, amount]
+    [AsoebiItems, addedAsoebiItems, amount, eventAsoebis]
   );
 
   const [eventId, setEventId] = useState('');
@@ -40,21 +41,19 @@ const Index = ({ setShowProducts, setShowCart }) => {
   const toast = useToast();
 
   useEffect(() => {
+    if (eventId !== '') {
+      dispatch(GetEventAsoebis(eventId));
+    }
+  }, [eventId]);
+
+  useEffect(() => {
     let amount = 0;
+    let idList = [];
     AsoebiItems.forEach(ele => {
       amount += asoebiItems.find(x => x.id === ele.asoebiItem).amount;
     });
     setAmount(amount);
   }, [AsoebiItems, asoebiItems]);
-
-  const HandleSubmit = async () => {
-    try {
-      await AddManyEventAsoebiApi(AsoebiItems);
-      dispatch(GetEventAsoebis(eventId));
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleClick = () => {
     if (eventId) {
@@ -118,7 +117,7 @@ const Index = ({ setShowProducts, setShowCart }) => {
         </Box>
       ) : (
         <AsoebiContext.Provider
-          value={{ ...contextValue, setAddedAsoebiItems, setAsoebiItems }}
+          value={{ ...contextValue, setAddedAsoebiItems, setAsoebiItems, setData }}
         >
           <>
             {showAsoebiCart ? (
@@ -126,7 +125,7 @@ const Index = ({ setShowProducts, setShowCart }) => {
             ) : (
               <AsoebiMarket
                 setShowProducts={setShowProducts}
-                giftItems={asoebiItems}
+                asoebiItems={asoebiItems}
                 setShowAsoebiCart={setShowAsoebiCart}
                 eventId={eventId}
               />
