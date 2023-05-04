@@ -114,7 +114,7 @@ export const ContributionAmount = ({
               fontSize={24}
               textAlign="center"
             >
-              How much do you want to contribute?
+              How much do you want to Mark Up?
             </Heading>
             <Flex w="70%" mx="auto" justifyContent="space-between" mb="5">
               <Button

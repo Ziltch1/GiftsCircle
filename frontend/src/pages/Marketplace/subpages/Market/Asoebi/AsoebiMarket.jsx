@@ -1,9 +1,10 @@
 import { Box, Flex, Image, Text, Heading } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Search from '../../../../../components/Search/Search';
 import BackButton from '../../../../CreateEvent/subpages/BackButton';
 import cartIcon from '../../../../assets/cart.svg';
 import GiftCard from './GiftCard';
+import { AsoebiContext } from '.';
 
 const AsoebiMarket = ({
   setShowProducts,
@@ -12,6 +13,8 @@ const AsoebiMarket = ({
   eventId,
 }) => {
   const [data, setData] = useState(giftItems);
+  const { AsoebiItems } =
+  useContext(AsoebiContext);
 
   return (
     <Box bg="#F5F5F5">
@@ -41,7 +44,8 @@ const AsoebiMarket = ({
             >
               <Flex gap={2} fontSize={14}>
                 <Image src={cartIcon} />
-                <Text>Cart</Text>
+                <Text>Cart </Text>
+                <Text>{AsoebiItems.length} </Text>
                 {/* <Text bg='#00BFB2' color='white' w='33px' h='21px' borderRadius='100px' textAlign='center' pb='4px' px='3px'>{giftItems.length}</Text> */}
               </Flex>
             </Box>
