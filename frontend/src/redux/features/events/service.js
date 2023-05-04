@@ -6,6 +6,7 @@ import {
 import { dispatch } from '../../store';
 import { createResponse } from '../../utils/UtilSlice';
 import {
+  setAsoebisItems,
   setEventGifts,
   setEvents,
   setFundRaising,
@@ -19,6 +20,10 @@ import {
   GetFundraisingDonorsApi,
   UpdateFundraisingStatusApi,
 } from '../../axios/apis/fundraising';
+import {
+  GetAddedAsoebiItemsApi,
+  GetAsoebiItemsApi,
+} from '../../axios/apis/asoebi';
 
 const GetUserEvents = id => async () => {
   dispatch(setLoading(false));
@@ -36,6 +41,26 @@ const GetUserEvents = id => async () => {
 const GetEventGifts = id => async () => {
   try {
     const res = await GetEventGiftsApi(id);
+    dispatch(setEventGifts(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+const GetAsoebiItems = () => async () => {
+  try {
+    const res = await GetAsoebiItemsApi();
+    dispatch(setAsoebisItems(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+const GetEventAsoebis = id => async () => {
+  try {
+    const res = await GetAddedAsoebiItemsApi(id);
     dispatch(setEventGifts(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
@@ -87,8 +112,10 @@ const DeleteEvent = id => async () => {
 export {
   GetUserEvents,
   GetEventGifts,
+  GetEventAsoebis,
   DeleteEvent,
   GetEventFundRaising,
   StopFundRaising,
   GetEventFundRaisingDonors,
+  GetAsoebiItems,
 };

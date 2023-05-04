@@ -1,54 +1,101 @@
-import { Box, Text, Image, Button, Flex, Modal, ModalBody, ModalContent, ModalCloseButton, ModalOverlay, Heading, Input, useDisclosure, FormLabel} from '@chakra-ui/react'
-import React from 'react'
-import cartItemImg from '../../../../assets/giftItemImage.svg'
-import { DeleteIcon, MinusIcon, AddIcon } from '@chakra-ui/icons'
+import {
+  Box,
+  Text,
+  Image,
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalCloseButton,
+  ModalOverlay,
+  Heading,
+  Input,
+  useDisclosure,
+  FormLabel,
+} from '@chakra-ui/react';
+import React, { useContext, useState } from 'react';
+import { DeleteIcon } from '@chakra-ui/icons';
+import { AsoebiContext } from '.';
+import { useSelector } from 'react-redux';
 
-const CartItem = ({setShowModal, item, data, setData}) => {
-  const removeItem = (id) => {
-    const filteredArray = data.filter(obj => obj.id !== id);
-    setData(filteredArray);
-  }
+const CartItem = ({ setShowModal, item }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [increment, setIncrement] = useState(0);
+  const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems, AsoebiItems } =
+    useContext(AsoebiContext);
 
-  console.log(item);
+  const { asoebiItems } = useSelector(state => state.event);
+  const asoebiItem = asoebiItems.find(x => x.id === item.asoebiItem);
+
+  const removeItem = id => {
+    const filteredAsoebi = AsoebiItems.filter(obj => obj.asoebiItem !== id);
+    const filteredIdList = addedAsoebiItems.filter(obj => obj !== id);
+    setAddedAsoebiItems(filteredIdList);
+    setAsoebiItems(filteredAsoebi);
+  };
+
   return (
-    <Box w='100%' h='auto' bg='#FAFAFA' p='4' mb='5'>
-      <Flex alignItems='center'>
-        <Box w='20%'>
-          <Image src={item.image} h='100px' w='120px' objectFit='cover' borderRadius={5} />
+    <Box w="100%" h="auto" bg="#FAFAFA" p="4" mb="5">
+      <ContributionAmount
+        isOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        setIncrement={setIncrement}
+        increment={increment}
+      />
+      <Flex alignItems="center">
+        <Box w="20%" m="3">
+          <Image
+            src={asoebiItem.image}
+            h="100px"
+            w="120px"
+            objectFit="cover"
+            borderRadius={5}
+          />
         </Box>
 
-        <Box w='80%'>
-
-          <Box mb='2' display='flex' justifyContent='space-between'>
-            <Text w='75%' fontWeight={600} fontSize={16}>{item.details}</Text>
-            <Text fontWeight={600} fontSize={16}>₦ {item.amount}</Text>
+        <Box w="80%">
+          <Box mb="2" display="flex" justifyContent="space-between">
+            <Text w="75%" fontWeight={600} fontSize={16}>
+              {asoebiItem.title}
+            </Text>
+            <Text fontWeight={600} fontSize={16}>
+              ₦ {asoebiItem.amount}
+            </Text>
           </Box>
 
-          <Box mb='2'>
-            <Button fontSize={14} >Markup Asoebi?</Button>
+          <Box mb="2">
+            <Button fontSize={14} onClick={() => setModalOpen(true)}>
+              Markup Asoebi?
+            </Button>
           </Box>
 
-          <Box display='flex' justifyContent='space-between'>
-            <Text color='#F5222D' fontSize={14} cursor='pointer' onClick={() => removeItem(item.id)}><DeleteIcon/> Remove from list</Text>
+          <Box display="flex" justifyContent="space-between">
+            <Text
+              color="#F5222D"
+              fontSize={14}
+              cursor="pointer"
+              onClick={() => removeItem(item.asoebiItem)}
+            >
+              <DeleteIcon /> Remove from list
+            </Text>
           </Box>
-
         </Box>
       </Flex>
     </Box>
-  )
-}
+  );
+};
 
-export default CartItem
+export default CartItem;
 
+export const ContributionAmount = ({
+  setIncrement,
+  increment,
+  setModalOpen,
+  isOpen,
+}) => {
+  const { onClose } = useDisclosure({ defaultIsOpen: true });
 
-
-
-export const ContributionAmount = ({ setContribution, setOpenModal }) => {
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
-  const closeModal = () => {
-    // setOpenModal(false)
-    setContribution(false);
-  };
   return (
     <Box>
       <Modal
@@ -59,7 +106,7 @@ export const ContributionAmount = ({ setContribution, setOpenModal }) => {
       >
         <ModalOverlay />
         <ModalContent py="4" w="380px" h="auto">
-          <ModalCloseButton onClick={closeModal} />
+          <ModalCloseButton onClick={() => setModalOpen(false)} />
           <ModalBody>
             <Heading
               mb="5"
@@ -76,6 +123,7 @@ export const ContributionAmount = ({ setContribution, setOpenModal }) => {
                 fontWeight="medium"
                 color="#00BFB2"
                 borderRadius="100px"
+                onClick={() => setIncrement(1000)}
               >
                 1,000
               </Button>
@@ -85,8 +133,9 @@ export const ContributionAmount = ({ setContribution, setOpenModal }) => {
                 fontWeight="medium"
                 color="#00BFB2"
                 borderRadius="100px"
+                onClick={() => setIncrement(2000)}
               >
-                5,000
+                2,000
               </Button>
               <Button
                 bg="#CCF2F0"
@@ -94,13 +143,20 @@ export const ContributionAmount = ({ setContribution, setOpenModal }) => {
                 fontWeight="medium"
                 color="#00BFB2"
                 borderRadius="100px"
+                onClick={() => setIncrement(5000)}
               >
-                10,000
+                5,000
               </Button>
             </Flex>
             <Box mb="5">
               <FormLabel fontSize={14}>Type amount here</FormLabel>
-              <Input type="text" placeholder="Amount" fontSize={14} />
+              <Input
+                type="text"
+                placeholder="Amount"
+                fontSize={14}
+                value={increment}
+                onChange={e => setIncrement(e.target.value)}
+              />
             </Box>
             <Box textAlign="center">
               <Button
@@ -110,6 +166,7 @@ export const ContributionAmount = ({ setContribution, setOpenModal }) => {
                 fontSize={14}
                 fontWeight="medium"
                 color="white"
+                onClick={() => setModalOpen(false)}
               >
                 Proceed
               </Button>
