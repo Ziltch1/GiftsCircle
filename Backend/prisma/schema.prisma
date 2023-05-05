@@ -190,10 +190,21 @@ model asoebiTransaction {
 }
 
 model sourvenirItem {
-  id       String  @id @db.VarChar(255)
-  title    String? @db.VarChar(255)
-  category String  @db.VarChar(255)
-  image    String? @db.VarChar(255)
-  details  String? @db.VarChar
-  amount   Int
+  id        String      @id @db.VarChar(255)
+  title     String?     @db.VarChar(255)
+  category  String      @db.VarChar(255)
+  image     String?     @db.VarChar(255)
+  details   String?     @db.VarChar
+  amount    Int
+  sourvenir sourvenir[]
+}
+
+model sourvenir {
+  id              String        @id @db.VarChar(255)
+  sourvenirItem   sourvenirItem @relation(fields: [sourvenirItemId], references: [id])
+  quantity        Int
+  purchased       Boolean       @default(false)
+  eventId         String?       @db.VarChar(255)
+  userId          String?       @db.VarChar(255)
+  sourvenirItemId String        @db.VarChar(255)
 }
