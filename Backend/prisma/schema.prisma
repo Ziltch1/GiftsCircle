@@ -171,6 +171,7 @@ model asoebi {
   eventId           String?             @db.VarChar(255)
   userId            String?             @db.VarChar(255)
   increment         Int
+  purchasedByHost   Boolean             @default(false)
   asoebiTransaction asoebiTransaction[]
 }
 
@@ -186,4 +187,13 @@ model asoebiTransaction {
   eventId      String      @db.VarChar(50)
   asoebiitem   asoebiitem? @relation(fields: [asoebiitemId], references: [id])
   asoebiitemId String?     @db.VarChar(255)
+}
+
+model sourvenirItem {
+  id       String  @id @db.VarChar(255)
+  title    String? @db.VarChar(255)
+  category String  @db.VarChar(255)
+  image    String? @db.VarChar(255)
+  details  String? @db.VarChar
+  amount   Int
 }
