@@ -3,25 +3,25 @@ const { v4: uuidv4 } = require("uuid");
 const prisma = new PrismaClient();
 
 const Get = async (id) => {
-  const asoebiItem = await prisma.asoebiitem.findUnique({
+  const sourvenirItem = await prisma.sourvenirItem.findUnique({
     where: {
       id: id,
     },
   });
 
   await prisma.$disconnect();
-  return asoebiItem;
+  return sourvenirItem;
 };
 
 const GetAll = async () => {
-  const asoebiItems = await prisma.asoebiitem.findMany({});
+  const sourvenirItems = await prisma.sourvenirItem.findMany({});
   await prisma.$disconnect();
-  return asoebiItems;
+  return sourvenirItems;
 };
 
 const Create = async (data, image) => {
   let id = uuidv4();
-  let Data = await prisma.asoebiitem.create({
+  let Data = await prisma.sourvenirItem.create({
     data: {
       id: id,
       title: data.title,
@@ -37,23 +37,23 @@ const Create = async (data, image) => {
 };
 
 const Update = async (id, data, image) => {
-  const asoebiItem = await prisma.asoebiitem.findUnique({
+  const sourvenirItem = await prisma.sourvenirItem.findUnique({
     where: {
       id: id,
     },
   });
 
-  if (asoebiItem) {
-    let Data = await prisma.asoebiitem.update({
+  if (sourvenirItem) {
+    let Data = await prisma.sourvenirItem.update({
       where: {
         id: id,
       },
       data: {
-        image: image ? image : asoebiItem.image,
-        amount: data.amount ? parseInt(data.amount) : asoebiItem.amount,
-        details: data.details ? data.details : asoebiItem.details,
-        category: data.category ? data.category : asoebiItem.category,
-        title: data.title ? data.title : asoebiItem.title,
+        image: image ? image : sourvenirItem.image,
+        amount: data.amount ? parseInt(data.amount) : sourvenirItem.amount,
+        details: data.details ? data.details : sourvenirItem.details,
+        category: data.category ? data.category : sourvenirItem.category,
+        title: data.title ? data.title : sourvenirItem.title,
       },
     });
 
@@ -64,14 +64,14 @@ const Update = async (id, data, image) => {
 };
 
 const Delete = async (id) => {
-  let asoebiItem = await prisma.asoebiitem.delete({
+  let sourvenirItem = await prisma.sourvenirItem.delete({
     where: {
       id: id,
     },
   });
 
   await prisma.$disconnect();
-  return asoebiItem;
+  return sourvenirItem;
 };
 
 module.exports = { Create, Get, GetAll, Update, Delete };
