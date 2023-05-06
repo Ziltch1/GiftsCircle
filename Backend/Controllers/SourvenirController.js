@@ -3,7 +3,16 @@ const express = require("express");
 const ResponseDTO = require("../DTO/Response");
 const router = express.Router();
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
-const { Get } = require("../Services/sourvenir");
+const {
+  Get,
+  GetAll,
+  GetEventSourvenir,
+  Create,
+  CreateMany,
+  Buy,
+  Delete,
+  Update,
+} = require("../Services/sourvenir");
 
 const prisma = new PrismaClient();
 
@@ -13,7 +22,7 @@ router.get("/:id", EnsureAuthenticated, async (req, res) => {
     if (data) {
       return res.status(200).send(data);
     }
-    return res.status(400).send(ResponseDTO("Failed", "Asoebi not found"));
+    return res.status(400).send(ResponseDTO("Failed", "Sourvenir not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -32,20 +41,9 @@ router.get("/Get/All", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/Get/EventAsoebi/:id", EnsureAuthenticated, async (req, res) => {
+router.get("/Get/EventSourvenir/:id", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await GetEventAsoebi(req.params.id);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
-  }
-});
-
-router.get("/Get/AsoebiBuyers/:id", EnsureAuthenticated, async (req, res) => {
-  try {
-    let data = await GetAsoebiBuyers(req.params.id);
+    let data = await GetEventSourvenir(req.params.id);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
@@ -76,15 +74,31 @@ router.post("/createMany", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.post("/Buy", EnsureAuthenticated, async (req, res) => {
+router.put("/Buy/:id", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await Buy(req.body);
+    let data = await Buy(req.params.id);
     if (data) {
       return res.status(200).send(data);
     }
     return res
       .status(400)
-      .send(ResponseDTO("Failed", "Asoebi Details not found"));
+      .send(ResponseDTO("Failed", "Sourvenir Details not found"));
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.put("/Update", EnsureAuthenticated, async (req, res) => {
+  try {
+    let data = await Update(req.body);
+    if (data) {
+      return res.status(200).send(data);
+    }
+    return res
+      .status(400)
+      .send(ResponseDTO("Failed", "Sourvenir Details not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -100,7 +114,7 @@ router.delete("/:id", EnsureAuthenticated, async (req, res) => {
       .send(
         ResponseDTO(
           "Success",
-          `Gift with id ${req.params.id} deleted successfully`
+          `Sourvenir with id ${req.params.id} deleted successfully`
         )
       );
   } catch (err) {
