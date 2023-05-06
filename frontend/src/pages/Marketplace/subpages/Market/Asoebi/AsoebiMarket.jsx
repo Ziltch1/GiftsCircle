@@ -1,21 +1,24 @@
 import { Box, Flex, Image, Text, Heading } from '@chakra-ui/react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Search from '../../../../../components/Search/Search';
 import BackButton from '../../../../../components/Buttons/BackButton';
 import cartIcon from '../../../../assets/cart.svg';
 import GiftCard from './GiftCard';
 import { AsoebiContext } from '.';
 import AsoebiDrawer from './AsoebiDrawer';
+import { useSelector } from 'react-redux';
 
-const AsoebiMarket = ({
-  setShowProducts,
-  asoebiItems,
-  setShowAsoebiCart,
-  eventId,
-}) => {
-  const [Data, setData] = useState(asoebiItems);
+const AsoebiMarket = ({ setShowProducts, eventId }) => {
+  const { asoebiItems } = useSelector(state => state.event);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { AsoebiItems, data } = useContext(AsoebiContext);
+  const { data, setAddedAsoebiItems } = useContext(AsoebiContext);
+
+  useEffect(() => {
+    let idList = [];
+    data.map(ele => idList.push(ele.asoebiItem));
+    let uniqueIds = new Set(idList);
+    setAddedAsoebiItems([...uniqueIds]);
+  }, [data, setAddedAsoebiItems]);
 
   return (
     <Box bg="#F5F5F5">
@@ -61,7 +64,7 @@ const AsoebiMarket = ({
         </Box>
 
         <Flex gap="24px" alignItems="center" flexWrap="wrap">
-          {Data?.map(gift => (
+          {asoebiItems?.map(gift => (
             <GiftCard
               id={gift.id}
               title={gift.title}
