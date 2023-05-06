@@ -65,7 +65,7 @@ const Index = ({ event }) => {
           giftCart={giftCart}
           complimentaryCart={complimentaryCart}
         />
-        <Flex alignItems="center" flexWrap="wrap">
+        <Flex alignItems="center" justifyContent='space-between' flexWrap="wrap">
           {data.map(item => (
             <GiftCard
               event={event}

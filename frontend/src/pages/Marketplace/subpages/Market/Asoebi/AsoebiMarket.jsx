@@ -40,7 +40,7 @@ const AsoebiMarket = ({
 
             <Box
               bg="#CCF2F0"
-              w="130px"
+              w="150px"
               h="45px"
               py="3"
               px="6"
@@ -48,10 +48,12 @@ const AsoebiMarket = ({
               borderRadius={5}
               onClick={() => setDrawerOpen(true)}
             >
-              <Flex gap={2} fontSize={14}>
+              <Flex gap={2} fontSize={14} alignItems='center' justifyContent='space-between'>
                 <Image src={cartIcon} />
                 <Text>Cart </Text>
-                <Text>{data.length} </Text>
+                <Box py='2px' borderRadius='100px' w='29px' px='3px' color='white' bg='#00BFB2' textAlign='center'>
+                  <Text>{data.length} </Text>
+                </Box>
               </Flex>
             </Box>
           </Flex>
