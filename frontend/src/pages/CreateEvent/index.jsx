@@ -2,13 +2,13 @@ import { Box } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { GetGiftItems } from '../../redux/features/gift/service';
 import { dispatch } from '../../redux/store';
-import FormHeader from './subpages/FormHeader';
-import BasicForm from './subpages/step1/BasicForm';
-import EventImageForm from './subpages/step2/EventImageForm';
+import FormHeader from './components/FormHeader';
+import BasicForm from './subpages/step1';
+import EventImageForm from './subpages/step2/Index';
 import AddGiftForm from './subpages/step3';
-import DeliveryDetailsForm from './subpages/step4/DeliveryDetailsForm';
-import SummaryForm from './subpages/step5/SummaryForm';
-import Stepper from './subpages/Stepper';
+import DeliveryDetailsForm from './subpages/step4/Index';
+import SummaryForm from './subpages/step5/Index';
+import Stepper from './components/Stepper';
 import EventPreview from './subpages/EventPreview';
 
 const Index = () => {

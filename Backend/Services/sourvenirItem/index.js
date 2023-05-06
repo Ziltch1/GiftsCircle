@@ -69,7 +69,6 @@ const Delete = async (id) => {
       id: id,
     },
   });
-
   await prisma.$disconnect();
   return sourvenirItem;
 };

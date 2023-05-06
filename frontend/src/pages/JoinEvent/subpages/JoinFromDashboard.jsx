@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Response from '../../../components/ResponseToast';
 import { dispatch } from '../../../redux/store';
-import BackButton from '../../CreateEvent/subpages/BackButton';
+import BackButton from '../../../components/Buttons/BackButton';
 
 const JoinFromDashboard = () => {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const JoinFromDashboard = () => {
   };
 
   return (
-    <Box >
+    <Box>
       <Header />
       <Response />
       <Box display="flex" alignItems="center" justifyContent="center" h="90vh">

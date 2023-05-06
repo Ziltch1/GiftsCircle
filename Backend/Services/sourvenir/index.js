@@ -38,7 +38,7 @@ const Create = async (data) => {
       quantity: data.quantity,
       sourvenirItem: {
         connect: {
-          sourvenirItemId: data.sourvenirItemId,
+          id: data.sourvenirItemId,
         },
       },
       userId: data.userId,
@@ -75,17 +75,42 @@ const Delete = async (id) => {
   return sourvenir;
 };
 
-const Buy = async (data) => {
+const Buy = async (id) => {
   const sourvenir = await prisma.sourvenir.findUnique({
     where: {
-      id: data.Id,
+      id: id,
     },
   });
 
   if (sourvenir) {
-    let Data = await prisma.sourvenir.create({
+    let Data = await prisma.sourvenir.update({
+      where: {
+        id: sourvenir.id,
+      },
       data: {
         purchased: true,
+      },
+    });
+
+    return Data;
+  }
+  return null;
+};
+
+const Update = async (data) => {
+  const sourvenir = await prisma.sourvenir.findUnique({
+    where: {
+      id: data.id,
+    },
+  });
+
+  if (sourvenir) {
+    let Data = await prisma.sourvenir.update({
+      where: {
+        id: sourvenir.id,
+      },
+      data: {
+        quantity: data.quantity,
       },
     });
 
@@ -98,7 +123,9 @@ module.exports = {
   Create,
   Get,
   GetAll,
+  GetEventSourvenir,
   Delete,
   CreateMany,
+  Update,
   Buy,
 };

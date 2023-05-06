@@ -1,8 +1,8 @@
 import { Box, Image, Button, Text, Flex } from '@chakra-ui/react';
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import GiftDetails from './GiftDetails';
-import FormFooter from '../../FormFooter';
+import GiftDetails from '../components/GiftDetails';
+import FormFooter from '../../../components/FormFooter';
 import { GiftContext } from '..';
 
 const GiftCard = ({ step, setStep }) => {

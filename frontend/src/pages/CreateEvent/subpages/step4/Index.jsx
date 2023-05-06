@@ -9,9 +9,12 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import BackButton from '../BackButton';
-import FormFooter from '../FormFooter';
-import { DeliveryDetailsApi, UpdateDeliveryDetailsApi } from '../../../../redux/axios/apis/events';
+import BackButton from '../../../../components/Buttons/BackButton';
+import FormFooter from '../../components/FormFooter';
+import {
+  DeliveryDetailsApi,
+  UpdateDeliveryDetailsApi,
+} from '../../../../redux/axios/apis/events';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../redux/store';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';

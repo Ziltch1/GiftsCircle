@@ -1,10 +1,10 @@
 import { Box, Heading, Text, Image, Flex } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Search from '../../../../components/Search/Search';
 import cartIcon from '../../../assets/cart.svg';
 import GiftCard from './GiftCard';
-import BackButton from '../../../CreateEvent/subpages/BackButton';
+import BackButton from '../../../../components/Buttons/BackButton';
 
 const Market = ({ setShowProducts, setShowCart }) => {
   const { giftItems } = useSelector(state => state.gift);

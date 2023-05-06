@@ -16,7 +16,6 @@ const FormFooter = ({ step, action }) => {
       dispatch(setNewEvent(null));
     }
     setOpenModal(true);
-    // navigate('/dashboard');
   };
 
   return (

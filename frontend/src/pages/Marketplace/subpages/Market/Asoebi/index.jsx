@@ -11,18 +11,18 @@ import {
 } from '@chakra-ui/react';
 import AsoebiMarket from './AsoebiMarket';
 import Cart from './Cart';
-import BackButton from '../../../../CreateEvent/subpages/BackButton';
+import BackButton from '../../../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../../redux/store';
 import { GetEventAsoebis } from '../../../../../redux/features/events/service';
 
 export const AsoebiContext = createContext(null);
 
-const Index = ({ setShowProducts, setShowCart }) => {
+const Index = ({ setShowProducts }) => {
   const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
   const [AsoebiItems, setAsoebiItems] = useState([]);
   const [addedAsoebiItems, setAddedAsoebiItems] = useState([]);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([...AsoebiItems, ...eventAsoebis]);
   const [amount, setAmount] = useState(0);
 
   const contextValue = useMemo(
@@ -48,7 +48,7 @@ const Index = ({ setShowProducts, setShowCart }) => {
 
   useEffect(() => {
     let amount = 0;
-    let idList = [];
+
     AsoebiItems.forEach(ele => {
       amount += asoebiItems.find(x => x.id === ele.asoebiItem).amount;
     });
@@ -117,7 +117,12 @@ const Index = ({ setShowProducts, setShowCart }) => {
         </Box>
       ) : (
         <AsoebiContext.Provider
-          value={{ ...contextValue, setAddedAsoebiItems, setAsoebiItems, setData }}
+          value={{
+            ...contextValue,
+            setAddedAsoebiItems,
+            setAsoebiItems,
+            setData,
+          }}
         >
           <>
             {showAsoebiCart ? (
@@ -125,7 +130,6 @@ const Index = ({ setShowProducts, setShowCart }) => {
             ) : (
               <AsoebiMarket
                 setShowProducts={setShowProducts}
-                asoebiItems={asoebiItems}
                 setShowAsoebiCart={setShowAsoebiCart}
                 eventId={eventId}
               />
