@@ -8,7 +8,7 @@ import EventMedia from './subpages/EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GetEventGifts } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
-import BackButton from '../CreateEvent/subpages/BackButton';
+import BackButton from '../../components/Buttons/BackButton';
 import Header from '../../components/Header/Header';
 import { GetEventApi } from '../../redux/axios/apis/events';
 import {

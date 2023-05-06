@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import CartItem from './CartItem'
-import BackButton from '../../../CreateEvent/subpages/BackButton'
+import BackButton from '../../../../components/Buttons/BackButton'
 import { Box, Heading, Text, Flex, Divider, Button } from '@chakra-ui/react'
 import CloseModal from '../../CloseModal'
 import { GetAddedAsoebiItemsApi } from '../../../../redux/axios/apis/asoebi'

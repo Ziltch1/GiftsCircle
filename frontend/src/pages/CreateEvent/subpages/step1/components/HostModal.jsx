@@ -1,7 +1,6 @@
 import React from 'react'
 import {
     Text,
-    Heading,
     Box,
     Modal,
     ModalOverlay,
@@ -9,17 +8,15 @@ import {
     ModalBody,
     ModalCloseButton,
     Button,
-    Image,
-    useDisclosure, 
-    ModalFooter,
+    useDisclosure,
     ModalHeader, 
     Input,
     Flex,
-    Avatar, AvatarBadge
+    Avatar
 } from '@chakra-ui/react';
 
 const HostModal = ({setOpenModal}) => {
-    const { isOpen, onOpen, onClose } = useDisclosure({defaultIsOpen: true})
+    const { isOpen, onClose } = useDisclosure({defaultIsOpen: true})
     const closeModal = () => {
         setOpenModal(false);
     }

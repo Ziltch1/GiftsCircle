@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import AsoebiMarket from './AsoebiMarket';
 import Cart from './Cart';
-import BackButton from '../../../../CreateEvent/subpages/BackButton';
+import BackButton from '../../../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../../redux/store';
 import { GetEventAsoebis } from '../../../../../redux/features/events/service';
@@ -117,7 +117,12 @@ const Index = ({ setShowProducts, setShowCart }) => {
         </Box>
       ) : (
         <AsoebiContext.Provider
-          value={{ ...contextValue, setAddedAsoebiItems, setAsoebiItems, setData }}
+          value={{
+            ...contextValue,
+            setAddedAsoebiItems,
+            setAsoebiItems,
+            setData,
+          }}
         >
           <>
             {showAsoebiCart ? (

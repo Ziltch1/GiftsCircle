@@ -11,7 +11,7 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import Search from '../../components/Search/Search';
-import BackButton from '../CreateEvent/subpages/BackButton';
+import BackButton from '../../components/Buttons/BackButton';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../redux/store';

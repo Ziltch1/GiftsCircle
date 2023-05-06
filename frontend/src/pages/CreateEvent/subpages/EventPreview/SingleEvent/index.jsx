@@ -8,13 +8,12 @@ import { Box, Skeleton, Stack } from '@chakra-ui/react';
 import EventMedia from './EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import BackButton from '../../BackButton';
+import BackButton from '../../../../../components/Buttons/BackButton';
 import { dispatch } from '../../../../../redux/store';
 import { GetUserEvents } from '../../../../../redux/features/events/service';
 
-
 const Index = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
   // const [newEvent, setNewEvent] = useState(null);
@@ -49,18 +48,18 @@ const Index = () => {
           <Skeleton height="50px" width="50%" />
         </Stack>
       ) : ( */}
-        <>
-          <Box>
-                <EventImages newEvent={newEvent} />
-          </Box>
-          <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
-          <Box>
-            {navPosition === 0 && <EventDetails newEvent={newEvent} />}
-            {navPosition === 1 && <EventGifts newEvent={newEvent}/>}
-            {navPosition === 2 && <EventMedia />}
-            {navPosition === 3 && <EventGuests />}
-          </Box>
-        </>
+      <>
+        <Box>
+          <EventImages newEvent={newEvent} />
+        </Box>
+        <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
+        <Box>
+          {navPosition === 0 && <EventDetails newEvent={newEvent} />}
+          {navPosition === 1 && <EventGifts newEvent={newEvent} />}
+          {navPosition === 2 && <EventMedia />}
+          {navPosition === 3 && <EventGuests />}
+        </Box>
+      </>
       {/* )} */}
     </Box>
   );

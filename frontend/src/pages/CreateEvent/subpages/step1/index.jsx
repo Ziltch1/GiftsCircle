@@ -10,17 +10,17 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import BackButton from '../BackButton';
+import BackButton from '../../../../components/Buttons/BackButton';
 import TimezoneSelect from 'react-timezone-select';
 import { useSelector } from 'react-redux';
 import { CreateEventApi1 } from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
-import FormFooter from '../FormFooter';
+import FormFooter from '../../components/FormFooter';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { GetEventGifts } from '../../../../redux/features/events/service';
-import { CancelModal } from '../FormHeader';
+import { CancelModal } from '../../components/FormHeader';
 
 const BasicForm = ({ step, setStep }) => {
   const event = JSON.parse(localStorage.getItem('newEvent'));
@@ -34,7 +34,9 @@ const BasicForm = ({ step, setStep }) => {
   const [date, setDate] = useState(event ? event.date : '');
   const [startTime, setStartTime] = useState(event ? event.startTime : '');
   const [endTime, setEndTime] = useState(event ? event.endTime : '');
-  const [selectedTimezone, setSelectedTimezone] = useState(event ? event.timezone :'');
+  const [selectedTimezone, setSelectedTimezone] = useState(
+    event ? event.timezone : ''
+  );
   const toast = useToast();
   const HandleSubmit = async e => {
     if (

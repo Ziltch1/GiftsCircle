@@ -7,6 +7,7 @@ import {
   Image,
   Heading,
   Switch,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -15,6 +16,7 @@ import { dispatch } from '../../../../../redux/store';
 import { GiftContext } from '..';
 
 const GiftItem = ({ gift, setData, data }) => {
+  const toast = useToast();
   const { setAddedGiftItems, setGiftItems } = useContext(GiftContext);
   const { giftItems } = useSelector(state => state.gift);
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
@@ -48,6 +50,16 @@ const GiftItem = ({ gift, setData, data }) => {
     setGiftItems(data);
   }, [enableContribution]);
 
+  const ShowToast = () => {
+    toast({
+      title: `Error`,
+      description: "You can't enable contribution for Items less than N20,000.",
+      status: 'error',
+      duration: 5000,
+      isClosable: true,
+    });
+  };
+
   return (
     <Box
       bg="#FAFAFA"
@@ -80,7 +92,7 @@ const GiftItem = ({ gift, setData, data }) => {
                 onChange={e =>
                   giftItem.amount > 20000
                     ? setEnableContribution(e.target.checked)
-                    : null
+                    : ShowToast()
                 }
               />
             </Flex>

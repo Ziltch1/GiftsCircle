@@ -29,7 +29,7 @@ import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import { DropdownList } from 'react-widgets';
 import 'react-widgets/styles.css';
-import BackButton from '../BackButton';
+import BackButton from '../../../../components/Buttons/BackButton';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 
 const SummaryForm = ({ setStep }) => {
@@ -83,12 +83,12 @@ const SummaryForm = ({ setStep }) => {
 
         <Box>
           {/* <Link to={`/create_event/${newEvent?.id}/preview`}> */}
-              <Button color="#00BFB2" bg='none' onClick={() => setStep(6)}>
-                <Flex alignItems="center" gap={2}>
-                  <Text>Preview your event</Text>
-                  <ExternalLinkIcon />
-                </Flex>
-              </Button>
+          <Button color="#00BFB2" bg="none" onClick={() => setStep(6)}>
+            <Flex alignItems="center" gap={2}>
+              <Text>Preview your event</Text>
+              <ExternalLinkIcon />
+            </Flex>
+          </Button>
           {/* </Link> */}
         </Box>
       </Flex>
@@ -188,7 +188,7 @@ export const ConfirmationModal = ({
         await EventSummaryApi(formBody);
         localStorage.removeItem('newEvent');
         localStorage.removeItem('delivery');
-      
+
         dispatch(setNewEvent(null));
       } catch (error) {
         dispatch(createResponse(ErrorHandler(error)));
