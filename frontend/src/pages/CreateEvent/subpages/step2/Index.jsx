@@ -12,9 +12,9 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import BackButton from '../BackButton';
+import BackButton from '../../../../components/Buttons/BackButton';
 import galleryImage from '../../../../components/assets/gallery.svg';
-import FormFooter from '../FormFooter';
+import FormFooter from '../../components/FormFooter';
 import { useSelector } from 'react-redux';
 import axiosInstance from '../../../../redux/axios/axios';
 import { dispatch } from '../../../../redux/store';
@@ -141,7 +141,7 @@ const EventImageForm = ({ step, setStep }) => {
                   >
                     <Input
                       type="file"
-                      accept='image/*'
+                      accept="image/*"
                       id="upload"
                       display="none"
                       onChange={uploadImage}

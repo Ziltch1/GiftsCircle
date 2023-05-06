@@ -14,11 +14,10 @@ import {
   GetUserEvents,
 } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
-import BackButton from '../CreateEvent/subpages/BackButton';
+import BackButton from '../../components/Buttons/BackButton';
 import Header from '../../components/Header/Header';
 import Fundraising from './Fundraising';
 import { setFundRaising } from '../../redux/features/events/eventSlice';
-import { GetFundraisingDonorsApi } from '../../redux/axios/apis/fundraising';
 
 const Index = () => {
   const navigate = useNavigate();

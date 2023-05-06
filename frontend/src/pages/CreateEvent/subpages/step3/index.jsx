@@ -1,15 +1,15 @@
 import { Box } from '@chakra-ui/react';
-import React, { createContext, useEffect, useMemo, useState } from 'react';
-import FilterButtons from './FilterButtons';
-import GiftHeader from './GiftHeader';
-import Search from './Search';
-import GiftCard from './subpages/GiftCard';
-import FormFooter from '../FormFooter';
+import React, { createContext, useMemo, useState } from 'react';
+import FilterButtons from './components/FilterButtons';
+import GiftHeader from './components/Header';
+import Search from './components/Search';
+import GiftCard from './components/GiftCard';
+import FormFooter from '../../components/FormFooter';
 import { CreateManyGiftsApi } from '../../../../redux/axios/apis/gift';
 import { dispatch } from '../../../../redux/store';
 import { GetEventGifts } from '../../../../redux/features/events/service';
 import { useSelector } from 'react-redux';
-import BackButton from '../BackButton';
+import BackButton from '../../../../components/Buttons/BackButton';
 
 export const GiftContext = createContext(null);
 

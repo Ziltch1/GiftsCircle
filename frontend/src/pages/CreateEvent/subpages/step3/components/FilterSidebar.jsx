@@ -1,5 +1,5 @@
 import { AddIcon, ChevronDownIcon, CloseIcon,} from '@chakra-ui/icons'
-import { Box, Select, FormControl, Divider, Button, Text, Flex } from '@chakra-ui/react'
+import { Box, Divider, Button, Text, Flex } from '@chakra-ui/react'
 import React, {useState} from 'react'
 import {FiSliders} from 'react-icons/fi'
 

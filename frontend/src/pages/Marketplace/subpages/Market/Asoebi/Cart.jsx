@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import CartItem from './CartItem';
 import { Box, Heading, Text, Flex, Divider, Button } from '@chakra-ui/react';
-import BackButton from '../../../../CreateEvent/subpages/BackButton';
+import BackButton from '../../../../../components/Buttons/BackButton';
 import CloseModal from '../../../CloseModal';
 import { AsoebiContext } from '.';
 
-const Cart = ({ setShowAsoebiCart, }) => {
+const Cart = ({ setShowAsoebiCart }) => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
 

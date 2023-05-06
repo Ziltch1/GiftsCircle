@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Text, Heading } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
 import Search from '../../../../../components/Search/Search';
-import BackButton from '../../../../CreateEvent/subpages/BackButton';
+import BackButton from '../../../../../components/Buttons/BackButton';
 import cartIcon from '../../../../assets/cart.svg';
 import GiftCard from './GiftCard';
 import { AsoebiContext } from '.';

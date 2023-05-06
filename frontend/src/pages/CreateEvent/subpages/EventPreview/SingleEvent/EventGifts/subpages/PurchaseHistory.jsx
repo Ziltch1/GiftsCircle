@@ -1,29 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Box,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Image,
-  Flex, Heading, Text
+  Box, Heading, Text
 } from '@chakra-ui/react';
-import eye from '../../../../../../../components/assets/eye.svg';
-import message from '../../../../../../../components/assets/message.svg';
-// import GiftDrawer from '../../../../components/Drawer/Drawer';
-import { useSelector } from 'react-redux';
-import GiftDrawer from '../../../../step3/subpages/GiftDrawer';
 
 const PurchaseHistory = ({ data }) => {
-  const { giftItems } = useSelector(state => state.gift);
-
-  const [showDrawer, setShowDrawer] = useState(false);
-  const openDrawer = () => {
-    setShowDrawer(true);
-  };
 
   return (
     <Box>
