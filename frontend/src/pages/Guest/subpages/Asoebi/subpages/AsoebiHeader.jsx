@@ -3,7 +3,7 @@ import { Box, Heading, Flex, Button, Image } from '@chakra-ui/react';
 import GiftIcon from '../../../../assets/giftIconSmall.svg';
 
 
-const GiftHeader = ({ setOpenDrawer, setShowListDrawer, giftCount, asoebiCart, complimentaryCart }) => {
+const AsoebiHeader = ({ setOpenDrawer, setShowListDrawer, asoebiCount, asoebiCart,}) => {
   const actionBtns = ['Purchase history', 'Gift list'];
 
   return (
@@ -13,7 +13,7 @@ const GiftHeader = ({ setOpenDrawer, setShowListDrawer, giftCount, asoebiCart, c
           mb="5"
           fontWeight={'medium'}
           fontSize={24}
-        >{`Gift List (${giftCount})`}</Heading>
+        >{`Gift List (${asoebiCount})`}</Heading>
         <Box>
           <Button
             bg="#CCF2F0"
@@ -31,4 +31,4 @@ const GiftHeader = ({ setOpenDrawer, setShowListDrawer, giftCount, asoebiCart, c
   );
 };
 
-export default GiftHeader;
+export default AsoebiHeader;

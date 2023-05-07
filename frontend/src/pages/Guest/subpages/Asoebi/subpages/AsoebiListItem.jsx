@@ -4,13 +4,13 @@ import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import cardImg from '../../../../assets/giftItemImage.svg'
 import { useSelector } from 'react-redux';
 
-const GiftListItem = ({item, asoebiCart, setAsoebiCart}) => {
-    console.log(asoebiCart);
+const AsoebiListItem = ({item, asoebiCart, setAsoebiCart}) => {
+    
     const handleDelete = (id) => {
         const filteredArray = asoebiCart.filter(obj => obj !== id);
         setAsoebiCart(filteredArray);
-        console.log(id);
     }
+
   return (
       <Box
           bg="#FAFAFA"
@@ -58,4 +58,4 @@ const GiftListItem = ({item, asoebiCart, setAsoebiCart}) => {
   )
 }
 
-export default GiftListItem
+export default AsoebiListItem

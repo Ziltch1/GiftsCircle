@@ -1,10 +1,9 @@
 import React, { useState, useEffect, createContext } from 'react';
-import GiftHeader from './subpages/GiftHeader';
+import AsoebiHeader from './subpages/AsoebiHeader';
 import { Box, Flex } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import ComplimentaryModal from './subpages/ComplimentaryModal';
-import GiftCard from './subpages/GiftCard';
-import GiftListDrawer from './subpages/GiftListDrawer';
+import AsoebiCard from './subpages/AsoebiCard';
+import AsoebiListDrawer from './subpages/AsoebiListDrawer';
 import { GetEventAsoebis } from '../../../../redux/features/events/service';
 import { GetAddedAsoebiItemsApi, GetAsoebiItemsApi } from '../../../../redux/axios/apis/asoebi';
 export const CartContext = createContext(null);
@@ -14,7 +13,6 @@ const Index = ({ event }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [data, setData] = useState([]);
-  const { eventAsoebis, eventGifts } = useSelector(state => state.event);
   const [asoebiCart, setAsoebiCart] = useState([]);
   
   const getAsoebi = async() => {
@@ -39,28 +37,26 @@ const Index = ({ event }) => {
         }}
       >
         {showListDrawer && (
-          <GiftListDrawer
+          <AsoebiListDrawer
             setShowListDrawer={setShowListDrawer}
             asoebiCart={asoebiCart}
             setAsoebiCart={setAsoebiCart}
           />
         )}
-        <GiftHeader
-          giftCount={data?.length}
+        <AsoebiHeader
+          asoebiCount={data?.length}
           setOpenDrawer={setOpenDrawer}
           setShowListDrawer={setShowListDrawer}
           asoebiCart={asoebiCart}
-          // allAsoebi={allItems}
         />
 
         <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
         {data?.map((item) => 
-            <GiftCard
+            <AsoebiCard
               event={event}
               key={data.indexOf(item)}
               ele={item}
               asoebi={data}
-              // allAsoebi={allItems}
               asoebiCart={asoebiCart}
               setAsoebiCart={setAsoebiCart}
             />)}

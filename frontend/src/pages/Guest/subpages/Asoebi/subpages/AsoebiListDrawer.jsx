@@ -12,12 +12,12 @@ import {
     Text,
     Heading, Flex, Image, Button
 } from '@chakra-ui/react';
-import GiftListItem from './GiftListItem';
+import GiftListItem from './AsoebiListItem';
 import { useSelector } from 'react-redux';
 import { GetAsoebiItemsApi } from '../../../../../redux/axios/apis/asoebi';
 
-const GiftListDrawer = ({setShowListDrawer, asoebiCart, setAsoebiCart,}) => {
-  const [newGifts, setNewGifts] = useState([]);
+const AsoebiListDrawer = ({setShowListDrawer, asoebiCart, setAsoebiCart,}) => {
+  const [newAsoebi, setNewAsoebi] = useState([]);
   const [data, setData] = useState([]);
 
   const getAsoebi = async() => {
@@ -34,20 +34,16 @@ const GiftListDrawer = ({setShowListDrawer, asoebiCart, setAsoebiCart,}) => {
     getAsoebi();
   }, []);
 
-  let giftAmount = 0;
-
-  console.log(data, asoebiCart);
+  let asoebiAmount = 0;
 
 
     useEffect(() => {
         const asoebiCartSet = new Set(asoebiCart);
         const filteredArray = data.filter(obj => asoebiCartSet.has(obj.id));
-        setNewGifts(filteredArray);
+        setNewAsoebi(filteredArray);
     }, [asoebiCart, data]);
 
-  console.log(newGifts);
-
- giftAmount = newGifts?.reduce((acc, curr) => acc + curr.amount, 0);
+ asoebiAmount = newAsoebi?.reduce((acc, curr) => acc + curr.amount, 0);
 
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const btnRef = React.useRef();
@@ -78,16 +74,16 @@ const GiftListDrawer = ({setShowListDrawer, asoebiCart, setAsoebiCart,}) => {
 
                   <DrawerBody>
                       <Flex justifyContent='space-between' flexWrap='wrap' mb='5'>
-                          {newGifts.map(ele => <GiftListItem id={ele.id} item={ele} newGifts={newGifts} setNewGifts={setNewGifts} asoebiCart={asoebiCart} setAsoebiCart={setAsoebiCart} />)}
+                          {newAsoebi.map(ele => <GiftListItem id={ele.id} item={ele} asoebiCart={asoebiCart} setAsoebiCart={setAsoebiCart} />)}
                       </Flex>
                       <Box mb='5' textAlign='right'>
                           <Heading fontWeight="medium" fontSize="18px" mb="2">
-                              Subtotal (₦{giftAmount})
+                              Subtotal (₦{asoebiAmount})
                           </Heading>
                       </Box>
                   </DrawerBody>
                   <DrawerFooter borderTop='1px solid lightgray'>
-                      <Button fontSize={13} color='white' ml='5' fontWeight='medium' bg='#00BFB2'>Checkout (₦{giftAmount})</Button>
+                      <Button fontSize={13} color='white' ml='5' fontWeight='medium' bg='#00BFB2'>Checkout (₦{asoebiAmount})</Button>
                   </DrawerFooter>
               </DrawerContent>
           </Drawer>
@@ -95,4 +91,4 @@ const GiftListDrawer = ({setShowListDrawer, asoebiCart, setAsoebiCart,}) => {
   )
 }
 
-export default GiftListDrawer
+export default AsoebiListDrawer

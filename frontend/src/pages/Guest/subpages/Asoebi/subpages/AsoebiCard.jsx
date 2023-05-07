@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { CartContext } from '..';
 import { GetAsoebiItemsApi } from '../../../../../redux/axios/apis/asoebi';
 
-const GiftCard = ({ event, setAsoebiCart, asoebi, allAsoebi, ele }) => {
+const AsoebiCard = ({ event, setAsoebiCart, asoebi, allAsoebi, ele }) => {
   const { asoebiCart, asoebiItems } = useContext(CartContext);
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState([]);
@@ -26,13 +26,12 @@ const GiftCard = ({ event, setAsoebiCart, asoebi, allAsoebi, ele }) => {
 
   const newData = data?.find(x => x.id === ele?.asoebiItem);
 
-  const addGift = id => {
+  const addAsoebi = id => {
     setAsoebiCart([...asoebiCart, id]);
   };
 
   return (
     <>
-
       <Box
         w="295px"
         minH="260px"
@@ -69,7 +68,7 @@ const GiftCard = ({ event, setAsoebiCart, asoebi, allAsoebi, ele }) => {
             color="white"
             w="129px"
             h="40px"
-            onClick={() => addGift(newData?.id)}
+            onClick={() => addAsoebi(newData?.id)}
             id={newData?.id}
           >
             {asoebiCart.includes(newData?.id) ? 'Added to cart' : 'Purchase'}
@@ -81,4 +80,4 @@ const GiftCard = ({ event, setAsoebiCart, asoebi, allAsoebi, ele }) => {
   );
 };
 
-export default GiftCard;
+export default AsoebiCard;
