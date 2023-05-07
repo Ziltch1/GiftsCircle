@@ -16,6 +16,7 @@ import {
   GetGiftItems,
 } from '../../redux/features/gift/service';
 import Fundraising from './subpages/Fundraising';
+import Asoebi from './subpages/Asoebi'
 
 const Index = () => {
   const navigate = useNavigate();
@@ -78,7 +79,9 @@ const Index = () => {
               {navPosition === 0 && <EventDetails newEvent={event} />}
               {navPosition === 1 && <EventGifts event={event} />}
               {navPosition === 2 && <EventMedia />}
-              {navPosition === 3 && <Fundraising event={event} />}
+              {navPosition === 3 && <Asoebi event={event} />}
+              {navPosition === 4 && <Fundraising event={event} />}
+              
             </Box>
           </>
         )}

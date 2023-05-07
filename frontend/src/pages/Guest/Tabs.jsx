@@ -3,21 +3,46 @@ import { Box, Flex, Button } from '@chakra-ui/react'
 import { useSelector } from 'react-redux';
 import { GetEventApi } from '../../redux/axios/apis/events';
 import { GetFundraisingApi } from '../../redux/axios/apis/fundraising';
+import { GetEventAsoebis } from '../../redux/features/events/service';
+import { GetAddedAsoebiItemsApi } from '../../redux/axios/apis/asoebi';
+
 
 const Tabs = ({navPosition, setNavPosition, event}) => {
 
     const links = ['About event', 'Gift List', 'Media'];
-    const [fundraising, setFundraising] = useState([])
+    const [fundraising, setFundraising] = useState(false)
+    const [asoebi, setAsoebi] = useState(false)
+
+    // const test = GetEventAsoebis(event.id);
+    // console.log(test);
 
     const checkFundraising = async() => {
         try {
             const checkFundraising = await GetFundraisingApi(event.id);
+            if (checkFundraising.data) {
+                setFundraising(true)
+            }
         } catch (error) {
             console.log(error);
         }
     }
+
+    const checkAsoebi = async() => {
+        try {
+            const checkAsoebi = await GetAddedAsoebiItemsApi(event.id);
+            console.log(checkAsoebi);
+            if (checkAsoebi.data) {
+                setAsoebi(true)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     useEffect(() => {
         checkFundraising()
+        checkAsoebi()
     }, [])
 
     const handleClick = (index) => {
@@ -26,6 +51,8 @@ const Tabs = ({navPosition, setNavPosition, event}) => {
 
     if (fundraising) {
         links.push('Fundraising');
+    }else if(asoebi){
+        links.push('Asoebi')
     }
 
     return (
