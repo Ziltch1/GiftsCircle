@@ -9,18 +9,40 @@
     "apiKeyAuth": {
       "type": "apiKey",
       "in": "header",
-      "name": "Bearer"
+      "name": "authorization"
     }
   },
   "host": "localhost:4000",
   "basePath": "/api",
   "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Apis handling authentication"
+    },
+    {
+      "name": "User",
+      "description": "Apis handling User Actions"
+    },
+    {
+      "name": "GiftItem",
+      "description": "Apis handling GiftItems"
+    },
+    {
+      "name": "Gift",
+      "description": "Apis handling Gift"
+    }
+  ],
   "paths": {
     "/login": {
       "post": {
         "description": "",
+        "tags": ["Auth"],
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/Login" }
@@ -39,8 +61,10 @@
     "/register": {
       "post": {
         "description": "",
+        "tags": ["Auth"],
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/Register" }
@@ -61,6 +85,7 @@
         "description": "",
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/GoogleSignin" }
@@ -81,6 +106,7 @@
         "description": "",
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/Setpassword" }
@@ -101,6 +127,7 @@
         "description": "",
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/Setpassword" }
@@ -121,6 +148,7 @@
         "description": "",
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/VerifyEmail" }
@@ -141,6 +169,7 @@
         "description": "",
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/GoogleSignin" }
@@ -161,6 +190,7 @@
         "description": "",
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/GoogleSignin" }
@@ -233,6 +263,7 @@
         "description": "",
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/UpdateUser" }
@@ -259,6 +290,7 @@
         "description": "",
         "parameters": [
           {
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": { "$ref": "#/definitions/schema/ChangePassword" }
@@ -1752,7 +1784,7 @@
         }
       }
     },
-    "/sourvenir/Get/EventSourvenir/{id}": {
+    "/sourvenir/Get/UserSourvenir/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -1912,73 +1944,6 @@
     }
   },
   "definitions": {
-    "openapi": {
-      "type": "string",
-      "example": "3.1.0"
-    },
-    "swagger": {
-      "type": "string",
-      "example": "2.0"
-    },
-    "info": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string",
-          "example": "LogRocket Express API with Swagger"
-        },
-        "version": {
-          "type": "string",
-          "example": "0.1.0"
-        },
-        "description": {
-          "type": "string",
-          "example": "This is a simple CRUD API application made with Express and documented with Swagger"
-        },
-        "license": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "example": "MIT"
-            },
-            "url": {
-              "type": "string",
-              "example": "https://spdx.org/licenses/MIT.html"
-            }
-          }
-        },
-        "contact": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "example": "LogRocket"
-            },
-            "url": {
-              "type": "string",
-              "example": "https://logrocket.com"
-            },
-            "email": {
-              "type": "string",
-              "example": "info@email.com"
-            }
-          }
-        }
-      }
-    },
-    "servers": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string",
-            "example": "http://localhost:4000/api"
-          }
-        }
-      }
-    },
     "schema": {
       "Login": {
         "type": "object",
@@ -2486,10 +2451,6 @@
       "Sourvenir": {
         "type": "object",
         "properties": {
-          "eventId": {
-            "type": "string",
-            "required": true
-          },
           "userId": {
             "type": "string",
             "required": true
