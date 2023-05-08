@@ -13,7 +13,6 @@ import {
   Flex,
   Button,
 } from '@chakra-ui/react';
-// import GiftItem from './GiftItem';
 import { AsoebiContext } from '.';
 import CartItem from './CartItem';
 import { AddManyEventAsoebiApi } from '../../../../../redux/axios/apis/asoebi';
@@ -23,7 +22,8 @@ import { GetEventAsoebis } from '../../../../../redux/features/events/service';
 const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
   const { onClose } = useDisclosure({ defaultIsOpen: true });
 
-  const { data, AsoebiItems, setAsoebiItems } = useContext(AsoebiContext);
+  const { data, AsoebiItems, setAsoebiItems, addForGuest, amount } =
+    useContext(AsoebiContext);
 
   const btnRef = React.useRef();
   const closeModal = () => {
@@ -68,13 +68,28 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
 
           <DrawerBody>
             {data.map(ele => (
-              <CartItem item={ele} key={ele?.asoebiItem} />
+              <CartItem
+                item={ele}
+                key={ele?.asoebiItem}
+              />
             ))}
           </DrawerBody>
+          {!addForGuest && (
+            <Box
+              p="8"
+              display="flex"
+              justifyContent="space-between"
+              fontWeight="700"
+              fontSize="18px"
+            >
+              <Text>Total Amount</Text>
+              <Text>N {amount}</Text>
+            </Box>
+          )}
           <Box textAlign="left" p="8">
             <Flex justifyContent="flex-end">
               <Button bg="#00BFB2" color="white" onClick={() => HandleSubmit()}>
-                Save Changes
+                {addForGuest ? 'Save Changes' : 'Proceed to Checkout'}
               </Button>
             </Flex>
           </Box>

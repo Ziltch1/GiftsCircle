@@ -15,15 +15,18 @@ import BackButton from '../../../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../../redux/store';
 import { GetEventAsoebis } from '../../../../../redux/features/events/service';
+import DesignViewModal from './DesignViewModal';
 
 export const AsoebiContext = createContext(null);
 
 const Index = ({ setShowProducts }) => {
-  const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
+  const {  eventAsoebis } = useSelector(state => state.event);
   const [AsoebiItems, setAsoebiItems] = useState([]);
   const [addedAsoebiItems, setAddedAsoebiItems] = useState([]);
   const [data, setData] = useState([...AsoebiItems, ...eventAsoebis]);
   const [amount, setAmount] = useState(0);
+  const [addForGuest, setAddforGuest] = useState(false);
+  const [designModal, setDesignModal] = useState(false);
 
   const contextValue = useMemo(
     () => ({
@@ -31,33 +34,20 @@ const Index = ({ setShowProducts }) => {
       AsoebiItems,
       addedAsoebiItems,
       amount,
+      addForGuest,
     }),
-    [AsoebiItems, addedAsoebiItems, amount, eventAsoebis]
+    [AsoebiItems, addedAsoebiItems, amount, eventAsoebis, addForGuest]
   );
 
   const [eventId, setEventId] = useState('');
   const [showAsoebi, setShowAsoebi] = useState(false);
-  const [showAsoebiCart, setShowAsoebiCart] = useState(false);
   const toast = useToast();
 
-  useEffect(() => {
-    if (eventId !== '') {
-      dispatch(GetEventAsoebis(eventId));
-    }
-  }, [eventId]);
-
-  useEffect(() => {
-    let amount = 0;
-
-    AsoebiItems.forEach(ele => {
-      amount += asoebiItems.find(x => x.id === ele.asoebiItem).amount;
-    });
-    setAmount(amount);
-  }, [AsoebiItems, asoebiItems]);
 
   const handleClick = () => {
-    if (eventId) {
-      setShowAsoebi(true);
+    if (eventId !== '') {
+      dispatch(GetEventAsoebis(eventId));
+      setDesignModal(true);
     } else {
       toast({
         title: 'Error',
@@ -69,11 +59,18 @@ const Index = ({ setShowProducts }) => {
       });
     }
   };
+
   return (
     <>
       {!showAsoebi ? (
         <Box w={{ base: '350px', md: '500px', lg: '500px' }} mx="auto" h="auto">
           <BackButton action={() => setShowProducts(false)} />
+          <DesignViewModal
+            setShowModal={setDesignModal}
+            setAddForGuest={setAddforGuest}
+            setShowAsoebi={setShowAsoebi}
+            modalOpen={designModal}
+          />
           <Heading
             textAlign="center"
             my="8"
@@ -108,7 +105,7 @@ const Index = ({ setShowProducts }) => {
                 fontWeight="medium"
                 fontSize={14}
                 color="white"
-                onClick={handleClick}
+                onClick={() => handleClick()}
               >
                 Proceed to marketplace
               </Button>
@@ -122,18 +119,11 @@ const Index = ({ setShowProducts }) => {
             setAddedAsoebiItems,
             setAsoebiItems,
             setData,
+            setAmount,
           }}
         >
           <>
-            {showAsoebiCart ? (
-              <Cart eventId={eventId} setShowAsoebiCart={setShowAsoebiCart} />
-            ) : (
-              <AsoebiMarket
-                setShowProducts={setShowProducts}
-                setShowAsoebiCart={setShowAsoebiCart}
-                eventId={eventId}
-              />
-            )}
+            <AsoebiMarket setShowProducts={setShowProducts} eventId={eventId} />
           </>
         </AsoebiContext.Provider>
       )}

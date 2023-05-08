@@ -11,14 +11,21 @@ import { useSelector } from 'react-redux';
 const AsoebiMarket = ({ setShowProducts, eventId }) => {
   const { asoebiItems } = useSelector(state => state.event);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { data, setAddedAsoebiItems } = useContext(AsoebiContext);
+  const { data, setAddedAsoebiItems, setAmount } = useContext(AsoebiContext);
 
   useEffect(() => {
     let idList = [];
     data.map(ele => idList.push(ele.asoebiItem));
     let uniqueIds = new Set(idList);
     setAddedAsoebiItems([...uniqueIds]);
-  }, [data, setAddedAsoebiItems]);
+
+    let amount = 0;
+
+    data.forEach(ele => {
+      amount += asoebiItems.find(x => x.id === ele.asoebiItem).amount;
+    });
+    setAmount(amount);
+  }, [data, setAddedAsoebiItems, asoebiItems, setAmount]);
 
   return (
     <Box bg="#F5F5F5">
@@ -51,10 +58,23 @@ const AsoebiMarket = ({ setShowProducts, eventId }) => {
               borderRadius={5}
               onClick={() => setDrawerOpen(true)}
             >
-              <Flex gap={2} fontSize={14} alignItems='center' justifyContent='space-between'>
+              <Flex
+                gap={2}
+                fontSize={14}
+                alignItems="center"
+                justifyContent="space-between"
+              >
                 <Image src={cartIcon} />
                 <Text>Cart </Text>
-                <Box py='2px' borderRadius='100px' w='29px' px='3px' color='white' bg='#00BFB2' textAlign='center'>
+                <Box
+                  py="2px"
+                  borderRadius="100px"
+                  w="29px"
+                  px="3px"
+                  color="white"
+                  bg="#00BFB2"
+                  textAlign="center"
+                >
                   <Text>{data.length} </Text>
                 </Box>
               </Flex>

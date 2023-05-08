@@ -21,13 +21,13 @@ import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../../redux/store';
 import { DeleteAsoebi } from '../../../../../redux/features/events/service';
 
-const CartItem = ({ setShowModal, item }) => {
+const CartItem = ({ item }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [increment, setIncrement] = useState(0);
-  const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems, AsoebiItems } =
+  const { setAddedAsoebiItems, addForGuest, setAsoebiItems, AsoebiItems } =
     useContext(AsoebiContext);
 
-  const { asoebiItems } = useSelector(state => state.event);
+  const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
   const asoebiItem = asoebiItems.find(x => x.id === item.asoebiItem);
 
   const MarkUpAsoebi = () => {
@@ -84,31 +84,37 @@ const CartItem = ({ setShowModal, item }) => {
             </Text>
           </Box>
 
-          <Box mb="2" display="flex" justifyContent="space-between">
-            <Text w="75%" fontWeight={400} fontSize={16}>
-              Purchase Price
-            </Text>
-            <Text fontWeight={400} fontSize={16}>
-              ₦ {asoebiItem.amount + item.increment}
-            </Text>
-          </Box>
+          {addForGuest && (
+            <Box mb="2" display="flex" justifyContent="space-between">
+              <Text w="75%" fontWeight={400} fontSize={16}>
+                Purchase Price
+              </Text>
+              <Text fontWeight={400} fontSize={16}>
+                ₦ {asoebiItem.amount + item.increment}
+              </Text>
+            </Box>
+          )}
 
-          <Box mb="2">
-            <Button fontSize={14} onClick={() => setModalOpen(true)}>
-              Markup Asoebi?
-            </Button>
-          </Box>
+          {addForGuest && !eventAsoebis.includes(item) && (
+            <Box mb="2">
+              <Button fontSize={14} onClick={() => setModalOpen(true)}>
+                Markup Asoebi?
+              </Button>
+            </Box>
+          )}
 
-          <Box display="flex" justifyContent="space-between">
-            <Text
-              color="#F5222D"
-              fontSize={14}
-              cursor="pointer"
-              onClick={() => removeItem(item)}
-            >
-              <DeleteIcon /> Remove from list
-            </Text>
-          </Box>
+          {!addForGuest && (
+            <Box display="flex" justifyContent="space-between">
+              <Text
+                color="#F5222D"
+                fontSize={14}
+                cursor="pointer"
+                onClick={() => removeItem(item)}
+              >
+                <DeleteIcon /> Remove from list
+              </Text>
+            </Box>
+          )}
         </Box>
       </Flex>
     </Box>
