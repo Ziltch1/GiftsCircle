@@ -1,6 +1,6 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const swaggerDocument = require("./swagger.json");
+const AdminSwaggerDocument = require("./swagger.admin.json");
 const swaggerUi = require("swagger-ui-express");
 const cors = require("cors");
 const app = express();
@@ -46,7 +46,12 @@ app.use("/api/delivery/", require("./Controllers/DeliveryController"));
 app.use("/api/fundRaising/", require("./Controllers/FundRaising"));
 app.use("/api/", require("./Controllers/AuthController"));
 
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api/docs/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+  "/api/admin/docs/",
+  swaggerUi.serve,
+  swaggerUi.setup(AdminSwaggerDocument)
+);
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {

@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
-    "title": "REST API For Client",
+    "version": "1.1.0",
+    "title": "REST API FOR ADMIN",
     "description": ""
   },
   "securityDefinitions": {
@@ -112,138 +112,6 @@
         }
       }
     },
-    "/googleSignin": {
-      "post": {
-        "description": "",
-        "tags": ["Auth"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/schema/GoogleSignin" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/setPassword": {
-      "post": {
-        "description": "",
-        "tags": ["Auth"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/schema/Setpassword" }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/resetPassword": {
-      "post": {
-        "description": "",
-        "tags": ["Auth"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/schema/Setpassword" }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/verifyEmail": {
-      "post": {
-        "description": "",
-        "tags": ["Auth"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/schema/VerifyEmail" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/sendVerifyEmail": {
-      "post": {
-        "description": "",
-        "tags": ["Auth"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/schema/GoogleSignin" }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/sendResetEmail": {
-      "post": {
-        "description": "",
-        "tags": ["Auth"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/schema/GoogleSignin" }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
 
     "/user/{id}": {
       "get": {
@@ -272,33 +140,6 @@
         }
       }
     },
-    "/user/changePassword": {
-      "post": {
-        "description": "",
-        "tags": ["User"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/schema/ChangePassword" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
     "/user///{id}": {
       "put": {
         "description": "",
@@ -320,6 +161,33 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/user//{id}": {
+      "delete": {
+        "description": "",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"
@@ -409,127 +277,16 @@
         }
       }
     },
-    "/events/create": {
-      "post": {
+    "/event//{id}": {
+      "delete": {
         "description": "",
         "tags": ["Event"],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "schema": { "$ref": "#/definitions/schema/CreateEvent" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/event/create2": {
-      "post": {
-        "description": "",
-        "tags": ["Event"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/Create2" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/event/create3": {
-      "post": {
-        "description": "",
-        "tags": ["Event"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/Create3" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/event/addGuest": {
-      "post": {
-        "description": "",
-        "tags": ["Event"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/AddGuest" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/events//create": {
-      "put": {
-        "description": "",
-        "tags": ["Event"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/schema/Update1" }
+            "type": "string"
           }
         ],
         "security": [
@@ -579,6 +336,93 @@
       "get": {
         "description": "",
         "tags": ["GiftItem"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/giftItem/create": {
+      "post": {
+        "description": "",
+        "tags": ["GiftItem"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/GiftItem" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/giftItem//{id}": {
+      "put": {
+        "description": "",
+        "tags": ["GiftItem"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/GiftItem" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/giftItem///{id}": {
+      "delete": {
+        "description": "",
+        "tags": ["GiftItem"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -671,117 +515,6 @@
         }
       }
     },
-    "/gift/create": {
-      "post": {
-        "description": "",
-        "tags": ["Gift"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/Gift" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/gift/createMany": {
-      "post": {
-        "description": "",
-        "tags": ["Gift"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/Gift" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/gift/EnableContribution": {
-      "put": {
-        "description": "",
-        "tags": ["Gift"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/EnableContribution" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/gift/EnableContribution/{id}": {
-      "put": {
-        "description": "",
-        "tags": ["Gift"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
     "/gift//{id}": {
       "delete": {
         "description": "",
@@ -820,67 +553,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/delivery/create": {
-      "post": {
-        "description": "",
-        "tags": ["Delivery"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/Delivery" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/delivery//{id}": {
-      "put": {
-        "description": "",
-        "tags": ["Delivery"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/schema/Delivery" }
           }
         ],
         "security": [
@@ -1020,136 +692,6 @@
         }
       }
     },
-    "/fundRaising/create": {
-      "post": {
-        "description": "",
-        "tags": ["FundRaising"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/FundRaising" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/fundRaising/Donate": {
-      "post": {
-        "description": "",
-        "tags": ["FundRaising"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/FundDonate" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/fundRaising/UpdateStatus": {
-      "put": {
-        "description": "",
-        "tags": ["FundRaising"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "object",
-            "schema": {
-              "properties": {
-                "status": {
-                  "type": "string"
-                },
-                "id": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/fundRaising/UpdateAmount": {
-      "put": {
-        "description": "",
-        "tags": ["FundRaising"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "object",
-            "schema": {
-              "properties": {
-                "amount": {
-                  "type": "number"
-                },
-                "id": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
 
     "/complimentaryGift/{id}": {
       "get": {
@@ -1192,6 +734,93 @@
         }
       }
     },
+    "/complimentaryGift/create": {
+      "post": {
+        "description": "",
+        "tags": ["ComplimentaryGift"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/ComplimentaryGift" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/complimentaryGift//{id}": {
+      "put": {
+        "description": "",
+        "tags": ["ComplimentaryGift"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/ComplimentaryGift" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/complimentaryGift///{id}": {
+      "delete": {
+        "description": "",
+        "tags": ["ComplimentaryGift"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
 
     "/asoebiItem/{id}": {
       "get": {
@@ -1224,6 +853,93 @@
       "get": {
         "description": "",
         "tags": ["AsoebiItem"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/asoebiItem/create": {
+      "post": {
+        "description": "",
+        "tags": ["AsoebiItem"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/AsoebiItem" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/asoebiItem//{id}": {
+      "put": {
+        "description": "",
+        "tags": ["AsoebiItem"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/GiftItem" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/asoebiItem///{id}": {
+      "delete": {
+        "description": "",
+        "tags": ["AsoebiItem"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1316,117 +1032,6 @@
         }
       }
     },
-    "/asoebi/create": {
-      "post": {
-        "description": "",
-        "tags": ["Asoebi"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/Asoebi" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/asoebi/createMany": {
-      "post": {
-        "description": "",
-        "tags": ["Asoebi"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/Asoebi" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/asoebi/Buy": {
-      "put": {
-        "description": "",
-        "tags": ["Asoebi"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/BuyAsoebi" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/asoebi//{id}": {
-      "delete": {
-        "description": "",
-        "tags": ["Asoebi"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
 
     "/sourvenirItem/{id}": {
       "get": {
@@ -1459,6 +1064,93 @@
       "get": {
         "description": "",
         "tags": ["SourvenirItem"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/sourvenirItem/create": {
+      "post": {
+        "description": "",
+        "tags": ["SourvenirItem"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/AsoebiItem" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/sourvenirItem//{id}": {
+      "put": {
+        "description": "",
+        "tags": ["SourvenirItem"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/schema/GiftItem" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/sourvenirItem///{id}": {
+      "delete": {
+        "description": "",
+        "tags": ["SourvenirItem"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1507,89 +1199,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/sourvenir/create": {
-      "post": {
-        "description": "",
-        "tags": ["Sourvenir"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "object",
-            "schema": { "$ref": "#/definitions/schema/Sourvenir" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/sourvenir/createMany": {
-      "post": {
-        "description": "",
-        "tags": ["Sourvenir"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/Sourvenir" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/sourvenir/Buy/:id": {
-      "put": {
-        "description": "",
-        "tags": ["Sourvenir"],
-        "parameters": [
-          {
-            "in": "body",
-            "required": true,
-            "type": "string",
-            "name": "id"
           }
         ],
         "security": [
@@ -1695,41 +1304,6 @@
           }
         }
       },
-      "GoogleSignin": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
-      "Setpassword": {
-        "type": "object",
-        "properties": {
-          "auth": {
-            "type": "string",
-            "required": true
-          },
-          "password": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
-      "VerifyEmail": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string",
-            "required": true
-          },
-          "user": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
       "ChangePassword": {
         "type": "object",
         "properties": {
@@ -1747,122 +1321,10 @@
           }
         }
       },
-      "CreateEvent": {
+      "GiftItem": {
         "type": "object",
         "properties": {
           "title": {
-            "type": "string",
-            "required": true
-          },
-          "category": {
-            "type": "string",
-            "required": true
-          },
-          "venue": {
-            "type": "string",
-            "required": true
-          },
-          "date": {
-            "type": "string",
-            "required": true
-          },
-          "start_time": {
-            "type": "string",
-            "required": true
-          },
-          "end_time": {
-            "type": "string",
-            "required": true
-          },
-          "timezone": {
-            "type": "string",
-            "required": true
-          },
-          "host": {
-            "type": "string",
-            "required": true
-          },
-          "userId": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
-      "Update1": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "required": true
-          },
-          "category": {
-            "type": "string",
-            "required": true
-          },
-          "venue": {
-            "type": "string",
-            "required": true
-          },
-          "date": {
-            "type": "string",
-            "required": true
-          },
-          "start_time": {
-            "type": "string",
-            "required": true
-          },
-          "end_time": {
-            "type": "string",
-            "required": true
-          },
-          "timezone": {
-            "type": "string",
-            "required": true
-          },
-          "host": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
-      "EnableContribution": {
-        "type": "object",
-        "properties": {
-          "eventId": {
-            "type": "string",
-            "required": true
-          },
-          "giftItemId": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
-      "Create3": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "required": true
-          },
-          "published": {
-            "type": "boolean",
-            "required": true
-          },
-          "percentDonation": {
-            "type": "number",
-            "required": true
-          },
-          "applyDonation": {
-            "type": "boolean",
-            "required": true
-          }
-        }
-      },
-      "Create2": {
-        "type": "object",
-        "properties": {
-          "id": {
             "type": "string",
             "required": true
           },
@@ -1870,148 +1332,36 @@
             "type": "object",
             "required": true
           },
-          "desc_summary": {
+          "category": {
             "type": "string",
             "required": true
           },
-          "summary": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
-      "AddGuest": {
-        "type": "object",
-        "properties": {
-          "eventId": {
-            "type": "string",
-            "required": true
-          },
-          "userId": {
-            "type": "string",
-            "required": true
-          },
-          "guestCode": {
-            "type": "string",
-            "required": true
-          },
-          "coHost": {
-            "type": "boolean",
-            "required": true
-          }
-        }
-      },
-      "Gift": {
-        "type": "object",
-        "properties": {
-          "eventId": {
-            "type": "string",
-            "required": true
-          },
-          "enableContribution": {
-            "type": "boolean",
-            "required": true
-          },
-          "quantity": {
-            "type": "number",
-            "required": true
-          },
-          "giftItemId": {
-            "type": "string",
-            "required": true
-          },
-          "complimentaryGift": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
-      "Delivery": {
-        "type": "object",
-        "properties": {
-          "address": {
-            "type": "string",
-            "required": true
-          },
-          "city": {
-            "type": "string",
-            "required": true
-          },
-          "state": {
-            "type": "string",
-            "required": true
-          },
-          "orderDate": {
-            "type": "string",
-            "required": true
-          },
-          "expectedDate": {
-            "type": "string",
-            "required": true
-          },
-          "tel": {
-            "type": "string",
-            "required": true
-          },
-          "tel2": {
-            "type": "string",
-            "required": true
-          },
-          "eventId": {
-            "type": "string",
-            "required": true
-          },
-          "postalCode": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
-      "FundRaising": {
-        "type": "object",
-        "properties": {
-          "eventId": {
+          "details": {
             "type": "string",
             "required": true
           },
           "amount": {
             "type": "number",
             "required": true
-          },
+          }
+        }
+      },
+      "ComplimentaryGift": {
+        "type": "object",
+        "properties": {
           "title": {
-            "type": "number",
-            "required": true
-          },
-          "description": {
-            "type": "number",
+            "type": "string",
             "required": true
           },
           "image": {
-            "type": "number",
+            "type": "object",
             "required": true
-          }
-        }
-      },
-      "FundDonate": {
-        "type": "object",
-        "properties": {
-          "firstName": {
+          },
+          "category": {
             "type": "string",
             "required": true
           },
-          "lastName": {
-            "type": "string",
-            "required": true
-          },
-          "email": {
-            "type": "string",
-            "required": true
-          },
-          "tel": {
-            "type": "string",
-            "required": true
-          },
-          "fundId": {
+          "details": {
             "type": "string",
             "required": true
           },
@@ -2021,90 +1371,26 @@
           }
         }
       },
-      "UpdateUser": {
+      "AsoebiItem": {
         "type": "object",
         "properties": {
-          "gender": {
+          "title": {
             "type": "string",
             "required": true
           },
-          "tel": {
+          "image": {
+            "type": "object",
+            "required": true
+          },
+          "category": {
             "type": "string",
             "required": true
           },
-          "dob": {
+          "details": {
             "type": "string",
             "required": true
           },
-          "residence": {
-            "type": "string",
-            "required": true
-          },
-          "state": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
-      "Asoebi": {
-        "type": "object",
-        "properties": {
-          "eventId": {
-            "type": "string",
-            "required": true
-          },
-          "userId": {
-            "type": "string",
-            "required": true
-          },
-          "asoebiItem": {
-            "type": "string",
-            "required": true
-          },
-          "increment": {
-            "type": "number",
-            "required": true
-          }
-        }
-      },
-      "BuyAsoebi": {
-        "type": "object",
-        "properties": {
-          "asoebiId": {
-            "type": "string",
-            "required": true
-          },
-          "purchasedBy": {
-            "type": "string",
-            "required": true
-          },
-          "eventId": {
-            "type": "string",
-            "required": true
-          },
-
           "amount": {
-            "type": "number",
-            "required": true
-          },
-          "quantity": {
-            "type": "number",
-            "required": true
-          }
-        }
-      },
-      "Sourvenir": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "required": true
-          },
-          "sourvenirItemId": {
-            "type": "string",
-            "required": true
-          },
-          "quantity": {
             "type": "number",
             "required": true
           }
