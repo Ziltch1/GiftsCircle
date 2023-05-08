@@ -43,7 +43,7 @@ router.get("/Get/All", EnsureAuthenticated, async (req, res) => {
 
 router.get("/Get/UserSourvenir/:id", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await GetEventSourvenir(req.params.id);
+    let data = await GetUserSourvenir(req.params.id);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
