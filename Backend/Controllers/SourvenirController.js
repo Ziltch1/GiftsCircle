@@ -6,7 +6,7 @@ const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const {
   Get,
   GetAll,
-  GetEventSourvenir,
+  GetUserSourvenir,
   Create,
   CreateMany,
   Buy,
@@ -41,7 +41,7 @@ router.get("/Get/All", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/Get/EventSourvenir/:id", EnsureAuthenticated, async (req, res) => {
+router.get("/Get/UserSourvenir/:id", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await GetEventSourvenir(req.params.id);
     return res.status(200).send(data);

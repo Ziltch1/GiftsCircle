@@ -204,7 +204,7 @@ model sourvenir {
   sourvenirItem   sourvenirItem @relation(fields: [sourvenirItemId], references: [id])
   quantity        Int
   purchased       Boolean       @default(false)
-  eventId         String?       @db.VarChar(255)
+  eventId         String?       @default("") @db.VarChar(255)
   userId          String?       @db.VarChar(255)
   sourvenirItemId String        @db.VarChar(255)
 }

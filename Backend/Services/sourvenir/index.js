@@ -20,10 +20,10 @@ const GetAll = async () => {
   return sourvenirs;
 };
 
-const GetEventSourvenir = async (id) => {
+const GetUserSourvenir = async (id) => {
   const sourvenirs = await prisma.sourvenir.findMany({
     where: {
-      eventId: id,
+      userId: id,
     },
   });
   await prisma.$disconnect();
@@ -42,7 +42,6 @@ const Create = async (data) => {
         },
       },
       userId: data.userId,
-      eventId: data.eventId,
     },
   });
 
@@ -123,7 +122,7 @@ module.exports = {
   Create,
   Get,
   GetAll,
-  GetEventSourvenir,
+  GetUserSourvenir,
   Delete,
   CreateMany,
   Update,
