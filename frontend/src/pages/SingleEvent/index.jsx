@@ -53,7 +53,6 @@ const Index = () => {
         dispatch(setFundRaising(null));
       }
       dispatch(GetEventFundRaisingDonors(fundRaising.id));
-      console.log(fundRaising.eventId, newEvent.id);
     }
   }, [fundRaising, newEvent]);
 
