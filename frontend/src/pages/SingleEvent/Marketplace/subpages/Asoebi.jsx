@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {
     Box,
     Table,
@@ -9,9 +9,27 @@ import {
     Td,
     TableContainer,
 } from '@chakra-ui/react';
+import { GetEventAsoebiApi } from '../../../../redux/axios/apis/asoebi';
 
-const Asoebi = () => {
-    const data = [0,1,2,3,4,5,6,7]
+
+const Asoebi = ({data, newEvent}) => {
+    const [newData, setNewData] = useState([])
+
+    const getEventAsoebi = async () => {
+        try {
+            const response = await GetEventAsoebiApi(newEvent.id);
+            const data = response.data;
+            setNewData(data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getEventAsoebi();
+    }, [])
+
+
   return (
       <Box>
           <TableContainer bg="white">
@@ -20,23 +38,26 @@ const Asoebi = () => {
                       <Tr fontSize={14} color="black">
                           <Th>S/N</Th>
                           <Th>Gift name</Th>
+                          <Th>Event name</Th>
+                          <Th>Amount</Th>
+                          <Th>Category</Th>
                           <Th>Quantity purchased</Th>
-                          <Th>Action</Th>
                       </Tr>
                   </Thead>
                   <Tbody>
-                      {data.map((gift, index) => {
-                        //   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
+                      {newData.map((item, index) => {
+                          const asoebiItem = data.find(x => x.id === item.asoebiItem);
                           return (
                               <>
                                   <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
                                       <Td>{index + 1}</Td>
-                                      <Td>Ankara and gele</Td>
-                                      <Td>5</Td>
+                                      <Td>{asoebiItem?.title}</Td>
+                                      <Td>{newEvent?.title}</Td>
                                       <Td color="#009F94">
-                                        Purchased for naming ceremony event
-                                          {/* {gift.purchased ? 'Purchased' : 'Available'} */}
+                                          ₦{asoebiItem?.amount}
                                       </Td>
+                                      <Td>{asoebiItem.category}</Td>
+                                      <Td>5</Td>
                                   </Tr>
                               </>
                           );

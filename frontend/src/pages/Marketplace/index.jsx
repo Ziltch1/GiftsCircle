@@ -9,7 +9,7 @@ import Asoebi from './subpages/Market/Asoebi';
 import { dispatch } from '../../redux/store';
 import { GetGiftItems } from '../../redux/features/gift/service';
 import { GetAsoebiItems } from '../../redux/features/events/service';
-import { GetSourvenirItemsApi } from '../../redux/axios/apis/sourvenir';
+import { GetSourvenirApi } from '../../redux/axios/apis/sourvenir';
 
 const Index = () => {
   const [position, setPosition] = useState(-1);
@@ -17,12 +17,12 @@ const Index = () => {
   const [showCart, setShowCart] = useState(false);
   const [sourvenirItems, setSourvenirItems] = useState([]);
   const [giftItems, setGiftItems] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [giftCart, setGiftCart] = useState([]);
   const [sourvenirCart, setSourvenirCart] = useState([]);
 
   const getSourvenirs = async() => {
     try {
-      const response = await GetSourvenirItemsApi();
+      const response = await GetSourvenirApi();
       const data = await response.data;
       setSourvenirItems(data);
       console.log(data);
@@ -96,8 +96,8 @@ const Index = () => {
                       setShowProducts={setShowProducts}
                       setShowCart={setShowCart} 
                       data={giftItems}
-                      cart={cart}
-                      setCart={setCart}
+                      cart={giftCart}
+                      setCart={setGiftCart}
                   />}
                   {position === 0 && (
                     <Asoebi
@@ -110,8 +110,8 @@ const Index = () => {
                       setShowProducts={setShowProducts}
                       setShowCart={setShowCart}
                       data={sourvenirItems}
-                      cart={cart}
-                      setCart={setCart}
+                      cart={sourvenirCart}
+                      setCart={setSourvenirCart}
                     />
                   )}
                 </Box>
