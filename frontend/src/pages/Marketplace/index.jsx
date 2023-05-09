@@ -9,15 +9,44 @@ import Asoebi from './subpages/Market/Asoebi';
 import { dispatch } from '../../redux/store';
 import { GetGiftItems } from '../../redux/features/gift/service';
 import { GetAsoebiItems } from '../../redux/features/events/service';
+import { GetSourvenirItemsApi } from '../../redux/axios/apis/sourvenir';
 
 const Index = () => {
   const [position, setPosition] = useState(-1);
   const [showProducts, setShowProducts] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const [sourvenirItems, setSourvenirItems] = useState([]);
+  const [giftItems, setGiftItems] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [sourvenirCart, setSourvenirCart] = useState([]);
+
+  const getSourvenirs = async() => {
+    try {
+      const response = await GetSourvenirItemsApi();
+      const data = await response.data;
+      setSourvenirItems(data);
+      console.log(data);
+    } catch (error) {
+      
+    }
+  }
+
+  const getGiftItems = async () => {
+    try {
+      const response = await GetGiftItemsApi();
+      const data = await response.data;
+      setGiftItems(data);
+      console.log(data);
+    } catch (error) {
+
+    }
+  }
 
   useEffect(() => {
-    dispatch(GetGiftItems());
+    dispatch(GetGiftItems())
     dispatch(GetAsoebiItems());
+    getSourvenirs();
+    getGiftItems();
   }, []);
 
   return (
@@ -62,11 +91,14 @@ const Index = () => {
             </Box>
           ) : (
             <>
-              {showCart ? (
-                <Cart setShowCart={setShowCart} />
-              ) : (
                 <Box>
-                  {position === 1 && <Market />}
+                  {position === 1 && <Market 
+                      setShowProducts={setShowProducts}
+                      setShowCart={setShowCart} 
+                      data={giftItems}
+                      cart={cart}
+                      setCart={setCart}
+                  />}
                   {position === 0 && (
                     <Asoebi
                       setShowProducts={setShowProducts}
@@ -77,10 +109,12 @@ const Index = () => {
                     <Market
                       setShowProducts={setShowProducts}
                       setShowCart={setShowCart}
+                      data={sourvenirItems}
+                      cart={cart}
+                      setCart={setCart}
                     />
                   )}
                 </Box>
-              )}
             </>
           )}
         </Box>

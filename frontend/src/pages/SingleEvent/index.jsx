@@ -4,6 +4,7 @@ import Tabs from './Tabs';
 import EventDetails from './EventDetails';
 import EventGifts from './EventGifts';
 import EventGuests from './EventGuests';
+import Marketplace from './Marketplace'
 import { Box, Skeleton, Stack } from '@chakra-ui/react';
 import EventMedia from './EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -78,7 +79,8 @@ const Index = () => {
               {navPosition === 1 && <EventGifts newEvent={newEvent} />}
               {navPosition === 2 && <EventMedia />}
               {navPosition === 3 && <EventGuests />}
-              {navPosition === 4 && <Fundraising />}
+              {navPosition === 4 && <Marketplace />}
+              {navPosition === 5 && <Fundraising />}
             </Box>
           </>
         )}

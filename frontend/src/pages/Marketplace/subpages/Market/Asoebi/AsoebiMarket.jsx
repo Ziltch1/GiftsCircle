@@ -34,7 +34,7 @@ const AsoebiMarket = ({ setShowProducts, eventId }) => {
         setOpenDrawer={setDrawerOpen}
         eventId={eventId}
       />
-      <Box minH="600px" w="95%" mx="auto" pt="8">
+      <Box minH="600px" w="100%" mx="auto" pt="8">
         <BackButton action={() => setShowProducts(false)} />
         <Box mb="8" mt="5">
           <Flex justifyContent="space-between" alignItems="center">
