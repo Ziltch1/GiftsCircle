@@ -36,7 +36,6 @@ const Index = () => {
       const response = await GetGiftItemsApi();
       const data = await response.data;
       setGiftItems(data);
-      console.log(data);
     } catch (error) {
 
     }
