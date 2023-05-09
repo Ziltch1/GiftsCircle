@@ -2,21 +2,24 @@ import { Box, Flex, Button, Text, Image, GridItem } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { AsoebiContext } from './Asoebi';
+import { AddSourvenirApi } from '../../../../redux/axios/apis/sourvenir';
 
 const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart }) => {
   // const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems } =
   //   useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
 
-  const AddAsoebi = id => {
+  const AddAsoebi = async(id) => {
     if (!cart.includes(id)) {
+      const formBody = { userId: user.id, sourvenirItemId: id, quantity: 1,};
+      
+      try {
+        await AddSourvenirApi(formBody);
+      } catch (error) {
+        console.log(error);
+      }
+
       setCart([...cart, id]);
-      // const formBody = {
-      //   eventId: eventId,
-      //   userId: user.id,
-      //   asoebiItem: id,
-      //   increment: 0,
-      // };
       // setAsoebiItems(prev => [...prev, formBody]);
       // setAddedAsoebiItems(prev => [...prev, id]);
     }

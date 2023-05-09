@@ -65,7 +65,7 @@ const GiftListDrawer = ({setShowDrawer, data, cart, setCart }) => {
                       </Box>
                   </DrawerBody>
                   <DrawerFooter borderTop='1px solid lightgray'>
-                      <Button fontSize={13} color='white' ml='5' fontWeight='medium' bg='#00BFB2'>Checkout (₦{giftAmount})</Button>
+                      <Button onClick={closeModal} fontSize={13} color='white' ml='5' fontWeight='medium' bg='#00BFB2'>Checkout (₦{giftAmount})</Button>
                   </DrawerFooter>
               </DrawerContent>
           </Drawer>

@@ -79,7 +79,7 @@ const Index = () => {
               {navPosition === 1 && <EventGifts newEvent={newEvent} />}
               {navPosition === 2 && <EventMedia />}
               {navPosition === 3 && <EventGuests />}
-              {navPosition === 4 && <Marketplace />}
+              {navPosition === 4 && <Marketplace newEvent={newEvent} />}
               {navPosition === 5 && <Fundraising />}
             </Box>
           </>
