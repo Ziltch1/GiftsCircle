@@ -18,7 +18,6 @@ const Index = () => {
   const [sourvenirItems, setSourvenirItems] = useState([]);
   const [giftItems, setGiftItems] = useState([]);
   const [cart, setCart] = useState([]);
-  const [sourvenirCart, setSourvenirCart] = useState([]);
 
   const getSourvenirs = async() => {
     try {
@@ -36,7 +35,6 @@ const Index = () => {
       const response = await GetGiftItemsApi();
       const data = await response.data;
       setGiftItems(data);
-      console.log(data);
     } catch (error) {
 
     }

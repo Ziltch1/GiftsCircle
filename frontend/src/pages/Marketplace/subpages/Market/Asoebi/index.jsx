@@ -20,7 +20,7 @@ import DesignViewModal from './DesignViewModal';
 export const AsoebiContext = createContext(null);
 
 const Index = ({ setShowProducts }) => {
-  const {  eventAsoebis } = useSelector(state => state.event);
+  const { eventAsoebis } = useSelector(state => state.event);
   const [AsoebiItems, setAsoebiItems] = useState([]);
   const [addedAsoebiItems, setAddedAsoebiItems] = useState([]);
   const [data, setData] = useState([...AsoebiItems, ...eventAsoebis]);
@@ -30,7 +30,7 @@ const Index = ({ setShowProducts }) => {
 
   const contextValue = useMemo(
     () => ({
-      data: [...AsoebiItems, ...eventAsoebis],
+      data: addForGuest ? [...AsoebiItems, ...eventAsoebis] : [...AsoebiItems],
       AsoebiItems,
       addedAsoebiItems,
       amount,
@@ -42,7 +42,6 @@ const Index = ({ setShowProducts }) => {
   const [eventId, setEventId] = useState('');
   const [showAsoebi, setShowAsoebi] = useState(false);
   const toast = useToast();
-
 
   const handleClick = () => {
     if (eventId !== '') {

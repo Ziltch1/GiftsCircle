@@ -15,7 +15,7 @@ const GiftCard = ({ title, image, id, amount, eventId }) => {
         userId: user.id,
         asoebiItem: id,
         increment: 0,
-        uploadedByHost: addForGuest,
+        purchasedByHost: !addForGuest,
       };
       setAsoebiItems(prev => [...prev, formBody]);
       setAddedAsoebiItems(prev => [...prev, id]);
