@@ -92,20 +92,22 @@ model complimentarygift {
 }
 
 model user {
-  id               String   @id @db.VarChar(255)
-  firstname        String   @db.VarChar(255)
-  lastname         String   @db.VarChar(255)
-  gender           String?  @db.VarChar(255)
-  placeOfResidence String?  @db.VarChar(255)
-  tel              String?  @db.VarChar(255)
-  state            String?  @db.VarChar(255)
-  dob              String?  @db.VarChar(255)
-  emailVerified    Boolean?
-  email            String   @unique
-  password         String   @db.VarChar(255)
-  eventId          String?  @db.VarChar(255)
-  event            event?   @relation(fields: [eventId], references: [id])
-  role             Role     @default(USER)
+  id                   String                 @id @db.VarChar(255)
+  firstname            String                 @db.VarChar(255)
+  lastname             String                 @db.VarChar(255)
+  gender               String?                @db.VarChar(255)
+  placeOfResidence     String?                @db.VarChar(255)
+  tel                  String?                @db.VarChar(255)
+  state                String?                @db.VarChar(255)
+  dob                  String?                @db.VarChar(255)
+  emailVerified        Boolean?
+  email                String                 @unique
+  password             String                 @db.VarChar(255)
+  eventId              String?                @db.VarChar(255)
+  event                event?                 @relation(fields: [eventId], references: [id])
+  role                 Role                   @default(USER)
+  Media                Media[]
+  ComplimentaryMessage ComplimentaryMessage[]
 }
 
 enum Role {
@@ -207,4 +209,38 @@ model sourvenir {
   eventId         String?       @default("") @db.VarChar(255)
   userId          String?       @db.VarChar(255)
   sourvenirItemId String        @db.VarChar(255)
+}
+
+model MediaFile {
+  id                     String                @id @db.VarChar(255)
+  url                    String                @db.VarChar(255)
+  mediaId                String
+  Media                  Media                 @relation(fields: [mediaId], references: [id])
+  ComplimentaryMessage   ComplimentaryMessage? @relation(fields: [complimentaryMessageId], references: [id])
+  complimentaryMessageId String?               @db.VarChar(255)
+}
+
+model Media {
+  id         String      @id @db.VarChar(255)
+  eventId    String      @db.VarChar(255)
+  user       user        @relation(fields: [userId], references: [id])
+  userId     String      @db.VarChar(255)
+  date       DateTime    @default(now())
+  uploadedBy USERTYPE
+  data       MediaFile[]
+}
+
+enum USERTYPE {
+  GUEST
+  HOST
+}
+
+model ComplimentaryMessage {
+  id      String      @id @db.VarChar(255)
+  eventId String      @db.VarChar(255)
+  user    user        @relation(fields: [userId], references: [id])
+  userId  String      @db.VarChar(255)
+  date    DateTime    @default(now())
+  message String      @db.VarChar
+  media   MediaFile[]
 }
