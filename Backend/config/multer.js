@@ -1,5 +1,5 @@
 const multer = require("multer");
-const DatauriParser = require('datauri/parser');
+const DatauriParser = require("datauri/parser");
 const parser = new DatauriParser();
 const path = require("path");
 
@@ -13,6 +13,12 @@ const upload = multer({ storage });
  * @returns {String} The data url from the string buffer
  */
 
-const dataUri = req => parser.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+const dataUri = (req) =>
+  parser.format(
+    path.extname(req.file.originalname).toString(),
+    req.file.buffer
+  );
+const dataUriMultiple = (file) =>
+  parser.format(path.extname(file.originalname).toString(), file.buffer);
 
-module.exports = { upload, dataUri };
+module.exports = { upload, dataUri, dataUriMultiple };
