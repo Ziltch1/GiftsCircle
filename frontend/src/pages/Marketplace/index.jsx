@@ -17,7 +17,8 @@ const Index = () => {
   const [showCart, setShowCart] = useState(false);
   const [sourvenirItems, setSourvenirItems] = useState([]);
   const [giftItems, setGiftItems] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [giftCart, setGiftCart] = useState([]);
+  const [sourvenirCart, setSourvenirCart] = useState([]);
 
   const getSourvenirs = async() => {
     try {
