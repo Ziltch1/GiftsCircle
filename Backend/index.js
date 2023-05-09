@@ -42,11 +42,11 @@ app.use("/api/fundRaising/", require("./Controllers/FundRaising"));
 app.use("/api/", require("./Controllers/AuthController"));
 
 app.use("/api/docs/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use(
-  "/api/admin/docs/",
-  swaggerUi.serve,
-  swaggerUi.setup(AdminSwaggerDocument)
-);
+// app.use(
+//   "/api/admin/docs/",
+//   swaggerUi.serve,
+//   swaggerUi.setup(AdminSwaggerDocument)
+// );
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
