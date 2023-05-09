@@ -1,11 +1,15 @@
 import api from '../axios'
 
-const GetSourvenirItemsApi = () => {
+const GetSourvenirApi = () => {
     return api.get('/sourvenirItem/Get/All/')
 }
 
-const AddSourvenirApi = (id) => {
-    return api.post('/sourvenirItem/create')
+const AddSourvenirApi = (data) => {
+    return api.post(`/sourvenir/create`, data)
 }
 
-export {GetSourvenirItemsApi}
+const GetUserSourvenirApi = (id) => {
+    return api.get(`/sourvenir/Get/UserSourvenir/${id}`)
+}
+
+export {GetSourvenirApi, GetUserSourvenirApi, AddSourvenirApi}
