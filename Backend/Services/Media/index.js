@@ -2,27 +2,39 @@ const { PrismaClient } = require("@prisma/client");
 const { v4: uuidv4 } = require("uuid");
 const prisma = new PrismaClient();
 
-const Get = async (id) => {
-  const giftItem = await prisma.giftitem.findUnique({
-    where: {
-      id: id,
-    },
-  });
-
-  await prisma.$disconnect();
-  return giftItem;
-};
-
-const GetAllMediaFiles = async () => {
-  const mediaFiles = await prisma.mediaFile.findMany({});
-  await prisma.$disconnect();
-  return mediaFiles;
-};
-
 const GetEventMediaFiles = async (id) => {
   const mediaFiles = await prisma.media.findMany({
     where: {
       eventId: id,
+      uploadedBy: "HOST",
+    },
+    include: {
+      data: true,
+    },
+  });
+  await prisma.$disconnect();
+  return mediaFiles;
+};
+
+const GetEventGuestMedia = async (id) => {
+  const mediaFiles = await prisma.media.findMany({
+    where: {
+      eventId: id,
+      uploadedBy: "GUEST",
+    },
+    include: {
+      data: true,
+    },
+  });
+  await prisma.$disconnect();
+  return mediaFiles;
+};
+
+const GetGuestSentMedia = async (eventId, userId) => {
+  const mediaFiles = await prisma.media.findMany({
+    where: {
+      eventId: eventId,
+      userId: userId,
     },
     include: {
       data: true,
@@ -56,7 +68,7 @@ const Create = async (data) => {
         },
       },
       eventId: data.eventId,
-      uploadedBy: "GUEST",
+      uploadedBy: data.uploadedBy,
     },
   });
 
@@ -64,47 +76,22 @@ const Create = async (data) => {
   return Data;
 };
 
-const Update = async (id, data, image) => {
-  const giftItem = await prisma.giftitem.findUnique({
-    where: {
-      id: id,
-    },
-  });
-
-  if (giftItem) {
-    let Data = await prisma.giftitem.update({
-      where: {
-        id: id,
-      },
-      data: {
-        image: image ? image : giftItem.image,
-        amount: data.amount ? parseInt(data.amount) : giftItem.amount,
-        details: data.details ? data.details : giftItem.details,
-        category: data.category ? data.category : giftItem.category,
-        title: data.title ? data.title : giftItem.title,
-      },
-    });
-
-    await prisma.$disconnect();
-    return Data;
-  }
-  return null;
-};
-
 const Delete = async (id) => {
-  let giftItem = await prisma.giftitem.delete({
+  let media = await prisma.media.delete({
     where: {
       id: id,
     },
   });
 
   await prisma.$disconnect();
-  return giftItem;
+  return media;
 };
 
 module.exports = {
-  GetAllMediaFiles,
+  GetGuestSentMedia,
   GetEventMediaFiles,
+  GetEventGuestMedia,
   Create,
   CreateMediaFile,
+  Delete,
 };

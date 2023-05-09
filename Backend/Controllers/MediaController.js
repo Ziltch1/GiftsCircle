@@ -8,27 +8,31 @@ const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const {
   Create,
   CreateMediaFile,
-  GetAllMediaFiles,
+  GetGuestSentMedia,
+  GetEventGuestMedia,
+  GetEventMediaFiles,
+  Delete,
 } = require("../Services/Media");
 const prisma = new PrismaClient();
 
-router.get("/:id", async (req, res) => {
-  try {
-    let data = await Get(req.params.id);
-    if (data) {
+router.get(
+  "/Get/EventMediaFiles/:id",
+  EnsureAuthenticated,
+  async (req, res) => {
+    try {
+      let data = await GetEventMediaFiles(req.params.id);
       return res.status(200).send(data);
+    } catch (err) {
+      console.log(err);
+      await prisma.$disconnect();
+      return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
     }
-    return res.status(400).send(ResponseDTO("Failed", "GiftItem not found"));
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
-});
+);
 
-router.get("/Get/AllMediaFiles", async (req, res) => {
+router.get("/Get/GuestSentFiles/:id", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await GetAllMediaFiles();
+    let data = await GetEventGuestMedia(req.params.id);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
@@ -37,16 +41,20 @@ router.get("/Get/AllMediaFiles", async (req, res) => {
   }
 });
 
-router.get("/Get/EventMediaFiles/:id", async (req, res) => {
-  try {
-    let data = await GetAllMediaFiles(req.params.id);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+router.get(
+  "/Get/GuestSentMedia/:eventId/:userId",
+  EnsureAuthenticated,
+  async (req, res) => {
+    try {
+      let data = await GetGuestSentMedia(req.params.eventId, req.params.userId);
+      return res.status(200).send(data);
+    } catch (err) {
+      console.log(err);
+      await prisma.$disconnect();
+      return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+    }
   }
-});
+);
 
 router.post(
   "/upload",
@@ -111,7 +119,7 @@ router.post("/UploadVideo", EnsureAuthenticated, async (req, res) => {
   try {
     let Data = await Create(req.body);
     if (Data) {
-      await CreateMediaFile(req.body.video, Data.id);
+      await CreateMediaFile(req.body.files, Data.id);
     }
     return res.status(200).send(Data);
   } catch (err) {
@@ -121,34 +129,7 @@ router.post("/UploadVideo", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.put("/:id", upload.single("image"), async (req, res) => {
-  try {
-    let data = null;
-    if (req.file) {
-      const file = dataUri(req).content;
-      const response = await cloudinary.uploader.upload(file, {
-        folder: "eventcircle",
-      });
-      data = await Update(req.params.id, req.body, response.url);
-      if (data) {
-        return res.status(200).send(data);
-      }
-      return res.status(400).send(ResponseDTO("Failed", "GiftItem not found"));
-    } else {
-      data = await Update(req.params.id, req.body, null);
-      if (data) {
-        return res.status(200).send(data);
-      }
-      return res.status(400).send(ResponseDTO("Failed", "GiftItem not found"));
-    }
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
-  }
-});
-
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     await Delete(req.params.id);
     return res
@@ -156,7 +137,7 @@ router.delete("/:id", async (req, res) => {
       .send(
         ResponseDTO(
           "Success",
-          `GiftItem with id ${req.params.id} deleted successfully`
+          `Media with id ${req.params.id} deleted successfully`
         )
       );
   } catch (err) {

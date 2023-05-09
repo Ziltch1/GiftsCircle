@@ -65,6 +65,10 @@
     {
       "name": "Sourvenir",
       "description": "Apis handling Sourvenir"
+    },
+    {
+      "name": "Media",
+      "description": "Apis handling Media"
     }
   ],
   "paths": {
@@ -1661,6 +1665,203 @@
           }
         }
       }
+    },
+    "/media/Get/EventMediaFiles/{id}": {
+      "get": {
+        "description": "Get Media files uploaded host for the event",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/media/Get/GuestSentFiles/{id}": {
+      "get": {
+        "description": "Get Media files uploaded by all guests for the event",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/media/Get/GuestSentMedia/{eventId}/{userId}": {
+      "get": {
+        "description": "Get Media files uploaded by a guest for the event",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/media/upload": {
+      "post": {
+        "description": "",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "body",
+            "required": true,
+            "type": "object"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/media/uploadImages": {
+      "post": {
+        "description": "",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "body",
+            "required": true,
+            "type": "object",
+            "schema": { "$ref": "#/definitions/schema/Media" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/media/UploadVideo": {
+      "post": {
+        "description": "",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "body",
+            "required": true,
+            "type": "object",
+            "schema": { "$ref": "#/definitions/schema/Media" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/media//{id}": {
+      "delete": {
+        "description": "",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -2120,6 +2321,28 @@
 
           "quantity": {
             "type": "number",
+            "required": true
+          }
+        }
+      },
+      "Media": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+
+          "eventId": {
+            "type": "string",
+            "required": true
+          },
+          "uploadedBy": {
+            "type": "string",
+            "required": true
+          },
+          "files": {
+            "type": "object",
             "required": true
           }
         }
