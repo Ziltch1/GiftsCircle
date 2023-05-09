@@ -51,6 +51,7 @@ const Create = async (data) => {
       userId: data.userId,
       eventId: data.eventId,
       increment: data.increment,
+      purchasedByHost: data.purchasedByHost,
     },
   });
 

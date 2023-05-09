@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { AsoebiContext } from '.';
 
 const GiftCard = ({ title, image, id, amount, eventId }) => {
-  const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems } =
+  const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems, addForGuest } =
     useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
 
@@ -15,6 +15,7 @@ const GiftCard = ({ title, image, id, amount, eventId }) => {
         userId: user.id,
         asoebiItem: id,
         increment: 0,
+        uploadedByHost: addForGuest,
       };
       setAsoebiItems(prev => [...prev, formBody]);
       setAddedAsoebiItems(prev => [...prev, id]);
