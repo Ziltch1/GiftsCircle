@@ -1,0 +1,76 @@
+import React, {useState, useEffect} from 'react'
+import {
+    Drawer,
+    DrawerBody,
+    DrawerHeader,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerCloseButton,
+    DrawerFooter,
+    useDisclosure,
+    Box,
+    Text,
+    Heading, Flex, Image, Button
+} from '@chakra-ui/react';
+import GiftListItem from './GiftListItem';
+import { useSelector } from 'react-redux';
+
+const GiftListDrawer = ({setShowDrawer, data, cart, setCart }) => {
+  const [newGifts, setNewGifts] = useState([]);
+
+  let giftAmount = 0;
+
+  useEffect(() => {
+    const filteredArray = data.filter(obj => cart.includes(obj.id));
+    setNewGifts(filteredArray)
+  }, [cart]);
+
+ giftAmount = newGifts?.reduce((acc, curr) => acc + curr.amount, 0);
+
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const btnRef = React.useRef();
+
+  const closeModal = () => {
+    setShowDrawer(false);
+  };
+
+  return (
+      <Box>
+          <Drawer
+              isOpen={isOpen}
+              placement="right"
+              onClose={onClose}
+              finalFocusRef={btnRef}
+              size="lg"
+              closeOnOverlayClick={false}
+          >
+              <DrawerOverlay />
+              <DrawerContent>
+                  <DrawerCloseButton onClick={closeModal} />
+
+                  <DrawerHeader>
+                      <Heading fontWeight="medium" fontSize="25px" mb="2">
+                          Summary of Purchase
+                      </Heading>
+                  </DrawerHeader>
+
+                  <DrawerBody>
+                      <Flex justifyContent='space-between' flexWrap='wrap' mb='5'>
+                          {newGifts.map(ele => <GiftListItem id={ele.id} item={ele} newGifts={newGifts} setNewGifts={setNewGifts} cart={cart} setCart={setCart} />)}
+                      </Flex>
+                      <Box mb='5' textAlign='right'>
+                          <Heading fontWeight="medium" fontSize="18px" mb="2">
+                              Subtotal (₦{giftAmount})
+                          </Heading>
+                      </Box>
+                  </DrawerBody>
+                  <DrawerFooter borderTop='1px solid lightgray'>
+                      <Button fontSize={13} color='white' ml='5' fontWeight='medium' bg='#00BFB2'>Checkout (₦{giftAmount})</Button>
+                  </DrawerFooter>
+              </DrawerContent>
+          </Drawer>
+      </Box>
+  )
+}
+
+export default GiftListDrawer

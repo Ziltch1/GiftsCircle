@@ -5,16 +5,21 @@ import Search from '../../../../components/Search/Search';
 import cartIcon from '../../../assets/cart.svg';
 import GiftCard from './GiftCard';
 import BackButton from '../../../../components/Buttons/BackButton';
+import GiftListDrawer from './GiftListDrawer';
 
-const Market = ({ setShowProducts, setShowCart }) => {
+
+const Market = ({ setShowProducts, setShowCart, data, cart, setCart }) => {
   const { giftItems } = useSelector(state => state.gift);
-  const [data, setData] = useState(giftItems);
+  const [item, setItem] = useState(data);
+  const [showDrawer, setShowDrawer] = useState(false)
   const showOptions = () => {
     setShowProducts(false);
   };
   return (
+    <>
+    {showDrawer && <GiftListDrawer cart={cart} data={data} setCart={setCart} setShowDrawer={setShowDrawer} />}
     <Box bg="#F5F5F5">
-      <Box minH="600px" w="95%" mx="auto" pt="8">
+      <Box minH="600px" w="100%" mx="auto" pt="8">
         <BackButton action={showOptions} />
         <Box mb="8" mt="5">
           <Flex justifyContent="space-between" alignItems="center">
@@ -36,7 +41,7 @@ const Market = ({ setShowProducts, setShowCart }) => {
               px="6"
               cursor="pointer"
               borderRadius={5}
-              onClick={() => setShowCart(true)}
+              onClick={() => setShowDrawer(true)}
             >
               <Flex gap={2} fontSize={14}>
                 <Image src={cartIcon} />
@@ -51,7 +56,7 @@ const Market = ({ setShowProducts, setShowCart }) => {
                   pb="4px"
                   px="3px"
                 >
-                  34
+                  {cart.length}
                 </Text>
               </Flex>
             </Box>
@@ -61,17 +66,21 @@ const Market = ({ setShowProducts, setShowCart }) => {
           <Search />
         </Box>
         <Flex gap="24px" alignItems="center" flexWrap="wrap">
-          {data.map(gift => (
+          {data.map(item => (
             <GiftCard
-              id={gift.id}
-              details={gift.title}
-              image={gift.image}
-              amount={gift.amount}
+              id={item.id}
+              details={item.title}
+              image={item.image}
+              amount={item.amount}
+              data={data}
+              cart={cart}
+              setCart={setCart}
             />
           ))}
         </Flex>
       </Box>
     </Box>
+    </>
   );
 };
 
