@@ -11,6 +11,7 @@ const initialState = {
   asoebiItems: null,
   eventMediaFiles: null,
   hostRecievedFiles: null,
+  guestSentFiles: null,
 };
 
 const EventSlice = createSlice({
@@ -47,6 +48,9 @@ const EventSlice = createSlice({
     setHostRecievedFiles: (state, action) => {
       state.hostRecievedFiles = action.payload;
     },
+    setGuestSentFiles: (state, action) => {
+      state.guestSentFiles = action.payload;
+    },
   },
 });
 
@@ -61,6 +65,7 @@ export const {
   setFundRaisingDonors,
   setEventMediaFiles,
   setHostRecievedFiles,
+  setGuestSentFiles,
 } = EventSlice.actions;
 
 export default EventSlice.reducer;

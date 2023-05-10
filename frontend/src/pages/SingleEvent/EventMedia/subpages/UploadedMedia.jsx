@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Box, Text, Heading, Flex, FormLabel, VStack } from '@chakra-ui/react';
-import LoadingModal from '../../components/LoadingModal';
-import Card from '../../components/CardItem';
+import LoadingModal from '../../../Guest/components/LoadingModal';
+import Card from '../../../Guest/components/CardItem';
 import { useUpload } from '../Hooks';
 
 const UploadedMedia = () => {
   const [image, setImage] = useState(null);
   const [modalOpen, setShowModal] = useState(false);
   const Data = useUpload(image, setShowModal, setImage);
-  
+
   return (
     <Box
       w="100%"

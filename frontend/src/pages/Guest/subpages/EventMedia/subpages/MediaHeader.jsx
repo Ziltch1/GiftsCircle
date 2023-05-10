@@ -1,30 +1,71 @@
-import React from 'react'
-import { Box, Heading, Flex, Button, FormLabel, Input } from '@chakra-ui/react'
+import React, { useState } from 'react';
+import { Box, Heading, Flex, FormLabel, Input } from '@chakra-ui/react';
+import { useUpload } from '../Hooks';
+import LoadingModal from '../../../components/LoadingModal';
 
 const MediaHeader = ({ navPosition, setNavPosition }) => {
   // const actionBtns = ['Uploaded by me', 'Sent to me']
   // const handleClick = (index) => {
   //   setNavPosition(index);
   // }
+  const [image, setImage] = useState(null);
+  const [modalOpen, setShowModal] = useState(false);
+  const Data = useUpload(image, setShowModal, setImage);
 
   return (
-    <Box mb='5'>
-        <Flex justifyContent='space-between'>
-              <Heading mb='5' fontWeight={'medium'} fontSize={24}>Media</Heading>
-              <FormLabel htmlFor='upload' fontWeight='medium' w='200px' color='white' bg='#00BFB2' fontSize={14} borderRadius='5px' px='28px' py='11px' textAlign='center'>
-                Send file to organizer
-                <Input type='file' id='upload' accept='image/*' display='none' />
-              </FormLabel>
+    <Box mb="5">
+      <LoadingModal setShowModal={setShowModal} open={modalOpen} />
+      <Flex justifyContent="space-between">
+        <Heading mb="5" fontWeight={'medium'} fontSize={24}>
+          Media
+        </Heading>
+        <FormLabel
+          htmlFor="upload"
+          w="210px"
+          color="white"
+          bg="#00BFB2"
+          fontSize={14}
+          borderRadius="5px"
+          px="28px"
+          py="11px"
+          textAlign="center"
+        >
+          Send File to Organizer
+          <Input
+            type="file"
+            id="upload"
+            display="none"
+            multiple={true}
+            onChange={e => setImage(e.target.files)}
+          />
+        </FormLabel>
+      </Flex>
+      {/* <Box fontSize={14} fontWeight="semibold">
+        <Flex alignItems={'center'} gap={4}>
+          {actionBtns.map((btn, index) => (
+            <Button
+              borderRadius={100}
+              fontSize={14}
+              bg="none"
+              onClick={() => handleClick(index)}
+              style={
+                index === navPosition
+                  ? {
+                      background: '#CCF2F0',
+                      padding: '8px 15px',
+                      borderRadius: '100px',
+                      color: '#009F94',
+                    }
+                  : { fontWeight: 'bold' }
+              }
+            >
+              {btn}
+            </Button>
+          ))}
         </Flex>
-        {/* <Box fontSize={14} fontWeight='semibold'>
-            <Flex alignItems={'center'} gap={4}>
-                  {actionBtns.map((btn, index) => <Button borderRadius={100} fontSize={14} bg='none' onClick={() => handleClick(index)} 
-                      style={index === navPosition ? { background: '#CCF2F0', padding: '8px 15px', borderRadius: '100px', color: '#009F94' } : {fontWeight: 'bold'}}>{btn}</Button>)}
-            </Flex>  
-        </Box> */}
-
+      </Box> */}
     </Box>
-  )
-}
+  );
+};
 
-export default MediaHeader
+export default MediaHeader;
