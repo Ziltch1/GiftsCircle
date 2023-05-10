@@ -8,4 +8,8 @@ const GetEventMediaFilesApi = id => {
   return api.get(`/media/Get/EventMediaFiles/${id}`);
 };
 
-export { UploadVideoApi, GetEventMediaFilesApi };
+const GetHostRecievedFilesApi = id => {
+  return api.get(`/media/Get/GuestSentFiles/${id}`);
+};
+
+export { UploadVideoApi, GetEventMediaFilesApi, GetHostRecievedFilesApi };

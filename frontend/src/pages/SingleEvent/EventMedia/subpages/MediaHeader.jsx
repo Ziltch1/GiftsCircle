@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Heading, Flex, Button, FormLabel, Input } from '@chakra-ui/react';
+import LoadingModal from '../../components/LoadingModal';
+import { useUpload } from '../Hooks';
 
 const MediaHeader = ({ navPosition, setNavPosition }) => {
+  const [image, setImage] = useState(null);
+  const [modalOpen, setShowModal] = useState(false);
+  const Data = useUpload(image, setShowModal, setImage);
+
   const actionBtns = ['Uploaded by me', 'Sent to me'];
   const handleClick = index => {
     setNavPosition(index);
@@ -9,6 +15,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
 
   return (
     <Box mb="5">
+      <LoadingModal setShowModal={setShowModal} open={modalOpen} />
       <Flex justifyContent="space-between">
         <Heading mb="5" fontWeight={'medium'} fontSize={24}>
           Media
@@ -25,7 +32,13 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
           textAlign="center"
         >
           Upload images/videos
-          <Input type="file" id="upload" display="none" />
+          <Input
+            type="file"
+            id="upload"
+            display="none"
+            multiple={true}
+            onChange={e => setImage(e.target.files)}
+          />
         </FormLabel>
       </Flex>
       <Box fontSize={14} fontWeight="semibold">
