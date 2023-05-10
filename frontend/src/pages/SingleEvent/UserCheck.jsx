@@ -6,6 +6,7 @@ import Host from '.';
 import { Box } from '@chakra-ui/react';
 import { dispatch } from '../../redux/store';
 import { GetUserEvents } from '../../redux/features/events/service';
+import Response from '../../components/ResponseToast';
 
 const UserCheck = () => {
   const { id } = useParams();
@@ -24,7 +25,12 @@ const UserCheck = () => {
     }
   }, [events, id, userId]);
 
-  return <Box>{newEvent?.user_id === userId ? <Host /> : <Guest />}</Box>;
+  return (
+    <>
+      <Response />
+      <Box>{newEvent?.user_id === userId ? <Host /> : <Guest />}</Box>
+    </>
+  );
 };
 
 export default UserCheck;

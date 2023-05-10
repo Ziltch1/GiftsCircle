@@ -4,6 +4,8 @@ import { dispatch } from '../../../../redux/store';
 import { GetEventMediaFiles } from '../../../../redux/features/events/service';
 import { useSelector } from 'react-redux';
 import axiosInstance from '../../../../redux/axios/axios';
+import { createResponse } from '../../../../redux/utils/UtilSlice';
+import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 
 const useUpload = (data, setShowModal, setImage) => {
   const { newEvent, eventMediaFiles } = useSelector(state => state.event);
@@ -34,18 +36,23 @@ const useUpload = (data, setShowModal, setImage) => {
 
   return Data;
 };
-const UploadVideoReq = async data => {
+const UploadVideoReq = async (data, setShowModal) => {
   const formData = new FormData();
   formData.append('image', data);
-  const result = await axiosInstance.post('/media/upload', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
-  return result.data;
+  try {
+    const result = await axiosInstance.post('/media/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return result.data;
+  } catch (error) {
+    setShowModal(false);
+    dispatch(createResponse(ErrorHandler(error)));
+  }
 };
 
 const UploadVideo = async (data, eventId, userId, setShowModal, setImage) => {
   try {
-    let res = await UploadVideoReq(data[0]);
+    let res = await UploadVideoReq(data[0], setShowModal);
     if (res) {
       setShowModal(false);
       setImage(null);
