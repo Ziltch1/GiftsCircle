@@ -13,6 +13,7 @@ import {
   GetEventFundRaising,
   GetEventFundRaisingDonors,
   GetEventMediaFiles,
+  GetHostRecievedFiles,
   GetUserEvents,
 } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
@@ -50,6 +51,7 @@ const Index = () => {
     if (newEvent) {
       dispatch(GetEventFundRaising(newEvent.id));
       dispatch(GetEventMediaFiles(newEvent.id));
+      dispatch(GetHostRecievedFiles(newEvent.id));
       setLoading(false);
     }
   }, [newEvent]);

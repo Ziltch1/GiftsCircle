@@ -10,6 +10,7 @@ const initialState = {
   eventAsoebis: [],
   asoebiItems: null,
   eventMediaFiles: null,
+  hostRecievedFiles: null,
 };
 
 const EventSlice = createSlice({
@@ -43,6 +44,9 @@ const EventSlice = createSlice({
     setEventMediaFiles: (state, action) => {
       state.eventMediaFiles = action.payload;
     },
+    setHostRecievedFiles: (state, action) => {
+      state.hostRecievedFiles = action.payload;
+    },
   },
 });
 
@@ -56,6 +60,7 @@ export const {
   setFundRaising,
   setFundRaisingDonors,
   setEventMediaFiles,
+  setHostRecievedFiles,
 } = EventSlice.actions;
 
 export default EventSlice.reducer;

@@ -13,6 +13,7 @@ import {
   setEvents,
   setFundRaising,
   setFundRaisingDonors,
+  setHostRecievedFiles,
   setLoading,
   setNewEvent,
 } from './eventSlice';
@@ -27,7 +28,10 @@ import {
   GetAddedAsoebiItemsApi,
   GetAsoebiItemsApi,
 } from '../../axios/apis/asoebi';
-import { GetEventMediaFilesApi } from '../../axios/apis/media';
+import {
+  GetEventMediaFilesApi,
+  GetHostRecievedFilesApi,
+} from '../../axios/apis/media';
 
 const GetUserEvents = id => async () => {
   dispatch(setLoading(false));
@@ -102,6 +106,16 @@ const GetEventMediaFiles = id => async () => {
   }
 };
 
+const GetHostRecievedFiles = id => async () => {
+  try {
+    const res = await GetHostRecievedFilesApi(id);
+    dispatch(setHostRecievedFiles(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    // dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
 const StopFundRaising = data => async () => {
   try {
     const res = await UpdateFundraisingStatusApi(data);
@@ -142,6 +156,7 @@ export {
   StopFundRaising,
   GetEventFundRaisingDonors,
   GetEventMediaFiles,
+  GetHostRecievedFiles,
   GetAsoebiItems,
   DeleteAsoebi,
 };

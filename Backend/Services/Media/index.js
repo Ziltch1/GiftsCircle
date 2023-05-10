@@ -8,12 +8,20 @@ const GetEventMediaFiles = async (id) => {
       eventId: id,
       uploadedBy: "HOST",
     },
-    include: {
-      data: true,
+    select: {
+      data: {
+        select: {
+          url: true,
+        },
+      },
     },
   });
+  let list = [];
+  mediaFiles.forEach((ele) => {
+    ele.data.forEach((i) => list.push(i.url));
+  });
   await prisma.$disconnect();
-  return mediaFiles;
+  return list;
 };
 
 const GetEventGuestMedia = async (id) => {
@@ -24,10 +32,24 @@ const GetEventGuestMedia = async (id) => {
     },
     include: {
       data: true,
+      user: true,
     },
   });
+
+  let list = [];
+  mediaFiles.forEach((ele) => {
+    ele.data.forEach((i) => {
+      let data = {};
+      (data.id = i.id),
+        (data.message = i.complimentaryMessageId),
+        (data.url = i.url),
+        (data.user = ele.user.firstname + " " + ele.user.lastname);
+
+      list.push(data);
+    });
+  });
   await prisma.$disconnect();
-  return mediaFiles;
+  return list;
 };
 
 const GetGuestSentMedia = async (eventId, userId) => {
@@ -53,7 +75,6 @@ const CreateMediaFile = async (url, mediaId) => {
       mediaId: mediaId,
     },
   });
-
   return Data;
 };
 

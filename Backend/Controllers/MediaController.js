@@ -85,7 +85,7 @@ router.post(
 
 router.post(
   "/UploadImages",
-  upload.array("media"),
+  upload.array("images"),
   EnsureAuthenticated,
   async (req, res) => {
     try {
