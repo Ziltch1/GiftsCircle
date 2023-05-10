@@ -8,8 +8,8 @@ import {
   Flex,
   Button,
 } from '@chakra-ui/react';
-import calendarIcon from '../../../../components/assets/calendar.svg';
-import giftIcon from '../../../assets/giftIconSmall.svg';
+import calendarIcon from '../../../components/assets/calendar.svg';
+import giftIcon from '../../assets/giftIconSmall.svg';
 import { Link } from 'react-router-dom';
 
 const GiftItemList = ({ event }) => {

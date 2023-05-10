@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import SettingsHeader from './SettingsHeader'
+import SettingsHeader from './components/SettingsHeader'
 import { Box } from '@chakra-ui/react'
 import ProfileForms from './subpages/ProfileForms'
 

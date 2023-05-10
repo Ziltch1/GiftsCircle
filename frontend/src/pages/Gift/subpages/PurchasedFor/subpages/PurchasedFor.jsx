@@ -1,6 +1,6 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
-import GiftItemList from './GiftItemList';
+import GiftItemList from '../../../components/GiftItemList';
 
 const PurchasedFor = ({ events }) => {
   return (

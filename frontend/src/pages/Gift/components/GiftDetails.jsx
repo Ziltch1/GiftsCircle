@@ -10,13 +10,13 @@ import {
   TableContainer,
   Heading,
 } from '@chakra-ui/react';
-import Search from '../../components/Search/Search';
-import BackButton from '../../components/Buttons/BackButton';
+import Search from '../../../components/Search/Search';
+import BackButton from '../../../components/Buttons/BackButton';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { dispatch } from '../../redux/store';
-import { GetEventGifts } from '../../redux/features/events/service';
-import SkeletonLoader from '../../components/Skeleton';
+import { dispatch } from '../../../redux/store';
+import { GetEventGifts } from '../../../redux/features/events/service';
+import SkeletonLoader from '../../../components/Skeleton';
 
 export default function GiftDetails() {
   const navigate = useNavigate();
