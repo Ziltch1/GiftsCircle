@@ -6,7 +6,10 @@ import EventGifts from './subpages/EventGifts';
 import { Box, Skeleton, Stack } from '@chakra-ui/react';
 import EventMedia from './subpages/EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GetEventGifts } from '../../redux/features/events/service';
+import {
+  GetEventGifts,
+  GetGuestSentFiles,
+} from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../../components/Buttons/BackButton';
 import Header from '../../components/Header/Header';
@@ -16,10 +19,13 @@ import {
   GetGiftItems,
 } from '../../redux/features/gift/service';
 import Fundraising from './subpages/Fundraising';
-import Asoebi from './subpages/Asoebi'
+import Asoebi from './subpages/Asoebi';
+import { setNewEvent } from '../../redux/features/events/eventSlice';
+import { useSelector } from 'react-redux';
 
 const Index = () => {
   const navigate = useNavigate();
+  const { user } = useSelector(state => state.user);
   const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
   const [event, setEvent] = useState(null);
@@ -40,10 +46,12 @@ const Index = () => {
   useEffect(() => {
     const GetEvent = async () => {
       const res = await GetEventApi(id);
+      dispatch(setNewEvent(res.data));
       setEvent(res.data);
     };
     GetEvent();
     dispatch(GetEventGifts(id));
+    dispatch(GetGuestSentFiles(id, user.id));
     dispatch(GetGiftItems());
     dispatch(GetComplimentaryGiftItems());
   }, [id]);
@@ -81,7 +89,6 @@ const Index = () => {
               {navPosition === 2 && <EventMedia />}
               {navPosition === 3 && <Asoebi event={event} />}
               {navPosition === 4 && <Fundraising event={event} />}
-              
             </Box>
           </>
         )}

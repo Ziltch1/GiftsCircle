@@ -53,6 +53,7 @@ const GetEventGuestMedia = async (id) => {
 };
 
 const GetGuestSentMedia = async (eventId, userId) => {
+  
   const mediaFiles = await prisma.media.findMany({
     where: {
       eventId: eventId,
@@ -62,8 +63,12 @@ const GetGuestSentMedia = async (eventId, userId) => {
       data: true,
     },
   });
+  let list = [];
+  mediaFiles.forEach((ele) => {
+    ele.data.forEach((i) => list.push(i.url));
+  });
   await prisma.$disconnect();
-  return mediaFiles;
+  return list;
 };
 
 const CreateMediaFile = async (url, mediaId) => {
