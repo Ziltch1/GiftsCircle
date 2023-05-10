@@ -58,7 +58,7 @@ router.get(
 
 router.post(
   "/upload",
-  upload.single("media"),
+  upload.single("image"),
   EnsureAuthenticated,
   async (req, res) => {
     try {

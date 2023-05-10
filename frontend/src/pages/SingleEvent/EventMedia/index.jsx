@@ -6,6 +6,7 @@ import ReceivedMedia from './subpages/ReceivedMedia'
 
 const Index = () => {
   const [navPosition, setNavPosition] = useState(0);
+
   return (
     <Box>
           <MediaHeader navPosition={navPosition} setNavPosition={setNavPosition} />

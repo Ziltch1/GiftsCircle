@@ -4,7 +4,7 @@ import Tabs from './Tabs';
 import EventDetails from './EventDetails';
 import EventGifts from './EventGifts';
 import EventGuests from './EventGuests';
-import Marketplace from './Marketplace'
+import Marketplace from './Marketplace';
 import { Box, Skeleton, Stack } from '@chakra-ui/react';
 import EventMedia from './EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -12,19 +12,23 @@ import { useSelector } from 'react-redux';
 import {
   GetEventFundRaising,
   GetEventFundRaisingDonors,
+  GetEventMediaFiles,
   GetUserEvents,
 } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../../components/Buttons/BackButton';
 import Header from '../../components/Header/Header';
 import Fundraising from './Fundraising';
-import { setFundRaising } from '../../redux/features/events/eventSlice';
+import {
+  setFundRaising,
+  setNewEvent,
+} from '../../redux/features/events/eventSlice';
 
 const Index = () => {
   const navigate = useNavigate();
   const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
-  const [newEvent, setNewEvent] = useState(null);
+  const [newEvent, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const { events, fundRaising } = useSelector(state => state.event);
@@ -35,7 +39,8 @@ const Index = () => {
   useEffect(() => {
     if (events.length > 0) {
       const specificEvent = events.filter(event => event.id === id)[0];
-      setNewEvent(specificEvent);
+      setEvent(specificEvent);
+      dispatch(setNewEvent(specificEvent));
     } else {
       dispatch(GetUserEvents(userId));
     }
@@ -44,6 +49,7 @@ const Index = () => {
   useEffect(() => {
     if (newEvent) {
       dispatch(GetEventFundRaising(newEvent.id));
+      dispatch(GetEventMediaFiles(newEvent.id));
       setLoading(false);
     }
   }, [newEvent]);
