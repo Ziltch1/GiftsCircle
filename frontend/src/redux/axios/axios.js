@@ -8,7 +8,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-axios.defaults.baseURL = 'http://localhost:4000/api';
+axios.defaults.baseURL = 'https://gift-circle-server.onrender.com/api';
 //'http://localhost:4000/api
 //https://gift-circle-server.onrender.com/api
 
