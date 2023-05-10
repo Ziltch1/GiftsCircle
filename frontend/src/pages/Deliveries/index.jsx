@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import DeliveriesHeader from './subpages/DeliveriesHeader'
+import DeliveriesHeader from './components/DeliveriesHeader'
 import Search from '../../components/Search/Search'
-import { Box, position } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import OpenDeliveries from './subpages/OpenDeliveries'
 import ClosedDeliveries from './subpages/ClosedDeliveries'
 

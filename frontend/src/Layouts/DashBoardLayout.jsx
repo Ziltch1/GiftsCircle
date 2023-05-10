@@ -8,7 +8,6 @@ import Navbar from '../components/Navbar/Navbar'
 const DashboardLayout = () => {
   const token = sessionStorage.getItem('token');
   const navigate = useNavigate();
-  const location = useLocation()
 
   useEffect(() => {
     if (!token) {

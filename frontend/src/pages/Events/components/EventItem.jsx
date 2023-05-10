@@ -25,7 +25,7 @@ const EventItem = ({ id, image, title, descSummary, published, date }) => {
                 w="120px"
                 h="110px"
                 borderRadius={5}
-                objectFit='cover'
+                objectFit="cover"
               />
             </Box>
             <Box>
@@ -38,12 +38,7 @@ const EventItem = ({ id, image, title, descSummary, published, date }) => {
                 >
                   {title}
                 </Heading>
-                <Text
-                  fontSize={14}
-                  textAlign="left"
-                  fontWeight={400}
-                  mb="2"
-                >
+                <Text fontSize={14} textAlign="left" fontWeight={400} mb="2">
                   {descSummary}
                 </Text>
                 <Flex fontSize={14} gap={5} color="#717171">

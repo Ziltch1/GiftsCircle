@@ -10,7 +10,6 @@ import { GetGiftItems } from '../../redux/features/gift/service';
 import Events from './components/Events';
 import EventHistory from './components/EventHistory';
 import SkeletonLoader from '../../components/Skeleton';
-import Navbar from '../../components/Navbar/Navbar';
 
 const Index = () => {
   const { user } = useSelector(state => state.user);
@@ -33,7 +32,6 @@ const Index = () => {
 
   return (
     <Box bg="#F5F5F5" h="100%" pb="8">
-      {/* <Navbar /> */}
       <WelcomeModal />
       <Box w="90%" mx="auto">
         <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />

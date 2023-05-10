@@ -9,25 +9,18 @@ import {
   Image,
 } from '@chakra-ui/react';
 import calendarIcon from '../../../components/assets/calendar.svg';
-import lockIcon from '../../../components/assets/lock.svg';
-import { CheckIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 import giftIcon from '../../assets/giftIconSmall.svg';
 
 const EventItem = ({ title, date, descSummary, gifts, image, id, event }) => {
   return (
-    <Box mt='8'>
+    <Box mt="8">
       <Box bg="white" mb="5" py="7" px="8" borderRadius={5}>
         <HStack justifyContent={'space-between'} alignItems="center">
           <Box>
             <HStack gap={2.5}>
               <Box>
-                <Image
-                  src={image}
-                  w="120px"
-                  h="110px"
-                  borderRadius={5}
-                />
+                <Image src={image} w="120px" h="110px" borderRadius={5} />
               </Box>
               <Box>
                 <Box textAlign={'left'}>
@@ -44,7 +37,9 @@ const EventItem = ({ title, date, descSummary, gifts, image, id, event }) => {
                     textAlign="left"
                     fontWeight={400}
                     mb="2"
-                    dangerouslySetInnerHTML={{ __html: descSummary?.substr(0, 100) }}
+                    dangerouslySetInnerHTML={{
+                      __html: descSummary?.substr(0, 100),
+                    }}
                   />
                   <Flex fontSize={14} gap={5} color="#717171">
                     <Flex alignItems={'center'} gap={1}>
@@ -72,7 +67,7 @@ const EventItem = ({ title, date, descSummary, gifts, image, id, event }) => {
                 py="10px"
                 borderRadius={5}
                 h="35px"
-                boxShadow='md'
+                boxShadow="md"
               >
                 View gifts
               </Button>
