@@ -13,9 +13,6 @@ const Tabs = ({navPosition, setNavPosition, event}) => {
     const [fundraising, setFundraising] = useState(false)
     const [asoebi, setAsoebi] = useState(false)
 
-    // const test = GetEventAsoebis(event.id);
-    // console.log(test);
-
     const checkFundraising = async() => {
         try {
             const checkFundraising = await GetFundraisingApi(event.id);
@@ -30,7 +27,6 @@ const Tabs = ({navPosition, setNavPosition, event}) => {
     const checkAsoebi = async() => {
         try {
             const checkAsoebi = await GetAddedAsoebiItemsApi(event.id);
-            console.log(checkAsoebi);
             if (checkAsoebi.data) {
                 setAsoebi(true)
             }

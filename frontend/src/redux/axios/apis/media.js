@@ -12,4 +12,8 @@ const GetHostRecievedFilesApi = id => {
   return api.get(`/media/Get/GuestSentFiles/${id}`);
 };
 
-export { UploadVideoApi, GetEventMediaFilesApi, GetHostRecievedFilesApi };
+const GetGuestSentFilesApi = (eventId, userId) => {
+  return api.get(`/media/Get/GuestSentMedia/${eventId}/${userId}`);
+};
+
+export { UploadVideoApi, GetEventMediaFilesApi, GetHostRecievedFilesApi, GetGuestSentFilesApi };
