@@ -31,7 +31,7 @@ const LoadingModal = ({ setShowModal, open }) => {
                 <Heading fontWeight={600} fontSize="25px" mb="3">
                   File Uploading
                 </Heading>
-                <Text>Please wait...</Text>
+                <Text mb='2'>Please wait...</Text>
                 <Spinner
                   thickness="4px"
                   speed="0.65s"
