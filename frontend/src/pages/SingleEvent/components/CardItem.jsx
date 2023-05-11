@@ -21,7 +21,6 @@ const Card = ({ item }) => {
       w="282px"
       h="282px"
       bg="white"
-      p="2.5"
       borderRadius={5}
       boxShadow="md"
       cursor="pointer"
