@@ -1,8 +1,10 @@
 import { Box, Image } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import ImageModal from './ImageModal';
 
 const Card = ({ item }) => {
   const [type, setType] = useState('IMAGE');
+  const [showImageModal, setShowImageModal] = useState(false)
 
   useEffect(() => {
     if (item.includes('.mp4')) {
@@ -13,26 +15,30 @@ const Card = ({ item }) => {
   }, [item]);
 
   return (
+    <>
+    {showImageModal && <ImageModal image={item} setShowImageModal={setShowImageModal} />}
     <Box
-      w="200px"
-      minH="200px"
+      w="282px"
+      h="282px"
       bg="white"
       p="2.5"
-      borderRadius={10}
-      boxShadow="sm"
-      mb="5"
+      borderRadius={5}
+      boxShadow="md"
       cursor="pointer"
+      onClick={() => setShowImageModal(true)}
+      // border='1px solid #C6C6C6'
     >
       {type === 'IMAGE' ? (
         <Image
           src={item}
-          w="200px"
-          h="200px"
-          borderRadius={10}
+          w="100%"
+          h="100%"
+          borderRadius={5}
           alt="item item image"
           display="block"
           mx="auto"
-          mb="2.5"
+          objectFit='cover'
+          boxShadow="sm"
         />
       ) : (
         <video
@@ -46,6 +52,7 @@ const Card = ({ item }) => {
         </video>
       )}
     </Box>
+    </>
   );
 };
 

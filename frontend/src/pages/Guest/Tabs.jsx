@@ -9,7 +9,7 @@ import { GetAddedAsoebiItemsApi } from '../../redux/axios/apis/asoebi';
 
 const Tabs = ({navPosition, setNavPosition, event}) => {
 
-    const links = ['About event', 'Gift List', 'Media'];
+    const links = ['About event', 'Gift List', 'Media', 'Asoebi'];
     const [fundraising, setFundraising] = useState(false)
     const [asoebi, setAsoebi] = useState(false)
 

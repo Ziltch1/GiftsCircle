@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Text, Heading, Flex, FormLabel, VStack } from '@chakra-ui/react';
+import { Box, Text, Heading, Flex, FormLabel, VStack, Input } from '@chakra-ui/react';
 import LoadingModal from '../../components/LoadingModal';
 import Card from '../../components/CardItem';
 import { useUpload } from '../Hooks';
@@ -16,13 +16,17 @@ const UploadedMedia = () => {
       bg="white"
       borderRadius={10}
       boxShadow="md"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
+      py='5'
+      px='8'
+      overflowY='auto'
+      // display="flex"
+      // justifyContent={Data.length > 0 ? 'space-between' : 'center'}
+      // alignItems="center"
     >
+      <Box w='100%' h='1px' bgColor='#C6C6C6' my='5'></Box>
       <LoadingModal setShowModal={setShowModal} open={modalOpen} />
       {Data.length > 0 ? (
-        <Flex alignItems="center" gap="24px" flexWrap="wrap">
+        <Flex alignItems="center" gap="28px" justifyContent='center' flexWrap="wrap">
           {Data.map(ele => (
             <Card item={ele} key={Data.indexOf(ele)} />
           ))}
@@ -50,11 +54,11 @@ const UploadedMedia = () => {
             textAlign="center"
           >
             Upload file
-            <input
+            <Input
               type="file"
               id="upload"
-              // // style={{ display: 'none' }}
-              // value={image}
+              display='none'
+              value={image}
               multiple={true}
               onChange={e => setImage(e.target.files)}
             />
