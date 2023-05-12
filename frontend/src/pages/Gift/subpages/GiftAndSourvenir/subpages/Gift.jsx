@@ -12,8 +12,8 @@ import {
 } from '@chakra-ui/react';
 
 
-const Gift = ({ newData, sourvenir, gifts }) => {
-    const data = [1,2,3,4,5,6,7,8]
+const Gift = ({ newGift, gifts }) => {
+    
     return (
         <Box my='8'>
             <TableContainer bg="white">
@@ -28,27 +28,23 @@ const Gift = ({ newData, sourvenir, gifts }) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {data?.map((item, index) => {
-                            const sourvenirItem = sourvenir?.find(x => x.id === item.sourvenirItemId);
+                        {newGift?.map((item, index) => {
+                            const giftItem = gifts?.find(x => x.id === item.giftItemId);
                             return (
                                 <>
                                     <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
                                         <Td>{index + 1}</Td>
                                         <Td>
-                                            {/* {sourvenirItem?.title} */}
-                                            Standing fan
+                                            {giftItem?.title}
                                         </Td>
                                         <Td color="#009F94">
-                                            {/* ₦{sourvenirItem?.amount} */}
-                                            ₦10000
+                                            ₦{giftItem?.amount}
                                         </Td>
                                         <Td>
-                                            {/* {sourvenirItem?.category} */}
-                                            Gift
+                                            {giftItem?.category}
                                         </Td>
                                         <Td>
-                                            7
-                                            {/* {item.quantity} */}
+                                            {item.quantity}
                                         </Td>
                                     </Tr>
                                 </>

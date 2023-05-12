@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 // import { AsoebiContext } from './Asoebi';
 import { AddSourvenirApi } from '../../../../../redux/axios/apis/sourvenir';
 
-const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart }) => {
+const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart, title }) => {
   // const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems } =
   //   useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
@@ -51,7 +51,7 @@ const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart }) 
           //   onClick={openDrawer}
         />
         <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
-          {details}
+          {title}
         </Text>
         <Flex alignItems="center" justifyContent="space-between">
           <Text color="#27272E" fontWeight={600} fontSize={18}>

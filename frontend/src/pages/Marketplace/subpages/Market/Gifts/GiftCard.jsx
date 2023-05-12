@@ -1,27 +1,23 @@
 import { Box, Flex, Button, Text, Image, GridItem } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
+import { AddGiftApi } from '../../../../../redux/axios/apis/gift';
 // import { AsoebiContext } from './Asoebi';
-import { AddSourvenirApi } from '../../../../../redux/axios/apis/sourvenir'
 
-const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart }) => {
+const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart, title }) => {
   // const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems } =
   //   useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
 
   const AddAsoebi = async(id) => {
     if (!cart.includes(id)) {
-      const formBody = { userId: user.id, sourvenirItemId: id, quantity: 1,};
-      
+      const formBody = { userId: user.id, amount: amount, quantity: 1, giftItemId: id, };
       try {
-        await AddSourvenirApi(formBody);
+        await AddGiftApi(formBody);
       } catch (error) {
         console.log(error);
       }
-
       setCart([...cart, id]);
-      // setAsoebiItems(prev => [...prev, formBody]);
-      // setAddedAsoebiItems(prev => [...prev, id]);
     }
   };
 
@@ -51,7 +47,7 @@ const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart }) 
           //   onClick={openDrawer}
         />
         <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
-          {details}
+          {title}
         </Text>
         <Flex alignItems="center" justifyContent="space-between">
           <Text color="#27272E" fontWeight={600} fontSize={18}>
