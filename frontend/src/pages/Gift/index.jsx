@@ -15,6 +15,7 @@ import PurchasedFor from './subpages/PurchasedFor/subpages/PurchasedFor';
 import PurchasedBy from './subpages/PurchasedBy/subpages/PurchasedBy';
 import GiftAndSourvenir from './subpages/GiftAndSourvenir'
 import { GetSourvenirApi } from '../../redux/axios/apis/sourvenir';
+import { GetGiftItemsApi } from '../../redux/axios/apis/gift';
 
 const Events = () => {
   const { user } = useSelector(state => state.user);
@@ -23,12 +24,23 @@ const Events = () => {
   const { events } = useSelector(state => state.event);
   const { userPurchasedGiftItems } = useSelector(state => state.gift);
   const [sourvenir, setSourvenir] = useState([]);
+  const [gift, setGift] = useState([]);
 
   const getSourvenirs = async () => {
     try {
       const res = await GetSourvenirApi();
       const data = await res.data;
       setSourvenir(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getGifts = async () => {
+    try {
+      const res = await GetGiftItemsApi();
+      const data = await res.data;
+      setGift(data);
     } catch (error) {
       console.log(error);
     }
@@ -41,6 +53,7 @@ const Events = () => {
       dispatch(GetUserPurchasedGifts(user.id));
       dispatch(GetGiftItems());
       getSourvenirs();
+      getGifts();
     }
   }, [user]);
 
@@ -75,7 +88,7 @@ const Events = () => {
                       <PurchasedBy items={userPurchasedGiftItems} />
                     )}
                     {navPosition === 2 && (
-                      <GiftAndSourvenir sourvenir={sourvenir} gifts={userPurchasedGiftItems} />
+                      <GiftAndSourvenir sourvenir={sourvenir} gifts={gift} />
                     )}
                   </>
                 )}

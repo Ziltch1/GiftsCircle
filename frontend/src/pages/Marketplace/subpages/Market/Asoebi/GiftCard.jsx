@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { AsoebiContext } from '.';
 
-const GiftCard = ({ title, image, id, amount, eventId }) => {
+const GiftCard = ({ title, image, id, amount, eventId, }) => {
   const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems, addForGuest } =
     useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);

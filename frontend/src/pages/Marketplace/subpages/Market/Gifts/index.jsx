@@ -71,6 +71,7 @@ const Index = ({ setShowProducts, setShowCart, data, cart, setCart }) => {
               id={item.id}
               details={item.title}
               image={item.image}
+              title={item.title}
               amount={item.amount}
               data={data}
               cart={cart}

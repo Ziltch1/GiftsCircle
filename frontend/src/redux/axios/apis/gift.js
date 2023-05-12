@@ -20,10 +20,20 @@ const DeleteEventGiftApi = id => {
   return api.delete(`/gift/${id}`);
 };
 
+const AddGiftApi = data => {
+  return api.post('/gift/BuyMarketGift', data);
+};
+
+const GetUserGiftApi = id => {
+  return api.get(`/gift/Get/MarketUserGifts/${id}`);
+};
+
 export {
   GetGiftItemsApi,
   GetComplimentaryGiftItemsApi,
   CreateManyGiftsApi,
   DeleteEventGiftApi,
   GetUserPurchasedGiftsApi,
+  AddGiftApi,
+  GetUserGiftApi,
 };

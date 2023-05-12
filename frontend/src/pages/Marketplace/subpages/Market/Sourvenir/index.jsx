@@ -75,6 +75,7 @@ const Index = ({ setShowProducts, setShowCart, data, cart, setCart }) => {
               data={data}
               cart={cart}
               setCart={setCart}
+              title={item.title}
             />
           ))}
         </Flex>
