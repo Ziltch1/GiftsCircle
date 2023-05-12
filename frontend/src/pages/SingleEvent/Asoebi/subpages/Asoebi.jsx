@@ -56,8 +56,8 @@ const Asoebi = ({data, newEvent}) => {
                                       <Td color="#009F94">
                                           ₦{asoebiItem?.amount}
                                       </Td>
-                                      <Td>{asoebiItem.category}</Td>
-                                      <Td>5</Td>
+                                      <Td>{asoebiItem?.category}</Td>
+                                      <Td>{item?.quantity}</Td>
                                   </Tr>
                               </>
                           );

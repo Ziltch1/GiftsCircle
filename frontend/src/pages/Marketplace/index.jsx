@@ -1,10 +1,10 @@
 import { Box, Heading, Text, Button } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import MarketplaceOptions from './MarketplaceOptions';
-import Market from './subpages/Market/Market';
+import SourvenirMarket from './subpages/Market/Sourvenir';
+import GiftMarket from './subpages/Market/Gifts';
 import { GetAsoebiItemsApi } from '../../redux/axios/apis/asoebi';
 import { GetGiftItemsApi } from '../../redux/axios/apis/gift';
-import Cart from './subpages/Cart/Cart';
 import Asoebi from './subpages/Market/Asoebi';
 import { dispatch } from '../../redux/store';
 import { GetGiftItems } from '../../redux/features/gift/service';
@@ -91,7 +91,7 @@ const Index = () => {
           ) : (
             <>
                 <Box>
-                  {position === 1 && <Market 
+                  {position === 1 && <GiftMarket
                       setShowProducts={setShowProducts}
                       setShowCart={setShowCart} 
                       data={giftItems}
@@ -105,7 +105,7 @@ const Index = () => {
                     />
                   )}
                   {position === 2 && (
-                    <Market
+                    <SourvenirMarket
                       setShowProducts={setShowProducts}
                       setShowCart={setShowCart}
                       data={sourvenirItems}

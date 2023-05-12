@@ -1,14 +1,14 @@
 import { Box, Heading, Text, Image, Flex } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import Search from '../../../../components/Search/Search';
-import cartIcon from '../../../assets/cart.svg';
+import cartIcon from '../../../../assets/cart.svg';
 import GiftCard from './GiftCard';
-import BackButton from '../../../../components/Buttons/BackButton';
 import GiftListDrawer from './GiftListDrawer';
+import BackButton from '../../../../../components/Buttons/BackButton';
+import Search from '../../../../../components/Search/Search';
 
 
-const Market = ({ setShowProducts, setShowCart, data, cart, setCart }) => {
+const Index = ({ setShowProducts, setShowCart, data, cart, setCart }) => {
   const { giftItems } = useSelector(state => state.gift);
   const [item, setItem] = useState(data);
   const [showDrawer, setShowDrawer] = useState(false)
@@ -84,4 +84,4 @@ const Market = ({ setShowProducts, setShowCart, data, cart, setCart }) => {
   );
 };
 
-export default Market;
+export default Index;

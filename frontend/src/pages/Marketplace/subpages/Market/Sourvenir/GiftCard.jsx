@@ -1,8 +1,8 @@
 import { Box, Flex, Button, Text, Image, GridItem } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { AsoebiContext } from './Asoebi';
-import { AddSourvenirApi } from '../../../../redux/axios/apis/sourvenir';
+// import { AsoebiContext } from './Asoebi';
+import { AddSourvenirApi } from '../../../../../redux/axios/apis/sourvenir';
 
 const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart }) => {
   // const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems } =
