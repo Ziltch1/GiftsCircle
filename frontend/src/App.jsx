@@ -18,7 +18,6 @@ import CreateEvent from './pages/CreateEvent';
 import Gift from './pages/Gift';
 import GiftDetails from './pages/Gift/components/GiftDetails';
 import Marketplace from './pages/Marketplace';
-import Market from './pages/Marketplace/subpages/Market/Market';
 import JoinEvent from './pages/JoinEvent';
 import ViewEvent from './pages/Guest';
 import UserCheck from './pages/SingleEvent/UserCheck';
@@ -47,7 +46,6 @@ function App() {
           <Route index path="" element={<Events />} />
           <Route path="/dashboard/gifts" element={<Gift />} />
           <Route path="/dashboard/marketplace" element={<Marketplace />} />
-          <Route path="/dashboard/marketplace/market" element={<Market />} />
           <Route path="/dashboard/event_details" element={<EventDetails />} />
           <Route path="/dashboard/settings" element={<Settings />} />
           <Route path="/dashboard/deliveries" element={<Deliveries />} />
