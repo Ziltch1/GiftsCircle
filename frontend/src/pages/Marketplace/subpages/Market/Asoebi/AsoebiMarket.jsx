@@ -3,15 +3,23 @@ import React, { useContext, useEffect, useState } from 'react';
 import Search from '../../../../../components/Search/Search';
 import BackButton from '../../../../../components/Buttons/BackButton';
 import cartIcon from '../../../../assets/cart.svg';
-import GiftCard from './GiftCard';
 import { AsoebiContext } from '.';
 import AsoebiDrawer from './AsoebiDrawer';
 import { useSelector } from 'react-redux';
+import DisplayCard from '../../../../../components/Card';
 
 const AsoebiMarket = ({ setShowProducts, eventId }) => {
   const { asoebiItems } = useSelector(state => state.event);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { data, setAddedAsoebiItems, setAmount } = useContext(AsoebiContext);
+  const {
+    data,
+    setAddedAsoebiItems,
+    setAmount,
+    addedAsoebiItems,
+    setAsoebiItems,
+    addForGuest,
+  } = useContext(AsoebiContext);
+  const { user } = useSelector(state => state.user);
 
   useEffect(() => {
     let idList = [];
@@ -26,6 +34,20 @@ const AsoebiMarket = ({ setShowProducts, eventId }) => {
     });
     setAmount(amount);
   }, [data, setAddedAsoebiItems, asoebiItems, setAmount]);
+
+  const AddAsoebi = id => {
+    if (!addedAsoebiItems.includes(id)) {
+      const formBody = {
+        eventId: eventId,
+        userId: user.id,
+        asoebiItem: id,
+        increment: 0,
+        purchasedByHost: !addForGuest,
+      };
+      setAsoebiItems(prev => [...prev, formBody]);
+      setAddedAsoebiItems(prev => [...prev, id]);
+    }
+  };
 
   return (
     <Box bg="#F5F5F5">
@@ -86,13 +108,12 @@ const AsoebiMarket = ({ setShowProducts, eventId }) => {
         </Box>
 
         <Flex gap="24px" alignItems="center" flexWrap="wrap">
-          {asoebiItems?.map(gift => (
-            <GiftCard
-              id={gift.id}
-              title={gift.title}
-              image={gift.image}
-              amount={gift.amount}
-              eventId={eventId}
+          {asoebiItems?.map(item => (
+            <DisplayCard
+              id={item.id}
+              data={item}
+              action={AddAsoebi}
+              disabled={addedAsoebiItems.includes(item.id)}
             />
           ))}
         </Flex>
