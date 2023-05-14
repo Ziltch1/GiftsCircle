@@ -1,13 +1,14 @@
 import { Box, Flex, Button, Text, Image, GridItem } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-// import { AsoebiContext } from './Asoebi';
 import { AddSourvenirApi } from '../../../../../redux/axios/apis/sourvenir';
+import DetailsDrawer from '../../../DetailsDrawer';
 
 const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart, title }) => {
   // const { setAddedAsoebiItems, addedAsoebiItems, setAsoebiItems } =
   //   useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const AddAsoebi = async(id) => {
     if (!cart.includes(id)) {
@@ -25,7 +26,13 @@ const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart, ti
     }
   };
 
+  const showDrawer = () => {
+    setOpenDrawer(true);
+  }
+
   return (
+    <>
+    {openDrawer && <DetailsDrawer setOpenDrawer={setOpenDrawer} />}
     <Flex justifyContent='center' alignItems='center' flexWrap='wrap'>
       <Box
         w="285px"
@@ -48,7 +55,7 @@ const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart, ti
           mx="auto"
           mb="2.5"
           objectFit="cover"
-          //   onClick={openDrawer}
+          onClick={() => showDrawer()}
         />
         <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
           {title}
@@ -72,6 +79,7 @@ const GiftCard = ({ details, image, id, amount, eventId, cart, data, setCart, ti
         </Flex>
       </Box>
     </Flex>
+    </>
   );
 };
 
