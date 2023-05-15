@@ -28,8 +28,7 @@ export default function GiftDetails() {
 
   useEffect(() => {
     dispatch(GetEventGifts(id));
-
-    setCurrentEvent(events.filter(x => x.id === id)[0]);
+    setCurrentEvent(events?.filter(x => x.id === id)[0]);
   }, [id, events]);
 
   useEffect(() => {
@@ -86,13 +85,13 @@ export default function GiftDetails() {
                       )[0];
                       return (
                         <Tr fontSize={13} textAlign="center" key={ele.id}>
-                          <Td>{giftItem.title}</Td>
+                          <Td>{giftItem?.title}</Td>
                           <Td>Taiwo</Td>
                           <Td>June 12th, 2022</Td>
-                          <Td>{ele.quantity}</Td>
-                          <Td>{ele.status}</Td>
+                          <Td>{ele?.quantity}</Td>
+                          <Td>{ele?.status}</Td>
                           <Td isNumeric>
-                            {parseInt(giftItem.amount) - ele.amountPaid}
+                            {parseInt(giftItem?.amount) - ele?.amountPaid}
                           </Td>
                           <Td>Complete payment</Td>
                         </Tr>

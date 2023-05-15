@@ -40,6 +40,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
             px="28px"
             py="11px"
             textAlign="center"
+            fontWeight='medium'
           >
             Record audio
           </Button>
@@ -54,6 +55,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
             px="28px"
             py="11px"
             textAlign="center"
+            fontWeight='medium'
           >
             Record video
           </Button>

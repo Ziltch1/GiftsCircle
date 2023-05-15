@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Box, UnorderedList, ListItem, HStack } from '@chakra-ui/react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [navPosition, setNavPosition] = useState(0);
   const { pathname } = useLocation();
+  const {id} = useParams();
   const tabs = ['Events', 'Gifts', 'Marketplace', 'Deliveries', 'Settings'];
+  // const test = pathname.includes('/gift_details');
+  // console.log(test);
   const handleClick = index => {
     setNavPosition(index);
     switch (index) {
@@ -30,6 +33,10 @@ const Navbar = () => {
         navigate('/dashboard/settings');
         setNavPosition(4)
         break;
+      case 5:
+        navigate(`/dashboard/gift/gift_details/${id}`);
+        setNavPosition(1);
+        break;
 
       default:
         break;
@@ -42,6 +49,9 @@ const Navbar = () => {
         setNavPosition(0);
         break;
       case '/dashboard/gifts':
+        setNavPosition(1);
+        break;
+      case `/dashboard/gift/gift_details/${id}`:
         setNavPosition(1);
         break;
       case '/dashboard/marketplace':
