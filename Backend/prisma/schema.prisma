@@ -117,6 +117,7 @@ model user {
   role                 Role                   @default(USER)
   Media                Media[]
   ComplimentaryMessage ComplimentaryMessage[]
+  Guests               Guests[]
 }
 
 enum Role {
@@ -132,11 +133,13 @@ model otp {
 }
 
 model Guests {
-  id      String  @id @db.VarChar(50)
-  eventId String  @db.VarChar(50)
-  coHost  Boolean
-  event   event   @relation(fields: [eventId], references: [id])
-  userId  String  @db.VarChar(255)
+  id          String   @id @db.VarChar(50)
+  eventId     String   @db.VarChar(50)
+  coHost      Boolean
+  user        user     @relation(fields: [userId], references: [id])
+  userId      String   @db.VarChar(255)
+  event       event    @relation(fields: [eventId], references: [id])
+  date_joined DateTime @default(now())
 }
 
 model FundRaising {

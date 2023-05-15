@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   events: null,
   eventGifts: null,
+  eventGuests: null,
   newEvent: JSON.parse(localStorage.getItem('newEvent')) || null,
   loading: true,
   fundRaising: null,
@@ -23,6 +24,9 @@ const EventSlice = createSlice({
     },
     setEventGifts: (state, action) => {
       state.eventGifts = action.payload;
+    },
+    setEventGuests: (state, action) => {
+      state.eventGuests = action.payload;
     },
     setAsoebisItems: (state, action) => {
       state.asoebiItems = action.payload;
@@ -57,6 +61,7 @@ const EventSlice = createSlice({
 export const {
   setEvents,
   setEventGifts,
+  setEventGuests,
   setAsoebisItems,
   setEventAsoebis,
   setNewEvent,

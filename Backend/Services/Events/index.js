@@ -227,8 +227,16 @@ const AddGuest = async (data) => {
         let Data = await prisma.guests.create({
           data: {
             id: id,
-            userId: data.userId,
-            eventId: data.eventId,
+            event: {
+              connect: {
+                id: data.eventId,
+              },
+            },
+            user: {
+              connect: {
+                id: data.userId,
+              },
+            },
             coHost: data.coHost,
           },
         });
@@ -268,9 +276,9 @@ const GetEventGuests = async (id) => {
       },
     });
     return data;
+  } else {
+    return null;
   }
-
-  return null;
 };
 
 module.exports = {

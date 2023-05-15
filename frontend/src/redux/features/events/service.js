@@ -1,6 +1,7 @@
 import {
   DeleteEventApi,
   GetEventGiftsApi,
+  GetEventGuestsApi,
   GetUserEventsApi,
 } from '../../axios/apis/events';
 import { dispatch } from '../../store';
@@ -9,6 +10,7 @@ import {
   setAsoebisItems,
   setEventAsoebis,
   setEventGifts,
+  setEventGuests,
   setEventMediaFiles,
   setEvents,
   setFundRaising,
@@ -55,6 +57,16 @@ const GetEventGifts = id => async () => {
   } catch (error) {
     console.log(ErrorHandler(error));
     dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+const GetEventGuests = id => async () => {
+  try {
+    const res = await GetEventGuestsApi(id);
+    dispatch(setEventGuests(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -162,6 +174,7 @@ const DeleteAsoebi = (id, eventId) => async () => {
 export {
   GetUserEvents,
   GetEventGifts,
+  GetEventGuests,
   GetEventAsoebis,
   DeleteEvent,
   GetEventFundRaising,

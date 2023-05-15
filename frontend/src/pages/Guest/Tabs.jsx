@@ -26,8 +26,6 @@ const Tabs = ({ navPosition, setNavPosition }) => {
     }
   }, [eventAsoebis, fundRaising]);
 
-  console.log(eventAsoebis, fundRaising);
-
   const handleClick = index => {
     setNavPosition(index);
   };

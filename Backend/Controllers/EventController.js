@@ -60,6 +60,17 @@ router.get("/UserEvents/:id", EnsureAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/:id/guests", EnsureAuthenticated, async (req, res) => {
+  try {
+    const data = await GetEventGuests(req.params.id);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Event Not Found"));
+  }
+});
+
 router.post("/create", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Create(req.body);
@@ -170,15 +181,6 @@ router.post("/addGuest", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/:id/guests", EnsureAuthenticated, async (req, res) => {
-  try {
-    const data = await GetEventGuests(req.params.id);
-    return res.status(200).send(data);
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Event Not Found"));
-  }
-});
+
 
 module.exports = router;
