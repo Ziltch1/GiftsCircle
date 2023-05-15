@@ -17,7 +17,7 @@ import {FaMicrophone, FaStop, FaPause, FaTrash} from 'react-icons/fa'
 import {BiSend} from 'react-icons/bi'
 
 const AudioModal = ({setShowAudioModal}) => {
-    const { audioURL, audioData, timer, recordingStatus, cancelRecording, saveRecordedAudio, startRecording, } = useRecorder();
+    const { audioURL, audioData, timer, recordingStatus, cancelRecording, saveRecordedAudio, startRecording } = useRecorder();
     const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
     const closeModal = () => {
         setShowAudioModal(false);

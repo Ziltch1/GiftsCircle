@@ -37,16 +37,27 @@ const useUpload = (data, setShowModal, setImage) => {
   return Data;
 };
 const UploadVideoReq = async (data, setShowModal) => {
-  const formData = new FormData();
-  formData.append('image', data);
-  try {
-    const result = await axiosInstance.post('/media/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return result.data;
-  } catch (error) {
+  if (data.size > 10000000) {
     setShowModal(false);
-    dispatch(createResponse(ErrorHandler(error)));
+    dispatch(
+      createResponse({
+        type: 'Error',
+        message: 'File should be less than 100MB',
+        title: 'Error',
+      })
+    );
+  } else {
+    const formData = new FormData();
+    formData.append('image', data);
+    try {
+      const result = await axiosInstance.post('/media/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return result.data;
+    } catch (error) {
+      setShowModal(false);
+      dispatch(createResponse(ErrorHandler(error)));
+    }
   }
 };
 
