@@ -28,35 +28,6 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
           Media
         </Heading>
 
-        <Stack direction="row" spacing={4}>
-          <Button
-            onClick={() => setShowAudioModal(true)}
-            w="150px"
-            h='45px'
-            color="white"
-            bg="#00BFB2"
-            fontSize={14}
-            borderRadius="5px"
-            px="28px"
-            py="11px"
-            textAlign="center"
-          >
-            Record audio
-          </Button>
-          <Button
-            onClick={() => setShowVideoModal(true)}
-            w="150px"
-            h='45px'
-            color="white"
-            bg="#00BFB2"
-            fontSize={14}
-            borderRadius="5px"
-            px="28px"
-            py="11px"
-            textAlign="center"
-          >
-            Record video
-          </Button>
           <FormLabel
             htmlFor="upload"
             w="210px"
@@ -78,7 +49,6 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
               onChange={e => setImage(e.target.files)}
             />
           </FormLabel>
-        </Stack>
       </Flex>
       <Box fontSize={14} fontWeight="semibold">
         <Flex alignItems={'center'} gap={4}>

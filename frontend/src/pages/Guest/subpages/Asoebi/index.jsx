@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import AsoebiHeader from './subpages/AsoebiHeader';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import AsoebiCard from './subpages/AsoebiCard';
 import AsoebiListDrawer from './subpages/AsoebiListDrawer';
@@ -50,17 +50,25 @@ const Index = ({ event }) => {
           asoebiCart={asoebiCart}
         />
 
-        <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
-        {data?.map((item) => 
-            <AsoebiCard
-              event={event}
-              key={data.indexOf(item)}
-              ele={item}
-              asoebi={data}
-              asoebiCart={asoebiCart}
-              setAsoebiCart={setAsoebiCart}
-            />)}
-        </Flex>
+        <Box>
+          {data ? 
+            <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
+            {data?.map((item) => 
+                <AsoebiCard
+                  event={event}
+                  key={data.indexOf(item)}
+                  ele={item}
+                  asoebi={data}
+                  asoebiCart={asoebiCart}
+                  setAsoebiCart={setAsoebiCart}
+                />)}
+            </Flex> 
+            : 
+            <Box>
+              <Heading fontWeight='semibold' fontSize={25}>No asoebi items added yet</Heading>
+            </Box>
+          }
+        </Box>
       </CartContext.Provider>
     </Box>
   );

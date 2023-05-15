@@ -24,21 +24,20 @@ const Tabs = ({navPosition, setNavPosition, event}) => {
         }
     }
 
-    const checkAsoebi = async() => {
-        try {
-            const checkAsoebi = await GetAddedAsoebiItemsApi(event.id);
-            if (checkAsoebi.data) {
-                setAsoebi(true)
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    // const checkAsoebi = async() => {
+    //     try {
+    //         const checkAsoebi = await GetAddedAsoebiItemsApi(event.id);
+    //         if (checkAsoebi.data) {
+    //             setAsoebi(true)
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
 
     useEffect(() => {
         checkFundraising()
-        checkAsoebi()
     }, [])
 
     const handleClick = (index) => {
@@ -47,8 +46,6 @@ const Tabs = ({navPosition, setNavPosition, event}) => {
 
     if (fundraising) {
         links.push('Fundraising');
-    }else if(asoebi){
-        links.push('Asoebi')
     }
 
     return (
