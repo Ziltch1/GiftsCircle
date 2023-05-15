@@ -42,8 +42,6 @@ const Tabs = ({navPosition, setNavPosition, event}) => {
 
     if (fundraising) {
         links.push('Fundraising');
-    }else if(asoebi){
-        links.push('Asoebi')
     }
 
     return (
