@@ -1,32 +1,33 @@
 import React, { useState, useEffect, createContext } from 'react';
 import AsoebiHeader from './subpages/AsoebiHeader';
 import { Box, Flex } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import AsoebiCard from './subpages/AsoebiCard';
 import AsoebiListDrawer from './subpages/AsoebiListDrawer';
-import { GetEventAsoebis } from '../../../../redux/features/events/service';
-import { GetAddedAsoebiItemsApi, GetAsoebiItemsApi } from '../../../../redux/axios/apis/asoebi';
+import { GetAddedAsoebiItemsApi } from '../../../../redux/axios/apis/asoebi';
+import DisplayCard from '../../../../components/Card';
 export const CartContext = createContext(null);
-
 
 const Index = ({ event }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [data, setData] = useState([]);
   const [asoebiCart, setAsoebiCart] = useState([]);
-  
-  const getAsoebi = async() => {
+
+  const getAsoebi = async () => {
     try {
       const res = await GetAddedAsoebiItemsApi(event.id);
       const data = await res.data;
-      setData(data)
+      setData(data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   useEffect(() => {
     getAsoebi();
   }, []);
+
+  const addAsoebi = id => {
+    setAsoebiCart([...asoebiCart, id]);
+  };
 
   return (
     <Box>
@@ -50,16 +51,24 @@ const Index = ({ event }) => {
           asoebiCart={asoebiCart}
         />
 
-        <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
-        {data?.map((item) => 
-            <AsoebiCard
-              event={event}
-              key={data.indexOf(item)}
-              ele={item}
-              asoebi={data}
-              asoebiCart={asoebiCart}
-              setAsoebiCart={setAsoebiCart}
-            />)}
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+        >
+          {data?.map(item => {
+            const newData = data?.find(x => x.id === item?.asoebiItem);
+            console.log(item, newData)
+            return (
+              <DisplayCard
+                id={item.id}
+                data={item}
+                action={addAsoebi}
+                disabled={asoebiCart.includes(newData?.id)}
+                text="Purchase"
+              />
+            );
+          })}
         </Flex>
       </CartContext.Provider>
     </Box>

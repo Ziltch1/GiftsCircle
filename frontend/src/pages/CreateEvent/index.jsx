@@ -12,7 +12,7 @@ import Stepper from './components/Stepper';
 import EventPreview from './subpages/EventPreview';
 
 const Index = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
 
   useEffect(() => {
     dispatch(GetGiftItems());

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import GiftDetails from '../components/GiftDetails';
 import FormFooter from '../../../components/FormFooter';
 import { GiftContext } from '..';
+import DisplayCard from '../../../../../components/Card';
 
 const GiftCard = ({ step, setStep }) => {
   const { setAddedGiftItems, addedGiftItems, setGiftItems } =
@@ -55,51 +56,15 @@ const GiftCard = ({ step, setStep }) => {
             setGiftItems={setGiftItems}
           />
         )}
-        {data.map(gift => {
+        {data.map(item => {
           return (
-            <Box
-              w="285px"
-              minH="250px"
-              bg="white"
-              p="2.5"
-              borderRadius={10}
-              boxShadow="sm"
-              mb="5"
-              cursor="pointer"
-              key={gift.id}
-            >
-              <Image
-                src={gift?.image}
-                w="279"
-                h="142px"
-                borderRadius={10}
-                alt="gift item image"
-                display="block"
-                mx="auto"
-                mb="2.5"
-                onClick={() => openDrawer(gift)}
-              />
-              <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
-                {gift.title}
-              </Text>
-              <Flex alignItems="center" justifyContent="space-between">
-                <Text color="#27272E" fontWeight={600} fontSize={18}>
-                  ₦ {gift.amount}
-                </Text>
-                <Button
-                  fontSize={13}
-                  fontWeight={500}
-                  bg={addedGiftItems.includes(gift.id) ? 'grey' : '#00BFB2'}
-                  color="white"
-                  w="129px"
-                  h="40px"
-                  onClick={() => AddGift(gift.id)}
-                  id={gift.id}
-                >
-                  {addedGiftItems.includes(gift.id) ? 'Added' : 'Add to list'}
-                </Button>
-              </Flex>
-            </Box>
+            <DisplayCard
+              id={item.id}
+              data={item}
+              action={AddGift}
+              text="Add to Cart"
+              disabled={addedGiftItems.includes(item.id)}
+            />
           );
         })}
       </Flex>
