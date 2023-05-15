@@ -4,7 +4,6 @@ import GiftIcon from '../../../../assets/giftIconSmall.svg';
 
 
 const AsoebiHeader = ({ setOpenDrawer, setShowListDrawer, asoebiCount, asoebiCart,}) => {
-  const actionBtns = ['Purchase history', 'Gift list'];
 
   return (
     <Box mb="5">
@@ -13,7 +12,7 @@ const AsoebiHeader = ({ setOpenDrawer, setShowListDrawer, asoebiCount, asoebiCar
           mb="5"
           fontWeight={'medium'}
           fontSize={24}
-        >{`Gift List (${asoebiCount})`}</Heading>
+        >{`Asoebi List (${asoebiCount})`}</Heading>
         <Box>
           <Button
             bg="#CCF2F0"
@@ -23,7 +22,7 @@ const AsoebiHeader = ({ setOpenDrawer, setShowListDrawer, asoebiCount, asoebiCar
             ml="5"
             onClick={() => setShowListDrawer(true)}
           >
-            <Image src={GiftIcon} mr="1" /> Gift list ({asoebiCart.length})
+            <Image src={GiftIcon} mr="1" /> Asoebi list ({asoebiCart.length})
           </Button>
         </Box>
       </Flex>
