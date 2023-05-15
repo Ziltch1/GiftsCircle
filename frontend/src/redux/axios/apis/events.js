@@ -12,6 +12,10 @@ const GetEventGiftsApi = eventId => {
   return api.get(`gift/Get/EventGifts/${eventId}`);
 };
 
+const GetEventGuestsApi = eventId => {
+  return api.get(`/event/${eventId}/guests`);
+};
+
 const CreateEventApi1 = data => {
   return api.post(`/event/create`, data);
 };
@@ -51,6 +55,7 @@ const JoinEventGuestApi = data => {
 export {
   GetUserEventsApi,
   GetEventGiftsApi,
+  GetEventGuestsApi,
   CreateEventApi1,
   UpdateEventApi1,
   CreateEventApi2,

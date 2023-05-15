@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import {
   GetEventFundRaising,
   GetEventFundRaisingDonors,
+  GetEventGuests,
   GetEventMediaFiles,
   GetHostRecievedFiles,
   GetUserEvents,
@@ -49,6 +50,7 @@ const Index = () => {
 
   useEffect(() => {
     if (newEvent) {
+      dispatch(GetEventGuests(newEvent.id));
       dispatch(GetEventFundRaising(newEvent.id));
       dispatch(GetEventMediaFiles(newEvent.id));
       dispatch(GetHostRecievedFiles(newEvent.id));
