@@ -1,29 +1,17 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, createContext } from 'react';
 import AsoebiHeader from './subpages/AsoebiHeader';
 import { Box, Flex } from '@chakra-ui/react';
 import AsoebiListDrawer from './subpages/AsoebiListDrawer';
-import { GetAddedAsoebiItemsApi } from '../../../../redux/axios/apis/asoebi';
 import DisplayCard from '../../../../components/Card';
+import { useSelector } from 'react-redux';
 export const CartContext = createContext(null);
 
-const Index = ({ event }) => {
+const Index = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
-  const [data, setData] = useState([]);
   const [asoebiCart, setAsoebiCart] = useState([]);
-
-  const getAsoebi = async () => {
-    try {
-      const res = await GetAddedAsoebiItemsApi(event.id);
-      const data = await res.data;
-      setData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getAsoebi();
-  }, []);
+  const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
+  const [data, setData] = useState([]);
 
   const addAsoebi = id => {
     setAsoebiCart([...asoebiCart, id]);
@@ -56,13 +44,12 @@ const Index = ({ event }) => {
           alignItems="center"
           flexWrap="wrap"
         >
-          {data?.map(item => {
-            const newData = data?.find(x => x.id === item?.asoebiItem);
-            console.log(item, newData)
+          {eventAsoebis?.map(item => {
+            const newData = asoebiItems?.find(x => x.id === item?.asoebiItem);
             return (
               <DisplayCard
                 id={item.id}
-                data={item}
+                data={newData}
                 action={addAsoebi}
                 disabled={asoebiCart.includes(newData?.id)}
                 text="Purchase"

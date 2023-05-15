@@ -49,7 +49,7 @@ const DisplayCard = ({ id, data, disabled, action, text }) => {
             color="white"
             w="129px"
             h="40px"
-            onClick={() => action(id)}
+            onClick={() => action(data.id)}
             id={id}
           >
             {disabled ? 'Added to Cart' : text}

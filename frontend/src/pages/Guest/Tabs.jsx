@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useDebugValue} from 'react'
 import { Box, Flex, Button } from '@chakra-ui/react'
 import { useSelector } from 'react-redux';
 import { GetEventApi } from '../../redux/axios/apis/events';
@@ -12,6 +12,7 @@ const Tabs = ({navPosition, setNavPosition, event}) => {
     const links = ['About event', 'Gift List', 'Media', 'Asoebi'];
     const [fundraising, setFundraising] = useState(false)
     const [asoebi, setAsoebi] = useState(false)
+    const {eventAsoebis} = useSelector(state => state.event)
 
     const checkFundraising = async() => {
         try {
@@ -24,22 +25,16 @@ const Tabs = ({navPosition, setNavPosition, event}) => {
         }
     }
 
-    const checkAsoebi = async() => {
-        try {
-            const checkAsoebi = await GetAddedAsoebiItemsApi(event.id);
-            if (checkAsoebi.data) {
-                setAsoebi(true)
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-
     useEffect(() => {
         checkFundraising()
-        checkAsoebi()
     }, [])
+
+    useEffect(() => {
+        if(eventAsoebis.length > 0){
+            setAsoebi(true)
+        }
+        
+    }, [eventAsoebis])
 
     const handleClick = (index) => {
         setNavPosition(index);

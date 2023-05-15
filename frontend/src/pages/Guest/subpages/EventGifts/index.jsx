@@ -3,19 +3,24 @@ import GiftHeader from './subpages/GiftHeader';
 import { Box, Flex } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import ComplimentaryModal from './subpages/ComplimentaryModal';
-import GiftCard from './subpages/GiftCard';
 import GiftListDrawer from './subpages/GiftListDrawer';
+import DisplayCard from '../../../../components/Card';
 
 export const CartContext = createContext(null);
 
-const Index = ({ event }) => {
+const Index = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [data, setData] = useState([]);
   const { eventGifts } = useSelector(state => state.event);
+  const { giftItems } = useSelector(state => state.gift);
   const { complimentaryGifts } = useSelector(state => state.gift);
   const [giftCart, setGiftCart] = useState([]);
   const [complimentaryCart, setComplimentaryCart] = useState([]);
+
+  const addGift = id => {
+    setGiftCart([...giftCart, id]);
+  };
 
   useEffect(() => {
     if (eventGifts) {
@@ -30,6 +35,7 @@ const Index = ({ event }) => {
       localStorage.setItem('Cart', JSON.stringify(data));
     }
   }, [giftCart]);
+
 
   return (
     <Box>
@@ -65,16 +71,23 @@ const Index = ({ event }) => {
           giftCart={giftCart}
           complimentaryCart={complimentaryCart}
         />
-        <Flex alignItems="center" justifyContent='space-between' flexWrap="wrap">
-          {data.map(item => (
-            <GiftCard
-              event={event}
-              key={data.indexOf(item)}
-              gift={item}
-              giftCart={giftCart}
-              setGiftCart={setGiftCart}
-            />
-          ))}
+        <Flex
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+        >
+          {data.map(item => {
+            const giftItem = giftItems.find(x => x.id === item?.giftItemId);
+            return (
+              <DisplayCard
+                id={item.id}
+                data={giftItem}
+                action={addGift}
+                disabled={giftCart.includes(item?.giftItemId)}
+                text="Purchase"
+              />
+            );
+          })}
         </Flex>
       </CartContext.Provider>
     </Box>

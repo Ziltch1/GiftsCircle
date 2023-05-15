@@ -26,8 +26,8 @@ import {
 } from '../../axios/apis/fundraising';
 import {
   DeleteAsoebiApi,
-  GetAddedAsoebiItemsApi,
   GetAsoebiItemsApi,
+  GetEventAsoebiApi,
 } from '../../axios/apis/asoebi';
 import {
   GetEventMediaFilesApi,
@@ -70,7 +70,7 @@ const GetAsoebiItems = () => async () => {
 
 const GetEventAsoebis = id => async () => {
   try {
-    const res = await GetAddedAsoebiItemsApi(id);
+    const res = await GetEventAsoebiApi(id);
     dispatch(setEventAsoebis(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
