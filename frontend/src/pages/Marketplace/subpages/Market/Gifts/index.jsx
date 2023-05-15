@@ -97,6 +97,7 @@ const Index = ({ setShowProducts, data, cart, setCart }) => {
                 id={item.id}
                 data={item}
                 action={AddGift}
+                text="Add to Cart"
                 disabled={cart.includes(item.id)}
               />
             ))}

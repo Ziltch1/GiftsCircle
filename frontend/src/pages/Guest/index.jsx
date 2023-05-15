@@ -7,6 +7,8 @@ import { Box, Skeleton, Stack } from '@chakra-ui/react';
 import EventMedia from './subpages/EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
+  GetAsoebiItems,
+  GetEventAsoebis,
   GetEventGifts,
   GetGuestSentFiles,
 } from '../../redux/features/events/service';
@@ -52,6 +54,8 @@ const Index = () => {
     GetEvent();
     dispatch(GetEventGifts(id));
     dispatch(GetGuestSentFiles(id, user.id));
+    dispatch(GetEventAsoebis(id));
+    dispatch(GetAsoebiItems());
     dispatch(GetGiftItems());
     dispatch(GetComplimentaryGiftItems());
   }, [id]);

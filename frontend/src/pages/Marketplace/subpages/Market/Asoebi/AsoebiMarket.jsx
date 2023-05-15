@@ -113,6 +113,7 @@ const AsoebiMarket = ({ setShowProducts, eventId }) => {
               id={item.id}
               data={item}
               action={AddAsoebi}
+              text="Add to Cart"
               disabled={addedAsoebiItems.includes(item.id)}
             />
           ))}

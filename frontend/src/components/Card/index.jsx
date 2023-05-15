@@ -2,7 +2,7 @@ import { Box, Flex, Button, Text, Image } from '@chakra-ui/react';
 import DetailsDrawer from './component/Details';
 import { useState } from 'react';
 
-const DisplayCard = ({ id, data, disabled, action }) => {
+const DisplayCard = ({ id, data, disabled, action, text }) => {
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <Flex>
@@ -49,10 +49,10 @@ const DisplayCard = ({ id, data, disabled, action }) => {
             color="white"
             w="129px"
             h="40px"
-            onClick={() => action(id)}
+            onClick={() => action(data.id)}
             id={id}
           >
-            {disabled ? 'Added to Cart' : 'Add to Cart'}
+            {disabled ? 'Added to Cart' : text}
           </Button>
         </Flex>
       </Box>

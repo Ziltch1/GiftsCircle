@@ -1,32 +1,21 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, createContext } from 'react';
 import AsoebiHeader from './subpages/AsoebiHeader';
-import { Box, Flex, Heading } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import AsoebiCard from './subpages/AsoebiCard';
+import { Box, Flex } from '@chakra-ui/react';
 import AsoebiListDrawer from './subpages/AsoebiListDrawer';
-import { GetEventAsoebis } from '../../../../redux/features/events/service';
-import { GetAddedAsoebiItemsApi, GetAsoebiItemsApi } from '../../../../redux/axios/apis/asoebi';
+import DisplayCard from '../../../../components/Card';
+import { useSelector } from 'react-redux';
 export const CartContext = createContext(null);
 
-
-const Index = ({ event }) => {
+const Index = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
-  const [data, setData] = useState([]);
   const [asoebiCart, setAsoebiCart] = useState([]);
-  
-  const getAsoebi = async() => {
-    try {
-      const res = await GetAddedAsoebiItemsApi(event.id);
-      const data = await res.data;
-      setData(data)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  useEffect(() => {
-    getAsoebi();
-  }, []);
+  const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
+  const [data, setData] = useState([]);
+
+  const addAsoebi = id => {
+    setAsoebiCart([...asoebiCart, id]);
+  };
 
   return (
     <Box>
@@ -50,25 +39,24 @@ const Index = ({ event }) => {
           asoebiCart={asoebiCart}
         />
 
-        <Box>
-          {data ? 
-            <Flex justifyContent='space-between' alignItems='center' flexWrap='wrap'>
-            {data?.map((item) => 
-                <AsoebiCard
-                  event={event}
-                  key={data.indexOf(item)}
-                  ele={item}
-                  asoebi={data}
-                  asoebiCart={asoebiCart}
-                  setAsoebiCart={setAsoebiCart}
-                />)}
-            </Flex> 
-            : 
-            <Box>
-              <Heading fontWeight='semibold' fontSize={25}>No asoebi items added yet</Heading>
-            </Box>
-          }
-        </Box>
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+        >
+          {eventAsoebis?.map(item => {
+            const newData = asoebiItems?.find(x => x.id === item?.asoebiItem);
+            return (
+              <DisplayCard
+                id={item.id}
+                data={newData}
+                action={addAsoebi}
+                disabled={asoebiCart.includes(newData?.id)}
+                text="Purchase"
+              />
+            );
+          })}
+        </Flex>
       </CartContext.Provider>
     </Box>
   );
