@@ -11,6 +11,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
   const [showVideoModal, setShowVideoModal] = useState(false);
   const Data = useUpload(image, setShowModal, setImage);
 
+  console.log(image);
   const actionBtns = ['Uploaded by me', 'Sent to me'];
   const handleClick = index => {
     setNavPosition(index);
@@ -19,7 +20,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
   return (
     <Box mb="5">
       <LoadingModal setShowModal={setShowModal} open={modalOpen} />
-      {showVideoModal && <VideoModal setShowVideoModal={setShowVideoModal} />}
+      {showVideoModal && <VideoModal setShowVideoModal={setShowVideoModal} open={modalOpen} setShowModal={setShowModal} />}
       <Flex justifyContent="space-between">
         <Heading mb="5" fontWeight={'medium'} fontSize={24}>
           Media
