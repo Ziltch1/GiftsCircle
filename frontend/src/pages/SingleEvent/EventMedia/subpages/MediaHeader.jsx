@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { Box, Heading, Flex, Button, FormLabel, Input, Stack } from '@chakra-ui/react';
 import LoadingModal from '../../components/LoadingModal';
 import { useUpload } from '../Hooks';
-import AudioModal from './AudioModal';
 import VideoModal from './VideoModal';
 
 
 const MediaHeader = ({ navPosition, setNavPosition }) => {
   const [image, setImage] = useState(null);
   const [modalOpen, setShowModal] = useState(false);
-  const [showAudioModal, setShowAudioModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const Data = useUpload(image, setShowModal, setImage);
 
+  console.log(image);
   const actionBtns = ['Uploaded by me', 'Sent to me'];
   const handleClick = index => {
     setNavPosition(index);
@@ -21,13 +20,28 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
   return (
     <Box mb="5">
       <LoadingModal setShowModal={setShowModal} open={modalOpen} />
-      {showAudioModal && <AudioModal setShowAudioModal={setShowAudioModal} />}
-      {showVideoModal && <VideoModal setShowVideoModal={setShowVideoModal} />}
+      {showVideoModal && <VideoModal setShowVideoModal={setShowVideoModal} open={modalOpen} setShowModal={setShowModal} />}
       <Flex justifyContent="space-between">
         <Heading mb="5" fontWeight={'medium'} fontSize={24}>
           Media
         </Heading>
 
+        <Stack direction='row' spacing={3}>
+          <Button
+            onClick={() => setShowVideoModal(true)}
+            w="150px"
+            h='45px'
+            color="white"
+            bg="#00BFB2"
+            fontSize={14}
+            borderRadius="5px"
+            px="28px"
+            py="11px"
+            textAlign="center"
+            fontWeight='medium'
+          >
+            Record video
+          </Button>
           <FormLabel
             htmlFor="upload"
             w="210px"
@@ -49,6 +63,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
               onChange={e => setImage(e.target.files)}
             />
           </FormLabel>
+        </Stack>
       </Flex>
       <Box fontSize={14} fontWeight="semibold">
         <Flex alignItems={'center'} gap={4}>

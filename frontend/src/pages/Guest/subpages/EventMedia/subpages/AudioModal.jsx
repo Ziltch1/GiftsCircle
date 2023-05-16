@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {
     Box,
     Heading,
@@ -17,8 +17,22 @@ import {FaMicrophone, FaStop, FaPause, FaTrash} from 'react-icons/fa'
 import {BiSend} from 'react-icons/bi'
 
 const AudioModal = ({setShowAudioModal}) => {
-    const { audioURL, audioData, timer, recordingStatus, cancelRecording, saveRecordedAudio, startRecording } = useRecorder();
+    const { audioURL, audioData, timer, recordingStatus, cancelRecording, saveRecordedAudio, startRecording, } = useRecorder();
     const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+    const [file, setFile] = useState(null)
+
+    const blobToFile = async (audioData, fileName) => {
+        return await new File([audioData], fileName, { lastModified: new Date().getTime(), type: audioData?.type })
+    }
+
+    useEffect(() => {
+        if (recordingStatus === 'save') {
+            blobToFile(audioData, 'audio.mp3').then((file) => {
+                setFile(file);
+            })
+        }
+    }, [recordingStatus])
+
     const closeModal = () => {
         setShowAudioModal(false);
     };

@@ -69,9 +69,11 @@ const Header = () => {
                     />
                   </MenuButton>
                   <MenuList zIndex={'overlay'}>
+                    <Link to='/dashboard/settings'>
                     <MenuItem fontSize={16} fontWeight={500}>
                       Account
                     </MenuItem>
+                    </Link>
                     <MenuItem fontSize={16} fontWeight={500}>
                       Security
                     </MenuItem>
