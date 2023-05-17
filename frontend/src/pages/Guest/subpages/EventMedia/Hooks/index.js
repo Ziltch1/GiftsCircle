@@ -15,6 +15,7 @@ const useUpload = (data, setShowModal, setImage) => {
   useEffect(() => {
     if (data) {
       setShowModal(true);
+      console.log(data);
       if (
         data.length === 1 &&
         (data[0].type.includes('video') || data[0].type.includes('audio'))

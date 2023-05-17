@@ -56,7 +56,7 @@ const GetEventGifts = id => async () => {
     dispatch(setEventGifts(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -76,7 +76,7 @@ const GetAsoebiItems = () => async () => {
     dispatch(setAsoebisItems(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -86,7 +86,7 @@ const GetEventAsoebis = id => async () => {
     dispatch(setEventAsoebis(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
