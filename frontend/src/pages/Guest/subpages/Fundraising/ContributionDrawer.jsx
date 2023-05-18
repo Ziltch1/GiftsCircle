@@ -7,29 +7,26 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Button,
   useDisclosure,
   Box,
   Text,
   Heading,
-  Textarea,
   Input,
   FormLabel,
-  Checkbox,
   FormControl,
 } from '@chakra-ui/react';
-import axiosInstance from '../../../../redux/axios/axios';
-import { setFundRaising } from '../../../../redux/features/events/eventSlice';
 import { dispatch } from '../../../../redux/store';
 import PaymentButton from '../../../../components/Buttons/PaymentButton';
+import { DonateFundRaising } from '../../../../redux/features/events/service';
 
-const ContributionDrawer = ({ setShowDrawer, id, fundRaising }) => {
+const ContributionDrawer = ({ setShowDrawer, fundRaising }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   const [amount, setAmount] = useState(0);
-  const [title, setTitle] = useState('');
-  const [description, setDesciption] = useState('');
-  const [image, setImage] = useState(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState(null);
+  const [tel, setTel] = useState(null);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const btnRef = React.useRef();
 
@@ -38,19 +35,18 @@ const ContributionDrawer = ({ setShowDrawer, id, fundRaising }) => {
   };
 
   const handleClick = async () => {
-    const formData = new FormData();
-    formData.append('eventId', id);
-    formData.append('amount', amount);
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('image', image);
+    const formData = {
+      fundId: fundRaising.id,
+      firstName,
+      lastName,
+      email,
+      tel,
+      amount,
+    };
 
     if (!btnDisabled) {
       try {
-        const res = await axiosInstance.post('/fundRaising/create', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        dispatch(setFundRaising(res.data));
+        dispatch(DonateFundRaising(formData, fundRaising.eventId));
         setShowDrawer(false);
       } catch (error) {
         console.log(error);
@@ -59,12 +55,18 @@ const ContributionDrawer = ({ setShowDrawer, id, fundRaising }) => {
   };
 
   useEffect(() => {
-    if (amount === '' || title === '' || description === '' || image === '') {
+    if (
+      amount === '' ||
+      firstName === '' ||
+      lastName === '' ||
+      email === '' ||
+      tel === ''
+    ) {
       setBtnDisabled(true);
     } else {
       setBtnDisabled(false);
     }
-  }, [amount, title, description, image]);
+  }, [amount, firstName, lastName, email, tel]);
 
   return (
     <>
@@ -98,8 +100,9 @@ const ContributionDrawer = ({ setShowDrawer, id, fundRaising }) => {
                   fontSize="14px"
                   placeholder="e.g  John"
                   bg="#F4F4F4"
-                  value={title}
-                  onChange={e => setTitle(e.target.value)}
+                  id="firstname"
+                  value={firstName}
+                  onChange={e => setFirstName(e.target.value)}
                 />
               </Box>
               <Box fontSize={'13px'} mb="5">
@@ -112,8 +115,9 @@ const ContributionDrawer = ({ setShowDrawer, id, fundRaising }) => {
                   placeholder="e.g Joshua"
                   fontWeight="normal"
                   bg="#F4f4f4"
-                  value={description}
-                  onChange={e => setDesciption(e.target.value)}
+                  id="lastname"
+                  value={lastName}
+                  onChange={e => setLastName(e.target.value)}
                 />
               </Box>
               <Box fontSize={'13px'} mb="5">
@@ -128,7 +132,8 @@ const ContributionDrawer = ({ setShowDrawer, id, fundRaising }) => {
                   fontWeight="normal"
                   bg="#F4f4f4"
                   placeholder="e.g john@gmail.com"
-                  onChange={e => setImage(e.target.value)}
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                 />
               </Box>
 
@@ -140,11 +145,12 @@ const ContributionDrawer = ({ setShowDrawer, id, fundRaising }) => {
                   type="text"
                   color="#A8A8A8"
                   fontSize="14px"
-                  id="email"
+                  id="tel"
                   fontWeight="normal"
                   bg="#F4f4f4"
                   placeholder="e.g +234757583856"
-                  onChange={e => setImage(e.target.value)}
+                  value={tel}
+                  onChange={e => setTel(e.target.value)}
                 />
               </Box>
 
@@ -167,7 +173,7 @@ const ContributionDrawer = ({ setShowDrawer, id, fundRaising }) => {
             <DrawerFooter>
               <PaymentButton
                 amount={amount}
-                action={closeModal}
+                action={handleClick}
                 text="Contribute"
               />
             </DrawerFooter>

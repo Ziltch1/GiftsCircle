@@ -108,7 +108,7 @@ const Donate = async (data) => {
         lastName: data.lastName,
         email: data.email,
         phone: data.tel,
-        amount: data.amount,
+        amount: parseInt(data.amount),
         date: new Date(Date.now()),
         fundId: data.fundId,
       },
@@ -119,7 +119,7 @@ const Donate = async (data) => {
         id: fundRaising.id,
       },
       data: {
-        amountPaid: fundRaising.amountPaid + data.amount,
+        amountPaid: fundRaising.amountPaid + parseInt(data.amount),
       },
     });
     await prisma.$disconnect();
@@ -146,6 +146,7 @@ const GetFundDonors = async (id) => {
   await prisma.$disconnect();
   return donors;
 };
+
 
 const DeleteFundRaising = async (id) => {
   let fundRaising = await prisma.fundRaising.delete({

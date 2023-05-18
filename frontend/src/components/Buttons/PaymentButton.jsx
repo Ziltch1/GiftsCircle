@@ -13,7 +13,6 @@ const PaymentButton = ({ amount, action, text }) => {
     publicKey: 'pk_test_29904691e1634d5c16a66b00afd15548bea054f5',
     text: text ? text : `Check Out N${amount}`,
     onSuccess: response => {
-      console.log(response);
       dispatch(
         createResponse({
           type: 'Success',
@@ -21,6 +20,7 @@ const PaymentButton = ({ amount, action, text }) => {
           title: 'Payment Successful',
         })
       );
+      console.log(response)
       action();
     },
     onClose: () =>
