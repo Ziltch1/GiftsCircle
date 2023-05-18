@@ -1,0 +1,15 @@
+.paystack-button {
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  background-color: #00bfb2;
+  padding: 8px;
+  font-weight: bold;
+  color: #FAFAFA;
+  border: none;
+  border-radius: 8px;
+  height: 45px;
+  border: 1.5px solid #FAFAFA;
+}
