@@ -4,6 +4,10 @@ const CreateFundraisingApi = data => {
   return api.post(`/fundRaising/create`, data);
 };
 
+const DonateFundraisingApi = data => {
+  return api.post(`/fundRaising/Donate`, data);
+};
+
 const GetFundraisingApi = id => {
   return api.get(`/fundRaising/${id}`);
 };
@@ -18,6 +22,7 @@ const UpdateFundraisingStatusApi = data => {
 
 export {
   CreateFundraisingApi,
+  DonateFundraisingApi,
   GetFundraisingApi,
   UpdateFundraisingStatusApi,
   GetFundraisingDonorsApi,

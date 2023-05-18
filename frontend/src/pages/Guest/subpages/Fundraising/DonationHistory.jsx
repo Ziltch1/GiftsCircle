@@ -4,7 +4,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -15,6 +14,7 @@ import { useSelector } from 'react-redux';
 
 const DonationHistory = () => {
   const { fundRaisingDonors } = useSelector(state => state.event);
+
   return (
     <Box>
       <Heading mb="4" fontSize={24} fontWeight={500}>
@@ -33,40 +33,21 @@ const DonationHistory = () => {
             </Thead>
             <Tbody>
               {fundRaisingDonors?.map((ele, index) => {
-                <Tr fontSize={14}>
-                  <Td>{index}</Td>
-                  <Td>
-                    {ele.firstname} {ele.lastname}
-                  </Td>
-                  <Td>{ele.amount}</Td>
-                  <Td>{ele.date}</Td>
-                </Tr>;
+                return (
+                  <Tr fontSize={14}>
+                    <Td>{index + 1 }</Td>
+                    <Td>
+                      {ele.firstName} {ele.lastName}
+                    </Td>
+                    <Td>{ele.amount}</Td>
+                    <Td>
+                      {new Date(ele.date).toLocaleDateString() +
+                        '  ' +
+                        new Date(ele.date).toLocaleTimeString()}{' '}
+                    </Td>
+                  </Tr>
+                );
               })}
-
-              <Tr fontSize={14}>
-                <Td>1</Td>
-                <Td>Khadijat Abdulkareem</Td>
-                <Td>₦ 12,000</Td>
-                <Td>June 12th, 2022, 9:00am</Td>
-              </Tr>
-              <Tr fontSize={14}>
-                <Td>1</Td>
-                <Td>Khadijat Abdulkareem</Td>
-                <Td>₦ 12,000</Td>
-                <Td>June 12th, 2022, 9:00am</Td>
-              </Tr>
-              <Tr fontSize={14}>
-                <Td>1</Td>
-                <Td>Khadijat Abdulkareem</Td>
-                <Td>₦ 12,000</Td>
-                <Td>June 12th, 2022, 9:00am</Td>
-              </Tr>
-              <Tr fontSize={14}>
-                <Td>1</Td>
-                <Td>Khadijat Abdulkareem</Td>
-                <Td>₦ 12,000</Td>
-                <Td>June 12th, 2022, 9:00am</Td>
-              </Tr>
             </Tbody>
           </Table>
         </TableContainer>

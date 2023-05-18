@@ -22,6 +22,7 @@ import {
 } from './eventSlice';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 import {
+  DonateFundraisingApi,
   GetFundraisingApi,
   GetFundraisingDonorsApi,
   UpdateFundraisingStatusApi,
@@ -140,6 +141,18 @@ const GetGuestSentFiles = (eventId, userId) => async () => {
   }
 };
 
+const DonateFundRaising = (data, eventId) => async () => {
+  try {
+    const res = await DonateFundraisingApi(data);
+    console.log(res.data)
+    dispatch(GetEventFundRaisingDonors(res.data.fundId));
+    dispatch(GetEventFundRaising(eventId));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
 const StopFundRaising = data => async () => {
   try {
     const res = await UpdateFundraisingStatusApi(data);
@@ -179,6 +192,7 @@ export {
   DeleteEvent,
   GetEventFundRaising,
   StopFundRaising,
+  DonateFundRaising,
   GetEventFundRaisingDonors,
   GetEventMediaFiles,
   GetHostRecievedFiles,

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ContributionDrawer from './ContributionDrawer';
 
-const FundraisingCard = ({ event }) => {
+const FundraisingCard = () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const { fundRaising } = useSelector(state => state.event);
 
