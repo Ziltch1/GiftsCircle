@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import GiftListItem from './GiftListItem';
 import { useSelector } from 'react-redux';
+import PaymentButton from '../../../../../components/Buttons/PaymentButton';
 
 const GiftListDrawer = ({
   setShowListDrawer,
@@ -121,15 +122,10 @@ const GiftListDrawer = ({
             </Box>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
-            <Button
-              fontSize={13}
-              color="white"
-              ml="5"
-              fontWeight="medium"
-              bg="#00BFB2"
-            >
-              Checkout (₦{giftAmount + complimentaryAmount})
-            </Button>
+            <PaymentButton
+              amount={giftAmount + complimentaryAmount}
+              action={closeModal}
+            />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
