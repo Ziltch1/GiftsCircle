@@ -109,7 +109,7 @@ router.delete("/:id", EnsureAuthenticated, async (req, res) => {
       .send(
         ResponseDTO(
           "Success",
-          `Gift with id ${req.params.id} deleted successfully`
+          `Asoebi with id ${req.params.id} deleted successfully`
         )
       );
   } catch (err) {

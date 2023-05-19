@@ -8,6 +8,7 @@ import { dispatch } from '../../store';
 import { createResponse } from '../../utils/UtilSlice';
 import {
   setAsoebisItems,
+  setEventAsoebiBuyers,
   setEventAsoebis,
   setEventGifts,
   setEventGuests,
@@ -28,9 +29,11 @@ import {
   UpdateFundraisingStatusApi,
 } from '../../axios/apis/fundraising';
 import {
+  BuyEventAsoebiApi,
   DeleteAsoebiApi,
   GetAsoebiItemsApi,
   GetEventAsoebiApi,
+  GetEventAsoebiBuyersApi,
 } from '../../axios/apis/asoebi';
 import {
   GetEventMediaFilesApi,
@@ -47,7 +50,7 @@ const GetUserEvents = id => async () => {
     dispatch(setLoading(false));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -85,6 +88,16 @@ const GetEventAsoebis = id => async () => {
   try {
     const res = await GetEventAsoebiApi(id);
     dispatch(setEventAsoebis(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    // dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+const GetEventAsoebiBuyers = id => async () => {
+  try {
+    const res = await GetEventAsoebiBuyersApi(id);
+    dispatch(setEventAsoebiBuyers(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
     // dispatch(createResponse(ErrorHandler(error)));
@@ -141,10 +154,18 @@ const GetGuestSentFiles = (eventId, userId) => async () => {
   }
 };
 
+const BuyEventAsoebi = data => async () => {
+  try {
+    await BuyEventAsoebiApi(data);
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    // dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
 const DonateFundRaising = (data, eventId) => async () => {
   try {
     const res = await DonateFundraisingApi(data);
-    console.log(res.data)
     dispatch(GetEventFundRaisingDonors(res.data.fundId));
     dispatch(GetEventFundRaising(eventId));
   } catch (error) {
@@ -189,8 +210,10 @@ export {
   GetEventGifts,
   GetEventGuests,
   GetEventAsoebis,
+  GetEventAsoebiBuyers,
   DeleteEvent,
   GetEventFundRaising,
+  BuyEventAsoebi,
   StopFundRaising,
   DonateFundRaising,
   GetEventFundRaisingDonors,

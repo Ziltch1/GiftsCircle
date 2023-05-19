@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useMemo } from 'react';
 import AsoebiHeader from './subpages/AsoebiHeader';
 import { Box, Flex } from '@chakra-ui/react';
 import AsoebiListDrawer from './subpages/AsoebiListDrawer';
@@ -7,37 +7,47 @@ import { useSelector } from 'react-redux';
 export const CartContext = createContext(null);
 
 const Index = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
-  const [asoebiCart, setAsoebiCart] = useState([]);
   const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
   const [data, setData] = useState([]);
+  const [AsoebiItems, setAsoebiItems] = useState([]);
+  const [addedAsoebiItems, setAddedAsoebiItems] = useState([]);
+  const [amount, setAmount] = useState(0);
 
   const addAsoebi = id => {
-    setAsoebiCart([...asoebiCart, id]);
+    let newItem = eventAsoebis.find(x => x.asoebiItem === id);
+    if (!addedAsoebiItems.includes(newItem.id)) {
+      setAsoebiItems([...AsoebiItems, newItem]);
+      setAddedAsoebiItems([...addedAsoebiItems, newItem.id]);
+    }
   };
+
+  const contextValue = useMemo(
+    () => ({
+      data: [...eventAsoebis],
+      AsoebiItems,
+      addedAsoebiItems,
+      amount,
+      asoebiItems,
+    }),
+    [AsoebiItems, addedAsoebiItems, amount, eventAsoebis, asoebiItems]
+  );
 
   return (
     <Box>
       <CartContext.Provider
         value={{
-          asoebiCart,
-          asoebiItems: data,
+          ...contextValue,
+          setAddedAsoebiItems,
+          setAsoebiItems,
+          setData,
+          setAmount,
         }}
       >
         {showListDrawer && (
-          <AsoebiListDrawer
-            setShowListDrawer={setShowListDrawer}
-            asoebiCart={asoebiCart}
-            setAsoebiCart={setAsoebiCart}
-          />
+          <AsoebiListDrawer setShowListDrawer={setShowListDrawer} />
         )}
-        <AsoebiHeader
-          asoebiCount={data?.length}
-          setOpenDrawer={setOpenDrawer}
-          setShowListDrawer={setShowListDrawer}
-          asoebiCart={asoebiCart}
-        />
+        <AsoebiHeader setShowListDrawer={setShowListDrawer} />
 
         <Flex
           justifyContent="space-between"
@@ -51,7 +61,7 @@ const Index = () => {
                 id={item.id}
                 data={newData}
                 action={addAsoebi}
-                disabled={asoebiCart.includes(newData?.id)}
+                disabled={addedAsoebiItems.includes(item.id)}
                 text="Purchase"
               />
             );

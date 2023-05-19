@@ -118,6 +118,7 @@ model user {
   Media                Media[]
   ComplimentaryMessage ComplimentaryMessage[]
   Guests               Guests[]
+  asoebiTransaction    asoebiTransaction[]
 }
 
 enum Role {
@@ -195,12 +196,13 @@ model asoebiTransaction {
   amount       Int
   date         DateTime
   asoebiId     String      @db.VarChar(255)
-  purchasedBy  String      @db.VarChar(50)
+  purchasedBy  user        @relation(fields: [userId], references: [id])
   quantity     Int
   delivered    Boolean     @default(false)
   eventId      String      @db.VarChar(50)
   asoebiitem   asoebiitem? @relation(fields: [asoebiitemId], references: [id])
   asoebiitemId String?     @db.VarChar(255)
+  userId       String      @db.VarChar(255)
 }
 
 model sourvenirItem {
