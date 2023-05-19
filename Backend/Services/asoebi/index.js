@@ -99,7 +99,7 @@ const Buy = async (data) => {
         id: uuidv4(),
         amount: data.amount,
         asoebiId: data.asoebiId,
-        purchasedBy: data.purchasedBy,
+        userId: data.userId,
         eventId: data.eventId,
         quantity: data.quantity,
         date: new Date(Date.now()),
@@ -127,12 +127,17 @@ const Buy = async (data) => {
 const GetAsoebiBuyers = async (id) => {
   let buyers = await prisma.asoebiTransaction.findMany({
     where: {
-      asoebiId: id,
+      eventId: id,
     },
     select: {
       amount: true,
       quantity: true,
-      purchasedBy: true,
+      purchasedBy: {
+        select: {
+          firstname: true,
+          lastname: true,
+        },
+      },
       id: true,
       date: true,
     },

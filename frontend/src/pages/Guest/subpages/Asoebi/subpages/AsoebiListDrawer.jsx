@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -11,45 +11,57 @@ import {
   Box,
   Heading,
   Flex,
-  Button,
 } from '@chakra-ui/react';
 import GiftListItem from './AsoebiListItem';
-import { GetAsoebiItemsApi } from '../../../../../redux/axios/apis/asoebi';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
+import { CartContext } from '..';
+import { useSelector } from 'react-redux';
+import { dispatch } from '../../../../../redux/store';
+import { BuyEventAsoebi } from '../../../../../redux/features/events/service';
 
-const AsoebiListDrawer = ({ setShowListDrawer, asoebiCart, setAsoebiCart }) => {
-  const [newAsoebi, setNewAsoebi] = useState([]);
-  const [data, setData] = useState([]);
-
-  const getAsoebi = async () => {
-    try {
-      const res = await GetAsoebiItemsApi();
-      const data = await res.data;
-      setData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getAsoebi();
-  }, []);
-
-  let asoebiAmount = 0;
+const AsoebiListDrawer = ({ setShowListDrawer }) => {
+  const {
+    AsoebiItems,
+    amount,
+    setAmount,
+    asoebiItems,
+    setAddedAsoebiItems,
+    setAsoebiItems,
+  } = useContext(CartContext);
+  const { user } = useSelector(state => state.user);
+  const { newEvent } = useSelector(state => state.event);
 
   useEffect(() => {
-    const asoebiCartSet = new Set(asoebiCart);
-    const filteredArray = data.filter(obj => asoebiCartSet.has(obj.id));
-    setNewAsoebi(filteredArray);
-  }, [asoebiCart, data]);
-
-  asoebiAmount = newAsoebi?.reduce((acc, curr) => acc + curr.amount, 0);
+    let totalAmount = 0;
+    AsoebiItems.forEach(ele => {
+      const newData = asoebiItems?.find(x => x.id === ele?.asoebiItem);
+      totalAmount = totalAmount + newData.amount;
+    });
+    setAmount(totalAmount);
+  }, [AsoebiItems, setAmount]);
 
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const btnRef = React.useRef();
 
   const closeModal = () => {
     setShowListDrawer(false);
+  };
+
+  const HandleSubmit = () => {
+    AsoebiItems.forEach(async ele => {
+      const amount = asoebiItems?.find(x => x.id === ele?.asoebiItem).amount;
+      const formData = {
+        amount: amount,
+        asoebiId: ele.id,
+        userId: user.id,
+        eventId: newEvent.id,
+        quantity: 1,
+      };
+      dispatch(BuyEventAsoebi(formData));
+    });
+    setShowListDrawer(false);
+    setAddedAsoebiItems([]);
+    setAsoebiItems([]);
   };
 
   return (
@@ -74,23 +86,18 @@ const AsoebiListDrawer = ({ setShowListDrawer, asoebiCart, setAsoebiCart }) => {
 
           <DrawerBody>
             <Flex justifyContent="space-between" flexWrap="wrap" mb="5">
-              {newAsoebi.map(ele => (
-                <GiftListItem
-                  id={ele.id}
-                  item={ele}
-                  asoebiCart={asoebiCart}
-                  setAsoebiCart={setAsoebiCart}
-                />
+              {AsoebiItems.map(ele => (
+                <GiftListItem id={ele.id} item={ele} />
               ))}
             </Flex>
             <Box mb="5" textAlign="right">
               <Heading fontWeight="medium" fontSize="18px" mb="2">
-                Subtotal (₦{asoebiAmount})
+                Subtotal (₦{amount})
               </Heading>
             </Box>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
-            <PaymentButton amount={asoebiAmount} action={closeModal} />
+            <PaymentButton amount={amount} action={HandleSubmit} />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Heading, Flex, Button, Image } from '@chakra-ui/react';
 import GiftIcon from '../../../../assets/giftIconSmall.svg';
+import { CartContext } from '..';
 
-
-const AsoebiHeader = ({ setOpenDrawer, setShowListDrawer, asoebiCount, asoebiCart,}) => {
+const AsoebiHeader = ({ setShowListDrawer }) => {
+  const { addedAsoebiItems, data } = useContext(CartContext);
 
   return (
     <Box mb="5">
@@ -12,7 +13,7 @@ const AsoebiHeader = ({ setOpenDrawer, setShowListDrawer, asoebiCount, asoebiCar
           mb="5"
           fontWeight={'medium'}
           fontSize={24}
-        >{`Asoebi List (${asoebiCount})`}</Heading>
+        >{`Asoebi List (${data.length})`}</Heading>
         <Box>
           <Button
             bg="#CCF2F0"
@@ -22,7 +23,8 @@ const AsoebiHeader = ({ setOpenDrawer, setShowListDrawer, asoebiCount, asoebiCar
             ml="5"
             onClick={() => setShowListDrawer(true)}
           >
-            <Image src={GiftIcon} mr="1" /> Asoebi list ({asoebiCart.length})
+            <Image src={GiftIcon} mr="1" /> Asoebi list (
+            {addedAsoebiItems.length})
           </Button>
         </Box>
       </Flex>
