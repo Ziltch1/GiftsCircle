@@ -3,24 +3,22 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { CartContext } from '..';
 
-const AsoebiListItem = ({ item }) => {
+const ComplimentaryListItem = ({ id, item }) => {
   const {
-    addedAsoebiItems,
-    setAddedAsoebiItems,
-    setAsoebiItems,
-    AsoebiItems,
-    asoebiItems,
+    addedComplimentaryGiftItems,
+    setAddedComplimentaryGiftItems,
+    ComplimentaryItems,
+    setComplimentaryItems,
   } = useContext(CartContext);
 
   const handleDelete = id => {
-    const filteredArray = addedAsoebiItems.filter(obj => obj !== id);
-    setAddedAsoebiItems(filteredArray);
+    const filteredArray = addedComplimentaryGiftItems.filter(obj => obj !== id);
 
-    const filteredAsoebi = AsoebiItems.filter(obj => obj.id !== id);
-    setAsoebiItems(filteredAsoebi);
+    setAddedComplimentaryGiftItems(filteredArray);
+
+    const filteredGifts = ComplimentaryItems.filter(obj => obj.id !== id);
+    setComplimentaryItems(filteredGifts);
   };
-
-  const newData = asoebiItems?.find(x => x.id === item?.asoebiItem);
 
   return (
     <Box
@@ -34,7 +32,7 @@ const AsoebiListItem = ({ item }) => {
     >
       <Flex gap={3}>
         <Image
-          src={newData?.image}
+          src={item.image}
           w="90px"
           h="90px"
           borderRadius={5}
@@ -43,7 +41,7 @@ const AsoebiListItem = ({ item }) => {
         />
         <Box w="350px">
           <Heading fontWeight="medium" fontSize="14px" lineHeight={6} mb="2">
-            {newData?.details}
+            {item.details}
           </Heading>
           <Button
             bg="none"
@@ -53,7 +51,7 @@ const AsoebiListItem = ({ item }) => {
             alignItems="center"
             gap={3}
             color="#F5222D"
-            onClick={() => handleDelete(item?.id)}
+            onClick={() => handleDelete(id)}
           >
             <DeleteIcon fontSize={16} />
             <Text fontWeight="medium" fontSize={14}>
@@ -63,7 +61,7 @@ const AsoebiListItem = ({ item }) => {
         </Box>
         <Box>
           <Text fontWeight="bold" fontSize={15}>
-            ₦ {newData?.amount}
+            ₦ {item.amount}
           </Text>
         </Box>
       </Flex>
@@ -71,4 +69,4 @@ const AsoebiListItem = ({ item }) => {
   );
 };
 
-export default AsoebiListItem;
+export default ComplimentaryListItem;

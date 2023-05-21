@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -15,22 +15,32 @@ import {
 } from '@chakra-ui/react';
 import ContributionModal from '../../ContributionModal';
 import DisplayCard from '../../../../../components/Card';
+import { CartContext } from '..';
 
-const ComplimentaryModal = ({
-  setOpenDrawer,
-  data,
-  setComplimentaryCart,
-  complimentaryCart,
-}) => {
+const ComplimentaryModal = ({ setOpenDrawer }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const [openModal, setOpenModal] = useState(false);
   const btnRef = React.useRef();
+  const {
+    complimentaryGifts,
+    setAddedComplimentaryGiftItems,
+    setComplimentaryItems,
+    addedComplimentaryGiftItems,
+    ComplimentaryItems,
+  } = useContext(CartContext);
   const closeModal = () => {
     setOpenDrawer(false);
   };
 
   const addGift = id => {
-    setComplimentaryCart([...complimentaryCart, id]);
+    let newItem = complimentaryGifts.find(x => x.id === id);
+    if (!addedComplimentaryGiftItems.includes(newItem.id)) {
+      setComplimentaryItems([...ComplimentaryItems, newItem]);
+      setAddedComplimentaryGiftItems([
+        ...addedComplimentaryGiftItems,
+        newItem.id,
+      ]);
+    }
   };
 
   return (
@@ -55,7 +65,7 @@ const ComplimentaryModal = ({
 
           <DrawerBody>
             <Flex justifyContent="space-between" flexWrap="wrap">
-              {data.map(item => (
+              {complimentaryGifts.map(item => (
                 <>
                   {openModal && (
                     <ContributionModal
@@ -67,7 +77,7 @@ const ComplimentaryModal = ({
                     id={item.id}
                     data={item}
                     action={addGift}
-                    disabled={complimentaryCart.includes(item?.id)}
+                    disabled={addedComplimentaryGiftItems.includes(item?.id)}
                     text="Purchase"
                   />
                 </>

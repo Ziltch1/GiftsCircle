@@ -2355,7 +2355,7 @@
             "type": "string",
             "required": true
           },
-          "purchasedBy": {
+          "userId": {
             "type": "string",
             "required": true
           },

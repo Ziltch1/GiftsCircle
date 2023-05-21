@@ -10,6 +10,7 @@ const initialState = {
   fundRaisingDonors: null,
   eventAsoebis: [],
   asoebiItems: null,
+  eventAsoebiBuyers: null,
   eventMediaFiles: null,
   hostRecievedFiles: null,
   guestSentFiles: null,
@@ -33,6 +34,9 @@ const EventSlice = createSlice({
     },
     setEventAsoebis: (state, action) => {
       state.eventAsoebis = action.payload;
+    },
+    setEventAsoebiBuyers: (state, action) => {
+      state.eventAsoebiBuyers = action.payload;
     },
     setNewEvent: (state, action) => {
       state.newEvent = action.payload;
@@ -64,6 +68,7 @@ export const {
   setEventGuests,
   setAsoebisItems,
   setEventAsoebis,
+  setEventAsoebiBuyers,
   setNewEvent,
   setLoading,
   setFundRaising,

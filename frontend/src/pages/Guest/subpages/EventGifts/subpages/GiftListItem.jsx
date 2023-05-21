@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
+import { CartContext } from '..';
 
-const GiftListItem = ({ item, giftCart, setGiftCart }) => {
+const GiftListItem = ({ id, item }) => {
+  const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems } =
+    useContext(CartContext);
+
   const handleDelete = id => {
-    const filteredArray = giftCart.filter(obj => obj !== id);
-    setGiftCart(filteredArray);
+    const filteredArray = addedGiftItems.filter(obj => obj !== id);
+
+    setAddedGiftItems(filteredArray);
+
+    const filteredGifts = GiftItems.filter(obj => obj.id !== id);
+    setGiftItems(filteredGifts);
   };
-  
+
   return (
     <Box
       bg="#FAFAFA"
@@ -20,7 +28,7 @@ const GiftListItem = ({ item, giftCart, setGiftCart }) => {
     >
       <Flex gap={3}>
         <Image
-          src={item?.image}
+          src={item.image}
           w="90px"
           h="90px"
           borderRadius={5}
@@ -29,7 +37,7 @@ const GiftListItem = ({ item, giftCart, setGiftCart }) => {
         />
         <Box w="350px">
           <Heading fontWeight="medium" fontSize="14px" lineHeight={6} mb="2">
-            {item?.details}
+            {item.details}
           </Heading>
           <Button
             bg="none"
@@ -39,7 +47,7 @@ const GiftListItem = ({ item, giftCart, setGiftCart }) => {
             alignItems="center"
             gap={3}
             color="#F5222D"
-            onClick={() => handleDelete(item?.id)}
+            onClick={() => handleDelete(id)}
           >
             <DeleteIcon fontSize={16} />
             <Text fontWeight="medium" fontSize={14}>
@@ -49,7 +57,7 @@ const GiftListItem = ({ item, giftCart, setGiftCart }) => {
         </Box>
         <Box>
           <Text fontWeight="bold" fontSize={15}>
-            ₦ {item?.amount}
+            ₦ {item.amount}
           </Text>
         </Box>
       </Flex>

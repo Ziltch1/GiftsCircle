@@ -20,7 +20,7 @@ const GetGiftItems = () => async () => {
     dispatch(setGiftItems(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -30,7 +30,7 @@ const GetComplimentaryGiftItems = () => async () => {
     dispatch(setComplimentaryGifts(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -40,7 +40,7 @@ const GetUserPurchasedGifts = id => async () => {
     dispatch(setUserPurchasedGifts(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -50,7 +50,7 @@ const DeleteGiftItems = (id, eventId) => async () => {
     dispatch(GetEventGifts(eventId));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 

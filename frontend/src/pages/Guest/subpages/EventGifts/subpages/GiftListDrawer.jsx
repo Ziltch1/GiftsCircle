@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -9,47 +9,54 @@ import {
   DrawerFooter,
   useDisclosure,
   Box,
-  Text,
   Heading,
   Flex,
-  Image,
-  Button,
 } from '@chakra-ui/react';
 import GiftListItem from './GiftListItem';
 import { useSelector } from 'react-redux';
+import PaymentButton from '../../../../../components/Buttons/PaymentButton';
+import { CartContext } from '..';
+import ComplimentaryListItem from './ComplimentaryListItem';
 
-const GiftListDrawer = ({
-  setShowListDrawer,
-  giftCart,
-  setGiftCart,
-  complimentaryCart,
-  setComplimentaryCart,
-  data,
-}) => {
+const GiftListDrawer = ({ setShowListDrawer }) => {
   const [newGifts, setNewGifts] = useState([]);
-  const [complimentary, setComplimentary] = useState([]);
   const { giftItems } = useSelector(state => state.gift);
 
-  let giftAmount = 0;
-  let complimentaryAmount = 0;
+  const {
+    complimentaryGifts,
+    setAmount,
+    ComplimentaryItems,
+    complimentaryGiftAmount,
+    giftAmount,
+    GiftItems,
+    amount,
+    setGiftAmount,
+    setComplimentaryGiftAmount,
+  } = useContext(CartContext);
 
   useEffect(() => {
-    const filteredArray = giftItems.filter(obj => giftCart.includes(obj.id));
-    setNewGifts(filteredArray);
-  }, [giftCart]);
+    let complimentaryAmount = 0;
+    let giftAmount = 0;
+    ComplimentaryItems.forEach(ele => {
+      const newData = complimentaryGifts?.find(x => x.id === ele?.id);
+      complimentaryAmount = complimentaryAmount + newData.amount;
+    });
+    setComplimentaryGiftAmount(complimentaryAmount);
 
-  useEffect(() => {
-    const newFilteredArray = data.filter(obj =>
-      complimentaryCart.includes(obj.id)
-    );
-    setComplimentary(newFilteredArray);
-  }, [complimentaryCart]);
+    GiftItems.forEach(ele => {
+      const newData = giftItems?.find(x => x.id === ele?.giftItemId);
+      giftAmount = giftAmount + newData.amount;
+    });
+    setGiftAmount(giftAmount);
 
-  giftAmount = newGifts?.reduce((acc, curr) => acc + curr.amount, 0);
-  complimentaryAmount = complimentary?.reduce(
-    (acc, curr) => acc + curr.amount,
-    0
-  );
+    setAmount(complimentaryAmount + giftAmount);
+  }, [
+    ComplimentaryItems,
+    setAmount,
+    setComplimentaryGiftAmount,
+    setGiftAmount,
+    GiftItems,
+  ]);
 
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const btnRef = React.useRef();
@@ -80,16 +87,10 @@ const GiftListDrawer = ({
 
           <DrawerBody>
             <Flex justifyContent="space-between" flexWrap="wrap" mb="5">
-              {newGifts.map(ele => (
-                <GiftListItem
-                  id={ele.id}
-                  item={ele}
-                  newGifts={newGifts}
-                  setNewGifts={setNewGifts}
-                  giftCart={giftCart}
-                  setGiftCart={setGiftCart}
-                />
-              ))}
+              {GiftItems.map(ele => {
+                const newData = giftItems?.find(x => x.id === ele?.giftItemId);
+                return <GiftListItem id={ele.id} item={newData} />;
+              })}
             </Flex>
             <Box mb="5" textAlign="right">
               <Heading fontWeight="medium" fontSize="18px" mb="2">
@@ -102,34 +103,19 @@ const GiftListDrawer = ({
             </Heading>
 
             <Flex justifyContent="space-between" flexWrap="wrap">
-              {complimentary.map(ele => (
-                <GiftListItem
-                  id={ele.id}
-                  item={ele}
-                  newGifts={newGifts}
-                  setNewGifts={setNewGifts}
-                  giftCart={complimentaryCart}
-                  setGiftCart={setComplimentaryCart}
-                />
+              {ComplimentaryItems.map(ele => (
+                <ComplimentaryListItem id={ele.id} item={ele} />
               ))}
             </Flex>
 
             <Box mb="5" textAlign="right">
               <Heading fontWeight="medium" fontSize="18px" mb="2">
-                Subtotal (₦{complimentaryAmount})
+                Subtotal (₦{complimentaryGiftAmount})
               </Heading>
             </Box>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
-            <Button
-              fontSize={13}
-              color="white"
-              ml="5"
-              fontWeight="medium"
-              bg="#00BFB2"
-            >
-              Checkout (₦{giftAmount + complimentaryAmount})
-            </Button>
+            <PaymentButton amount={amount} action={closeModal} />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

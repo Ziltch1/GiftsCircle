@@ -10,6 +10,7 @@ import EventMedia from './EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
+  GetEventAsoebiBuyers,
   GetEventFundRaising,
   GetEventFundRaisingDonors,
   GetEventGuests,
@@ -54,6 +55,7 @@ const Index = () => {
       dispatch(GetEventFundRaising(newEvent.id));
       dispatch(GetEventMediaFiles(newEvent.id));
       dispatch(GetHostRecievedFiles(newEvent.id));
+      // dispatch(GetEventAsoebiBuyers(newEvent.id));
       setLoading(false);
     }
   }, [newEvent]);

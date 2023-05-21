@@ -18,6 +18,7 @@ import CartItem from './CartItem';
 import { AddManyEventAsoebiApi } from '../../../../../redux/axios/apis/asoebi';
 import { dispatch } from '../../../../../redux/store';
 import { GetEventAsoebis } from '../../../../../redux/features/events/service';
+import PaymentButton from '../../../../../components/Buttons/PaymentButton';
 
 const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
   const { onClose } = useDisclosure({ defaultIsOpen: true });
@@ -85,9 +86,17 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
           )}
           <Box textAlign="left" p="8">
             <Flex justifyContent="flex-end">
-              <Button bg="#00BFB2" color="white" onClick={() => HandleSubmit()}>
-                {addForGuest ? 'Save Changes' : 'Proceed to Checkout'}
-              </Button>
+              {addForGuest ? (
+                <Button
+                  bg="#00BFB2"
+                  color="white"
+                  onClick={() => HandleSubmit()}
+                >
+                  Save Changes
+                </Button>
+              ) : (
+                <PaymentButton amount={amount} action={closeModal} />
+              )}
             </Flex>
           </Box>
         </DrawerContent>

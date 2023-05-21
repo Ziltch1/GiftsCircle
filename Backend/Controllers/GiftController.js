@@ -13,6 +13,7 @@ const {
   GetUserPurchasedGifts,
   BuyMarketGift,
   GetUserGifts,
+  Buy,
 } = require("../Services/Gift");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 
@@ -95,6 +96,22 @@ router.post("/createMany", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await CreateMany(req.body);
     return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.post("/Buy", EnsureAuthenticated, async (req, res) => {
+  try {
+    let data = await Buy(req.body);
+    if (data) {
+      return res.status(200).send(data);
+    }
+    return res
+      .status(400)
+      .send(ResponseDTO("Failed", "Asoebi Details not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
