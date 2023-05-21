@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Heading, Flex, Button, Image } from '@chakra-ui/react';
 import GiftIcon from '../../../../assets/giftIconSmall.svg';
+import { CartContext } from '..';
 
-
-const GiftHeader = ({ setOpenDrawer, setShowListDrawer, giftCount, giftCart, complimentaryCart }) => {
-  const actionBtns = ['Purchase history', 'Gift list'];
- 
+const GiftHeader = ({ setOpenDrawer, setShowListDrawer }) => {
+  const { addedComplimentaryGiftItems, addedGiftItems, data } =
+    useContext(CartContext);
   return (
     <Box mb="5">
       <Flex justifyContent="space-between" alignItems="center">
@@ -13,7 +13,7 @@ const GiftHeader = ({ setOpenDrawer, setShowListDrawer, giftCount, giftCart, com
           mb="5"
           fontWeight={'medium'}
           fontSize={24}
-        >{`Gift List (${giftCount})`}</Heading>
+        >{`Gift List (${data.length})`}</Heading>
         <Box>
           <Button
             bg="#00BFB2"
@@ -33,7 +33,8 @@ const GiftHeader = ({ setOpenDrawer, setShowListDrawer, giftCount, giftCart, com
             ml="5"
             onClick={() => setShowListDrawer(true)}
           >
-            <Image src={GiftIcon} mr="1" /> Gift list ({giftCart.length + complimentaryCart.length})
+            <Image src={GiftIcon} mr="1" /> Gift list (
+            {addedGiftItems.length + addedComplimentaryGiftItems.length})
           </Button>
         </Box>
       </Flex>

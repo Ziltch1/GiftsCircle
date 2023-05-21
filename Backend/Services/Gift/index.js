@@ -112,6 +112,42 @@ const EnableContribution = async (data, id) => {
   return null;
 };
 
+const Buy = async (data) => {
+  Promise.all(
+    data.map((ele) => {
+      prisma.gift.update({
+        where: {
+          id: ele.giftId,
+        },
+        data: {
+          purchased: true,
+          status: data.status,
+          complimentaryGift: data.complimentaryGift,
+          amountPaid: data.amount,
+        },
+      });
+    })
+  ).then((resolvedValues) => {
+    resolvedValues.forEach((value) => {
+      console.log(value);
+    });
+  });
+
+  data.forEach((element) => {
+    element.id = uuidv4();
+    element.date = new Date(Date.now());
+    element.quantity = 1;
+    return element;
+  });
+  let transactions = await prisma.giftTransaction.createMany({
+    data: [...data],
+    skipDuplicates: true,
+  });
+  await prisma.$disconnect();
+
+  return transactions;
+};
+
 const BuyMarketGift = async (data) => {
   let id = uuidv4();
   await prisma.marketGift.create({
@@ -158,6 +194,7 @@ module.exports = {
   GetEventGifts,
   Delete,
   CreateMany,
+  Buy,
   EnableContribution,
   GetUserPurchasedGifts,
   BuyMarketGift,
