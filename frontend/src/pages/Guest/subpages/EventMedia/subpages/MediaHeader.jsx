@@ -5,7 +5,6 @@ import { useUpload } from '../Hooks';
 import AudioModal from './AudioModal';
 import VideoModal from './VideoModal';
 
-
 const MediaHeader = ({ navPosition, setNavPosition }) => {
   const [image, setImage] = useState(null);
   const [modalOpen, setShowModal] = useState(false);
