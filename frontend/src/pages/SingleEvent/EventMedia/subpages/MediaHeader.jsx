@@ -4,18 +4,23 @@ import LoadingModal from '../../components/LoadingModal';
 import { useUpload } from '../Hooks';
 import VideoModal from './VideoModal';
 
-
 const MediaHeader = ({ navPosition, setNavPosition }) => {
   const [image, setImage] = useState(null);
   const [modalOpen, setShowModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const Data = useUpload(image, setShowModal, setImage);
 
+
   console.log(image);
+  
   const actionBtns = ['Uploaded by me', 'Sent to me'];
   const handleClick = index => {
     setNavPosition(index);
   };
+
+  const startVideo = () => {
+    setShowVideoModal(true);
+  }
 
   return (
     <Box mb="5">
@@ -28,7 +33,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
 
         <Stack direction='row' spacing={3}>
           <Button
-            onClick={() => setShowVideoModal(true)}
+            onClick={startVideo}
             w="150px"
             h='45px'
             color="white"
