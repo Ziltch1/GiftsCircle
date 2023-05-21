@@ -153,6 +153,7 @@ module.exports = {
   GetAll,
   Delete,
   CreateMany,
+  Buy,
   GetEventAsoebi,
   Buy,
   GetAsoebiBuyers,

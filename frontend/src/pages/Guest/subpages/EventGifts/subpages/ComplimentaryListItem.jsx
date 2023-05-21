@@ -3,17 +3,21 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { CartContext } from '..';
 
-const GiftListItem = ({ id, item }) => {
-  const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems } =
-    useContext(CartContext);
+const ComplimentaryListItem = ({ id, item }) => {
+  const {
+    addedComplimentaryGiftItems,
+    setAddedComplimentaryGiftItems,
+    ComplimentaryItems,
+    setComplimentaryItems,
+  } = useContext(CartContext);
 
   const handleDelete = id => {
-    const filteredArray = addedGiftItems.filter(obj => obj !== id);
+    const filteredArray = addedComplimentaryGiftItems.filter(obj => obj !== id);
 
-    setAddedGiftItems(filteredArray);
+    setAddedComplimentaryGiftItems(filteredArray);
 
-    const filteredGifts = GiftItems.filter(obj => obj.id !== id);
-    setGiftItems(filteredGifts);
+    const filteredGifts = ComplimentaryItems.filter(obj => obj.id !== id);
+    setComplimentaryItems(filteredGifts);
   };
 
   return (
@@ -65,4 +69,4 @@ const GiftListItem = ({ id, item }) => {
   );
 };
 
-export default GiftListItem;
+export default ComplimentaryListItem;
