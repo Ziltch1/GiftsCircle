@@ -10,7 +10,6 @@ import EventMedia from './EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
-  GetEventAsoebiBuyers,
   GetEventFundRaising,
   GetEventFundRaisingDonors,
   GetEventGuests,
@@ -26,6 +25,11 @@ import {
   setFundRaising,
   setNewEvent,
 } from '../../redux/features/events/eventSlice';
+import {
+  GetComplimentaryGiftItems,
+  GetEventGiftsTransactions,
+  GetGiftItems,
+} from '../../redux/features/gift/service';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -51,11 +55,14 @@ const Index = () => {
 
   useEffect(() => {
     if (newEvent) {
+      dispatch(GetGiftItems());
+      dispatch(GetComplimentaryGiftItems());
       dispatch(GetEventGuests(newEvent.id));
       dispatch(GetEventFundRaising(newEvent.id));
       dispatch(GetEventMediaFiles(newEvent.id));
       dispatch(GetHostRecievedFiles(newEvent.id));
       // dispatch(GetEventAsoebiBuyers(newEvent.id));
+      dispatch(GetEventGiftsTransactions(newEvent.id));
       setLoading(false);
     }
   }, [newEvent]);

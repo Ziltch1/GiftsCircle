@@ -40,6 +40,36 @@ const GetUserPurchasedGifts = async (id) => {
   return gifts;
 };
 
+const GetEventGiftTransactions = async (id) => {
+  const transactions = await prisma.giftTransaction.findMany({
+    where: {
+      eventId: id,
+    },
+    include: {
+      purchasedBy: {
+        select: {
+          firstname: true,
+          lastname: true,
+        },
+      },
+      gift: {
+        select: {
+          giftItemId: true,
+          status: true,
+          complimentaryGift: true,
+        },
+      },
+      complimentaryGift: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+  await prisma.$disconnect();
+  return transactions;
+};
+
 const Create = async (data) => {
   let id = uuidv4();
   await prisma.gift.create({
@@ -113,27 +143,23 @@ const EnableContribution = async (data, id) => {
 };
 
 const Buy = async (data) => {
-  Promise.all(
-    data.map((ele) => {
-      prisma.gift.update({
-        where: {
-          id: ele.giftId,
-        },
-        data: {
-          purchased: true,
-          status: data.status,
-          complimentaryGift: data.complimentaryGift,
-          amountPaid: data.amount,
-        },
-      });
-    })
-  ).then((resolvedValues) => {
-    resolvedValues.forEach((value) => {
-      console.log(value);
+  data.forEach(async (ele) => {
+    let data = await prisma.gift.update({
+      where: {
+        id: ele.giftId,
+      },
+      data: {
+        purchased: true,
+        status: ele.status,
+        complimentaryGift: ele.complimentaryGift,
+        amountPaid: ele.amount,
+      },
     });
   });
 
   data.forEach((element) => {
+    delete element.status;
+    delete element.complimentaryGift;
     element.id = uuidv4();
     element.date = new Date(Date.now());
     element.quantity = 1;
@@ -192,6 +218,7 @@ module.exports = {
   Get,
   GetAll,
   GetEventGifts,
+  GetEventGiftTransactions,
   Delete,
   CreateMany,
   Buy,

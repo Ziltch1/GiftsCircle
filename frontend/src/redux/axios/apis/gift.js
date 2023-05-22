@@ -12,8 +12,20 @@ const GetUserPurchasedGiftsApi = id => {
   return api.get(`/gift/Get/PurchasedBy/${id}`);
 };
 
+const GetEventGiftTransApi = id => {
+  return api.get(`/gift/Get/EventGiftsTrans/${id}`);
+};
+
 const CreateManyGiftsApi = data => {
   return api.post('/gift/createMany', data);
+};
+
+const BuyGiftsApi = data => {
+  return api.post('/gift/Buy', data);
+};
+
+const BuyComplimentaryGiftsApi = data => {
+  return api.post('/complimentaryGift/Buy', data);
 };
 
 const DeleteEventGiftApi = id => {
@@ -31,7 +43,10 @@ const GetUserGiftApi = id => {
 export {
   GetGiftItemsApi,
   GetComplimentaryGiftItemsApi,
+  GetEventGiftTransApi,
   CreateManyGiftsApi,
+  BuyGiftsApi,
+  BuyComplimentaryGiftsApi,
   DeleteEventGiftApi,
   GetUserPurchasedGiftsApi,
   AddGiftApi,

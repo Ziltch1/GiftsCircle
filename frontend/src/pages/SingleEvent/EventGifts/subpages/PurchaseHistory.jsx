@@ -16,8 +16,10 @@ import message from '../../../../components/assets/message.svg';
 import GiftDrawer from '../../../../components/Drawer/Drawer';
 import { useSelector } from 'react-redux';
 
-const PurchaseHistory = ({ data }) => {
-  const { giftItems } = useSelector(state => state.gift);
+const PurchaseHistory = () => {
+  const { giftItems, eventGiftTrans, complimentaryGifts } = useSelector(
+    state => state.gift
+  );
 
   const [showDrawer, setShowDrawer] = useState(false);
   const openDrawer = () => {
@@ -39,17 +41,31 @@ const PurchaseHistory = ({ data }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {data.map(ele => {
-              const gift = giftItems.find(x => x.id === ele.giftItemId);
-
+            {eventGiftTrans.map(ele => {
+              console.log(ele.complimentaryGift, ele);
+              const gift = ele.giftId
+                ? giftItems.find(x => x.id === ele.gift.giftItemId)
+                : complimentaryGifts.find(
+                    x => x.id === ele.complimentaryGift.id
+                  );
               return (
                 <>
                   <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
                     <Td>{gift.title}</Td>
-                    <Td>Abdullahi Abodunrin</Td>
-                    <Td>{ele.complimentaryGift === 'none' ? 'No' : 'Yes'}</Td>
+                    <Td>
+                      {ele.purchasedBy.firstname +
+                        '  ' +
+                        ele.purchasedBy.lastname}
+                    </Td>
+                    <Td>
+                      {ele.giftId
+                        ? ele.gift.complimentaryGift === ''
+                          ? 'No'
+                          : 'Yes'
+                        : 'No'}
+                    </Td>
                     <Td isNumeric># {gift.amount}</Td>
-                    <Td>{ele.status}</Td>
+                    <Td>{ele.giftId ? ele.gift.status : 'COMPLETED'}</Td>
                     <Td>
                       <Flex gap={8}>
                         <Image src={eye} onClick={openDrawer} />
