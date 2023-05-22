@@ -18,16 +18,24 @@ import PaymentButton from '../../../../../components/Buttons/PaymentButton';
 import { CartContext } from '..';
 import ComplimentaryListItem from './ComplimentaryListItem';
 import { dispatch } from '../../../../../redux/store';
-import { BuyGifts } from '../../../../../redux/features/gift/service';
+import {
+  BuyComplimentaryGifts,
+  BuyGifts,
+} from '../../../../../redux/features/gift/service';
 
 const GiftListDrawer = ({ setShowListDrawer }) => {
   const { giftItems } = useSelector(state => state.gift);
   const { user } = useSelector(state => state.user);
+  const { newEvent } = useSelector(state => state.event);
 
   const {
     complimentaryGifts,
     setAmount,
     ComplimentaryItems,
+    setGiftItems,
+    setComplimentaryItems,
+    setAddedGiftItems,
+    setAddedComplimentaryGiftItems,
     complimentaryGiftAmount,
     giftAmount,
     GiftItems,
@@ -64,7 +72,7 @@ const GiftListDrawer = ({ setShowListDrawer }) => {
   const btnRef = React.useRef();
 
   const HandleSubmit = () => {
-    const formBody = [];
+    const giftFormBody = [];
     GiftItems.forEach(item => {
       const newData = giftItems?.find(x => x.id === item?.giftItemId);
       const formData = {
@@ -76,10 +84,30 @@ const GiftListDrawer = ({ setShowListDrawer }) => {
           ComplimentaryItems.length > 0 ? ComplimentaryItems[0].id : '',
         amount: newData.amount,
       };
-      formBody.push(formData);
+      giftFormBody.push(formData);
     });
-    dispatch(BuyGifts(formBody));
-    console.log(formBody);
+    if (giftFormBody.length > 0) {
+      dispatch(BuyGifts(giftFormBody));
+      setGiftItems([]);
+      setAddedGiftItems([]);
+    }
+
+    const complimenTaryFormBody = [];
+    ComplimentaryItems.forEach(item => {
+      const formData = {
+        complimentarygiftId: item.id,
+        userId: user.id,
+        eventId: newEvent.id,
+        amount: item.amount,
+      };
+      complimenTaryFormBody.push(formData);
+    });
+
+    if (complimenTaryFormBody.length > 0) {
+      dispatch(BuyComplimentaryGifts(complimenTaryFormBody));
+      setComplimentaryItems([]);
+      setAddedComplimentaryGiftItems([]);
+    }
 
     setShowListDrawer(false);
   };

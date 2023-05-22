@@ -40,6 +40,36 @@ const GetUserPurchasedGifts = async (id) => {
   return gifts;
 };
 
+const GetEventGiftTransactions = async (id) => {
+  const transactions = await prisma.giftTransaction.findMany({
+    where: {
+      eventId: id,
+    },
+    include: {
+      purchasedBy: {
+        select: {
+          firstname: true,
+          lastname: true,
+        },
+      },
+      gift: {
+        select: {
+          giftItemId: true,
+          status: true,
+          complimentaryGift: true,
+        },
+      },
+      complimentaryGift: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+  await prisma.$disconnect();
+  return transactions;
+};
+
 const Create = async (data) => {
   let id = uuidv4();
   await prisma.gift.create({
@@ -188,6 +218,7 @@ module.exports = {
   Get,
   GetAll,
   GetEventGifts,
+  GetEventGiftTransactions,
   Delete,
   CreateMany,
   Buy,

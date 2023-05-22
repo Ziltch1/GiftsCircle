@@ -56,7 +56,7 @@ const Index = () => {
     dispatch(GetEventGifts(id));
     dispatch(GetGuestSentFiles(id, user.id));
     dispatch(GetEventAsoebis(id));
-    dispatch(GetEventFundRaising(id))
+    dispatch(GetEventFundRaising(id));
     dispatch(GetAsoebiItems());
     dispatch(GetGiftItems());
     dispatch(GetComplimentaryGiftItems());

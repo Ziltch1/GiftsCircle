@@ -652,6 +652,33 @@
         }
       }
     },
+    "/gift/Get/EventGiftsTrans/{id}": {
+      "get": {
+        "description": "",
+        "tags": ["Gift"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/gift/Get/PurchasedBy/{id}": {
       "get": {
         "description": "",
@@ -745,6 +772,35 @@
             "required": true,
             "type": "array",
             "schema": { "$ref": "#/definitions/schema/Gift" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+
+    "/gift/Buy": {
+      "post": {
+        "description": "",
+        "tags": ["Asoebi"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/BuyGift" }
           }
         ],
         "security": [
@@ -1224,6 +1280,34 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/complimentaryGift/Buy": {
+      "post": {
+        "description": "",
+        "tags": ["Asoebi"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/BuyGift" }
           }
         ],
         "security": [

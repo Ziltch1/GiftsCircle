@@ -1,14 +1,17 @@
 import { dispatch } from '../../store';
 import {
   setComplimentaryGifts,
+  setEventGiftsTrans,
   setGiftItems,
   setUserPurchasedGifts,
 } from './giftSlice';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 import {
+  BuyComplimentaryGiftsApi,
   BuyGiftsApi,
   DeleteEventGiftApi,
   GetComplimentaryGiftItemsApi,
+  GetEventGiftTransApi,
   GetGiftItemsApi,
   GetUserPurchasedGiftsApi,
 } from '../../axios/apis/gift';
@@ -44,9 +47,28 @@ const GetUserPurchasedGifts = id => async () => {
   }
 };
 
+const GetEventGiftsTransactions = id => async () => {
+  try {
+    const res = await GetEventGiftTransApi(id);
+    dispatch(setEventGiftsTrans(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    // dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
 const BuyGifts = data => async () => {
   try {
     await BuyGiftsApi(data);
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    // dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+const BuyComplimentaryGifts = data => async () => {
+  try {
+    await BuyComplimentaryGiftsApi(data);
   } catch (error) {
     console.log(ErrorHandler(error));
     // dispatch(createResponse(ErrorHandler(error)));
@@ -67,6 +89,8 @@ export {
   GetGiftItems,
   DeleteGiftItems,
   GetUserPurchasedGifts,
+  GetEventGiftsTransactions,
   BuyGifts,
+  BuyComplimentaryGifts,
   GetComplimentaryGiftItems,
 };
