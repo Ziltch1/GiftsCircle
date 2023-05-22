@@ -16,6 +16,10 @@ const CreateManyGiftsApi = data => {
   return api.post('/gift/createMany', data);
 };
 
+const BuyGiftsApi = data => {
+  return api.post('/gift/Buy', data);
+};
+
 const DeleteEventGiftApi = id => {
   return api.delete(`/gift/${id}`);
 };
@@ -32,6 +36,7 @@ export {
   GetGiftItemsApi,
   GetComplimentaryGiftItemsApi,
   CreateManyGiftsApi,
+  BuyGiftsApi,
   DeleteEventGiftApi,
   GetUserPurchasedGiftsApi,
   AddGiftApi,

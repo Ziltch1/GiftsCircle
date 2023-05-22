@@ -113,27 +113,23 @@ const EnableContribution = async (data, id) => {
 };
 
 const Buy = async (data) => {
-  Promise.all(
-    data.map((ele) => {
-      prisma.gift.update({
-        where: {
-          id: ele.giftId,
-        },
-        data: {
-          purchased: true,
-          status: data.status,
-          complimentaryGift: data.complimentaryGift,
-          amountPaid: data.amount,
-        },
-      });
-    })
-  ).then((resolvedValues) => {
-    resolvedValues.forEach((value) => {
-      console.log(value);
+  data.forEach(async (ele) => {
+    let data = await prisma.gift.update({
+      where: {
+        id: ele.giftId,
+      },
+      data: {
+        purchased: true,
+        status: ele.status,
+        complimentaryGift: ele.complimentaryGift,
+        amountPaid: ele.amount,
+      },
     });
   });
 
   data.forEach((element) => {
+    delete element.status;
+    delete element.complimentaryGift;
     element.id = uuidv4();
     element.date = new Date(Date.now());
     element.quantity = 1;

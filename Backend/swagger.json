@@ -2186,6 +2186,36 @@
           }
         }
       },
+      "BuyGift": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "required": true
+          },
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+          "eventId": {
+            "type": "string",
+            "required": true
+          },
+          "complimentaryGift": {
+            "type": "string",
+            "required": true
+          },
+
+          "amount": {
+            "type": "number",
+            "required": true
+          },
+          "giftId": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
       "MarketGift": {
         "type": "object",
         "properties": {

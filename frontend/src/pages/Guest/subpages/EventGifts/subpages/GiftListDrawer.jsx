@@ -17,10 +17,12 @@ import { useSelector } from 'react-redux';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
 import { CartContext } from '..';
 import ComplimentaryListItem from './ComplimentaryListItem';
+import { dispatch } from '../../../../../redux/store';
+import { BuyGifts } from '../../../../../redux/features/gift/service';
 
 const GiftListDrawer = ({ setShowListDrawer }) => {
-  const [newGifts, setNewGifts] = useState([]);
   const { giftItems } = useSelector(state => state.gift);
+  const { user } = useSelector(state => state.user);
 
   const {
     complimentaryGifts,
@@ -61,7 +63,24 @@ const GiftListDrawer = ({ setShowListDrawer }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const btnRef = React.useRef();
 
-  const closeModal = () => {
+  const HandleSubmit = () => {
+    const formBody = [];
+    GiftItems.forEach(item => {
+      const newData = giftItems?.find(x => x.id === item?.giftItemId);
+      const formData = {
+        status: 'COMPLETED',
+        giftId: item.id,
+        userId: user.id,
+        eventId: item.eventId,
+        complimentaryGift:
+          ComplimentaryItems.length > 0 ? ComplimentaryItems[0].id : '',
+        amount: newData.amount,
+      };
+      formBody.push(formData);
+    });
+    dispatch(BuyGifts(formBody));
+    console.log(formBody);
+
     setShowListDrawer(false);
   };
 
@@ -77,7 +96,7 @@ const GiftListDrawer = ({ setShowListDrawer }) => {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton onClick={closeModal} />
+          <DrawerCloseButton onClick={() => setShowListDrawer(false)} />
 
           <DrawerHeader>
             <Heading fontWeight="medium" fontSize="25px" mb="2">
@@ -115,7 +134,7 @@ const GiftListDrawer = ({ setShowListDrawer }) => {
             </Box>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
-            <PaymentButton amount={amount} action={closeModal} />
+            <PaymentButton amount={amount} action={HandleSubmit} />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
