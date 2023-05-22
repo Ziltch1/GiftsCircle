@@ -12,17 +12,13 @@ import {
     useDisclosure,
     Button, Stack, VStack
 } from '@chakra-ui/react';
-import { FaMicrophone, FaStop, FaPause, FaTrash } from 'react-icons/fa'
-import { BiSend } from 'react-icons/bi'
-import { useUpload } from '../Hooks';
-import LoadingModal from '../../../components/LoadingModal';
-import { BsCameraVideoFill } from 'react-icons/bs'
-import VideoRecorder from '../../../../SingleEvent/EventMedia/subpages/VideoRecorder';
+import VideoRecorder from '../../../../../SingleEvent/EventMedia/subpages/VideoRecorder';
 
-const VideoModal = ({ setShowVideoModal, setShowModal, open }) => {
+const VideoModal = ({ setShowVideoModal, setShowModal, open, setNavPosition }) => {
     const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
     const closeModal = () => {
-        setShowVideoModal(false);
+        setNavPosition(-1);
+        // setShowVideoModal(false);
     };
 
 
@@ -46,14 +42,11 @@ const VideoModal = ({ setShowVideoModal, setShowModal, open }) => {
                                         Record Video
                                     </Heading>
                                     <Text fontSize={14}>
-                                        Record a video you want to send to your guests
+                                        Record a video you want to send to your host
                                     </Text>
                                     <VideoRecorder />
-                                   
                                 </VStack>
                             </Box>
-
-                            
                         </ModalBody>
                     </Box>
                 </ModalContent>

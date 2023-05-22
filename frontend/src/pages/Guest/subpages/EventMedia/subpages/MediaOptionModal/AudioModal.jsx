@@ -16,7 +16,7 @@ import { useRecorder } from 'react-recorder-voice'
 import {FaMicrophone, FaStop, FaPause, FaTrash} from 'react-icons/fa'
 import {BiSend} from 'react-icons/bi'
 
-const AudioModal = ({setShowAudioModal}) => {
+const AudioModal = ({setShowAudioModal, setNavPosition}) => {
     const { audioURL, audioData, timer, recordingStatus, cancelRecording, saveRecordedAudio, startRecording, } = useRecorder();
     const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
     const [file, setFile] = useState(null)
@@ -34,7 +34,8 @@ const AudioModal = ({setShowAudioModal}) => {
     }, [recordingStatus])
 
     const closeModal = () => {
-        setShowAudioModal(false);
+        setNavPosition(-1)
+        // setShowAudioModal(false);
     };
 
   return (
