@@ -31,9 +31,17 @@ const GetEventGifts = async (id) => {
 };
 
 const GetUserPurchasedGifts = async (id) => {
-  const gifts = await prisma.gift.findMany({
+  const gifts = await prisma.giftTransaction.findMany({
     where: {
-      purchasedBy: id,
+      userId: id,
+    },
+    include: {
+      gift: {
+        select: {
+          giftItemId: true,
+          status: true,
+        },
+      },
     },
   });
   await prisma.$disconnect();

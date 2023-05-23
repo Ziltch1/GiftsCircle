@@ -5,6 +5,7 @@ const initialState = {
   userPurchasedGiftItems: [],
   complimentaryGifts: [],
   eventGiftTrans: [],
+  sourvernirItems: [],
 };
 
 const GiftSlice = createSlice({
@@ -23,6 +24,9 @@ const GiftSlice = createSlice({
     setEventGiftsTrans: (state, action) => {
       state.eventGiftTrans = action.payload;
     },
+    setSourvenir: (state, action) => {
+      state.sourvernirItems = action.payload;
+    },
   },
 });
 
@@ -31,6 +35,7 @@ export const {
   setUserPurchasedGifts,
   setComplimentaryGifts,
   setEventGiftsTrans,
+  setSourvenir,
 } = GiftSlice.actions;
 
 export default GiftSlice.reducer;
