@@ -89,13 +89,22 @@ model giftTransaction {
   complimentarygiftId String?            @db.VarChar(255)
 }
 
-model marketGift {
-  id          String @id @db.VarChar(255)
-  giftItemId  String @db.VarChar(255)
+model marketGiftTransaction {
+  id          String         @id @db.VarChar(255)
+  ItemId      String         @db.VarChar(255)
   quantity    Int
-  purchasedBy String @db.VarChar(255)
-  status      String @db.VarChar(255)
+  purchasedBy user           @relation(fields: [userId], references: [id])
+  status      Status
   amountPaid  Int
+  date        DateTime       @default(now())
+  category    MarketCategory
+  userId      String         @db.VarChar(255)
+}
+
+enum MarketCategory {
+  ASOEBI
+  GIFT
+  SOURVENIR
 }
 
 model giftitem {
@@ -118,25 +127,26 @@ model complimentarygift {
 }
 
 model user {
-  id                   String                 @id @db.VarChar(255)
-  firstname            String                 @db.VarChar(255)
-  lastname             String                 @db.VarChar(255)
-  gender               String?                @db.VarChar(255)
-  placeOfResidence     String?                @db.VarChar(255)
-  tel                  String?                @db.VarChar(255)
-  state                String?                @db.VarChar(255)
-  dob                  String?                @db.VarChar(255)
-  emailVerified        Boolean?
-  email                String                 @unique
-  password             String                 @db.VarChar(255)
-  eventId              String?                @db.VarChar(255)
-  event                event?                 @relation(fields: [eventId], references: [id])
-  role                 Role                   @default(USER)
-  Media                Media[]
-  ComplimentaryMessage ComplimentaryMessage[]
-  Guests               Guests[]
-  asoebiTransaction    asoebiTransaction[]
-  giftTransaction      giftTransaction[]
+  id                    String                  @id @db.VarChar(255)
+  firstname             String                  @db.VarChar(255)
+  lastname              String                  @db.VarChar(255)
+  gender                String?                 @db.VarChar(255)
+  placeOfResidence      String?                 @db.VarChar(255)
+  tel                   String?                 @db.VarChar(255)
+  state                 String?                 @db.VarChar(255)
+  dob                   String?                 @db.VarChar(255)
+  emailVerified         Boolean?
+  email                 String                  @unique
+  password              String                  @db.VarChar(255)
+  eventId               String?                 @db.VarChar(255)
+  event                 event?                  @relation(fields: [eventId], references: [id])
+  role                  Role                    @default(USER)
+  Media                 Media[]
+  ComplimentaryMessage  ComplimentaryMessage[]
+  Guests                Guests[]
+  asoebiTransaction     asoebiTransaction[]
+  giftTransaction       giftTransaction[]
+  marketGiftTransaction marketGiftTransaction[]
 }
 
 enum Role {
@@ -275,4 +285,12 @@ model ComplimentaryMessage {
   date    DateTime    @default(now())
   message String      @db.VarChar
   media   MediaFile[]
+}
+
+enum Status {
+  PAID
+  COMPLETED
+  PARTIAL
+  DELIVERED
+  UNPAID
 }

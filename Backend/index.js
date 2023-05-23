@@ -33,6 +33,7 @@ app.use(
   "/api/sourvenirItem/",
   require("./Controllers/SourvenirItemController")
 );
+app.use("/api/marketPlace/", require("./Controllers/MarketplaceController"));
 app.use("/api/media/", require("./Controllers/MediaController"));
 app.use("/api/complimentaryGift/", require("./Controllers/ComplimentaryGift"));
 app.use("/api/gift/", require("./Controllers/GiftController"));

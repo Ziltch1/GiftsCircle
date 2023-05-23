@@ -73,6 +73,10 @@
     {
       "name": "Media",
       "description": "Apis handling Media"
+    },
+    {
+      "name": "Marketplace",
+      "description": "Apis handling Marketplace"
     }
   ],
   "paths": {
@@ -801,34 +805,6 @@
             "required": true,
             "type": "array",
             "schema": { "$ref": "#/definitions/schema/BuyGift" }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/gift/BuyMarketGift": {
-      "post": {
-        "description": "",
-        "tags": ["Gift"],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "array",
-            "schema": { "$ref": "#/definitions/schema/MarketGift" }
           }
         ],
         "security": [
@@ -2005,6 +1981,61 @@
           }
         }
       }
+    },
+    "/marketPlace/Get/All": {
+      "get": {
+        "description": "",
+        "tags": ["MarketPlace"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/marketPlace/create": {
+      "post": {
+        "description": "",
+        "tags": ["MarketPlace"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/Marketplace" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -2300,27 +2331,6 @@
           }
         }
       },
-      "MarketGift": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "required": true
-          },
-          "amount": {
-            "type": "number",
-            "required": true
-          },
-          "quantity": {
-            "type": "number",
-            "required": true
-          },
-          "giftItemId": {
-            "type": "string",
-            "required": true
-          }
-        }
-      },
       "Delivery": {
         "type": "object",
         "properties": {
@@ -2537,6 +2547,36 @@
           },
           "files": {
             "type": "object",
+            "required": true
+          }
+        }
+      },
+      "Marketplace": {
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "required": true
+          },
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+          "quantity": {
+            "type": "number",
+            "required": true
+          },
+
+          "amount": {
+            "type": "number",
+            "required": true
+          },
+          "status": {
+            "type": "string",
+            "required": true
+          },
+          "category": {
+            "type": "string",
             "required": true
           }
         }

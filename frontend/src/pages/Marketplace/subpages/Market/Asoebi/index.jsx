@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import {
   Box,
   FormLabel,
@@ -13,7 +13,10 @@ import AsoebiMarket from './AsoebiMarket';
 import BackButton from '../../../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../../redux/store';
-import { GetEventAsoebis } from '../../../../../redux/features/events/service';
+import {
+  GetAsoebiItems,
+  GetEventAsoebis,
+} from '../../../../../redux/features/events/service';
 import DesignViewModal from './DesignViewModal';
 
 export const AsoebiContext = createContext(null);
@@ -26,6 +29,10 @@ const Index = ({ setShowProducts }) => {
   const [amount, setAmount] = useState(0);
   const [addForGuest, setAddforGuest] = useState(false);
   const [designModal, setDesignModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(GetAsoebiItems());
+  }, []);
 
   const contextValue = useMemo(
     () => ({
