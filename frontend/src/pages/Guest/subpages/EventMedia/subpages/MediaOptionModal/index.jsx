@@ -50,7 +50,7 @@ const Index = ({setShowMediaOption}) => {
                 </Heading>
                 
                 <Stack direction='row' flexWrap='wrap' justifyContent='center' alignItems='center'>
-                  {texts.map((text, index) => <Button my='3' fontWeight="medium" fontSize={16} color="white" bg="#00BFB2" onClick={() => handleClick(index)}>{text}</Button>)}
+                  {texts.map((text, index) => <Button my='3' fontWeight="medium" fontSize={14} color="white" bg="#00BFB2" onClick={() => handleClick(index)}>{text}</Button>)}
                 </Stack>
               </VStack>
             </Box>
@@ -60,7 +60,7 @@ const Index = ({setShowMediaOption}) => {
     </Modal>
       {navPosition === 0 && <AudioModal setNavPosition={setNavPosition} />}
       {navPosition === 1 && <VideoModal setNavPosition={setNavPosition} />}
-      {navPosition === 2 && <MessageModal setNavPosition={setNavPosition} />}
+      {navPosition === 2 && <MessageModal setNavPosition={setNavPosition} setShowMediaOption={setShowMediaOption} />}
     </>
   )
 }

@@ -60,8 +60,8 @@ const FundraisingCard = () => {
 
             <Box>
               <Flex alignItems="center" justifyContent="space-between">
-                <Box>
-                  <Box w="450px">
+                <Box w='450px'>
+                  {/* <Box w="450px">
                     <Box w="100%" bg="#EEEEEE" h="8px" borderRadius={5} mb="3">
                       <Box
                         w={`${percentagePaid}%`}
@@ -75,7 +75,7 @@ const FundraisingCard = () => {
                     <strong>{formatter.format(fundRaising?.amountPaid)}</strong>{' '}
                     raised out of{' '}
                     <strong>{formatter.format(fundRaising?.amount)}</strong>
-                  </Text>
+                  </Text> */}
                 </Box>
                 <Box>
                   <Button
