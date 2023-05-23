@@ -93,8 +93,12 @@ const Index = () => {
                 id={item.id}
                 data={giftItem}
                 action={addGift}
-                disabled={addedGiftItems.includes(item.id)}
-                text="Purchase"
+                disabled={
+                  addedGiftItems.includes(item.id) ||
+                  item.amountPaid === giftItem.amount
+                }
+                purchased={item.amountPaid === giftItem.amount}
+                text={'Purchase'}
               />
             );
           })}
