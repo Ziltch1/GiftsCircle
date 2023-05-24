@@ -2013,7 +2013,7 @@
 
     "/media/UpdateVisibility/{id}": {
       "put": {
-        "description": "",
+        "description": "Two options are PRIVATE or PUBLIC",
         "tags": ["Media"],
         "parameters": [
           {
