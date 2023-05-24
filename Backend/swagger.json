@@ -1882,12 +1882,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
           }
         ],
         "security": [
