@@ -52,7 +52,7 @@ const GiftListItem = ({ item }) => {
             alignItems="center"
             gap={3}
             color="#F5222D"
-            onClick={() => handleDelete(item?.itemId)}
+            onClick={() => handleDelete(item?.ItemId)}
           >
             <DeleteIcon fontSize={16} />
             <Text fontWeight="medium" fontSize={14}>

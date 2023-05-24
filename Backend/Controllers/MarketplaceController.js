@@ -11,9 +11,9 @@ const {
 
 const prisma = new PrismaClient();
 
-router.get("/Get/All", EnsureAuthenticated, async (req, res) => {
+router.get("/Get/All/:id", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await GetMarketTransactions();
+    let data = await GetMarketTransactions(req.params.id);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);

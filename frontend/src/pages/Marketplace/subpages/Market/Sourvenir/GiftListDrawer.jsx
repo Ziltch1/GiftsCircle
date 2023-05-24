@@ -18,10 +18,14 @@ import { SourvenirContext } from '.';
 import { dispatch } from '../../../../../redux/store';
 import { BuyItems } from '../../../../../redux/features/marketplace/service';
 
-const GiftListDrawer = ({ setShowDrawer }) => {
-  const { SourvenirItems, setSourvenirItems, amount } =
-    useContext(SourvenirContext);
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+const GiftListDrawer = ({ setShowDrawer, isOpen }) => {
+  const {
+    SourvenirItems,
+    setSourvernirItems,
+    amount,
+    setAddedSourvernirItems,
+  } = useContext(SourvenirContext);
+  const { onClose } = useDisclosure();
   const btnRef = React.useRef();
 
   const closeModal = () => {
@@ -31,10 +35,11 @@ const GiftListDrawer = ({ setShowDrawer }) => {
   const HandleSubmit = () => {
     if (SourvenirItems.length > 0) {
       dispatch(BuyItems(SourvenirItems));
-      setSourvenirItems([]);
-      setShowDrawer(false);
+      setSourvernirItems([]);
+      setAddedSourvernirItems([]);
+      closeModal();
     } else {
-      setShowDrawer(false);
+      setShowDrawer();
     }
   };
 
@@ -46,7 +51,6 @@ const GiftListDrawer = ({ setShowDrawer }) => {
         onClose={onClose}
         finalFocusRef={btnRef}
         size="lg"
-        closeOnOverlayClick={false}
       >
         <DrawerOverlay />
         <DrawerContent>
@@ -61,7 +65,7 @@ const GiftListDrawer = ({ setShowDrawer }) => {
           <DrawerBody>
             <Flex justifyContent="space-between" flexWrap="wrap" mb="5">
               {SourvenirItems.map(ele => (
-                <GiftListItem id={ele.id} item={ele} />
+                <GiftListItem id={ele.ItemId} item={ele} />
               ))}
             </Flex>
             <Box mb="5" textAlign="right">

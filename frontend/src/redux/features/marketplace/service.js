@@ -6,9 +6,9 @@ import {
 } from '../../axios/apis/marketPlace';
 import { setUserPurchasedItems } from './marketSlice';
 
-const GetUserMarketItems = () => async () => {
+const GetUserMarketItems = (id) => async () => {
   try {
-    const res = await GetMarkeplaceTransApi();
+    const res = await GetMarkeplaceTransApi(id);
     dispatch(setUserPurchasedItems(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
