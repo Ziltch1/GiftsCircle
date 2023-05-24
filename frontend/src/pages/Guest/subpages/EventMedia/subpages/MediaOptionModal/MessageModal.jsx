@@ -15,7 +15,7 @@ import {
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const MessageModal = ({ setShowAudioModal, setNavPosition }) => {
+const MessageModal = ({ setShowAudioModal, setNavPosition, setShowMediaOption }) => {
     const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
     const [message, setMessage]  = useState('')
 
@@ -35,8 +35,12 @@ const MessageModal = ({ setShowAudioModal, setNavPosition }) => {
 
     const closeModal = () => {
         setNavPosition(-1)
-        // setShowAudioModal(false);
     };
+
+    const sendMessage = () => {
+        setShowMediaOption(false)
+        setNavPosition(-1)
+    }
 
     return (
         <Modal
@@ -46,11 +50,11 @@ const MessageModal = ({ setShowAudioModal, setNavPosition }) => {
             isCentered
         >
             <ModalOverlay />
-            <ModalContent maxW="450px" h='480px' bg="white" p="3">
-                <Box>
+            <ModalContent maxW="450px" h='480px' overflow='auto' bg="white" p="3">
+                <Box mb='10'>
                     <ModalCloseButton onClick={closeModal} />
                     <ModalBody>
-                        <Box textAlign="center" mb="7">
+                        <Box textAlign="center" mb="5">
                             <VStack spacing={3}>
                                 <Heading fontWeight={600} fontSize="23px" mb="3">
                                     Send a message to your host
@@ -70,11 +74,12 @@ const MessageModal = ({ setShowAudioModal, setNavPosition }) => {
                         </Box>
                     </ModalBody>
                 </Box>
-                <ModalFooter>
+                <ModalFooter position='absolute' bottom='0' right='0'>
                     <Button fontWeight="medium"
-                        fontSize={16}
+                        fontSize={14}
                         color="white"
-                        bg="#00BFB2">Send</Button>
+                        onClick={sendMessage}
+                        bg="#00BFB2">Send Message</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

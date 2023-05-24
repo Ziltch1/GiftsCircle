@@ -18,7 +18,7 @@ const Index = ({ event }) => {
   return (
     <Box>
       <FundraisingCard event={event} />
-      <DonationHistory />
+      {/* <DonationHistory /> */}
     </Box>
   );
 };
