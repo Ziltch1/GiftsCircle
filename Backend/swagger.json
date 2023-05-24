@@ -1872,6 +1872,33 @@
         }
       }
     },
+    "/media/Get/ComplimentaryMessages/{eventId}": {
+      "get": {
+        "description": "Get Media files uploaded by a guest for the event",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/media/upload": {
       "post": {
         "description": "",
@@ -1938,6 +1965,68 @@
             "required": true,
             "type": "object",
             "schema": { "$ref": "#/definitions/schema/Media" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/media/UploadMessage": {
+      "post": {
+        "description": "",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "body",
+            "required": true,
+            "type": "object",
+            "schema": { "$ref": "#/definitions/schema/ComplimentaryMessage" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+
+    "/media/UpdateVisibility/{id}": {
+      "put": {
+        "description": "Two options are PRIVATE or PUBLIC",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "visibility",
+            "in": "body",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "security": [
@@ -2547,6 +2636,23 @@
           },
           "files": {
             "type": "object",
+            "required": true
+          }
+        }
+      },
+      "ComplimentaryMessage": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+          "eventId": {
+            "type": "string",
+            "required": true
+          },
+          "message": {
+            "type": "string",
             "required": true
           }
         }

@@ -1,7 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import FundraisingCard from './FundraisingCard';
-import DonationHistory from './DonationHistory';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../redux/store';
 import { GetEventFundRaisingDonors } from '../../../../redux/features/events/service';

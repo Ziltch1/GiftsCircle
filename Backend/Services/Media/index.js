@@ -53,7 +53,6 @@ const GetEventGuestMedia = async (id) => {
 };
 
 const GetGuestSentMedia = async (eventId, userId) => {
-  
   const mediaFiles = await prisma.media.findMany({
     where: {
       eventId: eventId,
@@ -69,6 +68,25 @@ const GetGuestSentMedia = async (eventId, userId) => {
   });
   await prisma.$disconnect();
   return list;
+};
+
+const GetComplimentaryMessage = async (eventId) => {
+  const messages = await prisma.complimentaryMessage.findMany({
+    where: {
+      eventId: eventId,
+    },
+    include: {
+      user: {
+        select: {
+          firstname: true,
+          lastname: true,
+        },
+      },
+    },
+  });
+
+  await prisma.$disconnect();
+  return messages;
 };
 
 const CreateMediaFile = async (url, mediaId) => {
@@ -102,6 +120,35 @@ const Create = async (data) => {
   return Data;
 };
 
+const UpdateVisibility = async (id, data) => {
+  let Data = await prisma.media.update({
+    where: {
+      id: id,
+    },
+    data: {
+      visibility: data.visibility,
+    },
+  });
+
+  await prisma.$disconnect();
+  return Data;
+};
+
+const CreateComplimentaryMessage = async (data) => {
+  let id = uuidv4();
+  let Data = await prisma.complimentaryMessage.create({
+    data: {
+      id: id,
+      userId: data.userId,
+      eventId: data.eventId,
+      message: data.message,
+    },
+  });
+
+  await prisma.$disconnect();
+  return Data;
+};
+
 const Delete = async (id) => {
   let media = await prisma.media.delete({
     where: {
@@ -117,7 +164,10 @@ module.exports = {
   GetGuestSentMedia,
   GetEventMediaFiles,
   GetEventGuestMedia,
+  GetComplimentaryMessage,
   Create,
   CreateMediaFile,
+  CreateComplimentaryMessage,
+  UpdateVisibility,
   Delete,
 };

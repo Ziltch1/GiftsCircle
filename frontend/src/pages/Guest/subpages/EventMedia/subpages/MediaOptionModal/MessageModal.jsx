@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     Box,
     Heading,
@@ -7,10 +7,8 @@ import {
     ModalContent,
     ModalBody,
     ModalCloseButton,
-    Text,
-    Image,
     useDisclosure,
-    Button, Stack, VStack, ModalFooter
+    Button,  VStack, ModalFooter
 } from '@chakra-ui/react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';

@@ -6,12 +6,10 @@ import {
   ModalContent,
   ModalBody,
   ModalCloseButton,
-  Text,
-  Image,
   useDisclosure,
   Button, Stack, VStack
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import AudioModal from './AudioModal';
 import VideoModal from './VideoModal';
 import MessageModal from './MessageModal';
