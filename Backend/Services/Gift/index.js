@@ -180,35 +180,7 @@ const Buy = async (data) => {
   await prisma.$disconnect();
 
   return transactions;
-};
-
-const BuyMarketGift = async (data) => {
-  let id = uuidv4();
-  await prisma.marketGift.create({
-    data: {
-      id: id,
-      purchasedBy: data.userId,
-      quantity: data.quantity ? data.quantity : 1,
-      status: "Paid",
-      amountPaid: data.amount,
-      giftItemId: data.giftItemId,
-    },
-  });
-
-  await prisma.$disconnect();
-  return data;
-};
-
-const GetUserGifts = async (id) => {
-  let data = await prisma.marketGift.findMany({
-    where: {
-      purchasedBy: id,
-    },
-  });
-
-  await prisma.$disconnect();
-  return data;
-};
+};;
 
 const Delete = async (id) => {
   let gift = await prisma.gift.delete({
@@ -231,7 +203,5 @@ module.exports = {
   CreateMany,
   Buy,
   EnableContribution,
-  GetUserPurchasedGifts,
-  BuyMarketGift,
-  GetUserGifts,
+  GetUserPurchasedGifts
 };

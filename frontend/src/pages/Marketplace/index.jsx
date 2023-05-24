@@ -3,50 +3,11 @@ import React, { useState, useEffect } from 'react';
 import MarketplaceOptions from './MarketplaceOptions';
 import SourvenirMarket from './subpages/Market/Sourvenir';
 import GiftMarket from './subpages/Market/Gifts';
-import { GetAsoebiItemsApi } from '../../redux/axios/apis/asoebi';
-import { GetGiftItemsApi } from '../../redux/axios/apis/gift';
 import Asoebi from './subpages/Market/Asoebi';
-import { dispatch } from '../../redux/store';
-import { GetGiftItems } from '../../redux/features/gift/service';
-import { GetAsoebiItems } from '../../redux/features/events/service';
-import { GetSourvenirApi } from '../../redux/axios/apis/sourvenir';
 
 const Index = () => {
   const [position, setPosition] = useState(-1);
   const [showProducts, setShowProducts] = useState(false);
-  const [showCart, setShowCart] = useState(false);
-  const [sourvenirItems, setSourvenirItems] = useState([]);
-  const [giftItems, setGiftItems] = useState([]);
-  const [giftCart, setGiftCart] = useState([]);
-  const [sourvenirCart, setSourvenirCart] = useState([]);
-
-  const getSourvenirs = async() => {
-    try {
-      const response = await GetSourvenirApi();
-      const data = await response.data;
-      setSourvenirItems(data);
-      console.log(data);
-    } catch (error) {
-      
-    }
-  }
-
-  const getGiftItems = async () => {
-    try {
-      const response = await GetGiftItemsApi();
-      const data = await response.data;
-      setGiftItems(data);
-    } catch (error) {
-
-    }
-  }
-
-  useEffect(() => {
-    dispatch(GetGiftItems())
-    dispatch(GetAsoebiItems());
-    getSourvenirs();
-    getGiftItems();
-  }, []);
 
   return (
     <Box>
@@ -90,30 +51,15 @@ const Index = () => {
             </Box>
           ) : (
             <>
-                <Box>
-                  {position === 1 && <GiftMarket
-                      setShowProducts={setShowProducts}
-                      setShowCart={setShowCart} 
-                      data={giftItems}
-                      cart={giftCart}
-                      setCart={setGiftCart}
-                  />}
-                  {position === 0 && (
-                    <Asoebi
-                      setShowProducts={setShowProducts}
-                      setShowCart={setShowCart}
-                    />
-                  )}
-                  {position === 2 && (
-                    <SourvenirMarket
-                      setShowProducts={setShowProducts}
-                      setShowCart={setShowCart}
-                      data={sourvenirItems}
-                      cart={sourvenirCart}
-                      setCart={setSourvenirCart}
-                    />
-                  )}
-                </Box>
+              <Box>
+                {position === 1 && (
+                  <GiftMarket setShowProducts={setShowProducts} />
+                )}
+                {position === 0 && <Asoebi setShowProducts={setShowProducts} />}
+                {position === 2 && (
+                  <SourvenirMarket setShowProducts={setShowProducts} />
+                )}
+              </Box>
             </>
           )}
         </Box>

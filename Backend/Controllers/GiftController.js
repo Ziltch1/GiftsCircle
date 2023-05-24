@@ -82,21 +82,6 @@ router.get("/Get/PurchasedBy/:id", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.get(
-  "/Get/MarketUserGifts/:id",
-  EnsureAuthenticated,
-  async (req, res) => {
-    try {
-      let data = await GetUserGifts(req.params.id);
-      return res.status(200).send(data);
-    } catch (err) {
-      console.log(err);
-      await prisma.$disconnect();
-      return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
-    }
-  }
-);
-
 router.post("/create", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Create(req.body);
@@ -128,17 +113,6 @@ router.post("/Buy", EnsureAuthenticated, async (req, res) => {
     return res
       .status(400)
       .send(ResponseDTO("Failed", "Asoebi Details not found"));
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
-  }
-});
-
-router.post("/BuyMarketGift", EnsureAuthenticated, async (req, res) => {
-  try {
-    let data = await BuyMarketGift(req.body);
-    return res.status(200).send(data);
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

@@ -1,5 +1,5 @@
 import { Box, Heading, Text, Image, Flex } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import cartIcon from '../../../../assets/cart.svg';
 import GiftListDrawer from './GiftListDrawer';
@@ -7,12 +7,18 @@ import BackButton from '../../../../../components/Buttons/BackButton';
 import Search from '../../../../../components/Search/Search';
 import DisplayCard from '../../../../../components/Card';
 import { AddGiftApi } from '../../../../../redux/axios/apis/gift';
+import { dispatch } from '../../../../../redux/store';
+import { GetGiftItems } from '../../../../../redux/features/gift/service';
 
 const Index = ({ setShowProducts, data, cart, setCart }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const showOptions = () => {
     setShowProducts(false);
   };
+
+  useEffect(() => {
+    dispatch(GetGiftItems());
+  }, []);
 
   const { user } = useSelector(state => state.user);
 
