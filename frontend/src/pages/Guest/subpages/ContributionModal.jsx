@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import errorImg from '../../assets/errorImg.svg';
 
-const ContributionModal = ({ setOpenModal, contribute }) => {
+const ContributionModal = ({ setOpenModal, contribute, setShowModal, amount }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const [contribution, setContribution] = useState(false);
   return (
@@ -36,7 +36,7 @@ const ContributionModal = ({ setOpenModal, contribute }) => {
       >
         <ModalOverlay />
         <ModalContent py="4" w="380px" h="auto">
-          <ModalCloseButton onClick={() => setOpenModal(false)} />
+          <ModalCloseButton onClick={() => setShowModal(false)} />
           <ModalBody>
             <Image src={errorImg} mb="3" display="block" mx="auto" />
             <Text mb="3" textAlign="center">
@@ -44,6 +44,7 @@ const ContributionModal = ({ setOpenModal, contribute }) => {
               contribute to pay part of the total cost
             </Text>
             <Flex direction="column" w="85%" mx="auto">
+              {amount < 20000 ?
               <Button
                 mb="3"
                 bg="#00BFB2"
@@ -53,7 +54,17 @@ const ContributionModal = ({ setOpenModal, contribute }) => {
               >
                 Pay in full{' '}
               </Button>
-              {contribute && (
+              :
+              <>
+                <Button
+                    mb="3"
+                    bg="#00BFB2"
+                    fontSize={14}
+                    fontWeight="medium"
+                    color="white"
+                  >
+                    Pay in full{' '}
+                </Button>
                 <Button
                   fontSize={14}
                   fontWeight="medium"
@@ -61,7 +72,8 @@ const ContributionModal = ({ setOpenModal, contribute }) => {
                 >
                   Contribute
                 </Button>
-              )}
+                </>
+              }
             </Flex>
           </ModalBody>
         </ModalContent>

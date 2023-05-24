@@ -99,8 +99,8 @@ const Card = ({ item }) => {
             mx="auto"
             objectFit="cover"
             boxShadow="sm"
-            opacity={showOptions ? '0.8' : '1'}
-            transition='ease 0.3s'
+            opacity={showOptions ? '0.9' : '1'}
+            transition='ease 0.1s'
           />
         ) : (
           <>
@@ -123,7 +123,7 @@ const Card = ({ item }) => {
           </>
         )}
 
-        <Box w='auto' textAlign='center' position='absolute' margin='45% auto' inset='0' opacity={showOptions ? '1' : '0'} transition='ease 0.3s'>
+        <Box w='auto' textAlign='center' position='absolute' margin='45% auto' inset='0' opacity={showOptions ? '1' : '0'} transition='ease 0.1s'>
           <Stack direction='row' alignItems='flex-start' justifyContent='center'>
             <Button bg='none' _hover={{bg: 'none', cursor: 'pointer'}}><Image src={deleteIcon} w='100%' /></Button>
             <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={(event) => handleClick(event,item)}><Image src={downloadIcon} /></Button>

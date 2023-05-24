@@ -38,7 +38,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
             textAlign="center"
             fontWeight='medium'
           >
-            Record Media
+            Record Media/Messages
           </Button>
           <FormLabel
             htmlFor="upload"

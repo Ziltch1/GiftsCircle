@@ -1,10 +1,20 @@
 import { Box, Flex, Button, Text, Image } from '@chakra-ui/react';
 import DetailsDrawer from './component/Details';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ContributionModal from '../../pages/Guest/subpages/ContributionModal'
 
 const DisplayCard = ({ id, data, disabled, action, text }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false)
+
+  const checkPrice = (id) => {
+      setShowModal(true);
+      action(id)
+  }
+
   return (
+    <>
+    {showModal && <ContributionModal setShowModal={setShowModal} amount={data?.amount} />}
     <Flex>
       <DetailsDrawer
         data={data}
@@ -49,7 +59,7 @@ const DisplayCard = ({ id, data, disabled, action, text }) => {
             color="white"
             w="129px"
             h="40px"
-            onClick={() => action(data.id)}
+            onClick={() => checkPrice(data.id)}
             id={id}
           >
             {disabled ? 'Added to Cart' : text}
@@ -57,6 +67,7 @@ const DisplayCard = ({ id, data, disabled, action, text }) => {
         </Flex>
       </Box>
     </Flex>
+    </>
   );
 };
 
