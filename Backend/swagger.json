@@ -75,7 +75,7 @@
       "description": "Apis handling Media"
     },
     {
-      "name": "Marketplace",
+      "name": "MarketPlace",
       "description": "Apis handling Marketplace"
     }
   ],
@@ -2071,7 +2071,7 @@
         }
       }
     },
-    "/marketPlace/Get/All": {
+    "/marketPlace/Get/All/{id}": {
       "get": {
         "description": "",
         "tags": ["MarketPlace"],

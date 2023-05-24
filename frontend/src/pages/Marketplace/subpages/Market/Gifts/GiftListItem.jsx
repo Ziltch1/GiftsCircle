@@ -1,61 +1,74 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { GiftContext } from '.';
 
-const GiftListItem = ({item, cart, setCart}) => {
+const GiftListItem = ({ item }) => {
+  const {
+    setGiftItems,
+    setAddedGiftItems,
+    GiftItems,
+    addedGiftItems,
+    giftItems,
+  } = useContext(GiftContext);
 
-    const {eventGifts} = useSelector(state => state.event);
-    const handleDelete = (id) => {
-        const filteredArray = cart.filter(obj => obj !== id);
-        setCart(filteredArray);
-        console.log(id);
-    }
+  const handleDelete = id => {
+    const filteredArray = GiftItems.filter(obj => obj.ItemId !== id);
+    setGiftItems(filteredArray);
+
+    const filteredItems = addedGiftItems.filter(obj => obj !== id);
+    setAddedGiftItems(filteredItems);
+  };
+
+  const data = giftItems.find(x => x.id === item.ItemId);
+
   return (
-      <Box
-          bg="#FAFAFA"
-          p="3"
-          mb="4"
-          border="1.5px solid #FAFAFA"
-          borderRadius={10}
-          w='100%'
-          _hover={{ border: '1.5px solid #C6C6C6', boxShadow: 'sm' }}
-      >
-          <Flex gap={3}>
-              <Image
-                  src={item?.image}
-                  w="90px"
-                  h="90px"
-                  borderRadius={5}
-                  alt="gift item image"
-                  objectFit='cover'
-              />
-              <Box w="350px">
-                  <Heading fontWeight="medium" fontSize="14px" lineHeight={6} mb='2'>
-                      {item?.details}
-                  </Heading>
-                  <Button
-                      bg="none"
-                      p="0"
-                      _hover={{ bg: 'none' }}
-                      display="flex"
-                      alignItems="center"
-                      gap={3}
-                      color="#F5222D"
-                      onClick={() => handleDelete(item?.id)}
-                  >
-                      <DeleteIcon fontSize={16} />
-                      <Text fontWeight="medium" fontSize={14}>
-                          Remove from list
-                      </Text>
-                  </Button>
-              </Box>
-              <Box>
-                  <Text fontWeight='bold' fontSize={15}>₦ {item?.amount}</Text>
-              </Box>
-          </Flex>
-      </Box>
-  )
-}
+    <Box
+      bg="#FAFAFA"
+      p="3"
+      mb="4"
+      border="1.5px solid #FAFAFA"
+      borderRadius={10}
+      w="100%"
+      _hover={{ border: '1.5px solid #C6C6C6', boxShadow: 'sm' }}
+    >
+      <Flex gap={3}>
+        <Image
+          src={data?.image}
+          w="90px"
+          h="90px"
+          borderRadius={5}
+          alt="gidata image"
+          objectFit="cover"
+        />
+        <Box w="350px">
+          <Heading fontWeight="medium" fontSize="14px" lineHeight={6} mb="2">
+            {data?.details}
+          </Heading>
+          <Button
+            bg="none"
+            p="0"
+            _hover={{ bg: 'none' }}
+            display="flex"
+            alignItems="center"
+            gap={3}
+            color="#F5222D"
+            onClick={() => handleDelete(item?.ItemId)}
+          >
+            <DeleteIcon fontSize={16} />
+            <Text fontWeight="medium" fontSize={14}>
+              Remove from list
+            </Text>
+          </Button>
+        </Box>
+        <Box>
+          <Text fontWeight="bold" fontSize={15}>
+            ₦ {data?.amount}
+          </Text>
+        </Box>
+      </Flex>
+    </Box>
+  );
+};
 
-export default GiftListItem
+export default GiftListItem;

@@ -4,7 +4,7 @@ import utilReducer from './utils/UtilSlice';
 import userReducer from './features/user/userSlice';
 import eventReducer from './features/events/eventSlice';
 import giftReducer from './features/gift/giftSlice';
-
+import marketReducer from './features/marketplace/marketSlice';
 
 const store = configureStore({
   reducer: {
@@ -13,6 +13,7 @@ const store = configureStore({
     user: userReducer,
     event: eventReducer,
     gift: giftReducer,
+    market: marketReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(),
   devTools: true,

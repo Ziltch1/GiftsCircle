@@ -35,7 +35,6 @@ const Index = ({ setShowProducts }) => {
     }),
     [sourvernirItems, addedSourvernirItems, amount, SourvenirItems]
   );
-
   const AddSourvenir = async id => {
     if (!addedSourvernirItems.includes(id)) {
       const data = sourvernirItems.find(x => x.id === id);
@@ -70,7 +69,7 @@ const Index = ({ setShowProducts }) => {
           setAmount,
         }}
       >
-        {showDrawer && <GiftListDrawer setShowDrawer={setShowDrawer} />}
+        <GiftListDrawer setShowDrawer={setShowDrawer} isOpen={showDrawer} />
         <Box bg="#F5F5F5">
           <Box minH="600px" w="100%" mx="auto" pt="8">
             <BackButton action={showOptions} />

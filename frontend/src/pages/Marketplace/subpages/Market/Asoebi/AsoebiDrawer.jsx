@@ -19,12 +19,19 @@ import { AddManyEventAsoebiApi } from '../../../../../redux/axios/apis/asoebi';
 import { dispatch } from '../../../../../redux/store';
 import { GetEventAsoebis } from '../../../../../redux/features/events/service';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
+import { BuyItems } from '../../../../../redux/features/marketplace/service';
 
 const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
   const { onClose } = useDisclosure({ defaultIsOpen: true });
 
-  const { data, AsoebiItems, setAsoebiItems, addForGuest, amount } =
-    useContext(AsoebiContext);
+  const {
+    data,
+    AsoebiItems,
+    setAsoebiItems,
+    addForGuest,
+    amount,
+    setAddedAsoebiItems,
+  } = useContext(AsoebiContext);
 
   const btnRef = React.useRef();
   const closeModal = () => {
@@ -41,6 +48,17 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const BuyMarketAsoebi = async () => {
+    if (AsoebiItems.length > 0) {
+      dispatch(BuyItems(AsoebiItems));
+      setAsoebiItems([]);
+      setAddedAsoebiItems([]);
+      closeModal();
+    } else {
+      closeModal();
     }
   };
 
@@ -69,7 +87,7 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
 
           <DrawerBody>
             {data.map(ele => (
-              <CartItem item={ele} key={ele?.asoebiItem} />
+              <CartItem item={ele} key={data.indexOf(ele)} />
             ))}
           </DrawerBody>
           {!addForGuest && (
@@ -95,7 +113,7 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
                   Save Changes
                 </Button>
               ) : (
-                <PaymentButton amount={amount} action={closeModal} />
+                <PaymentButton amount={amount} action={BuyMarketAsoebi} />
               )}
             </Flex>
           </Box>

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Box, Stack, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../redux/store';
-import { GetUserEvents } from '../../redux/features/events/service';
+import {
+  GetAsoebiItems,
+  GetUserEvents,
+} from '../../redux/features/events/service';
 import {
   GetComplimentaryGiftItems,
   GetGiftItems,
@@ -16,6 +19,7 @@ import SkeletonLoader from '../../components/Skeleton';
 import PurchasedFor from './subpages/PurchasedFor/subpages/PurchasedFor';
 import PurchasedBy from './subpages/PurchasedBy/subpages/PurchasedBy';
 import GiftAndSourvenir from './subpages/GiftAndSourvenir';
+import { GetUserMarketItems } from '../../redux/features/marketplace/service';
 
 const Events = () => {
   const { user } = useSelector(state => state.user);
@@ -29,10 +33,12 @@ const Events = () => {
   useEffect(() => {
     if (user) {
       dispatch(GetSourvenirItems());
+      dispatch(GetAsoebiItems());
       dispatch(GetComplimentaryGiftItems());
       dispatch(GetUserEvents(user.id));
       dispatch(GetUserPurchasedGifts(user.id));
       dispatch(GetGiftItems());
+      dispatch(GetUserMarketItems(user.id));
     }
   }, [user]);
 

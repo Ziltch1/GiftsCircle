@@ -1,7 +1,7 @@
 import api from '../axios';
 
-const GetMarkeplaceTransApi = () => {
-  return api.get('/marketPlace/Get/All/');
+const GetMarkeplaceTransApi = id => {
+  return api.get(`/marketPlace/Get/All/${id}`);
 };
 
 const BuyItemsApi = data => {

@@ -24,11 +24,18 @@ import { DeleteAsoebi } from '../../../../../redux/features/events/service';
 const CartItem = ({ item }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [increment, setIncrement] = useState(0);
-  const { setAddedAsoebiItems, addForGuest, setAsoebiItems, AsoebiItems } =
-    useContext(AsoebiContext);
+  const {
+    setAddedAsoebiItems,
+    addForGuest,
+    setAsoebiItems,
+    AsoebiItems,
+    addedAseobiItems,
+  } = useContext(AsoebiContext);
 
   const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
-  const asoebiItem = asoebiItems.find(x => x.id === item.asoebiItem);
+  const asoebiItem = addForGuest
+    ? asoebiItems.find(x => x.id === item.asoebiItem)
+    : asoebiItems.find(x => x.id === item.ItemId);
 
   const MarkUpAsoebi = () => {
     AsoebiItems.map(ele => {
@@ -47,10 +54,15 @@ const CartItem = ({ item }) => {
       setAsoebiItems(prev => prev.filter(x => x.id !== asoebi.id));
       setAddedAsoebiItems(prev => prev.filter(x => x.id !== asoebiItem.id));
     } else {
-      setAsoebiItems(prev => prev.filter(x => x.asoebiItem !== asoebiItem.id));
-      setAddedAsoebiItems(prev =>
-        prev.filter(x => x.asoebiItem !== asoebiItem.id)
+      const filteredArray = AsoebiItems.filter(
+        obj => obj.ItemId !== asoebiItem.id
       );
+      setAsoebiItems(filteredArray);
+
+      const filteredItems = addedAseobiItems.filter(
+        obj => obj !== asoebiItem.id
+      );
+      setAddedAsoebiItems(filteredItems);
     }
   };
 
