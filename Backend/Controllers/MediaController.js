@@ -14,6 +14,7 @@ const {
   Delete,
   CreateComplimentaryMessage,
   GetComplimentaryMessage,
+  UpdateVisibility,
 } = require("../Services/Media");
 const prisma = new PrismaClient();
 
@@ -149,6 +150,17 @@ router.post("/UploadVideo", EnsureAuthenticated, async (req, res) => {
 router.post("/UploadMessage", EnsureAuthenticated, async (req, res) => {
   try {
     let Data = await CreateComplimentaryMessage(req.body);
+    return res.status(200).send(Data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.put("/UpdateVisibility/:id", EnsureAuthenticated, async (req, res) => {
+  try {
+    let Data = await UpdateVisibility(req.params.id, req.body);
     return res.status(200).send(Data);
   } catch (err) {
     console.log(err);

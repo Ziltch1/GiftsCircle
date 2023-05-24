@@ -2010,6 +2010,40 @@
         }
       }
     },
+
+    "/media/UpdateVisibility/{id}": {
+      "put": {
+        "description": "",
+        "tags": ["Media"],
+        "parameters": [
+          {
+            "name": "visibility",
+            "in": "body",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/media//{id}": {
       "delete": {
         "description": "",
