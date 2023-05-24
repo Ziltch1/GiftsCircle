@@ -1,8 +1,19 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import GiftItemList from '../../../components/GiftItemList';
+import { useSelector } from 'react-redux';
 
 const PurchasedFor = ({ events }) => {
+  const { user } = useSelector(state => state.user);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (events.length > 0) {
+      let data = events.filter(x => x.user_id === user.id);
+      setData(data);
+    }
+  }, [events, user]);
+
   return (
     <Box>
       {events?.length < 1 ? (
@@ -25,8 +36,7 @@ const PurchasedFor = ({ events }) => {
         </Box>
       ) : (
         <Box w="100%" h="100%">
-          
-          {events?.map(event => (
+          {data?.map(event => (
             <GiftItemList key={event.id} event={event} />
           ))}
         </Box>

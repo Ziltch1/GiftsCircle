@@ -75,25 +75,30 @@ model gift {
 }
 
 model giftTransaction {
-  id          String   @id @db.VarChar(50)
-  gift        gift     @relation(fields: [giftId], references: [id])
-  amount      Int
-  date        DateTime
-  giftId      String   @db.VarChar(255)
-  purchasedBy user     @relation(fields: [userId], references: [id])
-  quantity    Int
-  delivered   Boolean  @default(false)
-  eventId     String   @db.VarChar(50)
-  userId      String   @db.VarChar(255)
+  id                  String             @id @db.VarChar(50)
+  gift                gift?              @relation(fields: [giftId], references: [id])
+  complimentaryGift   complimentarygift? @relation(fields: [complimentarygiftId], references: [id])
+  amount              Int
+  date                DateTime
+  giftId              String?            @db.VarChar(255)
+  purchasedBy         user               @relation(fields: [userId], references: [id])
+  quantity            Int
+  delivered           Boolean            @default(false)
+  eventId             String             @db.VarChar(50)
+  userId              String             @db.VarChar(255)
+  complimentarygiftId String?            @db.VarChar(255)
 }
 
-model marketGift {
-  id          String @id @db.VarChar(255)
-  giftItemId  String @db.VarChar(255)
+model marketGiftTransaction {
+  id          String         @id @db.VarChar(255)
+  ItemId      String         @db.VarChar(255)
   quantity    Int
-  purchasedBy String @db.VarChar(255)
-  status      String @db.VarChar(255)
+  purchasedBy user           @relation(fields: [userId], references: [id])
+  status      Status
   amountPaid  Int
+  date        DateTime       @default(now())
+  category    MarketCategory
+  userId      String         @db.VarChar(255)
 }
 
 model giftitem {
@@ -106,39 +111,36 @@ model giftitem {
 }
 
 model complimentarygift {
-  id       String  @id @db.VarChar(255)
-  title    String? @db.VarChar(255)
-  category String  @db.VarChar(255)
-  image    String? @db.VarChar(255)
-  details  String? @db.VarChar(255)
-  amount   Int
+  id              String            @id @db.VarChar(255)
+  title           String?           @db.VarChar(255)
+  category        String            @db.VarChar(255)
+  image           String?           @db.VarChar(255)
+  details         String?           @db.VarChar(255)
+  amount          Int
+  giftTransaction giftTransaction[]
 }
 
 model user {
-  id                   String                 @id @db.VarChar(255)
-  firstname            String                 @db.VarChar(255)
-  lastname             String                 @db.VarChar(255)
-  gender               String?                @db.VarChar(255)
-  placeOfResidence     String?                @db.VarChar(255)
-  tel                  String?                @db.VarChar(255)
-  state                String?                @db.VarChar(255)
-  dob                  String?                @db.VarChar(255)
-  emailVerified        Boolean?
-  email                String                 @unique
-  password             String                 @db.VarChar(255)
-  eventId              String?                @db.VarChar(255)
-  event                event?                 @relation(fields: [eventId], references: [id])
-  role                 Role                   @default(USER)
-  Media                Media[]
-  ComplimentaryMessage ComplimentaryMessage[]
-  Guests               Guests[]
-  asoebiTransaction    asoebiTransaction[]
-  giftTransaction      giftTransaction[]
-}
-
-enum Role {
-  USER
-  ADMIN
+  id                    String                  @id @db.VarChar(255)
+  firstname             String                  @db.VarChar(255)
+  lastname              String                  @db.VarChar(255)
+  gender                String?                 @db.VarChar(255)
+  placeOfResidence      String?                 @db.VarChar(255)
+  tel                   String?                 @db.VarChar(255)
+  state                 String?                 @db.VarChar(255)
+  dob                   String?                 @db.VarChar(255)
+  emailVerified         Boolean?
+  email                 String                  @unique
+  password              String                  @db.VarChar(255)
+  eventId               String?                 @db.VarChar(255)
+  event                 event?                  @relation(fields: [eventId], references: [id])
+  role                  Role                    @default(USER)
+  Media                 Media[]
+  ComplimentaryMessage  ComplimentaryMessage[]
+  Guests                Guests[]
+  asoebiTransaction     asoebiTransaction[]
+  giftTransaction       giftTransaction[]
+  marketGiftTransaction marketGiftTransaction[]
 }
 
 model otp {
@@ -241,12 +243,10 @@ model sourvenir {
 }
 
 model MediaFile {
-  id                     String                @id @db.VarChar(255)
-  url                    String                @db.VarChar(255)
-  mediaId                String
-  Media                  Media                 @relation(fields: [mediaId], references: [id])
-  ComplimentaryMessage   ComplimentaryMessage? @relation(fields: [complimentaryMessageId], references: [id])
-  complimentaryMessageId String?               @db.VarChar(255)
+  id      String @id @db.VarChar(255)
+  url     String @db.VarChar(255)
+  mediaId String
+  Media   Media  @relation(fields: [mediaId], references: [id])
 }
 
 model Media {
@@ -256,20 +256,44 @@ model Media {
   userId     String      @db.VarChar(255)
   date       DateTime    @default(now())
   uploadedBy USERTYPE
+  visibility VISBILITY   @default(PUBLIC)
   data       MediaFile[]
+}
+
+model ComplimentaryMessage {
+  id      String   @id @db.VarChar(255)
+  eventId String   @db.VarChar(255)
+  user    user     @relation(fields: [userId], references: [id])
+  userId  String   @db.VarChar(255)
+  date    DateTime @default(now())
+  message String   @db.VarChar
+}
+
+enum Status {
+  PAID
+  COMPLETED
+  PARTIAL
+  DELIVERED
+  UNPAID
+}
+
+enum MarketCategory {
+  ASOEBI
+  GIFT
+  SOURVENIR
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum VISBILITY {
+  PUBLIC
+  PRIVATE
 }
 
 enum USERTYPE {
   GUEST
   HOST
-}
-
-model ComplimentaryMessage {
-  id      String      @id @db.VarChar(255)
-  eventId String      @db.VarChar(255)
-  user    user        @relation(fields: [userId], references: [id])
-  userId  String      @db.VarChar(255)
-  date    DateTime    @default(now())
-  message String      @db.VarChar
-  media   MediaFile[]
 }

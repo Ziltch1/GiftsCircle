@@ -2,9 +2,17 @@ const { PrismaClient } = require("@prisma/client");
 const express = require("express");
 const ResponseDTO = require("../DTO/Response");
 const router = express.Router();
-const { Get, GetAll, Create, Update, Delete } = require("../Services/ComplimentaryGift");
+const {
+  Get,
+  GetAll,
+  Create,
+  Update,
+  Delete,
+  Buy,
+} = require("../Services/ComplimentaryGift");
 const cloudinary = require("../config/Cloudinary");
 const { upload, dataUri } = require("../config/multer");
+const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const prisma = new PrismaClient();
 
 router.get("/:id", async (req, res) => {
@@ -41,6 +49,22 @@ router.post("/create", upload.single("image"), async (req, res) => {
     let data = await Create(req.body, response.url);
 
     return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.post("/Buy", EnsureAuthenticated, async (req, res) => {
+  try {
+    let data = await Buy(req.body);
+    if (data) {
+      return res.status(200).send(data);
+    }
+    return res
+      .status(400)
+      .send(ResponseDTO("Failed", "Asoebi Details not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

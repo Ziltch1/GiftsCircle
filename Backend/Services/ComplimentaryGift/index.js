@@ -32,8 +32,26 @@ const Create = async (data, image) => {
     },
   });
 
-  await prisma.$disconnect();      
+  await prisma.$disconnect();
   return Data;
+};
+
+const Buy = async (data) => {
+  data.forEach((element) => {
+    element.id = uuidv4();
+    element.date = new Date(Date.now());
+    element.quantity = 1;
+    return element;
+  });
+  let transactions = await prisma.giftTransaction.createMany({
+    data: [...data],
+    skipDuplicates: true,
+  });
+  await prisma.$disconnect();
+
+  console.log(transactions);
+
+  return transactions;
 };
 
 const Update = async (id, data, image) => {
@@ -64,7 +82,7 @@ const Update = async (id, data, image) => {
 };
 
 const Delete = async (id) => {
-  let complimentarygift = await prisma.complimentarygift.delete({
+  let complimentarygift = await prisma.giftTransaction.delete({
     where: {
       id: id,
     },
@@ -74,4 +92,4 @@ const Delete = async (id) => {
   return complimentarygift;
 };
 
-module.exports = { Create, Get, GetAll, Update, Delete };
+module.exports = { Create, Buy, Get, GetAll, Update, Delete };

@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Box, Stack, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../redux/store';
-import { GetUserEvents } from '../../redux/features/events/service';
 import {
+  GetAsoebiItems,
+  GetUserEvents,
+} from '../../redux/features/events/service';
+import {
+  GetComplimentaryGiftItems,
   GetGiftItems,
+  GetSourvenirItems,
   GetUserPurchasedGifts,
 } from '../../redux/features/gift/service';
 import GiftHeader from './components/GiftHeader';
@@ -13,47 +18,27 @@ import Search from '../../components/Search/Search';
 import SkeletonLoader from '../../components/Skeleton';
 import PurchasedFor from './subpages/PurchasedFor/subpages/PurchasedFor';
 import PurchasedBy from './subpages/PurchasedBy/subpages/PurchasedBy';
-import GiftAndSourvenir from './subpages/GiftAndSourvenir'
-import { GetSourvenirApi } from '../../redux/axios/apis/sourvenir';
-import { GetGiftItemsApi } from '../../redux/axios/apis/gift';
+import GiftAndSourvenir from './subpages/GiftAndSourvenir';
+import { GetUserMarketItems } from '../../redux/features/marketplace/service';
 
 const Events = () => {
   const { user } = useSelector(state => state.user);
   const [navPosition, setNavPosition] = useState(0);
   const [loading, setLoading] = useState(true);
   const { events } = useSelector(state => state.event);
-  const { userPurchasedGiftItems } = useSelector(state => state.gift);
-  const [sourvenir, setSourvenir] = useState([]);
-  const [gift, setGift] = useState([]);
-
-  const getSourvenirs = async () => {
-    try {
-      const res = await GetSourvenirApi();
-      const data = await res.data;
-      setSourvenir(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const getGifts = async () => {
-    try {
-      const res = await GetGiftItemsApi();
-      const data = await res.data;
-      setGift(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+  const { userPurchasedGiftItems, giftItems, sourvenirItems } = useSelector(
+    state => state.gift
+  );
 
   useEffect(() => {
     if (user) {
+      dispatch(GetSourvenirItems());
+      dispatch(GetAsoebiItems());
+      dispatch(GetComplimentaryGiftItems());
       dispatch(GetUserEvents(user.id));
       dispatch(GetUserPurchasedGifts(user.id));
       dispatch(GetGiftItems());
-      getSourvenirs();
-      getGifts();
+      dispatch(GetUserMarketItems(user.id));
     }
   }, [user]);
 
@@ -88,7 +73,10 @@ const Events = () => {
                       <PurchasedBy items={userPurchasedGiftItems} />
                     )}
                     {navPosition === 2 && (
-                      <GiftAndSourvenir sourvenir={sourvenir} gifts={gift} />
+                      <GiftAndSourvenir
+                        sourvenir={sourvenirItems}
+                        gifts={giftItems}
+                      />
                     )}
                   </>
                 )}

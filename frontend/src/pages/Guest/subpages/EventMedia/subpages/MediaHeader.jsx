@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Box, Heading, Flex, Button, FormLabel, Input, Stack } from '@chakra-ui/react';
 import LoadingModal from '../../../components/LoadingModal';
-import { useUpload } from '../Hooks';
+// import { useUpload } from '../Hooks';
 import MediaOptionModal from './MediaOptionModal'
 
 const MediaHeader = ({ navPosition, setNavPosition }) => {
   const [image, setImage] = useState(null);
   const [modalOpen, setShowModal] = useState(false);
   const [showMediaOption, setShowMediaOption] = useState(false)
-  const Data = useUpload(image, setShowModal, setImage);
+  // const Data = useUpload(image, setShowModal, setImage);
 
   const actionBtns = ['Uploaded by me', 'Sent to me'];
   const handleClick = index => {

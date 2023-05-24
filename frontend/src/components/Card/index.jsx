@@ -3,7 +3,7 @@ import DetailsDrawer from './component/Details';
 import React, { useState, useEffect } from 'react';
 import ContributionModal from '../../pages/Guest/subpages/ContributionModal'
 
-const DisplayCard = ({ id, data, disabled, action, text }) => {
+const DisplayCard = ({ id, data, disabled, action, text, purchased }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [showModal, setShowModal] = useState(false)
 
@@ -60,9 +60,10 @@ const DisplayCard = ({ id, data, disabled, action, text }) => {
             w="129px"
             h="40px"
             onClick={() => checkPrice(data.id)}
+            // onClick={() => (disabled ? null : action(data.id))}
             id={id}
           >
-            {disabled ? 'Added to Cart' : text}
+            {disabled ? (purchased ? 'Purchased' : 'Added to Cart') : text}
           </Button>
         </Flex>
       </Box>

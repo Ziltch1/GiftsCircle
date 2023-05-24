@@ -31,13 +31,51 @@ const GetEventGifts = async (id) => {
 };
 
 const GetUserPurchasedGifts = async (id) => {
-  const gifts = await prisma.gift.findMany({
+  const gifts = await prisma.giftTransaction.findMany({
     where: {
-      purchasedBy: id,
+      userId: id,
+    },
+    include: {
+      gift: {
+        select: {
+          giftItemId: true,
+          status: true,
+        },
+      },
     },
   });
   await prisma.$disconnect();
   return gifts;
+};
+
+const GetEventGiftTransactions = async (id) => {
+  const transactions = await prisma.giftTransaction.findMany({
+    where: {
+      eventId: id,
+    },
+    include: {
+      purchasedBy: {
+        select: {
+          firstname: true,
+          lastname: true,
+        },
+      },
+      gift: {
+        select: {
+          giftItemId: true,
+          status: true,
+          complimentaryGift: true,
+        },
+      },
+      complimentaryGift: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+  await prisma.$disconnect();
+  return transactions;
 };
 
 const Create = async (data) => {
@@ -113,27 +151,23 @@ const EnableContribution = async (data, id) => {
 };
 
 const Buy = async (data) => {
-  Promise.all(
-    data.map((ele) => {
-      prisma.gift.update({
-        where: {
-          id: ele.giftId,
-        },
-        data: {
-          purchased: true,
-          status: data.status,
-          complimentaryGift: data.complimentaryGift,
-          amountPaid: data.amount,
-        },
-      });
-    })
-  ).then((resolvedValues) => {
-    resolvedValues.forEach((value) => {
-      console.log(value);
+  data.forEach(async (ele) => {
+    let data = await prisma.gift.update({
+      where: {
+        id: ele.giftId,
+      },
+      data: {
+        purchased: true,
+        status: ele.status,
+        complimentaryGift: ele.complimentaryGift,
+        amountPaid: ele.amount,
+      },
     });
   });
 
   data.forEach((element) => {
+    delete element.status;
+    delete element.complimentaryGift;
     element.id = uuidv4();
     element.date = new Date(Date.now());
     element.quantity = 1;
@@ -146,35 +180,7 @@ const Buy = async (data) => {
   await prisma.$disconnect();
 
   return transactions;
-};
-
-const BuyMarketGift = async (data) => {
-  let id = uuidv4();
-  await prisma.marketGift.create({
-    data: {
-      id: id,
-      purchasedBy: data.userId,
-      quantity: data.quantity ? data.quantity : 1,
-      status: "Paid",
-      amountPaid: data.amount,
-      giftItemId: data.giftItemId,
-    },
-  });
-
-  await prisma.$disconnect();
-  return data;
-};
-
-const GetUserGifts = async (id) => {
-  let data = await prisma.marketGift.findMany({
-    where: {
-      purchasedBy: id,
-    },
-  });
-
-  await prisma.$disconnect();
-  return data;
-};
+};;
 
 const Delete = async (id) => {
   let gift = await prisma.gift.delete({
@@ -192,11 +198,10 @@ module.exports = {
   Get,
   GetAll,
   GetEventGifts,
+  GetEventGiftTransactions,
   Delete,
   CreateMany,
   Buy,
   EnableContribution,
-  GetUserPurchasedGifts,
-  BuyMarketGift,
-  GetUserGifts,
+  GetUserPurchasedGifts
 };

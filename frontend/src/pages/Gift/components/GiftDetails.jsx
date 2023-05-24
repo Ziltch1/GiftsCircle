@@ -15,28 +15,31 @@ import BackButton from '../../../components/Buttons/BackButton';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../redux/store';
-import { GetEventGifts } from '../../../redux/features/events/service';
 import SkeletonLoader from '../../../components/Skeleton';
+import { GetEventGiftsTransactions } from '../../../redux/features/gift/service';
 
 export default function GiftDetails() {
   const navigate = useNavigate();
   const [currentEvent, setCurrentEvent] = useState([]);
   const { id } = useParams();
-  const { eventGifts, events } = useSelector(state => state.event);
-  const { giftItems } = useSelector(state => state.gift);
+  const { events } = useSelector(state => state.event);
+  const { giftItems, eventGiftTrans, complimentaryGifts } = useSelector(
+    state => state.gift
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(GetEventGifts(id));
+    dispatch(GetEventGiftsTransactions(id));
     setCurrentEvent(events?.filter(x => x.id === id)[0]);
   }, [id, events]);
 
   useEffect(() => {
-    if (eventGifts) {
+    if (eventGiftTrans) {
       setLoading(false);
     }
-  }, [eventGifts]);
+  }, [eventGiftTrans]);
 
+  console.log(eventGiftTrans);
   return (
     <Box bg="#F5F5F5">
       <Box w="85%" mx="auto" pt="10" pb="5">
@@ -49,7 +52,7 @@ export default function GiftDetails() {
           <SkeletonLoader />
         ) : (
           <>
-            {eventGifts.length === 0 ? (
+            {eventGiftTrans.length === 0 ? (
               <Box h="100vh">
                 <Heading
                   textAlign="center"
@@ -79,19 +82,21 @@ export default function GiftDetails() {
                     </Tr>
                   </Thead>
                   <Tbody bg="white">
-                    {eventGifts.map(ele => {
-                      const giftItem = giftItems.filter(
-                        x => x.id === ele.giftItemId
-                      )[0];
+                    {eventGiftTrans.map(ele => {
+                      const gift = ele.giftId
+                        ? giftItems.find(x => x.id === ele.gift.giftItemId)
+                        : complimentaryGifts.find(
+                            x => x.id === ele.complimentaryGift.id
+                          );
                       return (
                         <Tr fontSize={13} textAlign="center" key={ele.id}>
-                          <Td>{giftItem?.title}</Td>
+                          <Td>{gift?.title}</Td>
                           <Td>Taiwo</Td>
                           <Td>June 12th, 2022</Td>
                           <Td>{ele?.quantity}</Td>
                           <Td>{ele?.status}</Td>
                           <Td isNumeric>
-                            {parseInt(giftItem?.amount) - ele?.amountPaid}
+                            {parseInt(gift?.amount) - ele?.amount}
                           </Td>
                           <Td>Complete payment</Td>
                         </Tr>

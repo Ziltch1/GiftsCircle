@@ -23,32 +23,55 @@ const AsoebiMarket = ({ setShowProducts, eventId }) => {
 
   useEffect(() => {
     let idList = [];
-    data.map(ele => idList.push(ele.asoebiItem));
+    data.map(ele => {
+      if (addForGuest) {
+        idList.push(ele.asoebiItem);
+      } else {
+        idList.push(ele.ItemId);
+      }
+      return ele;
+    });
     let uniqueIds = new Set(idList);
     setAddedAsoebiItems([...uniqueIds]);
 
     let amount = 0;
 
     data.forEach(ele => {
-      amount += asoebiItems.find(x => x.id === ele.asoebiItem).amount;
+      amount += addForGuest
+        ? asoebiItems.find(x => x.id === ele.asoebiItem).amount
+        : asoebiItems.find(x => x.id === ele.ItemId).amount;
     });
     setAmount(amount);
-  }, [data, setAddedAsoebiItems, asoebiItems, setAmount]);
+  }, [data, setAddedAsoebiItems, asoebiItems, setAmount, addForGuest]);
 
   const AddAsoebi = id => {
     if (!addedAsoebiItems.includes(id)) {
-      const formBody = {
-        eventId: eventId,
-        userId: user.id,
-        asoebiItem: id,
-        increment: 0,
-        purchasedByHost: !addForGuest,
-      };
-      setAsoebiItems(prev => [...prev, formBody]);
-      setAddedAsoebiItems(prev => [...prev, id]);
+      if (addForGuest) {
+        const formBody = {
+          eventId: eventId,
+          userId: user.id,
+          asoebiItem: id,
+          increment: 0,
+          purchasedByHost: !addForGuest,
+        };
+        setAsoebiItems(prev => [...prev, formBody]);
+        setAddedAsoebiItems(prev => [...prev, id]);
+      } else {
+        const data = asoebiItems.find(x => x.id === id);
+
+        const formBody = {
+          ItemId: id,
+          userId: user.id,
+          quantity: 1,
+          amountPaid: data.amount,
+          status: 'PAID',
+          category: 'ASOEBI',
+        };
+        setAsoebiItems(prev => [...prev, formBody]);
+        setAddedAsoebiItems(prev => [...prev, id]);
+      }
     }
   };
-
   return (
     <Box bg="#F5F5F5">
       <AsoebiDrawer
