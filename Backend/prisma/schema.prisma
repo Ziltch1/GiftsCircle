@@ -101,12 +101,6 @@ model marketGiftTransaction {
   userId      String         @db.VarChar(255)
 }
 
-enum MarketCategory {
-  ASOEBI
-  GIFT
-  SOURVENIR
-}
-
 model giftitem {
   id       String  @id @db.VarChar(255)
   title    String? @db.VarChar(255)
@@ -147,11 +141,6 @@ model user {
   asoebiTransaction     asoebiTransaction[]
   giftTransaction       giftTransaction[]
   marketGiftTransaction marketGiftTransaction[]
-}
-
-enum Role {
-  USER
-  ADMIN
 }
 
 model otp {
@@ -254,12 +243,10 @@ model sourvenir {
 }
 
 model MediaFile {
-  id                     String                @id @db.VarChar(255)
-  url                    String                @db.VarChar(255)
-  mediaId                String
-  Media                  Media                 @relation(fields: [mediaId], references: [id])
-  ComplimentaryMessage   ComplimentaryMessage? @relation(fields: [complimentaryMessageId], references: [id])
-  complimentaryMessageId String?               @db.VarChar(255)
+  id      String @id @db.VarChar(255)
+  url     String @db.VarChar(255)
+  mediaId String
+  Media   Media  @relation(fields: [mediaId], references: [id])
 }
 
 model Media {
@@ -269,22 +256,17 @@ model Media {
   userId     String      @db.VarChar(255)
   date       DateTime    @default(now())
   uploadedBy USERTYPE
+  visibility VISBILITY   @default(PUBLIC)
   data       MediaFile[]
 }
 
-enum USERTYPE {
-  GUEST
-  HOST
-}
-
 model ComplimentaryMessage {
-  id      String      @id @db.VarChar(255)
-  eventId String      @db.VarChar(255)
-  user    user        @relation(fields: [userId], references: [id])
-  userId  String      @db.VarChar(255)
-  date    DateTime    @default(now())
-  message String      @db.VarChar
-  media   MediaFile[]
+  id      String   @id @db.VarChar(255)
+  eventId String   @db.VarChar(255)
+  user    user     @relation(fields: [userId], references: [id])
+  userId  String   @db.VarChar(255)
+  date    DateTime @default(now())
+  message String   @db.VarChar
 }
 
 enum Status {
@@ -293,4 +275,25 @@ enum Status {
   PARTIAL
   DELIVERED
   UNPAID
+}
+
+enum MarketCategory {
+  ASOEBI
+  GIFT
+  SOURVENIR
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum VISBILITY {
+  PUBLIC
+  PRIVATE
+}
+
+enum USERTYPE {
+  GUEST
+  HOST
 }

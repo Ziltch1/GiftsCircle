@@ -12,6 +12,8 @@ const {
   GetEventGuestMedia,
   GetEventMediaFiles,
   Delete,
+  CreateComplimentaryMessage,
+  GetComplimentaryMessage,
 } = require("../Services/Media");
 const prisma = new PrismaClient();
 
@@ -47,6 +49,21 @@ router.get(
   async (req, res) => {
     try {
       let data = await GetGuestSentMedia(req.params.eventId, req.params.userId);
+      return res.status(200).send(data);
+    } catch (err) {
+      console.log(err);
+      await prisma.$disconnect();
+      return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+    }
+  }
+);
+
+router.get(
+  "/Get/ComplimentaryMessages/:eventId",
+  EnsureAuthenticated,
+  async (req, res) => {
+    try {
+      let data = await GetComplimentaryMessage(req.params.eventId);
       return res.status(200).send(data);
     } catch (err) {
       console.log(err);
@@ -121,6 +138,17 @@ router.post("/UploadVideo", EnsureAuthenticated, async (req, res) => {
     if (Data) {
       await CreateMediaFile(req.body.files, Data.id);
     }
+    return res.status(200).send(Data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.post("/UploadMessage", EnsureAuthenticated, async (req, res) => {
+  try {
+    let Data = await CreateComplimentaryMessage(req.body);
     return res.status(200).send(Data);
   } catch (err) {
     console.log(err);

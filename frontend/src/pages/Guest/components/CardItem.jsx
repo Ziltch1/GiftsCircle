@@ -1,4 +1,4 @@
-import { Box, Image, Stack, Button, Divider, Text } from '@chakra-ui/react';
+import { Box, Image, Stack, Button, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import ImageModal from './ImageModal';
 import deleteIcon from '../../assets/deleteIcon.png'

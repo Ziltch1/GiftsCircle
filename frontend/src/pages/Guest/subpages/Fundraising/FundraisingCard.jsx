@@ -7,12 +7,12 @@ const FundraisingCard = () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const { fundRaising } = useSelector(state => state.event);
 
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'NGN',
-  });
+  // const formatter = new Intl.NumberFormat('en-US', {
+  //   style: 'currency',
+  //   currency: 'NGN',
+  // });
 
-  const percentagePaid = (fundRaising?.amountPaid * 100) / fundRaising?.amount;
+  // const percentagePaid = (fundRaising?.amountPaid * 100) / fundRaising?.amount;
 
   return (
     <>
