@@ -3,7 +3,7 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { CartContext } from '..';
 
-const GiftListItem = ({ id, item }) => {
+const GiftListItem = ({ id, item, amount }) => {
   const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems } =
     useContext(CartContext);
 
@@ -57,7 +57,7 @@ const GiftListItem = ({ id, item }) => {
         </Box>
         <Box>
           <Text fontWeight="bold" fontSize={15}>
-            ₦ {item.amount}
+            ₦ {amount}
           </Text>
         </Box>
       </Flex>

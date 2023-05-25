@@ -5,12 +5,14 @@ import { useSelector } from 'react-redux';
 import ComplimentaryModal from './subpages/ComplimentaryModal';
 import GiftListDrawer from './subpages/GiftListDrawer';
 import DisplayCard from '../../../../components/Card';
+import ContributionModal from './subpages/ContributionModal';
 
 export const CartContext = createContext(null);
 
 const Index = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
+  const [contributionModal, setContributionModal] = useState(false);
   const [data, setData] = useState([]);
   const { eventGifts } = useSelector(state => state.event);
   const { giftItems, complimentaryGifts } = useSelector(state => state.gift);
@@ -22,12 +24,20 @@ const Index = () => {
   const [amount, setAmount] = useState(0);
   const [giftAmount, setGiftAmount] = useState(0);
   const [complimentaryGiftAmount, setComplimentaryGiftAmount] = useState(0);
+  const [contributionAmount, setContributionAmount] = useState(0);
+  const [currentItem, setCurrentItem] = useState(null);
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftItemId === id);
-    if (!addedGiftItems.includes(newItem.id)) {
-      setGiftItems([...GiftItems, newItem]);
-      setAddedGiftItems([...addedGiftItems, newItem.id]);
+    let itemData = giftItems.find(x => x.id === id);
+    if (itemData.amount > 20000) {
+      setContributionModal(true);
+      setCurrentItem(newItem);
+    } else {
+      if (!addedGiftItems.includes(newItem.id)) {
+        setGiftItems([...GiftItems, newItem]);
+        setAddedGiftItems([...addedGiftItems, newItem.id]);
+      }
     }
   };
 
@@ -43,6 +53,8 @@ const Index = () => {
       amount,
       giftAmount,
       complimentaryGiftAmount,
+      contributionAmount,
+      currentItem,
     }),
     [
       eventGifts,
@@ -55,6 +67,8 @@ const Index = () => {
       amount,
       giftAmount,
       complimentaryGiftAmount,
+      contributionAmount,
+      currentItem,
     ]
   );
 
@@ -70,13 +84,21 @@ const Index = () => {
           setComplimentaryItems,
           setGiftItems,
           setGiftAmount,
+          setContributionAmount,
           setComplimentaryGiftAmount,
+          setCurrentItem,
         }}
       >
-        {openDrawer && <ComplimentaryModal setOpenDrawer={setOpenDrawer} />}
-        {showListDrawer && (
-          <GiftListDrawer setShowListDrawer={setShowListDrawer} />
-        )}
+        <ContributionModal
+          setOpenModal={setContributionModal}
+          isOpen={contributionModal}
+        />
+        <ComplimentaryModal setOpenDrawer={setOpenDrawer} isOpen={openDrawer} />
+        <GiftListDrawer
+          setShowListDrawer={setShowListDrawer}
+          isOpen={showListDrawer}
+        />
+
         <GiftHeader
           setOpenDrawer={setOpenDrawer}
           setShowListDrawer={setShowListDrawer}
@@ -88,6 +110,7 @@ const Index = () => {
         >
           {eventGifts.map(item => {
             const giftItem = giftItems.find(x => x.id === item?.giftItemId);
+            console.log(item.amountPaid >= giftItem.amount);
             return (
               <DisplayCard
                 id={item.id}
@@ -97,7 +120,7 @@ const Index = () => {
                   addedGiftItems.includes(item.id) ||
                   item.amountPaid === giftItem.amount
                 }
-                purchased={item.amountPaid === giftItem.amount}
+                purchased={item.amountPaid >= giftItem.amount}
                 text={'Purchase'}
               />
             );

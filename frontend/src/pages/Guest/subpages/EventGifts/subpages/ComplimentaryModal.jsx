@@ -13,12 +13,12 @@ import {
   Flex,
   Button,
 } from '@chakra-ui/react';
-import ContributionModal from '../../ContributionModal';
+import ContributionModal from './ContributionModal';
 import DisplayCard from '../../../../../components/Card';
 import { CartContext } from '..';
 
-const ComplimentaryModal = ({ setOpenDrawer }) => {
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+const ComplimentaryModal = ({ setOpenDrawer, isOpen }) => {
+  const { onClose } = useDisclosure();
   const [openModal, setOpenModal] = useState(false);
   const btnRef = React.useRef();
   const {
