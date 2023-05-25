@@ -63,7 +63,7 @@ const PurchaseHistory = () => {
                           : 'Yes'
                         : 'No'}
                     </Td>
-                    <Td isNumeric># {gift.amount}</Td>
+                    <Td isNumeric>N{ele.amount}</Td>
                     <Td>{ele.giftId ? ele.gift.status : 'COMPLETED'}</Td>
                     <Td>
                       <Flex gap={8}>

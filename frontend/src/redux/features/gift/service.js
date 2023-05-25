@@ -69,9 +69,12 @@ const GetEventGiftsTransactions = id => async () => {
   }
 };
 
-const BuyGifts = data => async () => {
+const BuyGifts = (data, eventId) => async () => {
   try {
-    await BuyGiftsApi(data);
+    let Data = await BuyGiftsApi(data);
+    if (Data.status) {
+      dispatch(GetEventGifts(eventId));
+    }
   } catch (error) {
     console.log(ErrorHandler(error));
     // dispatch(createResponse(ErrorHandler(error)));

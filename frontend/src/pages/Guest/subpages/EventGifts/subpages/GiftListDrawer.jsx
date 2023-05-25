@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -23,7 +23,7 @@ import {
   BuyGifts,
 } from '../../../../../redux/features/gift/service';
 
-const GiftListDrawer = ({ setShowListDrawer }) => {
+const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
   const { giftItems } = useSelector(state => state.gift);
   const { user } = useSelector(state => state.user);
   const { newEvent } = useSelector(state => state.event);
@@ -55,7 +55,10 @@ const GiftListDrawer = ({ setShowListDrawer }) => {
 
     GiftItems.forEach(ele => {
       const newData = giftItems?.find(x => x.id === ele?.giftItemId);
-      giftAmount = giftAmount + newData.amount;
+      let amount = ele.contributionAmount
+        ? ele.contributionAmount
+        : newData.amount;
+      giftAmount = giftAmount + amount;
     });
     setGiftAmount(giftAmount);
 
@@ -68,26 +71,32 @@ const GiftListDrawer = ({ setShowListDrawer }) => {
     GiftItems,
   ]);
 
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { onClose } = useDisclosure();
   const btnRef = React.useRef();
 
   const HandleSubmit = () => {
     const giftFormBody = [];
     GiftItems.forEach(item => {
       const newData = giftItems?.find(x => x.id === item?.giftItemId);
+      let amount = item.contributionAmount
+        ? item.contributionAmount
+        : newData.amount;
       const formData = {
-        status: 'COMPLETED',
+        status:
+          amount + item.amountPaid >= newData.amount ? 'COMPLETED' : 'PARTIAL',
         giftId: item.id,
         userId: user.id,
         eventId: item.eventId,
+        amountPaid: item.amountPaid,
+        giftItemAmount: amount,
         complimentaryGift:
           ComplimentaryItems.length > 0 ? ComplimentaryItems[0].id : '',
-        amount: newData.amount,
+        amount: amount,
       };
       giftFormBody.push(formData);
     });
     if (giftFormBody.length > 0) {
-      dispatch(BuyGifts(giftFormBody));
+      dispatch(BuyGifts(giftFormBody, newEvent.id));
       setGiftItems([]);
       setAddedGiftItems([]);
     }
@@ -136,7 +145,12 @@ const GiftListDrawer = ({ setShowListDrawer }) => {
             <Flex justifyContent="space-between" flexWrap="wrap" mb="5">
               {GiftItems.map(ele => {
                 const newData = giftItems?.find(x => x.id === ele?.giftItemId);
-                return <GiftListItem id={ele.id} item={newData} />;
+                let amount = ele.contributionAmount
+                  ? ele.contributionAmount
+                  : newData.amount;
+                return (
+                  <GiftListItem id={ele.id} item={newData} amount={amount} />
+                );
               })}
             </Flex>
             <Box mb="5" textAlign="right">

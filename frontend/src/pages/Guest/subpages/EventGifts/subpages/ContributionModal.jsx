@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Text,
   Heading,
@@ -15,19 +15,57 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import errorImg from '../../assets/errorImg.svg';
+import errorImg from '../../../../assets/errorImg.svg';
+import { CartContext } from '..';
 
-const ContributionModal = ({ setOpenModal, contribute, setShowModal, amount }) => {
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+const ContributionModal = ({ setOpenModal, isOpen }) => {
+  const {
+    setContributionAmount,
+    contributionAmount,
+    currentItem,
+    addedGiftItems,
+    setGiftItems,
+    GiftItems,
+    setAddedGiftItems,
+    setCurrentItem,
+  } = useContext(CartContext);
+  const { onClose } = useDisclosure();
   const [contribution, setContribution] = useState(false);
+
+  const HandleSubmit = () => {
+    if (!addedGiftItems.includes(currentItem.id)) {
+      setGiftItems([...GiftItems, currentItem]);
+      setAddedGiftItems([...addedGiftItems, currentItem.id]);
+    }
+    setOpenModal(false);
+  };
+
+  const HandleContributeSubmit = () => {
+    let updatedItem = { ...currentItem };
+    updatedItem.contributionAmount = contributionAmount;
+    setCurrentItem(updatedItem);
+
+    if (!addedGiftItems.includes(currentItem.id)) {
+      setGiftItems([...GiftItems, updatedItem]);
+      setAddedGiftItems([...addedGiftItems, currentItem.id]);
+
+      setOpenModal(false);
+      setContribution(false);
+      setCurrentItem(null);
+      setContributionAmount(0);
+    }
+  };
+
   return (
     <Box>
-      {contribution && (
-        <ContributionAmount
-          setContribution={setContribution}
-          setOpenModal={setOpenModal}
-        />
-      )}
+      <ContributionAmount
+        isOpen={contribution}
+        setOpenModal={setContribution}
+        setAmount={setContributionAmount}
+        amount={contributionAmount}
+        submitHandler={HandleContributeSubmit}
+      />
+
       <Modal
         isCentered
         closeOnOverlayClick={false}
@@ -36,7 +74,7 @@ const ContributionModal = ({ setOpenModal, contribute, setShowModal, amount }) =
       >
         <ModalOverlay />
         <ModalContent py="4" w="380px" h="auto">
-          <ModalCloseButton onClick={() => setShowModal(false)} />
+          <ModalCloseButton onClick={() => setOpenModal(false)} />
           <ModalBody>
             <Image src={errorImg} mb="3" display="block" mx="auto" />
             <Text mb="3" textAlign="center">
@@ -44,36 +82,23 @@ const ContributionModal = ({ setOpenModal, contribute, setShowModal, amount }) =
               contribute to pay part of the total cost
             </Text>
             <Flex direction="column" w="85%" mx="auto">
-              {amount < 20000 ?
               <Button
                 mb="3"
                 bg="#00BFB2"
                 fontSize={14}
                 fontWeight="medium"
                 color="white"
+                onClick={() => HandleSubmit()}
               >
-                Pay in full{' '}
+                Pay in full
               </Button>
-              :
-              <>
-                <Button
-                    mb="3"
-                    bg="#00BFB2"
-                    fontSize={14}
-                    fontWeight="medium"
-                    color="white"
-                  >
-                    Pay in full{' '}
-                </Button>
-                <Button
-                  fontSize={14}
-                  fontWeight="medium"
-                  onClick={() => setContribution(true)}
-                >
-                  Contribute
-                </Button>
-                </>
-              }
+              <Button
+                fontSize={14}
+                fontWeight="medium"
+                onClick={() => setContribution(true)}
+              >
+                Contribute
+              </Button>
             </Flex>
           </ModalBody>
         </ModalContent>
@@ -84,12 +109,19 @@ const ContributionModal = ({ setOpenModal, contribute, setShowModal, amount }) =
 
 export default ContributionModal;
 
-export const ContributionAmount = ({ setContribution, setOpenModal }) => {
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+export const ContributionAmount = ({
+  setAmount,
+  amount,
+  isOpen,
+  setOpenModal,
+  submitHandler,
+}) => {
+  const { onClose } = useDisclosure();
   const closeModal = () => {
-    // setOpenModal(false)
-    setContribution(false);
+    setOpenModal(false);
+    setAmount(0);
   };
+  console.log(amount);
   return (
     <Box>
       <Modal
@@ -117,6 +149,7 @@ export const ContributionAmount = ({ setContribution, setOpenModal }) => {
                 fontWeight="medium"
                 color="#00BFB2"
                 borderRadius="100px"
+                onClick={() => setAmount(1000)}
               >
                 1,000
               </Button>
@@ -126,6 +159,7 @@ export const ContributionAmount = ({ setContribution, setOpenModal }) => {
                 fontWeight="medium"
                 color="#00BFB2"
                 borderRadius="100px"
+                onClick={() => setAmount(5000)}
               >
                 5,000
               </Button>
@@ -135,13 +169,20 @@ export const ContributionAmount = ({ setContribution, setOpenModal }) => {
                 fontWeight="medium"
                 color="#00BFB2"
                 borderRadius="100px"
+                onClick={() => setAmount(10000)}
               >
                 10,000
               </Button>
             </Flex>
             <Box mb="5">
               <FormLabel fontSize={14}>Type amount here</FormLabel>
-              <Input type="text" placeholder="Amount" fontSize={14} />
+              <Input
+                type="text"
+                placeholder="Amount"
+                fontSize={14}
+                value={amount}
+                onChange={e => setAmount(parseInt(e.target.value))}
+              />
             </Box>
             <Box textAlign="center">
               <Button
@@ -151,6 +192,7 @@ export const ContributionAmount = ({ setContribution, setOpenModal }) => {
                 fontSize={14}
                 fontWeight="medium"
                 color="white"
+                onClick={() => submitHandler()}
               >
                 Proceed
               </Button>

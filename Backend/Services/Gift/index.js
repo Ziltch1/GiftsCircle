@@ -152,15 +152,17 @@ const EnableContribution = async (data, id) => {
 
 const Buy = async (data) => {
   data.forEach(async (ele) => {
-    let data = await prisma.gift.update({
+    let check = ele.amountPaid + ele.amount > ele.giftItemAmount;
+
+    await prisma.gift.update({
       where: {
         id: ele.giftId,
       },
       data: {
-        purchased: true,
+        purchased: check,
         status: ele.status,
         complimentaryGift: ele.complimentaryGift,
-        amountPaid: ele.amount,
+        amountPaid: ele.amountPaid + ele.amount,
       },
     });
   });
@@ -168,6 +170,9 @@ const Buy = async (data) => {
   data.forEach((element) => {
     delete element.status;
     delete element.complimentaryGift;
+    delete element.amountPaid;
+    delete element.giftItemAmount;
+    
     element.id = uuidv4();
     element.date = new Date(Date.now());
     element.quantity = 1;
@@ -180,7 +185,7 @@ const Buy = async (data) => {
   await prisma.$disconnect();
 
   return transactions;
-};;
+};
 
 const Delete = async (id) => {
   let gift = await prisma.gift.delete({
@@ -203,5 +208,5 @@ module.exports = {
   CreateMany,
   Buy,
   EnableContribution,
-  GetUserPurchasedGifts
+  GetUserPurchasedGifts,
 };
