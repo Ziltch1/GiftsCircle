@@ -108,23 +108,19 @@ router.post(
   async (req, res) => {
     try {
       let data = req.files;
-      let Data = await Create(req.body);
-      if (Data) {
-        data.map((ele) => {
-          const file = dataUriMultiple(ele).content;
+      data.map((ele) => {
+        const file = dataUriMultiple(ele).content;
 
-          cloudinary.uploader
-            .upload(file, {
-              folder: "eventcircle/media",
-            })
-            .then((response) => {
-              CreateMediaFile(response.url, Data.id);
-            })
-            .catch((err) => console.log(err));
-        });
-
-        return res.status(200).send(Data);
-      }
+        cloudinary.uploader
+          .upload(file, {
+            folder: "eventcircle/media",
+          })
+          .then((response) => {
+            Create(req.body, response.url);
+          })
+          .catch((err) => console.log(err));
+      });
+      return res.sendStatus(200);
     } catch (err) {
       console.log(err);
       await prisma.$disconnect();
@@ -135,10 +131,7 @@ router.post(
 
 router.post("/UploadVideo", EnsureAuthenticated, async (req, res) => {
   try {
-    let Data = await Create(req.body);
-    if (Data) {
-      await CreateMediaFile(req.body.files, Data.id);
-    }
+    let Data = await Create(req.body, req.body.files);
     return res.status(200).send(Data);
   } catch (err) {
     console.log(err);

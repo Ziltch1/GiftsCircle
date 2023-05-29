@@ -9,19 +9,14 @@ const GetEventMediaFiles = async (id) => {
       uploadedBy: "HOST",
     },
     select: {
-      data: {
-        select: {
-          url: true,
-        },
-      },
+      url: true,
+      date: true,
+      id: true,
+      visibility: true,
     },
   });
-  let list = [];
-  mediaFiles.forEach((ele) => {
-    ele.data.forEach((i) => list.push(i.url));
-  });
   await prisma.$disconnect();
-  return list;
+  return mediaFiles;
 };
 
 const GetEventGuestMedia = async (id) => {
@@ -31,23 +26,19 @@ const GetEventGuestMedia = async (id) => {
       uploadedBy: "GUEST",
     },
     include: {
-      data: true,
       user: true,
     },
   });
-
   let list = [];
   mediaFiles.forEach((ele) => {
-    ele.data.forEach((i) => {
-      let data = {};
-      (data.id = i.id),
-        (data.message = i.complimentaryMessageId),
-        (data.url = i.url),
-        (data.user = ele.user.firstname + " " + ele.user.lastname);
-
-      list.push(data);
-    });
+    let data = {};
+    (data.id = ele.id),
+      (data.url = ele.url),
+      (data.visibility = ele.visibility),
+      (data.user = ele.user.firstname + " " + ele.user.lastname);
+    list.push(data);
   });
+
   await prisma.$disconnect();
   return list;
 };
@@ -58,16 +49,15 @@ const GetGuestSentMedia = async (eventId, userId) => {
       eventId: eventId,
       userId: userId,
     },
-    include: {
-      data: true,
+    select: {
+      url: true,
+      date: true,
+      id: true,
+      visibility: true,
     },
   });
-  let list = [];
-  mediaFiles.forEach((ele) => {
-    ele.data.forEach((i) => list.push(i.url));
-  });
   await prisma.$disconnect();
-  return list;
+  return mediaFiles;
 };
 
 const GetComplimentaryMessage = async (eventId) => {
@@ -89,19 +79,7 @@ const GetComplimentaryMessage = async (eventId) => {
   return messages;
 };
 
-const CreateMediaFile = async (url, mediaId) => {
-  let id = uuidv4();
-  let Data = await prisma.mediaFile.create({
-    data: {
-      id: id,
-      url: url,
-      mediaId: mediaId,
-    },
-  });
-  return Data;
-};
-
-const Create = async (data) => {
+const Create = async (data, url) => {
   let id = uuidv4();
   let Data = await prisma.media.create({
     data: {
@@ -112,6 +90,7 @@ const Create = async (data) => {
         },
       },
       eventId: data.eventId,
+      url: url,
       uploadedBy: data.uploadedBy,
     },
   });
@@ -166,7 +145,6 @@ module.exports = {
   GetEventGuestMedia,
   GetComplimentaryMessage,
   Create,
-  CreateMediaFile,
   CreateComplimentaryMessage,
   UpdateVisibility,
   Delete,
