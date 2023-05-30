@@ -9,9 +9,6 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
   const [modalOpen, setShowModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const Data = useUpload(image, setShowModal, setImage);
-
-
-  console.log(image);
   
   const actionBtns = ['Uploaded by me', 'Sent to me'];
   const handleClick = index => {

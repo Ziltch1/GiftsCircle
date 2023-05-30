@@ -242,22 +242,15 @@ model sourvenir {
   sourvenirItemId String        @db.VarChar(255)
 }
 
-model MediaFile {
-  id      String @id @db.VarChar(255)
-  url     String @db.VarChar(255)
-  mediaId String
-  Media   Media  @relation(fields: [mediaId], references: [id])
-}
-
 model Media {
-  id         String      @id @db.VarChar(255)
-  eventId    String      @db.VarChar(255)
-  user       user        @relation(fields: [userId], references: [id])
-  userId     String      @db.VarChar(255)
-  date       DateTime    @default(now())
+  id         String    @id @db.VarChar(255)
+  eventId    String    @db.VarChar(255)
+  url        String    @db.VarChar(255)
+  user       user      @relation(fields: [userId], references: [id])
+  userId     String    @db.VarChar(255)
+  date       DateTime  @default(now())
   uploadedBy USERTYPE
-  visibility VISBILITY   @default(PUBLIC)
-  data       MediaFile[]
+  visibility VISBILITY @default(PUBLIC)
 }
 
 model ComplimentaryMessage {

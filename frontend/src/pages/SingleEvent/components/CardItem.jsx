@@ -65,7 +65,7 @@ const Card = ({ item }) => {
 
 
   useEffect(() => {
-    if (item.includes('.mp4')) {
+    if (item.url.includes('.mp4')) {
       setType('VIDEO');
     } else {
       setType('IMAGE');
@@ -75,7 +75,7 @@ const Card = ({ item }) => {
   return (
     <>
       {showImageModal && (
-        <ImageModal image={item} setShowImageModal={setShowImageModal} />
+        <ImageModal image={item.url} setShowImageModal={setShowImageModal} />
       )}
       <Box
         w="282px"
@@ -91,7 +91,7 @@ const Card = ({ item }) => {
       >
         {type === 'IMAGE' ? (
           <Image
-            src={item}
+            src={item.url}
             w="100%"
             h="100%"
             borderRadius={5}
@@ -110,9 +110,9 @@ const Card = ({ item }) => {
                 controls
                 width="100%"
                 height="330px"
-                poster={item.replace('.mp4', '.jpg')}
+                  poster={item.url.replace('.mp4', '.jpg')}
               >
-                <source src={item} type="video/mp4" />
+                <source src={item.url} type="video/mp4" />
                 Sorry, your browser doesn't support videos.
               </video>
             ) : (

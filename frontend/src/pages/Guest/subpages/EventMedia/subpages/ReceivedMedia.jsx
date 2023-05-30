@@ -14,29 +14,6 @@ import {
 
 
 const ReceivedMedia = () => {
-  const gifts = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-    {
-      id: 6,
-    },
-    {
-      id: 7,
-    },
-  ]
 
   return (
     <Box>
@@ -51,7 +28,7 @@ const ReceivedMedia = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {gifts.map((gift, index) => {
+            {/* {gifts.map((gift, index) => {
               return (
                 <>
                   <Tr fontSize={14} _hover={{ bg: '#FAFAFA'}}>
@@ -62,7 +39,7 @@ const ReceivedMedia = () => {
                   </Tr>
                 </>
               )
-            })}
+            })} */}
           </Tbody>
         </Table>
       </TableContainer>
