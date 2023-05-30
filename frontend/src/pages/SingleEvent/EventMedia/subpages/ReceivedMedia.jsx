@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 
 const ReceivedMedia = () => {
   const { hostRecievedFiles } = useSelector(state => state.event);
+  console.log(hostRecievedFiles)
 
   const HandleClick = url => {
     window.open(url);

@@ -4,8 +4,13 @@ import { FaMicrophone, FaStop, FaPause, FaTrash } from 'react-icons/fa'
 import { BiPlay, BiSend } from 'react-icons/bi'
 import { BsCameraVideoFill } from 'react-icons/bs'
 import { useUpload } from '../Hooks';
+import { UploadVideo } from '../../../Guest/subpages/EventMedia/Hooks';
+import { useSelector } from 'react-redux';
+
 
 const VideoRecorder = () => {
+    const {user} = useSelector(state => state.user);
+    const { newEvent } = useSelector(state => state.event);
     const videoRef = useRef(null);
     const mediaRecorderRef = useRef(null);
     const streamRef = useRef(null);
@@ -15,9 +20,23 @@ const VideoRecorder = () => {
     const [paused, setPaused] = useState(false);
     const [playingVideo, setPlayingVideo] = useState(false);
 
+    const blobToFile = (blob, fileName, fileType) => {
+        // Create a new File object from the Blob
+        const file = new File([blob], fileName, { type: fileType });
+        return file;
+    };
+
+    // Usage example
+    const convertedFile = blobToFile(videoBlob, 'video.mp4', 'video/mp4');
+    console.log(convertedFile);
+
+
     const SendVideo = async() => {
         try {
-            await useUpload(videoBlob, setShowModal, setVideoBlob);
+            if(videoBlob){
+              await UploadVideo(convertedFile, newEvent.id, user.id, setShowModal, setVideoBlob);
+            }
+            await setVideoBlob(null);
         } catch (error) {
             console.log(error);
         }
