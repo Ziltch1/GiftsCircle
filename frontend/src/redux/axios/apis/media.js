@@ -16,4 +16,20 @@ const GetGuestSentFilesApi = (eventId, userId) => {
   return api.get(`/media/Get/GuestSentMedia/${eventId}/${userId}`);
 };
 
-export { UploadVideoApi, GetEventMediaFilesApi, GetHostRecievedFilesApi, GetGuestSentFilesApi };
+const UploadEventMessageApi = (data) => {
+  return api.post('/media/UploadMessage', data)
+}
+
+const DeleteMediaApi = (id) => {
+  return api.delete(`/media/${id}`)
+}
+
+const MediaVisibilityApi = (id, data) => {
+  return api.put(`/media/UpdateVisibility/${id}`, data)
+}
+
+const GetEventMessagesApi = (id) => {
+  return api.get(`/media/Get/ComplimentaryMessages/${id}`)
+}
+
+export { UploadVideoApi, GetEventMediaFilesApi, GetHostRecievedFilesApi, GetGuestSentFilesApi, UploadEventMessageApi, DeleteMediaApi, MediaVisibilityApi };

@@ -61,7 +61,7 @@ const UploadVideoReq = async (data, setShowModal) => {
   }
 };
 
-const UploadVideo = async (data, eventId, userId, setShowModal, setImage) => {
+export const UploadVideo = async (data, eventId, userId, setShowModal, setImage) => {
   try {
     let res = await UploadVideoReq(data[0], setShowModal);
     if (res) {

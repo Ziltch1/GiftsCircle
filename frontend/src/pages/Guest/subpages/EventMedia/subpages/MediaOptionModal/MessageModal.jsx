@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Box,
     Heading,
@@ -12,10 +12,21 @@ import {
 } from '@chakra-ui/react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import {useSelector} from 'react-redux'
+import { UploadEventMessageApi } from '../../../../../../redux/axios/apis/media';
+
 
 const MessageModal = ({ setShowAudioModal, setNavPosition, setShowMediaOption }) => {
     const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
-    const [message, setMessage]  = useState('')
+    const [message, setMessage]  = useState('');
+    const {user} = useSelector(state => state.user);
+    const {newEvent} = useSelector(state => state.event);
+
+    const formBody = {
+        userId: user.id,
+        eventId: newEvent.id,
+        message: message
+    }
 
     //modules for react quill editor
     const modules = {
@@ -35,9 +46,16 @@ const MessageModal = ({ setShowAudioModal, setNavPosition, setShowMediaOption })
         setNavPosition(-1)
     };
 
-    const sendMessage = () => {
-        setShowMediaOption(false)
-        setNavPosition(-1)
+    const sendMessage = async() => {
+        try {
+            await UploadEventMessageApi(formBody);
+            await setShowMediaOption(false)
+            await setNavPosition(-1)
+        } catch (error) {
+            console.log(error);
+        }
+        
+        
     }
 
     return (
@@ -48,7 +66,7 @@ const MessageModal = ({ setShowAudioModal, setNavPosition, setShowMediaOption })
             isCentered
         >
             <ModalOverlay />
-            <ModalContent maxW="450px" h='480px' overflow='auto' bg="white" p="3">
+            <ModalContent w="750px" h='480px' overflow='auto' bg="white" p="3">
                 <Box mb='10'>
                     <ModalCloseButton onClick={closeModal} />
                     <ModalBody>
@@ -69,6 +87,7 @@ const MessageModal = ({ setShowAudioModal, setNavPosition, setShowMediaOption })
                                 modules={modules}
                                 style={{ height: '240px', borderRadius: '12px' }}
                             />
+                            
                         </Box>
                     </ModalBody>
                 </Box>

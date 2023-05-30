@@ -4,10 +4,12 @@ import MarketplaceOptions from './MarketplaceOptions';
 import SourvenirMarket from './subpages/Market/Sourvenir';
 import GiftMarket from './subpages/Market/Gifts';
 import Asoebi from './subpages/Market/Asoebi';
+import Checkout from './Checkout'
 
 const Index = () => {
   const [position, setPosition] = useState(-1);
   const [showProducts, setShowProducts] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false)
 
   return (
     <Box>
@@ -15,9 +17,10 @@ const Index = () => {
         bg="#F5F5F5"
         minH="580px"
         display="flex"
-        alignItems="center"
-        justifyContent="center"
+        alignItems={showCheckout ? null : 'center'}
+        justifyContent={showCheckout ? null : 'center'}
       >
+      {showCheckout ? <Checkout setShowCheckout={setShowCheckout} /> : 
         <Box w="90%" mx="auto">
           {!showProducts ? (
             <Box>
@@ -53,16 +56,16 @@ const Index = () => {
             <>
               <Box>
                 {position === 1 && (
-                  <GiftMarket setShowProducts={setShowProducts} />
+                  <GiftMarket setShowProducts={setShowProducts} setShowCheckout={setShowCheckout} />
                 )}
-                {position === 0 && <Asoebi setShowProducts={setShowProducts} />}
+                {position === 0 && <Asoebi setShowProducts={setShowProducts} setShowCheckout={setShowCheckout} />}
                 {position === 2 && (
-                  <SourvenirMarket setShowProducts={setShowProducts} />
+                  <SourvenirMarket setShowProducts={setShowProducts} setShowCheckout={setShowCheckout} />
                 )}
               </Box>
             </>
           )}
-        </Box>
+        </Box>}
       </Box>
     </Box>
   );

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -10,7 +10,7 @@ import {
   useDisclosure,
   Box,
   Heading,
-  Flex,
+  Flex, Button
 } from '@chakra-ui/react';
 import GiftListItem from './GiftListItem';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
@@ -18,7 +18,7 @@ import { GiftContext } from '.';
 import { dispatch } from '../../../../../redux/store';
 import { BuyItems } from '../../../../../redux/features/marketplace/service';
 
-const GiftListDrawer = ({ setShowDrawer, isOpen }) => {
+const GiftListDrawer = ({ setShowDrawer, isOpen, setShowCheckout }) => {
   const { GiftItems, setGiftItems, amount, setAddedGiftItems } =
     useContext(GiftContext);
   const { onClose } = useDisclosure();
@@ -30,7 +30,8 @@ const GiftListDrawer = ({ setShowDrawer, isOpen }) => {
 
   const HandleSubmit = () => {
     if (GiftItems.length > 0) {
-      dispatch(BuyItems(GiftItems));
+      // dispatch(BuyItems(GiftItems));
+      setShowCheckout(true)
       setGiftItems([]);
       setAddedGiftItems([]);
       closeModal();
@@ -39,7 +40,9 @@ const GiftListDrawer = ({ setShowDrawer, isOpen }) => {
     }
   };
 
+
   return (
+    <>
     <Box>
       <Drawer
         isOpen={isOpen}
@@ -72,11 +75,12 @@ const GiftListDrawer = ({ setShowDrawer, isOpen }) => {
             </Box>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
-            <PaymentButton amount={amount} action={HandleSubmit} />
+              <Button bg='#00BFB2' color='white' onClick={() => setShowCheckout(true)}>Proceed to checkout</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </Box>
+    </>
   );
 };
 

@@ -5,6 +5,8 @@ import deleteIcon from '../../assets/deleteIcon.png'
 import downloadIcon from '../../assets/downloadIcon.png'
 import optionsIcon from '../../assets/optionsIcon.png'
 import {CheckIcon} from '@chakra-ui/icons'
+import { MediaVisibilityApi } from '../../../redux/axios/apis/media';
+
 
 const Card = ({ item }) => {
   const [type, setType] = useState('IMAGE');
@@ -48,14 +50,28 @@ const Card = ({ item }) => {
     setDisplayOptions(!displayOptions)
   }
 
-  const addCheck = (event, index) => {
+  const addCheck = async(event, id, index) => {
     event.stopPropagation();
     setCheckedOption(index);
+    try {
+      if(index === 0){
+        await MediaVisibilityApi(id, "PRIVATE");
+      }else{
+        await MediaVisibilityApi(id, 'PUBLIC');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const resetOptions = () => {
     setDisplayOptions(false);
     setShowOptions(false);
+  }
+
+  const deleteMedia = (event) => {
+    event.stopPropagation();
+    console.log('delete media')
   }
 
 
@@ -125,7 +141,7 @@ const Card = ({ item }) => {
 
         <Box w='auto' textAlign='center' position='absolute' margin='45% auto' inset='0' opacity={showOptions ? '1' : '0'} transition='ease 0.1s'>
           <Stack direction='row' alignItems='flex-start' justifyContent='center'>
-            <Button bg='none' _hover={{bg: 'none', cursor: 'pointer'}}><Image src={deleteIcon} w='100%' /></Button>
+            <Button bg='none' _hover={{bg: 'none', cursor: 'pointer'}} onClick={deleteMedia}><Image src={deleteIcon} w='100%' /></Button>
             <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={(event) => handleClick(event,item)}><Image src={downloadIcon} /></Button>
             <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={handleDisplay}>
               <Stack direction='column' spacing={3} position='relative'>
