@@ -62,7 +62,7 @@ const UploadedMedia = () => {
             flexWrap="wrap"
           >
             {Data.map(ele => (
-              <Card item={ele.url} key={Data.indexOf(ele)} />
+              <Card item={ele} key={Data.indexOf(ele)} />
             ))}
           </Flex>
         </>
