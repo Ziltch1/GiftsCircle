@@ -109,11 +109,11 @@ const Index = ({ setShowMediaOption, isOpen, setData }) => {
         setShowModal={() => CloseModals(setVideoModal)}
       />
 
-      {/* <MessageModal
-        open={videoModal}
+      <MessageModal
+        open={messageModal}
         setData={setData}
-        setShowModal={setVideoModal}
-      /> */}
+        setShowModal={() => CloseModals(setMessageModal)}
+      />
     </>
   );
 };
