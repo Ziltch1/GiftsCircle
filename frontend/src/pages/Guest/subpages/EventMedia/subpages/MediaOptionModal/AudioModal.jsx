@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Box,
   Heading,
@@ -41,6 +41,7 @@ const AudioModal = ({ setShowModal, open, setData }) => {
     setTimeout(() => {
       const convertedFile = blobToFile(audioData, 'audio.mp3');
       setData(convertedFile);
+      setShowModal(false);
     }, 1000);
   };
 
