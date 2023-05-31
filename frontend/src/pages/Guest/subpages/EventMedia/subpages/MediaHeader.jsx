@@ -11,6 +11,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
   const Data = useUpload(image, setShowModal, setImage);
 
   const actionBtns = ['Uploaded by me', 'Sent to me'];
+
   const handleClick = index => {
     setNavPosition(index);
   };

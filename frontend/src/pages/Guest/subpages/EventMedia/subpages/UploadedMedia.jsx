@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Text,
@@ -16,8 +16,14 @@ const UploadedMedia = () => {
   const [image, setImage] = useState(null);
   const [modalOpen, setShowModal] = useState(false);
   const Data = useUpload(image, setShowModal, setImage);
-  console.log(Data);
+  const [images, setImages] = useState([]);
 
+  useEffect(() => {
+    if (Data.length > 0) {
+      setImages(Data);
+    }
+  }, [Data]);
+  
   return (
     <Box
       w="100%"
@@ -33,7 +39,7 @@ const UploadedMedia = () => {
       // alignItems="center"
     >
       <LoadingModal setShowModal={setShowModal} open={modalOpen} />
-      {Data.length > 0 ? (
+      {images.length > 0 ? (
         <>
           <Box
             w="100%"
@@ -62,8 +68,8 @@ const UploadedMedia = () => {
             justifyContent="center"
             flexWrap="wrap"
           >
-            {Data.map(ele => (
-              <Card item={ele.url} key={Data.indexOf(ele)} />
+            {images.map(ele => (
+              <Card item={ele} images={images} setImages={setImages} key={ele.id} />
             ))}
           </Flex>
         </>

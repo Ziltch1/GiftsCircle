@@ -5,14 +5,17 @@ import deleteIcon from '../../assets/deleteIcon.png'
 import downloadIcon from '../../assets/downloadIcon.png'
 import optionsIcon from '../../assets/optionsIcon.png'
 import { CheckIcon } from '@chakra-ui/icons'
+import { DeleteMediaApi, MediaVisibilityApi } from '../../../redux/axios/apis/media';
 
-const Card = ({ item }) => {
+const Card = ({ item, setImages }) => {
   const [type, setType] = useState('IMAGE');
   const [showImageModal, setShowImageModal] = useState(false)
   const [showOptions, setShowOptions] = useState(false);
   const [displayOptions, setDisplayOptions] = useState(false);
   const options = ['Seen by host only', 'Seen by host and public']
-  const [checkedOption, setCheckedOption] = useState(-1)
+  const [checkedOption, setCheckedOption] = useState(-1);
+  const publicMedia = { visibility: 'PUBLIC' }
+  const privateMedia = { visibility: 'PRIVATE' }
 
   const handleClick = (event, item) => {
     event.stopPropagation();
@@ -48,19 +51,34 @@ const Card = ({ item }) => {
     setDisplayOptions(!displayOptions)
   }
 
-  const addCheck = (event, index) => {
+  const addCheck = async (event, index, id) => {
     event.stopPropagation();
     setCheckedOption(index);
+    try {
+      if (index === 0) {
+        await MediaVisibilityApi(id, privateMedia);
+      } else {
+        await MediaVisibilityApi(id, publicMedia);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
+
 
   const resetOptions = () => {
     setDisplayOptions(false);
     setShowOptions(false);
   }
 
-  const deleteMedia = (event) => {
+  const deleteMedia = async (event, item) => {
     event.stopPropagation();
-    console.log('delete media')
+    try {
+      await DeleteMediaApi(item.id);
+      setImages((prevImages) => prevImages.filter((image) => image.id !== item.id));
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
@@ -126,8 +144,8 @@ const Card = ({ item }) => {
 
         <Box w='auto' textAlign='center' position='absolute' margin='45% auto' inset='0' opacity={showOptions ? '1' : '0'} transition='ease 0.1s'>
           <Stack direction='row' alignItems='flex-start' justifyContent='center'>
-            <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={deleteMedia}><Image src={deleteIcon} w='100%' /></Button>
-            <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={(event) => handleClick(event, item)}><Image src={downloadIcon} /></Button>
+            <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={(event) => deleteMedia(event, item)}><Image src={deleteIcon} w='100%' /></Button>
+            <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={(event) => handleClick(event, item.url)}><Image src={downloadIcon} /></Button>
             <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={handleDisplay}>
               <Stack direction='column' spacing={3} position='relative'>
                 <Box><Image src={optionsIcon} /></Box>
@@ -136,7 +154,7 @@ const Card = ({ item }) => {
                     {options.map((option, index) => {
                       return (
                         <>
-                          <Stack direction='row' justifyContent='space-between' alignItems='center' onClick={(event) => addCheck(event, index)}>
+                          <Stack direction='row' justifyContent='space-between' alignItems='center' onClick={(event) => addCheck(event, index, item.id)}>
                             <Text py='2.5'>{option}</Text>
                             {checkedOption === index ? <CheckIcon color='#00BFB2' fontSize={18} /> : null}
                           </Stack>
