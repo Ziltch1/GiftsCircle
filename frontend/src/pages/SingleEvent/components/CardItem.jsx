@@ -62,8 +62,14 @@ const Card = ({ item }) => {
   };
 
   useEffect(() => {
-    if (item.url.includes('.mp4') || item.url.includes('.webm')) {
+    if (
+      item.url.includes('.mp4') ||
+      item.url.includes('.webm') ||
+      item.url.includes('.mkv')
+    ) {
       setType('VIDEO');
+    } else if (item.url.includes('.mp3') || item.url.includes('.webm')) {
+      setType('AUDIO');
     } else {
       setType('IMAGE');
     }
@@ -107,9 +113,12 @@ const Card = ({ item }) => {
                 controls
                 width="100%"
                 height="330px"
-                poster={item.url.replace('.mp4', '.jpg')}
+                poster={
+                  item.url.replace('.mp4', '.jpg') ||
+                  item.url.replace('.mkv', '.jpg')
+                }
               >
-                <source src={item.url} type="video/mp4" />
+                <source src={item.url} type={'video/mp4' || 'video/mkv'} />
                 Sorry, your browser doesn't support videos.
               </video>
             ) : (

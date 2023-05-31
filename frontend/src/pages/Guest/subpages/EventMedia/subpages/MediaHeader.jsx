@@ -67,6 +67,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
             px="28px"
             py="11px"
             textAlign="center"
+            onClick={() => setRecorded(false)}
           >
             Upload images/videos
             <Input

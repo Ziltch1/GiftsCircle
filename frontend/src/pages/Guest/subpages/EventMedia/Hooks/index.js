@@ -55,7 +55,7 @@ const useUpload = (data, setShowModal, setImage, recorded = false) => {
   return Data;
 };
 const UploadVideoReq = async (data, setShowModal) => {
-  if (data.size > 10000000) {
+  if (data.size > 104857600) {
     setShowModal(false);
     dispatch(
       createResponse({
