@@ -41,7 +41,6 @@ const AudioModal = ({ setShowModal, open, setData }) => {
     setTimeout(() => {
       const convertedFile = blobToFile(audioData, 'audio.mp3');
       setData(convertedFile);
-    
     }, 1000);
   };
 

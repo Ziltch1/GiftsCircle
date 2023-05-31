@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import { Box, Heading, Flex, Button, FormLabel, Input, Stack } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Flex,
+  Button,
+  FormLabel,
+  Input,
+  Stack,
+} from '@chakra-ui/react';
 import LoadingModal from '../../../components/LoadingModal';
 import { useUpload } from '../Hooks';
-import MediaOptionModal from './MediaOptionModal'
+import MediaOptionModal from './MediaOptionModal';
 
 const MediaHeader = ({ navPosition, setNavPosition }) => {
   const [image, setImage] = useState(null);
   const [modalOpen, setShowModal] = useState(false);
-  const [showMediaOption, setShowMediaOption] = useState(false)
-  const Data = useUpload(image, setShowModal, setImage);
+  const [showMediaOption, setShowMediaOption] = useState(false);
+  const [recorded, setRecorded] = useState(true);
+  useUpload(image, setShowModal, setImage, recorded);
 
   const actionBtns = ['Uploaded by me', 'Sent to me'];
   const handleClick = index => {
@@ -18,7 +27,11 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
   return (
     <Box mb="5">
       <LoadingModal setShowModal={setShowModal} open={modalOpen} />
-      {showMediaOption && <MediaOptionModal setShowMediaOption={setShowMediaOption} />}
+      <MediaOptionModal
+        setShowMediaOption={setShowMediaOption}
+        isOpen={showMediaOption}
+        setData={setImage}
+      />
       <Flex justifyContent="space-between">
         <Heading mb="5" fontWeight={'medium'} fontSize={24}>
           Media
@@ -26,9 +39,12 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
 
         <Stack direction="row" spacing={4}>
           <Button
-            onClick={() => setShowMediaOption(true)}
+            onClick={() => {
+              setShowMediaOption(true);
+              setRecorded(true);
+            }}
             w="auto"
-            h='45px'
+            h="45px"
             color="white"
             bg="#00BFB2"
             fontSize={14}
@@ -36,14 +52,14 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
             px="28px"
             py="11px"
             textAlign="center"
-            fontWeight='medium'
+            fontWeight="medium"
           >
             Record Media/Messages
           </Button>
           <FormLabel
             htmlFor="upload"
             w="210px"
-            h='45px'
+            h="45px"
             color="white"
             bg="#00BFB2"
             fontSize={14}
@@ -74,11 +90,11 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
               style={
                 index === navPosition
                   ? {
-                    background: '#CCF2F0',
-                    padding: '8px 15px',
-                    borderRadius: '100px',
-                    color: '#009F94',
-                  }
+                      background: '#CCF2F0',
+                      padding: '8px 15px',
+                      borderRadius: '100px',
+                      color: '#009F94',
+                    }
                   : { fontWeight: 'bold' }
               }
             >

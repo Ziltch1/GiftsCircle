@@ -7,7 +7,7 @@ import axiosInstance from '../../../../redux/axios/axios';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 
-const useUpload = (data, setShowModal, setImage) => {
+const useUpload = (data, setShowModal, setImage, recorded = false) => {
   const { newEvent, eventMediaFiles } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
   const [Data, setData] = useState([]);
@@ -15,13 +15,31 @@ const useUpload = (data, setShowModal, setImage) => {
   useEffect(() => {
     if (data) {
       setShowModal(true);
-      if (
-        data.length === 1 &&
-        (data[0].type.includes('video') || data[0].type.includes('audio'))
-      ) {
-        UploadVideo(data, newEvent.id, user.id, setShowModal, setImage);
+      if (recorded) {
+        UploadVideo(
+          data,
+          newEvent.id,
+          user.id,
+          setShowModal,
+          setImage,
+          recorded
+        );
       } else {
-        UploadImages(data, newEvent.id, user.id, setShowModal, setImage);
+        if (
+          data.length === 1 &&
+          (data[0].type.includes('video') || data[0].type.includes('audio'))
+        ) {
+          UploadVideo(
+            data,
+            newEvent.id,
+            user.id,
+            setShowModal,
+            setImage,
+            recorded
+          );
+        } else {
+          UploadImages(data, newEvent.id, user.id, setShowModal, setImage);
+        }
       }
     }
   }, [data]);
@@ -61,9 +79,18 @@ const UploadVideoReq = async (data, setShowModal) => {
   }
 };
 
-const UploadVideo = async (data, eventId, userId, setShowModal, setImage) => {
+const UploadVideo = async (
+  data,
+  eventId,
+  userId,
+  setShowModal,
+  setImage,
+  recorded
+) => {
   try {
-    let res = await UploadVideoReq(data[0], setShowModal);
+    let res = recorded
+      ? await UploadVideoReq(data, setShowModal)
+      : await UploadVideoReq(data[0], setShowModal);
     if (res) {
       setShowModal(false);
       setImage(null);
@@ -116,4 +143,4 @@ const UploadImages = async (data, eventId, userId, setShowModal, setImage) => {
   }
 };
 
-export { useUpload };
+export { useUpload, UploadVideo };

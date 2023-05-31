@@ -16,7 +16,6 @@ const UploadedMedia = () => {
   const [image, setImage] = useState(null);
   const [modalOpen, setShowModal] = useState(false);
   const Data = useUpload(image, setShowModal, setImage);
-  console.log(Data);
 
   return (
     <Box

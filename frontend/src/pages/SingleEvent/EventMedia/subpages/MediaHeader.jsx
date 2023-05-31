@@ -1,38 +1,56 @@
 import React, { useState } from 'react';
-import { Box, Heading, Flex, Button, FormLabel, Input, Stack } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Flex,
+  Button,
+  FormLabel,
+  Input,
+  Stack,
+} from '@chakra-ui/react';
 import LoadingModal from '../../components/LoadingModal';
 import { useUpload } from '../Hooks';
-import VideoModal from './VideoModal';
+import VideoModal from '../../../../components/VideoRecorder/VideoModal';
 
 const MediaHeader = ({ navPosition, setNavPosition }) => {
   const [image, setImage] = useState(null);
   const [modalOpen, setShowModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
-  const Data = useUpload(image, setShowModal, setImage);
-  
+  const [recorded, setRecorded] = useState(null);
+  useUpload(image, setShowModal, setImage, recorded);
+
   const actionBtns = ['Uploaded by me', 'Sent to me'];
   const handleClick = index => {
     setNavPosition(index);
   };
 
   const startVideo = () => {
+    setRecorded(true);
     setShowVideoModal(true);
-  }
+  };
 
   return (
     <Box mb="5">
-      <LoadingModal setShowModal={setShowModal} open={modalOpen} />
-      {showVideoModal && <VideoModal setShowVideoModal={setShowVideoModal} open={modalOpen} setShowModal={setShowModal} />}
+      <LoadingModal
+        setShowModal={setShowModal}
+        open={modalOpen}
+        setData={setImage}
+      />
+      <VideoModal
+        open={showVideoModal}
+        setShowModal={setShowVideoModal}
+        setData={setImage}
+      />
       <Flex justifyContent="space-between">
         <Heading mb="5" fontWeight={'medium'} fontSize={24}>
           Media
         </Heading>
 
-        <Stack direction='row' spacing={3}>
+        <Stack direction="row" spacing={3}>
           <Button
             onClick={startVideo}
             w="150px"
-            h='45px'
+            h="45px"
             color="white"
             bg="#00BFB2"
             fontSize={14}
@@ -40,14 +58,14 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
             px="28px"
             py="11px"
             textAlign="center"
-            fontWeight='medium'
+            fontWeight="medium"
           >
             Record video
           </Button>
           <FormLabel
             htmlFor="upload"
             w="210px"
-            h='45px'
+            h="45px"
             color="white"
             bg="#00BFB2"
             fontSize={14}

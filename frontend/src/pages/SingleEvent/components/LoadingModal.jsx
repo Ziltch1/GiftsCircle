@@ -12,8 +12,8 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-const LoadingModal = ({ setShowModal, open }) => {
-  const { onClose } = useDisclosure({ defaultIsOpen: true });
+const LoadingModal = ({ setShowModal, setData, open }) => {
+  const { onClose } = useDisclosure();
   return (
     <>
       <Modal
@@ -31,7 +31,7 @@ const LoadingModal = ({ setShowModal, open }) => {
                 <Heading fontWeight={600} fontSize="25px" mb="3">
                   File Uploading
                 </Heading>
-                <Text mb='2'>Please wait...</Text>
+                <Text mb="2">Please wait...</Text>
                 <Spinner
                   thickness="4px"
                   speed="0.65s"
