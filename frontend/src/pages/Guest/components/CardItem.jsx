@@ -77,7 +77,7 @@ const Card = ({ item }) => {
 
 
   useEffect(() => {
-    if (item.includes('.mp4')) {
+    if (item.includes('.mp4') || item.includes('.webm')) {
       setType('VIDEO');
     } else if (item.includes('.mp3')) {
       setType('AUDIO');

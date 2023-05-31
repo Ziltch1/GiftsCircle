@@ -1,25 +1,25 @@
 import { Box, Image, Stack, Button, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import ImageModal from './ImageModal';
-import deleteIcon from '../../assets/deleteIcon.png'
-import downloadIcon from '../../assets/downloadIcon.png'
-import optionsIcon from '../../assets/optionsIcon.png'
-import { CheckIcon } from '@chakra-ui/icons'
+import deleteIcon from '../../assets/deleteIcon.png';
+import downloadIcon from '../../assets/downloadIcon.png';
+import optionsIcon from '../../assets/optionsIcon.png';
+import { CheckIcon } from '@chakra-ui/icons';
 
 const Card = ({ item }) => {
   const [type, setType] = useState('IMAGE');
-  const [showImageModal, setShowImageModal] = useState(false)
+  const [showImageModal, setShowImageModal] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [displayOptions, setDisplayOptions] = useState(false);
-  const options = ['Seen by host only', 'Seen by host and public']
-  const [checkedOption, setCheckedOption] = useState(-1)
+  const options = ['Seen by host only', 'Seen by host and public'];
+  const [checkedOption, setCheckedOption] = useState(-1);
 
   const handleClick = (event, item) => {
     event.stopPropagation();
     downloadImage(item);
-  }
+  };
 
-  const downloadImage = async (item) => {
+  const downloadImage = async item => {
     try {
       const response = await fetch(item);
       const blob = await response.blob();
@@ -36,36 +36,33 @@ const Card = ({ item }) => {
     }
   };
 
-
-  const showModal = (event) => {
+  const showModal = event => {
     event.stopPropagation();
     setShowImageModal(true);
-  }
+  };
 
-
-  const handleDisplay = (event) => {
+  const handleDisplay = event => {
     event.stopPropagation();
-    setDisplayOptions(!displayOptions)
-  }
+    setDisplayOptions(!displayOptions);
+  };
 
   const addCheck = (event, index) => {
     event.stopPropagation();
     setCheckedOption(index);
-  }
+  };
 
   const resetOptions = () => {
     setDisplayOptions(false);
     setShowOptions(false);
-  }
+  };
 
-  const deleteMedia = (event) => {
+  const deleteMedia = event => {
     event.stopPropagation();
-    console.log('delete media')
-  }
-
+    console.log('delete media');
+  };
 
   useEffect(() => {
-    if (item.url.includes('.mp4')) {
+    if (item.url.includes('.mp4') || item.url.includes('.webm')) {
       setType('VIDEO');
     } else {
       setType('IMAGE');
@@ -85,7 +82,7 @@ const Card = ({ item }) => {
         boxShadow="md"
         cursor="pointer"
         onClick={showModal}
-        position='relative'
+        position="relative"
         onMouseOver={() => setShowOptions(true)}
         onMouseLeave={resetOptions}
       >
@@ -101,7 +98,7 @@ const Card = ({ item }) => {
             objectFit="cover"
             boxShadow="sm"
             opacity={showOptions ? '0.9' : '1'}
-            transition='ease 0.1s'
+            transition="ease 0.1s"
           />
         ) : (
           <>
@@ -110,7 +107,7 @@ const Card = ({ item }) => {
                 controls
                 width="100%"
                 height="330px"
-                  poster={item.url.replace('.mp4', '.jpg')}
+                poster={item.url.replace('.mp4', '.jpg')}
               >
                 <source src={item.url} type="video/mp4" />
                 Sorry, your browser doesn't support videos.
@@ -124,27 +121,76 @@ const Card = ({ item }) => {
           </>
         )}
 
-        <Box w='auto' textAlign='center' position='absolute' margin='45% auto' inset='0' opacity={showOptions ? '1' : '0'} transition='ease 0.1s'>
-          <Stack direction='row' alignItems='flex-start' justifyContent='center'>
-            <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={deleteMedia}><Image src={deleteIcon} w='100%' /></Button>
-            <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={(event) => handleClick(event, item)}><Image src={downloadIcon} /></Button>
-            <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={handleDisplay}>
-              <Stack direction='column' spacing={3} position='relative'>
-                <Box><Image src={optionsIcon} /></Box>
-                {displayOptions &&
-                  <Box w='300px' fontSize={15} bg='white' borderRadius={5} p='3' textAlign='left' position='absolute' top='36px' right='0' boxShadow='sm' border='1.5px solid lightgray'>
+        <Box
+          w="auto"
+          textAlign="center"
+          position="absolute"
+          margin="45% auto"
+          inset="0"
+          opacity={showOptions ? '1' : '0'}
+          transition="ease 0.1s"
+        >
+          <Stack
+            direction="row"
+            alignItems="flex-start"
+            justifyContent="center"
+          >
+            <Button
+              bg="none"
+              _hover={{ bg: 'none', cursor: 'pointer' }}
+              onClick={deleteMedia}
+            >
+              <Image src={deleteIcon} w="100%" />
+            </Button>
+            <Button
+              bg="none"
+              _hover={{ bg: 'none', cursor: 'pointer' }}
+              onClick={event => handleClick(event, item)}
+            >
+              <Image src={downloadIcon} />
+            </Button>
+            <Button
+              bg="none"
+              _hover={{ bg: 'none', cursor: 'pointer' }}
+              onClick={handleDisplay}
+            >
+              <Stack direction="column" spacing={3} position="relative">
+                <Box>
+                  <Image src={optionsIcon} />
+                </Box>
+                {displayOptions && (
+                  <Box
+                    w="300px"
+                    fontSize={15}
+                    bg="white"
+                    borderRadius={5}
+                    p="3"
+                    textAlign="left"
+                    position="absolute"
+                    top="36px"
+                    right="0"
+                    boxShadow="sm"
+                    border="1.5px solid lightgray"
+                  >
                     {options.map((option, index) => {
                       return (
                         <>
-                          <Stack direction='row' justifyContent='space-between' alignItems='center' onClick={(event) => addCheck(event, index)}>
-                            <Text py='2.5'>{option}</Text>
-                            {checkedOption === index ? <CheckIcon color='#00BFB2' fontSize={18} /> : null}
+                          <Stack
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            onClick={event => addCheck(event, index)}
+                          >
+                            <Text py="2.5">{option}</Text>
+                            {checkedOption === index ? (
+                              <CheckIcon color="#00BFB2" fontSize={18} />
+                            ) : null}
                           </Stack>
                         </>
-                      )
+                      );
                     })}
                   </Box>
-                }
+                )}
               </Stack>
             </Button>
           </Stack>
