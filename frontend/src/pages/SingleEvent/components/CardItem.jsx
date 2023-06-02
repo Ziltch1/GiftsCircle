@@ -9,7 +9,7 @@ import { DeleteMediaApi, MediaVisibilityApi } from '../../../redux/axios/apis/me
 
 const Card = ({ item, setImages }) => {
   const [type, setType] = useState('IMAGE');
-  const [showImageModal, setShowImageModal] = useState(false)
+  const [showImageModal, setShowImageModal] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [displayOptions, setDisplayOptions] = useState(false);
   const options = ['Seen by host only', 'Seen by host and public']
@@ -20,9 +20,9 @@ const Card = ({ item, setImages }) => {
   const handleClick = (event, item) => {
     event.stopPropagation();
     downloadImage(item);
-  }
+  };
 
-  const downloadImage = async (item) => {
+  const downloadImage = async item => {
     try {
       const response = await fetch(item);
       const blob = await response.blob();
@@ -39,17 +39,15 @@ const Card = ({ item, setImages }) => {
     }
   };
 
-
-  const showModal = (event) => {
+  const showModal = event => {
     event.stopPropagation();
     setShowImageModal(true);
-  }
+  };
 
-
-  const handleDisplay = (event) => {
+  const handleDisplay = event => {
     event.stopPropagation();
-    setDisplayOptions(!displayOptions)
-  }
+    setDisplayOptions(!displayOptions);
+  };
 
   const addCheck = async (event, index, id) => {
     event.stopPropagation();
@@ -69,7 +67,7 @@ const Card = ({ item, setImages }) => {
   const resetOptions = () => {
     setDisplayOptions(false);
     setShowOptions(false);
-  }
+  };
 
   const deleteMedia = async (event, item) => {
     event.stopPropagation();
@@ -83,8 +81,14 @@ const Card = ({ item, setImages }) => {
 
 
   useEffect(() => {
-    if (item.url.includes('.mp4')) {
+    if (
+      item.url.includes('.mp4') ||
+      item.url.includes('.webm') ||
+      item.url.includes('.mkv')
+    ) {
       setType('VIDEO');
+    } else if (item.url.includes('.mp3') || item.url.includes('.webm')) {
+      setType('AUDIO');
     } else {
       setType('IMAGE');
     }
@@ -103,7 +107,7 @@ const Card = ({ item, setImages }) => {
         boxShadow="md"
         cursor="pointer"
         onClick={showModal}
-        position='relative'
+        position="relative"
         onMouseOver={() => setShowOptions(true)}
         onMouseLeave={resetOptions}
       >
@@ -119,7 +123,7 @@ const Card = ({ item, setImages }) => {
             objectFit="cover"
             boxShadow="sm"
             opacity={showOptions ? '0.9' : '1'}
-            transition='ease 0.1s'
+            transition="ease 0.1s"
           />
         ) : (
           <>
@@ -128,9 +132,12 @@ const Card = ({ item, setImages }) => {
                 controls
                 width="100%"
                 height="330px"
-                  poster={item.url.replace('.mp4', '.jpg')}
+                poster={
+                  item.url.replace('.mp4', '.jpg') ||
+                  item.url.replace('.mkv', '.jpg')
+                }
               >
-                <source src={item.url} type="video/mp4" />
+                <source src={item.url} type={'video/mp4' || 'video/mkv'} />
                 Sorry, your browser doesn't support videos.
               </video>
             ) : (
@@ -159,7 +166,7 @@ const Card = ({ item, setImages }) => {
                             {checkedOption === index ? <CheckIcon color='#00BFB2' fontSize={18} /> : null}
                           </Stack>
                         </>
-                      )
+                      );
                     })}
                   </Box>
                 }
