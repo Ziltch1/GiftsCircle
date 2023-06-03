@@ -7,7 +7,6 @@ const {
   Create,
   Delete,
   Update,
-  UpdateStatus,
 } = require("../Services/Delivery");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const prisma = new PrismaClient();
@@ -60,21 +59,6 @@ router.put("/:id", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.put("/:id/UpdateStatus", EnsureAuthenticated, async (req, res) => {
-  try {
-    let data = await UpdateStatus(req.params.id, req.body);
-    if (data) {
-      return res.status(200).send(data);
-    }
-    return res
-      .status(400)
-      .send(ResponseDTO("Failed", "Delivery Details not found"));
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
-  }
-});
 
 router.delete("/:id", EnsureAuthenticated, async (req, res) => {
   try {

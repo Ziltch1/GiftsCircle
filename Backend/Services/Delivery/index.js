@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const Get = async (id) => {
   const delivery = await prisma.delivery.findFirst({
     where: {
-      eventId: id,
+      userId: id,
     },
   });
 
@@ -15,33 +15,22 @@ const Get = async (id) => {
 
 const Create = async (data) => {
   let id = uuidv4();
-  const delivery = await prisma.delivery.findFirst({
-    where: {
-      eventId: data.eventId,
+  const Data = await prisma.delivery.create({
+    data: {
+      id: id,
+      address: data.address,
+      city: data.city,
+      state: data.state,
+      country: data.country,
+      tel: data.tel,
+      tel2: data.tel2,
+      userId: data.userId,
+      postalCode: data.postalCode,
     },
   });
-  if (!delivery) {
-    const Data = await prisma.delivery.create({
-      data: {
-        id: id,
-        address: data.address,
-        city: data.city,
-        state: data.state,
-        orderDate: new Date(data.orderDate),
-        country: data.country,
-        expectedDate: new Date(data.expectedDate),
-        tel: data.tel,
-        tel2: data.tel2,
-        eventId: data.eventId,
-        postalCode: data.postalCode,
-        status: "Pending"
-      },
-    });
 
-    await prisma.$disconnect();
-    return Data;
-  }
-  return null;
+  await prisma.$disconnect();
+  return Data;
 };
 
 const Update = async (id, data) => {
@@ -60,35 +49,10 @@ const Update = async (id, data) => {
         address: data.address ? data.address : delivery.address,
         city: data.city ? data.city : delivery.city,
         state: data.state ? data.state : delivery.state,
-        orderDate: data.orderDate ? new Date(data.orderDate) : delivery.orderDate,
         country: data.country ? data.country : delivery.country,
-        expectedDate: data.expectedDate ? new Date(data.expectedDate) : delivery.expectedDate,
         tel: data.tel ? data.tel : delivery.tel,
         tel2: data.tel2 ? data.tel2 : delivery.tel2,
         postalCode: data.postalCode,
-      },
-    });
-
-    await prisma.$disconnect();
-    return Data;
-  }
-  return null;
-};
-
-const UpdateStatus = async (id, data) => {
-  const delivery = await prisma.delivery.findUnique({
-    where: {
-      id: id,
-    },
-  });
-
-  if (delivery) {
-    let Data = await prisma.delivery.update({
-      where: {
-        id: id,
-      },
-      data: {
-        status: data.status
       },
     });
 
@@ -114,5 +78,4 @@ module.exports = {
   Get,
   Delete,
   Update,
-  UpdateStatus
 };

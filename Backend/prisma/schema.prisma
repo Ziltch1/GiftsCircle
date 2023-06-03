@@ -12,16 +12,13 @@ model delivery {
   address      String   @db.VarChar(255)
   city         String   @db.VarChar(255)
   state        String   @db.VarChar(255)
-  orderDate    DateTime
   country      String   @db.VarChar(255)
-  expectedDate DateTime
-  postalCode   String   @db.VarChar(255)
+  postalCode   String?   @db.VarChar(255)
   tel          String   @db.VarChar(255)
   tel2         String   @db.VarChar(255)
-  status       String   @db.VarChar(255)
-  eventId      String   @db.VarChar(255)
+  userId       String   @db.VarChar(255)
 
-  @@index([eventId], map: "Delivery_eventId_fkey")
+  @@index([userId], map: "Delivery_userId_fkey")
 }
 
 model event {
