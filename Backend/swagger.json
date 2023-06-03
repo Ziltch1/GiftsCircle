@@ -993,46 +993,6 @@
         }
       }
     },
-    "/delivery/{id}/UpdateStatus": {
-      "put": {
-        "description": "",
-        "tags": ["Delivery"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "type": "object",
-            "schema": {
-              "properties": {
-                "status": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
     "/delivery///{id}": {
       "delete": {
         "description": "",
@@ -2435,14 +2395,6 @@
             "type": "string",
             "required": true
           },
-          "orderDate": {
-            "type": "string",
-            "required": true
-          },
-          "expectedDate": {
-            "type": "string",
-            "required": true
-          },
           "tel": {
             "type": "string",
             "required": true
@@ -2451,7 +2403,7 @@
             "type": "string",
             "required": true
           },
-          "eventId": {
+          "userId": {
             "type": "string",
             "required": true
           },
