@@ -36,19 +36,16 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
   const [phoneNumber2, setPhoneNumber2] = useState(
     delivery ? delivery.tel2 : ''
   );
-  const { newEvent } = useSelector(state => state.event);
+  const { user } = useSelector(state => state.user);
 
   const handleSubmit = async () => {
-    const orderDate = new Date().toDateString();
     const formBody = {
       address: address,
       city: city,
       state: state,
-      orderDate: orderDate,
-      expectedDate: orderDate,
       tel: phoneNumber1,
       tel2: phoneNumber2,
-      eventId: newEvent.id,
+      userId: user.id,
       postalCode: postalCode,
       country: country,
     };
@@ -65,12 +62,10 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
       try {
         if (delivery) {
           const res = await UpdateDeliveryDetailsApi(formBody, delivery.id);
-          console.log(res.data);
           localStorage.setItem('delivery', JSON.stringify(res.data));
           setStep(step + 1);
         } else {
           const res = await DeliveryDetailsApi(formBody);
-          console.log(res.data);
           localStorage.setItem('delivery', JSON.stringify(res.data));
           setStep(step + 1);
         }
