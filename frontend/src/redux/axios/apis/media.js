@@ -32,4 +32,4 @@ const GetEventMessagesApi = (id) => {
   return api.get(`/media/Get/ComplimentaryMessages/${id}`)
 }
 
-export { UploadVideoApi, GetEventMediaFilesApi, GetHostRecievedFilesApi, GetGuestSentFilesApi, UploadEventMessageApi, DeleteMediaApi, MediaVisibilityApi };
+export { UploadVideoApi, GetEventMediaFilesApi, GetHostRecievedFilesApi, GetGuestSentFilesApi, UploadEventMessageApi, DeleteMediaApi, MediaVisibilityApi, GetEventMessagesApi };
