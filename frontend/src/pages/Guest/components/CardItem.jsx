@@ -81,9 +81,9 @@ const Card = ({ item, images, setImages }) => {
 
 
   useEffect(() => {
-    if (item.url.includes('.mp4')) {
+    if (item.url.includes('.mp4') || item.url.includes('.mkv') || item.url.includes('.webm')) {
       setType('VIDEO');
-    } else if (item.url.includes('.mp3')) {
+    } else if (item.url.includes('.mp3') || item.url.includes('.webm')) {
       setType('AUDIO');
     } else {
       setType('IMAGE');
@@ -93,7 +93,7 @@ const Card = ({ item, images, setImages }) => {
   return (
     <>
       {showImageModal && (
-        <ImageModal image={item.url} setShowImageModal={setShowImageModal} />
+        <ImageModal item={item.url} setShowImageModal={setShowImageModal} />
       )}
       <Box
         w="282px"
@@ -126,21 +126,20 @@ const Card = ({ item, images, setImages }) => {
             {type === 'VIDEO' ? (
               <video
                 controls
-                width="100%"
-                height="330px"
-                poster={
-                  item.url.replace('.mp4', '.jpg') ||
-                  item.url.replace('.mkv', '.jpg')
-                }
+                style={{width: '100%', height: '100%', borderRadius: '5px', objectFit: 'cover'}}
               >
-                <source src={item.url} type={'video/mp4' || 'video/mkv'} />
+                <source src={item.url} type={'video/mp4' || 'video/mkv' || 'video/webm'} />
                 Sorry, your browser doesn't support videos.
               </video>
             ) : (
-              <audio controls>
-                <source src={item.url} type="audio/mp3" />
-                Your browser does not support the audio element.
-              </audio>
+              <>
+                {type === 'AUDIO' && (
+                      <audio controls style={{ width: '100%', height: '100%' }}>
+                        <source src={item.url} type={'audio/mp3' || 'audioo/mkv' || 'audio/webm'} />
+                        Your browser does not support the audio element.
+                      </audio>)
+                }
+              </>
             )}
           </>
         )}

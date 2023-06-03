@@ -7,13 +7,13 @@ import optionsIcon from '../../assets/optionsIcon.png'
 import { CheckIcon } from '@chakra-ui/icons'
 import { DeleteMediaApi, MediaVisibilityApi } from '../../../redux/axios/apis/media';
 
-const Card = ({ item, setImages }) => {
+const Card = ({ item, images, setImages }) => {
   const [type, setType] = useState('IMAGE');
   const [showImageModal, setShowImageModal] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [displayOptions, setDisplayOptions] = useState(false);
   const options = ['Seen by host only', 'Seen by host and public']
-  const [checkedOption, setCheckedOption] = useState(-1);
+  const [checkedOption, setCheckedOption] = useState(-1)
   const publicMedia = { visibility: 'PUBLIC' }
   const privateMedia = { visibility: 'PRIVATE' }
 
@@ -61,8 +61,7 @@ const Card = ({ item, setImages }) => {
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   const resetOptions = () => {
     setDisplayOptions(false);
@@ -80,12 +79,9 @@ const Card = ({ item, setImages }) => {
   }
 
 
+
   useEffect(() => {
-    if (
-      item.url.includes('.mp4') ||
-      item.url.includes('.webm') ||
-      item.url.includes('.mkv')
-    ) {
+    if (item.url.includes('.mp4') || item.url.includes('.mkv') || item.url.includes('.webm')) {
       setType('VIDEO');
     } else if (item.url.includes('.mp3') || item.url.includes('.webm')) {
       setType('AUDIO');
@@ -97,7 +93,7 @@ const Card = ({ item, setImages }) => {
   return (
     <>
       {showImageModal && (
-        <ImageModal image={item.url} setShowImageModal={setShowImageModal} />
+        <ImageModal item={item.url} setShowImageModal={setShowImageModal} />
       )}
       <Box
         w="282px"
@@ -130,21 +126,20 @@ const Card = ({ item, setImages }) => {
             {type === 'VIDEO' ? (
               <video
                 controls
-                width="100%"
-                height="330px"
-                poster={
-                  item.url.replace('.mp4', '.jpg') ||
-                  item.url.replace('.mkv', '.jpg')
-                }
+                style={{ width: '100%', height: '100%', borderRadius: '5px', objectFit: 'cover' }}
               >
-                <source src={item.url} type={'video/mp4' || 'video/mkv'} />
+                <source src={item.url} type={'video/mp4' || 'video/mkv' || 'video/webm'} />
                 Sorry, your browser doesn't support videos.
               </video>
             ) : (
-              <audio controls>
-                <source src={item} type="audio/mp3" />
-                Your browser does not support the audio element.
-              </audio>
+              <>
+                {type === 'AUDIO' && (
+                  <audio controls style={{ width: '100%', height: '100%' }}>
+                    <source src={item.url} type={'audio/mp3' || 'audioo/mkv' || 'audio/webm'} />
+                    Your browser does not support the audio element.
+                  </audio>)
+                }
+              </>
             )}
           </>
         )}
