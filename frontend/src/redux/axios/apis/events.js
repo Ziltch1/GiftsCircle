@@ -40,6 +40,10 @@ const DeliveryDetailsApi = data => {
   return api.post(`/delivery/create`, data);
 };
 
+const GetDeliveryDetailsApi = (id) => {
+  return api.get(`/delivery/${id}`);
+};
+
 const UpdateDeliveryDetailsApi = (data, id) => {
   return api.put(`/delivery/${id}`, data);
 };
@@ -66,4 +70,5 @@ export {
   UpdateDeliveryDetailsApi,
   GetEventApi,
   JoinEventGuestApi,
+  GetDeliveryDetailsApi
 };

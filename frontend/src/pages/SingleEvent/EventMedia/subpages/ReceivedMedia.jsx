@@ -22,12 +22,14 @@ const ReceivedMedia = () => {
   const [eventMessages, setEventMessages] = useState([]);
   const [itemUrl, setItemUrl] = useState('');
   const { newEvent } = useSelector(state => state.event);
+  const [fileType, setFileType] = useState('');
+  const [type, setType] = useState('')
 
   const getEventMessages = async () => {
     try {
       const response = await GetEventMessagesApi(newEvent.id);
-         const data = response.data;
-         setEventMessages(data);
+      const data = response.data;
+      setEventMessages(data);
     } catch (error) {
       console.log(error);
     }
@@ -35,9 +37,21 @@ const ReceivedMedia = () => {
 
   useEffect(() => {
     getEventMessages();
+    const file = hostRecievedFiles.map((file) => {
+      return setFileType(file.url)
+    });
   }, []);
 
-  console.log(eventMessages);
+
+  useEffect(() => {
+    if (fileType.includes('.mp4') || fileType.includes('.mkv')) {
+      setType('VIDEO');
+    } else if (fileType.includes('.mp3')) {
+      setType('AUDIO');
+    } else {
+      setType('IMAGE');
+    }
+  }, [fileType]);
 
   const HandleClick = url => {
     setShowImageModal(true);
@@ -56,6 +70,7 @@ const ReceivedMedia = () => {
                 <Th>S/N</Th>
                 <Th>Media Type</Th>
                 <Th>Sent by</Th>
+                <Th>Visibility</Th>
                 <Th>Action</Th>
               </Tr>
             </Thead>
@@ -63,12 +78,14 @@ const ReceivedMedia = () => {
             <Tbody>
               <>
               {hostRecievedFiles?.map((file, index) => {
+                console.log(file);
                 return (
                   <>
                     <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
                       <Td>{index + 1}</Td>
-                      <Td>Image {index + 1}</Td>
+                      <Td>{type} {index + 1}</Td>
                       <Td>{file.user}</Td>
+                      <Td>{file.visibility}</Td>
                       <Td color="#009F94">
                         <Flex gap={8} cursor='pointer'>
                           <Text onClick={() => HandleClick(file?.url)}>View</Text>
