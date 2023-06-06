@@ -74,9 +74,6 @@ const Header = () => {
                       Account
                     </MenuItem>
                     </Link>
-                    <MenuItem fontSize={16} fontWeight={500}>
-                      Security
-                    </MenuItem>
                     <MenuDivider />
                     <MenuItem
                       color="#F5222D"

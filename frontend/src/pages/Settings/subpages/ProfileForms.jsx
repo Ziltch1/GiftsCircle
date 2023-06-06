@@ -12,10 +12,10 @@ import { useSelector } from 'react-redux';
 import { states } from '../data';
 import { dispatch } from '../../../redux/store';
 import { UpdateUser } from '../../../redux/features/user/service';
+import {DatePicker} from 'react-widgets'
 
 const ProfileForms = () => {
   const { user } = useSelector(state => state.user);
-
   const [edited, setEdited] = useState(false);
   const [firstName, setFirstName] = useState(user.firstname);
   const [lastName, setLastName] = useState(user.lastname);
@@ -78,7 +78,6 @@ const ProfileForms = () => {
                   >
                     <option value="lagos">Male</option>
                     <option value="lagos">Female</option>
-                    <option value="lagos">Others</option>
                   </Select>
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
@@ -124,15 +123,12 @@ const ProfileForms = () => {
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
                   <FormLabel fontSize={14}>Date of Birth</FormLabel>
-                  <Input
-                    type="date"
-                    w="100%"
-                    bg="#EEEEEE"
+                  <DatePicker 
+                    defaultValue={new Date()}
+                    valueFormat={{ day: "numeric", month: "short" }}
                     value={dateOfBirth}
-                    onChange={e => setDateOfBirth(e.target.value)}
-                    border="1px solid #C6C6C6"
+                    onChange={value => setDateOfBirth(value)}
                     disabled={!edited ? 'disabled' : null}
-                    fontSize={15}
                   />
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
