@@ -59,12 +59,12 @@ const WelcomeModal = () => {
               bg="#0C4C84"
               borderBottomRightRadius={'6px'}
               borderBottomLeftRadius="6px"
-              minH="200px"
+              minH="240px"
             >
               <ModalBody>
                 <Heading
                   textAlign={'center'}
-                  mt="5"
+                  mt="3"
                   mb="3"
                   fontSize="20px"
                   color="white"
@@ -77,9 +77,7 @@ const WelcomeModal = () => {
                   mb="5"
                   fontSize={'13px'}
                 >
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Beatae ea cum dolores pariatur harum doloribus aliquam dicta
-                  architecto laboriosam nulla?
+                  Welcome to Event Circle website! We are thrilled to have you here, ready to embark on a journey of creating unforgettable experiences. Whether you're planning a grand celebration, a corporate gathering, or an intimate get-together, you've come to the right place.
                 </Text>
 
                 <Box textAlign="center">
