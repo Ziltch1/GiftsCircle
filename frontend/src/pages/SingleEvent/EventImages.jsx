@@ -85,10 +85,10 @@ const EventImages = ({ newEvent }) => {
             h="474px"
             bg="#EEEEEE"
             borderRadius={5}
-            p="6"
+            py="8" px='6'
             boxShadow="md"
           >
-            <Box mb="4">
+            <Box mb="5">
               <Text fontSize={14} mb="1">
                 Event ID
               </Text>
@@ -109,7 +109,7 @@ const EventImages = ({ newEvent }) => {
               </Flex>
             </Box>
 
-            <Box mb="4">
+            <Box mb="5">
               <Text fontSize={14} mb="1">
                 Co-host Code
               </Text>
@@ -132,7 +132,7 @@ const EventImages = ({ newEvent }) => {
               </Flex>
             </Box>
 
-            <Box mb="4">
+            <Box mb="5">
               <Text fontSize={14} mb="1">
                 Co-host link
               </Text>
@@ -161,7 +161,7 @@ const EventImages = ({ newEvent }) => {
               </Flex>
             </Box>
 
-            <Box mb="4">
+            <Box mb="5">
               <Text fontSize={14} mb="1">
                 Event Guest Code
               </Text>
@@ -182,7 +182,7 @@ const EventImages = ({ newEvent }) => {
               </Flex>
             </Box>
 
-            <Box mb="4">
+            <Box mb="5">
               <Text fontSize={14} mb="1">
                 Event Guest link
               </Text>
@@ -213,39 +213,17 @@ const EventImages = ({ newEvent }) => {
 
             <Box mb="5" fontSize={14}>
               <Flex justifyContent="space-between" alignItems="center">
-                <Text fontWeight="medium">Share on: </Text>
-                <Box>
-                  <Flex gap={3}>
-                    <Box>
-                      <Image src={facebook} />
-                    </Box>
-                    <Box>
-                      <Image src={twitter} />
-                    </Box>
-                    <Box>
-                      <Image src={whatsapp} />
-                    </Box>
-                    <Box>
-                      <Image src={instagram} />
-                    </Box>
-                    <Box>
-                      <Image src={linkedin} />
-                    </Box>
+                <Text fontWeight="medium" fontSize={13}>Share on: </Text>
+                
+                  <Flex>
+                    <ShareButton title={newEvent.title} img={facebook} platform='Facebook' url='https://facebook.com' text='I am inviting you to joing my event' />
+                    <ShareButton title={newEvent.title} img={twitter} platform='Twitter' url='https://twitter.com' text='I am inviting you to joing my event' />
+                    <ShareButton title={newEvent.title} img={whatsapp} platform='WhatsApp' url='https://whatsapp.com' text='I am inviting you to joing my event' />
+                    <ShareButton title={newEvent.title} img={instagram} platform='Instagram' url='https://instagram.com' text='I am inviting you to joing my event' />
+                    <ShareButton title={newEvent.title} img={linkedin} platform='Linkedin' url='https://linkedin.com' text='I am inviting you to joing my event' />
                   </Flex>
-                </Box>
               </Flex>
             </Box>
-
-            <Button
-              bg="#00BFB2"
-              color="white"
-              w="100%"
-              fontWeight="medium"
-              fontSize="14px"
-              boxShadow="md"
-            >
-              Edit Event
-            </Button>
           </Box>
         </Flex>
       </Box>
@@ -254,3 +232,26 @@ const EventImages = ({ newEvent }) => {
 };
 
 export default EventImages;
+
+
+
+export const ShareButton = ({ platform, url, text, img, title }) => {
+  const handleClick = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        text,
+        url,
+      })
+        .then(() => console.log(`Shared on ${platform}`))
+        .catch((error) => console.error(`Error sharing on ${platform}`, error));
+    } else {
+      console.log(`Sharing on ${platform} not supported.`);
+    }
+  };
+
+  return (
+    <Button onClick={handleClick} bg='none' p='0' m='0' _hover={{bg: 'none', p: 0}}><Image src={img} /></Button>
+  );
+};
+

@@ -78,12 +78,11 @@ const ReceivedMedia = () => {
             <Tbody>
               <>
               {hostRecievedFiles?.map((file, index) => {
-                console.log(file);
                 return (
                   <>
                     <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
                       <Td>{index + 1}</Td>
-                      <Td>{type} {index + 1}</Td>
+                      <Td>Media {index + 1}</Td>
                       <Td>{file.user}</Td>
                       <Td>{file.visibility}</Td>
                       <Td color="#009F94">
@@ -121,7 +120,6 @@ export const EventMessages = ({eventMessages}) => {
   const handleClick = (message) => {
     setShowModal(true);
     setEventMessage(message);
-    console.log('clicked');
   }
 
   return (
