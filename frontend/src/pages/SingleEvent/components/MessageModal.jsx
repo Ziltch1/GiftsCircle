@@ -21,7 +21,7 @@ const MessageModal = ({ setShowModal, message }) => {
                 isCentered
             >
                 <ModalOverlay />
-                <ModalContent maxW="420px" bg="white" py="8" px="6">
+                <ModalContent maxW="420px" h='350px' overflow='auto' bg="white" py="8" px="6">
                     <Box>
                         <ModalCloseButton onClick={() => setShowModal(false)} />
                         <ModalBody>
