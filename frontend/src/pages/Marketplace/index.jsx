@@ -1,5 +1,5 @@
 import { Box, Heading, Text, Button } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import MarketplaceOptions from './MarketplaceOptions';
 import SourvenirMarket from './subpages/Market/Sourvenir';
 import GiftMarket from './subpages/Market/Gifts';
