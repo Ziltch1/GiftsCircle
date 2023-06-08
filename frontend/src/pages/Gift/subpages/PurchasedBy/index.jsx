@@ -3,6 +3,7 @@ import React from 'react';
 import PurchasedBy from './subpages/PurchasedBy';
 
 const index = ({ items }) => {
+  console.log(items);
   return (
     <Box>
       {items?.length < 1 ? (
