@@ -21,7 +21,7 @@ import DesignViewModal from './DesignViewModal';
 
 export const AsoebiContext = createContext(null);
 
-const Index = ({ setShowProducts }) => {
+const Index = ({ setShowProducts, setShowCheckout }) => {
   const { eventAsoebis } = useSelector(state => state.event);
   const [AsoebiItems, setAsoebiItems] = useState([]);
   const [addedAsoebiItems, setAddedAsoebiItems] = useState([]);
@@ -128,7 +128,11 @@ const Index = ({ setShowProducts }) => {
           }}
         >
           <>
-            <AsoebiMarket setShowProducts={setShowProducts} eventId={eventId} />
+            <AsoebiMarket
+              setShowProducts={setShowProducts}
+              eventId={eventId}
+              setShowCheckout={setShowCheckout}
+            />
           </>
         </AsoebiContext.Provider>
       )}

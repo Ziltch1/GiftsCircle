@@ -8,7 +8,7 @@ import AsoebiDrawer from './AsoebiDrawer';
 import { useSelector } from 'react-redux';
 import DisplayCard from '../../../../../components/Card';
 
-const AsoebiMarket = ({ setShowProducts, eventId }) => {
+const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout }) => {
   const { asoebiItems } = useSelector(state => state.event);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const {
@@ -78,6 +78,7 @@ const AsoebiMarket = ({ setShowProducts, eventId }) => {
         openDrawer={drawerOpen}
         setOpenDrawer={setDrawerOpen}
         eventId={eventId}
+        setShowCheckout={setShowCheckout}
       />
       <Box minH="600px" w="100%" mx="auto" pt="8">
         <BackButton action={() => setShowProducts(false)} />

@@ -21,7 +21,7 @@ import { GetEventAsoebis } from '../../../../../redux/features/events/service';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
 import { BuyItems } from '../../../../../redux/features/marketplace/service';
 
-const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
+const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) => {
   const { onClose } = useDisclosure({ defaultIsOpen: true });
 
   const {
@@ -113,7 +113,8 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId }) => {
                   Save Changes
                 </Button>
               ) : (
-                <PaymentButton amount={amount} action={BuyMarketAsoebi} />
+                // <PaymentButton amount={amount} action={BuyMarketAsoebi} />
+                <Button bg='#00BFB2' color='white' onClick={() => setShowCheckout(true)}>Proceed to checkout</Button>
               )}
             </Flex>
           </Box>

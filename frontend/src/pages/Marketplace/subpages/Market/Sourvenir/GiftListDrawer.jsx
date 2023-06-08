@@ -11,6 +11,7 @@ import {
   Box,
   Heading,
   Flex,
+  Button
 } from '@chakra-ui/react';
 import GiftListItem from './GiftListItem';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
@@ -18,7 +19,7 @@ import { SourvenirContext } from '.';
 import { dispatch } from '../../../../../redux/store';
 import { BuyItems } from '../../../../../redux/features/marketplace/service';
 
-const GiftListDrawer = ({ setShowDrawer, isOpen }) => {
+const GiftListDrawer = ({ setShowDrawer, isOpen, setShowCheckout }) => {
   const {
     SourvenirItems,
     setSourvernirItems,
@@ -75,7 +76,8 @@ const GiftListDrawer = ({ setShowDrawer, isOpen }) => {
             </Box>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
-            <PaymentButton amount={amount} action={HandleSubmit} />
+            {/* <PaymentButton amount={amount} action={HandleSubmit} /> */}
+            <Button bg='#00BFB2' color='white' onClick={() => setShowCheckout(true)}>Proceed to checkout</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
