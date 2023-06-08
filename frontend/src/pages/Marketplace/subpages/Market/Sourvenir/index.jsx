@@ -11,7 +11,7 @@ import { GetSourvenirItems } from '../../../../../redux/features/gift/service';
 
 export const SourvenirContext = createContext(null);
 
-const Index = ({ setShowProducts }) => {
+const Index = ({ setShowProducts, setShowCheckout }) => {
   const { user } = useSelector(state => state.user);
   const { sourvernirItems } = useSelector(state => state.gift);
   const [showDrawer, setShowDrawer] = useState(false);
@@ -69,7 +69,7 @@ const Index = ({ setShowProducts }) => {
           setAmount,
         }}
       >
-        <GiftListDrawer setShowDrawer={setShowDrawer} isOpen={showDrawer} />
+        <GiftListDrawer setShowDrawer={setShowDrawer} isOpen={showDrawer} setShowCheckout={setShowCheckout}/>
         <Box bg="#F5F5F5">
           <Box minH="600px" w="100%" mx="auto" pt="8">
             <BackButton action={showOptions} />

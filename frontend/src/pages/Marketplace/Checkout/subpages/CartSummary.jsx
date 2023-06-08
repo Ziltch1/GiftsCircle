@@ -36,7 +36,7 @@ const CartSummary = () => {
           <Heading fontWeight='medium' fontSize={18}>₦ 175,000</Heading>
         </Flex>
         <Divider />
-        <PaymentButton action={HandleSubmit} />
+        <PaymentButton action={HandleSubmit} amount={175000}/>
       </Stack>
     </Box>
   )
