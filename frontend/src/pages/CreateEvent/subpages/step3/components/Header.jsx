@@ -79,17 +79,6 @@ const GiftHeader = ({ setOpenDrawer, openDrawer }) => {
                 {data.length}
               </Text>
             </Button>
-            <Button
-              bg="#00BFB2"
-              w="170px"
-              h="44px"
-              color="white"
-              fontSize={14}
-              fontWeight="medium"
-              boxShadow="0px 8px 30px rgba(0, 191, 178, 0.1)"
-            >
-              Request for an item
-            </Button>
           </Flex>
         </Box>
       </Flex>
