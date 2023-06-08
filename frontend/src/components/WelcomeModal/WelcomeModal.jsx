@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   Heading,
@@ -20,6 +20,22 @@ import { setWelcomeModal } from '../../redux/utils/UtilSlice';
 const WelcomeModal = () => {
   const { user } = useSelector(state => state.user);
   const { welcomeModal } = useSelector(state => state.util);
+  const [greeting, setGreeting] = useState('');
+
+  useEffect(() => {
+    const currentHour = new Date().getHours();
+    let newGreeting = '';
+
+    if (currentHour >= 5 && currentHour < 12) {
+      newGreeting = 'Good morning';
+    } else if (currentHour >= 12 && currentHour < 18) {
+      newGreeting = 'Good afternoon';
+    } else {
+      newGreeting = 'Good evening';
+    }
+    setGreeting(newGreeting);
+  }, []);
+
   return (
     <Box>
       <Modal isOpen={welcomeModal} isCentered>
@@ -43,17 +59,17 @@ const WelcomeModal = () => {
               bg="#0C4C84"
               borderBottomRightRadius={'6px'}
               borderBottomLeftRadius="6px"
-              minH="200px"
+              minH="240px"
             >
               <ModalBody>
                 <Heading
                   textAlign={'center'}
-                  mt="5"
+                  mt="3"
                   mb="3"
                   fontSize="20px"
                   color="white"
                 >
-                  Welcome {user.firstname}
+                  {greeting} {user.firstname}
                 </Heading>
                 <Text
                   color="white"
@@ -61,9 +77,7 @@ const WelcomeModal = () => {
                   mb="5"
                   fontSize={'13px'}
                 >
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Beatae ea cum dolores pariatur harum doloribus aliquam dicta
-                  architecto laboriosam nulla?
+                  Welcome to Event Circle website! We are thrilled to have you here, ready to embark on a journey of creating unforgettable experiences. Whether you're planning a grand celebration, a corporate gathering, or an intimate get-together, you've come to the right place.
                 </Text>
 
                 <Box textAlign="center">
