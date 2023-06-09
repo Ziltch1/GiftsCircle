@@ -26,9 +26,7 @@ const Events = () => {
   const [navPosition, setNavPosition] = useState(0);
   const [loading, setLoading] = useState(true);
   const { events } = useSelector(state => state.event);
-  const { userPurchasedGiftItems, giftItems, sourvenirItems } = useSelector(
-    state => state.gift
-  );
+  const { giftItems, sourvenirItems } = useSelector(state => state.gift);
 
   useEffect(() => {
     if (user) {
@@ -69,9 +67,7 @@ const Events = () => {
                 ) : (
                   <>
                     {navPosition === 0 && <PurchasedFor events={events} />}
-                    {navPosition === 1 && (
-                      <PurchasedBy items={userPurchasedGiftItems} />
-                    )}
+                    {navPosition === 1 && <PurchasedBy events={events} />}
                     {navPosition === 2 && (
                       <GiftAndSourvenir
                         sourvenir={sourvenirItems}
