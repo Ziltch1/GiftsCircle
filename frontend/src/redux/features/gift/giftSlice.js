@@ -4,7 +4,8 @@ const initialState = {
   giftItems: [],
   userPurchasedGiftItems: [],
   complimentaryGifts: [],
-  eventGiftTrans: [],
+  eventGiftTrans: null,
+  userEventGiftTrans: null,
   sourvernirItems: [],
 };
 
@@ -24,6 +25,9 @@ const GiftSlice = createSlice({
     setEventGiftsTrans: (state, action) => {
       state.eventGiftTrans = action.payload;
     },
+    setUserEventGiftTrans: (state, action) => {
+      state.userEventGiftTrans = action.payload;
+    },
     setSourvenir: (state, action) => {
       state.sourvernirItems = action.payload;
     },
@@ -33,6 +37,7 @@ const GiftSlice = createSlice({
 export const {
   setGiftItems,
   setUserPurchasedGifts,
+  setUserEventGiftTrans,
   setComplimentaryGifts,
   setEventGiftsTrans,
   setSourvenir,

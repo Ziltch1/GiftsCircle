@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 const PurchasedFor = ({ events }) => {
   const { user } = useSelector(state => state.user);
   const [data, setData] = useState([]);
-  console.log(events);
 
   useEffect(() => {
     if (events.length > 0) {

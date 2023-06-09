@@ -16,34 +16,59 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../redux/store';
 import SkeletonLoader from '../../../components/Skeleton';
-import { GetEventGiftsTransactions } from '../../../redux/features/gift/service';
+import {
+  GetEventGiftsTransactions,
+  GetUserEventGiftsTransactions,
+} from '../../../redux/features/gift/service';
+import {
+  setEventGiftsTrans,
+  setUserEventGiftTrans,
+} from '../../../redux/features/gift/giftSlice';
 
 export default function GiftDetails() {
   const navigate = useNavigate();
   const [currentEvent, setCurrentEvent] = useState([]);
   const { id } = useParams();
   const { events } = useSelector(state => state.event);
-  const { giftItems, eventGiftTrans, complimentaryGifts } = useSelector(
-    state => state.gift
-  );
+  const { user } = useSelector(state => state.user);
+  const { giftItems, eventGiftTrans, userEventGiftTrans, complimentaryGifts } =
+    useSelector(state => state.gift);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(GetEventGiftsTransactions(id));
-    setCurrentEvent(events?.filter(x => x.id === id)[0]);
+    if (events) {
+      let CurrentEvent = events?.filter(x => x.id === id)[0];
+      if (CurrentEvent.user_id === user.id) {
+        dispatch(GetEventGiftsTransactions(id));
+      } else {
+        dispatch(GetUserEventGiftsTransactions(user.id, id));
+      }
+      setCurrentEvent(CurrentEvent);
+    }
   }, [id, events]);
 
   useEffect(() => {
-    if (eventGiftTrans) {
+    if (eventGiftTrans && currentEvent.user_id === user.id) {
       setLoading(false);
+      setData(eventGiftTrans);
     }
-  }, [eventGiftTrans]);
+    if (userEventGiftTrans && currentEvent.user_id !== user.id) {
+      setLoading(false);
+      setData(userEventGiftTrans);
+    }
+  }, [eventGiftTrans, userEventGiftTrans]);
 
-  console.log(eventGiftTrans);
   return (
     <Box bg="#F5F5F5">
       <Box w="85%" mx="auto" pt="10" pb="5">
-        <BackButton action={() => navigate(-1)} />
+        <BackButton
+          action={() => {
+            navigate(-1);
+            dispatch(setEventGiftsTrans(null));
+            dispatch(setUserEventGiftTrans(null));
+          }}
+        />
         <Heading mb="7" mt="5" fontWeight="bold" fontSize={25}>
           {currentEvent?.title}
         </Heading>
@@ -52,7 +77,7 @@ export default function GiftDetails() {
           <SkeletonLoader />
         ) : (
           <>
-            {eventGiftTrans.length === 0 ? (
+            {data.length === 0 ? (
               <Box h="100vh">
                 <Heading
                   textAlign="center"
@@ -73,7 +98,6 @@ export default function GiftDetails() {
                   >
                     <Tr borderRadius={5} textTransform="capitalize">
                       <Th>Name</Th>
-                      <Th>Purchased by</Th>
                       <Th>Date</Th>
                       <Th isNumeric>Qty</Th>
                       <Th>Payment status</Th>
@@ -82,7 +106,7 @@ export default function GiftDetails() {
                     </Tr>
                   </Thead>
                   <Tbody bg="white">
-                    {eventGiftTrans.map(ele => {
+                    {data.map(ele => {
                       const gift = ele.giftId
                         ? giftItems.find(x => x.id === ele.gift.giftItemId)
                         : complimentaryGifts.find(
@@ -91,10 +115,9 @@ export default function GiftDetails() {
                       return (
                         <Tr fontSize={13} textAlign="center" key={ele.id}>
                           <Td>{gift?.title}</Td>
-                          <Td>Taiwo</Td>
                           <Td>June 12th, 2022</Td>
                           <Td>{ele?.quantity}</Td>
-                          <Td>{ele?.status}</Td>
+                          <Td>{ele?.gift ? ele.gift.status : 'COMPLETED'}</Td>
                           <Td isNumeric>
                             {parseInt(gift?.amount) - ele?.amount}
                           </Td>

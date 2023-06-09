@@ -53,6 +53,8 @@ const GetUserEvents = async (id) => {
           start_time: true,
           end_time: true,
           image: true,
+          user_id: true,
+          host: true,
           gifts: {
             select: {
               giftItemId: true,
