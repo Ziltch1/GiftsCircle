@@ -11,7 +11,7 @@ function index() {
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 5000,
+          delay: 20000,
           disableOnInteraction: false,
         }}
         modules={[Autoplay]}

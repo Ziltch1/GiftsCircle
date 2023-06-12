@@ -30,8 +30,11 @@ const Hero_1 = () => {
           </Box>
 
           <VStack spacing={8} maxW='736px' h='auto' mx='auto' mt='6' mb='4' textAlign='center'>
-            <Heading size={'2xl'} textAlign='center' lineHeight={'58px'} color='#CCF2F0'>Add <b style={{color: '#FF9F1C'}}>gift list</b> when you create your event with <b style={{color: '#00BFB2'}}>Event Circle</b></Heading>
-            <Text color='white' maxW='450px' mx='auto'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus quam sed sed proin. Imperdiet velit, tempor, venen</Text>
+            <Heading size={'2xl'} textAlign='center' lineHeight={'58px'} color='#CCF2F0'>
+              Add <b style={{color: '#FF9F1C'}}>gift list</b> when you create your event with <b style={{color: '#00BFB2'}}>Event Circle</b></Heading>
+            <Text color='white' maxW='460px' mx='auto'>
+              On our website, we aim to provide you with a seamless and enjoyable experience when it comes to planning memorable events and finding the perfect gifts for these events. Whether you're organizing a grand celebration or looking for a special present for a loved one, we're here to make your life easier.
+            </Text>
             <Flex justifyContent={'space-around'} w='450px'>
               <Button bg='none' _hover={{bg: "none"}}><Image src={google_play} /></Button>
               <Button bg='none' _hover={{bg: "none"}}><Image src={apple_store} /></Button>
