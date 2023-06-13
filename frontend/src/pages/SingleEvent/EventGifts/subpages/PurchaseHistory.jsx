@@ -41,40 +41,44 @@ const PurchaseHistory = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {eventGiftTrans.map(ele => {
-              const gift = ele.giftId
-                ? giftItems.find(x => x.id === ele.gift.giftItemId)
-                : complimentaryGifts.find(
-                    x => x.id === ele.complimentaryGift.id
-                  );
-              return (
-                <>
-                  <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
-                    <Td>{gift.title}</Td>
-                    <Td>
-                      {ele.purchasedBy.firstname +
-                        '  ' +
-                        ele.purchasedBy.lastname}
-                    </Td>
-                    <Td>
-                      {ele.giftId
-                        ? ele.gift.complimentaryGift === ''
-                          ? 'No'
-                          : 'Yes'
-                        : 'No'}
-                    </Td>
-                    <Td isNumeric>N{ele.amount}</Td>
-                    <Td>{ele.giftId ? ele.gift.status : 'COMPLETED'}</Td>
-                    <Td>
-                      <Flex gap={8}>
-                        <Image src={eye} onClick={openDrawer} />
-                        <Image src={message} />
-                      </Flex>
-                    </Td>
-                  </Tr>
-                </>
-              );
-            })}
+            {eventGiftTrans ? (
+              eventGiftTrans.map(ele => {
+                const gift = ele.giftId
+                  ? giftItems.find(x => x.id === ele.gift.giftItemId)
+                  : complimentaryGifts.find(
+                      x => x.id === ele.complimentaryGift.id
+                    );
+                return (
+                  <>
+                    <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
+                      <Td>{gift.title}</Td>
+                      <Td>
+                        {ele.purchasedBy.firstname +
+                          '  ' +
+                          ele.purchasedBy.lastname}
+                      </Td>
+                      <Td>
+                        {ele.giftId
+                          ? ele.gift.complimentaryGift === ''
+                            ? 'No'
+                            : 'Yes'
+                          : 'No'}
+                      </Td>
+                      <Td isNumeric>N{ele.amount}</Td>
+                      <Td>{ele.giftId ? ele.gift.status : 'COMPLETED'}</Td>
+                      <Td>
+                        <Flex gap={8}>
+                          <Image src={eye} onClick={openDrawer} />
+                          <Image src={message} />
+                        </Flex>
+                      </Td>
+                    </Tr>
+                  </>
+                );
+              })
+            ) : (
+              <>No purchase Yet</>
+            )}
           </Tbody>
         </Table>
       </TableContainer>

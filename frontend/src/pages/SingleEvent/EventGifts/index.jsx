@@ -26,11 +26,19 @@ const Index = ({ newEvent }) => {
 
   return (
     <Box>
-      <GiftHeader navPosition={navPosition} setNavPosition={setNavPosition} />
-      <Box>
-        {navPosition === 0 && <PurchaseHistory />}
-        {navPosition === 1 && <GiftLists data={data}/>}
-      </Box>
+      <GiftHeader
+        navPosition={navPosition}
+        setNavPosition={setNavPosition}
+        event={newEvent}
+      />
+      {newEvent.published ? (
+        <Box>
+          {navPosition === 0 && <PurchaseHistory />}
+          {navPosition === 1 && <GiftLists data={data} />}
+        </Box>
+      ) : (
+        <GiftLists data={data} />
+      )}
     </Box>
   );
 };

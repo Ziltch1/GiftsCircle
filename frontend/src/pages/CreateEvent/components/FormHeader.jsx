@@ -19,10 +19,17 @@ import { DeleteEventApi } from '../../../redux/axios/apis/events';
 import { setNewEvent } from '../../../redux/features/events/eventSlice';
 import { dispatch } from '../../../redux/store';
 import errorImg from '../../assets/errorImg.svg';
+import { useSelector } from 'react-redux';
 
 const FormHeader = ({ step }) => {
   const [openModal, setOpenModal] = useState(false);
-  const texts = ['Basic Info', 'Event Page', 'Add Gift list', 'Add delivery details', 'Event confirmation']
+  const texts = [
+    'Basic Info',
+    'Event Page',
+    'Add Gift list',
+    'Add delivery details',
+    'Event confirmation',
+  ];
   return (
     <>
       {openModal && <CancelModal setOpenModal={setOpenModal} />}
@@ -40,7 +47,10 @@ const FormHeader = ({ step }) => {
               </Heading>
             </Flex>
           </Box>
-          <Box fontSize={14}>Step {step}/5 - <span style={{ color: '#00BFB2'}}>{texts[step-1]}</span></Box>
+          <Box fontSize={14}>
+            Step {step}/5 -{' '}
+            <span style={{ color: '#00BFB2' }}>{texts[step - 1]}</span>
+          </Box>
         </Flex>
       </Box>
     </>
@@ -51,19 +61,24 @@ export default FormHeader;
 
 export const CancelModal = ({ setOpenModal }) => {
   const navigate = useNavigate();
+  const { editEvent, newEvent } = useSelector(state => state.event);
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const closeModal = () => {
     setOpenModal(false);
   };
 
   const HandleSubmit = async () => {
-    const event = JSON.parse(localStorage.getItem('newEvent'));
-    if (event) {
-      const res = await DeleteEventApi(event.id);
-      if (res.status) {
+    if (newEvent) {
+      if (editEvent) {
         dispatch(setNewEvent(null));
-        localStorage.removeItem('newEvent');
         navigate('/dashboard');
+      } else {
+        const res = await DeleteEventApi(newEvent.id);
+        if (res.status) {
+          dispatch(setNewEvent(null));
+          localStorage.removeItem('newEvent');
+          navigate('/dashboard');
+        }
       }
     } else {
       navigate('/dashboard');

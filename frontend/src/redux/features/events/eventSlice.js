@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   events: null,
   eventGifts: null,
+  editEvent: false,
   eventGuests: null,
   newEvent: JSON.parse(localStorage.getItem('newEvent')) || null,
   loading: true,
@@ -20,6 +21,9 @@ const EventSlice = createSlice({
   name: 'Event',
   initialState,
   reducers: {
+    setEditEvent: (state, action) => {
+      state.editEvent = action.payload;
+    },
     setEvents: (state, action) => {
       state.events = action.payload;
     },
@@ -64,6 +68,7 @@ const EventSlice = createSlice({
 
 export const {
   setEvents,
+  setEditEvent,
   setEventGifts,
   setEventGuests,
   setAsoebisItems,

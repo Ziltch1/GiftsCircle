@@ -22,7 +22,7 @@ import {
 import React, { useState } from 'react';
 import errorImg from '../../../assets/errorImg.svg';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { EventSummaryApi } from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
@@ -30,19 +30,21 @@ import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import { DropdownList } from 'react-widgets';
 import 'react-widgets/styles.css';
 import BackButton from '../../../../components/Buttons/BackButton';
-import { setNewEvent } from '../../../../redux/features/events/eventSlice';
+import {
+  setEditEvent,
+  setNewEvent,
+} from '../../../../redux/features/events/eventSlice';
 
 const SummaryForm = ({ setStep }) => {
   const { newEvent } = useSelector(state => state.event);
   const [openModal, setOpenModal] = useState(false);
   const [percentage, setPercentage] = useState('');
-  const [publish, setPublish] = useState('publish');
+  const [publish, setPublish] = useState(false);
   const toast = useToast();
 
   const showModal = () => {
     if (percentage && publish) {
       setOpenModal(true);
-      console.log(percentage);
     } else {
       toast({
         title: 'Error!',
@@ -61,13 +63,13 @@ const SummaryForm = ({ setStep }) => {
 
   return (
     <Box mt="8" w="80%" mx="auto" mb="16">
-      {openModal && (
-        <ConfirmationModal
-          setOpenModal={setOpenModal}
-          percentage={percentage}
-          publish={publish}
-        />
-      )}
+      <ConfirmationModal
+        setOpenModal={setOpenModal}
+        isOpen={openModal}
+        percentage={percentage}
+        publish={publish}
+      />
+
       <Box>
         <BackButton action={backAction} />
       </Box>
@@ -116,10 +118,14 @@ const SummaryForm = ({ setStep }) => {
         <Heading mb="4" fontWeight={600} fontSize={18}>
           When should we publish your event?
         </Heading>
-        <RadioGroup onChange={setPublish} value={publish} spacing={2}>
+        <RadioGroup spacing={2}>
           <Stack direction="column">
-            <Radio value="publish">Publish now</Radio>
-            <Radio value="publish later">Publish later</Radio>
+            <Radio value="publish" onChange={() => setPublish(true)}>
+              Publish now
+            </Radio>
+            <Radio value="publish later" onChange={() => setPublish(false)}>
+              Publish later
+            </Radio>
           </Stack>
         </RadioGroup>
       </Box>
@@ -155,7 +161,7 @@ const SummaryForm = ({ setStep }) => {
           fontWeight={500}
           color="white"
           textAlign="center"
-          onClick={showModal}
+          onClick={() => showModal()}
         >
           Finish
         </Button>
@@ -170,31 +176,36 @@ export const ConfirmationModal = ({
   setOpenModal,
   percentage,
   publish,
-  publishLater,
+  isOpen,
 }) => {
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { onClose } = useDisclosure();
   const [isChecked, setIsChecked] = useState(false);
   const { newEvent } = useSelector(state => state.event);
+  const navigate = useNavigate();
 
-  const closeModal = async () => {
+  const Submit = async () => {
     const formBody = {
       id: newEvent.id,
       published: publish,
-      percentDonation: percentage,
+      percentDonation: parseInt(percentage.split('')[0]),
       applyDonation: true,
     };
     if (isChecked) {
       try {
-        await EventSummaryApi(formBody);
-        localStorage.removeItem('newEvent');
-        localStorage.removeItem('delivery');
-
-        dispatch(setNewEvent(null));
+        const res = await EventSummaryApi(formBody);
+        if (res.data) {
+          localStorage.removeItem('newEvent');
+          localStorage.removeItem('delivery');
+          dispatch(setEditEvent(false));
+          dispatch(setNewEvent(null));
+          setOpenModal(false);
+          navigate('/dashboard');
+        }
       } catch (error) {
+        setOpenModal(false);
         dispatch(createResponse(ErrorHandler(error)));
       }
     }
-    setOpenModal(false);
   };
 
   return (
@@ -208,7 +219,7 @@ export const ConfirmationModal = ({
         <ModalOverlay />
         <ModalContent maxW="420px" bg="white" py="8" px="6">
           <Box>
-            <ModalCloseButton onClick={closeModal} />
+            <ModalCloseButton onClick={() => setOpenModal(false)} />
             <ModalBody>
               <Image src={errorImg} display="block" mx="auto" mb="3" />
               <Box textAlign="center" mb="4">
@@ -232,16 +243,15 @@ export const ConfirmationModal = ({
               </Box>
 
               <Box textAlign="center">
-                <Link to={isChecked && '/dashboard'}>
-                  <Button
-                    fontWeight="medium"
-                    fontSize={14}
-                    color="white"
-                    bg={isChecked ? '#00BFB2' : '#AAEAE5'}
-                  >
-                    Yes add {percentage} of cost items
-                  </Button>
-                </Link>
+                <Button
+                  fontWeight="medium"
+                  fontSize={14}
+                  color="white"
+                  bg={isChecked ? '#00BFB2' : '#AAEAE5'}
+                  onClick={() => Submit()}
+                >
+                  Yes add {percentage} of cost items
+                </Button>
               </Box>
             </ModalBody>
           </Box>

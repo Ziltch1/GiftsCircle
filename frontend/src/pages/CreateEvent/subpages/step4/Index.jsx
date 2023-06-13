@@ -50,15 +50,7 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
       country: country,
     };
 
-    if (
-      address &&
-      city &&
-      state &&
-      country &&
-      postalCode &&
-      phoneNumber1 &&
-      phoneNumber2
-    ) {
+    if (address && city && state && country && postalCode && phoneNumber1) {
       try {
         if (delivery) {
           const res = await UpdateDeliveryDetailsApi(formBody, delivery.id);
@@ -173,18 +165,17 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
                     onChange={e => setPhoneNumber1(e.target.value)}
                   />
                 </Box>
-
-                <Box mb="6">
-                  <FormLabel fontWeight="semibold" fontSize={15}>
-                    Phone Number 2
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    value={phoneNumber2}
-                    onChange={e => setPhoneNumber2(e.target.value)}
-                  />
-                </Box>
               </FormControl>
+              <Box mb="6">
+                <FormLabel fontWeight="semibold" fontSize={15}>
+                  Phone Number 2
+                </FormLabel>
+                <Input
+                  type="text"
+                  value={phoneNumber2}
+                  onChange={e => setPhoneNumber2(e.target.value)}
+                />
+              </Box>
             </Box>
           </Box>
         </Flex>
