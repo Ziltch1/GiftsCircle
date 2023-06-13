@@ -24,6 +24,7 @@ import FormFooter from '../../components/FormFooter';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { GetEventGifts } from '../../../../redux/features/events/service';
 import { CancelModal } from '../../components/FormHeader';
+import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 
 const BasicForm = ({ step, setStep }) => {
   const { user } = useSelector(state => state.user);
@@ -47,6 +48,7 @@ const BasicForm = ({ step, setStep }) => {
     if (event) {
       dispatch(setNewEvent(event));
     }
+    dispatch(GetDeliveryDetails(user.id));
   }, []);
   const toast = useToast();
   const HandleSubmit = async e => {

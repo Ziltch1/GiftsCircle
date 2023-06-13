@@ -1,14 +1,14 @@
-import { UpdateUserApi } from '../../axios/apis/user';
+import { GetDeliveryDetailsApi, UpdateUserApi } from '../../axios/apis/user';
 import { dispatch } from '../../store';
 import { createResponse } from '../../utils/UtilSlice';
-import { setUser } from './userSlice';
+import { setDeliveryDetails, setUser } from './userSlice';
 
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 
 const UpdateUser = (data, id) => async () => {
   try {
     const res = await UpdateUserApi(data, id);
-    console.log(res.data)
+    console.log(res.data);
     dispatch(setUser(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
@@ -16,4 +16,15 @@ const UpdateUser = (data, id) => async () => {
   }
 };
 
-export { UpdateUser };
+const GetDeliveryDetails = userId => async () => {
+  try {
+    console.log('hey');
+    const res = await GetDeliveryDetailsApi(userId);
+    dispatch(setDeliveryDetails(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    // dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+export { UpdateUser, GetDeliveryDetails };
