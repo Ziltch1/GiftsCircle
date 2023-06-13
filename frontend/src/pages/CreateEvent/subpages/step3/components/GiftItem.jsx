@@ -36,19 +36,19 @@ const GiftItem = ({ gift, setData, data }) => {
     }
   };
 
-  useEffect(() => {
-    data.map(ele => {
-      if (ele.giftItemId === gift.giftItemId) {
-        if (enableContribution) {
-          ele.enableContribution = true;
-        } else {
-          ele.enableContribution = false;
-        }
-      }
-      return ele;
-    });
-    setGiftItems(data);
-  }, [enableContribution]);
+  // useEffect(() => {
+  //   data.map(ele => {
+  //     if (ele.giftItemId === gift.giftItemId) {
+  //       if (enableContribution) {
+  //         ele.enableContribution = true;
+  //       } else {
+  //         ele.enableContribution = false;
+  //       }
+  //     }
+  //     return ele;
+  //   });
+  //   setGiftItems(data);
+  // }, [enableContribution]);
 
   const ShowToast = () => {
     toast({

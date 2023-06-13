@@ -1,8 +1,10 @@
 import React from 'react';
 import { Box, Text } from '@chakra-ui/react';
 import EventItem from './EventItem';
+import { useSelector } from 'react-redux';
 
 const Events = ({ event }) => {
+  const { user } = useSelector(state => state.user);
   return (
     <Box textAlign={'center'} mt="20px">
       <>
@@ -25,17 +27,21 @@ const Events = ({ event }) => {
           </Box>
         ) : (
           <Box>
-            {event.map(event => (
-              <EventItem
-                key={event.id}
-                id={event.id}
-                title={event.title}
-                descSummary={event.summary}
-                date={event.date}
-                image={event?.image}
-                published={event.published}
-              />
-            ))}
+            {event.map(event => {
+              const guest = event.user_id !== user.id
+              return (
+                <EventItem
+                  key={event.id}
+                  id={event.id}
+                  title={event.title}
+                  descSummary={event.summary}
+                  date={event.date}
+                  image={event?.image}
+                  published={event.published}
+                  guest={guest}
+                />
+              );
+            })}
           </Box>
         )}
       </>

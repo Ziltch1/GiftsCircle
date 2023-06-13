@@ -42,6 +42,8 @@ const SummaryForm = ({ setStep }) => {
   const [publish, setPublish] = useState(false);
   const toast = useToast();
 
+  console.log(publish, percentage);
+
   const showModal = () => {
     if (percentage && publish) {
       setOpenModal(true);

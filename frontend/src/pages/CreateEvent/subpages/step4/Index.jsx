@@ -8,35 +8,53 @@ import {
   FormLabel,
   useToast,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BackButton from '../../../../components/Buttons/BackButton';
 import FormFooter from '../../components/FormFooter';
-import {
-  DeliveryDetailsApi,
-  UpdateDeliveryDetailsApi,
-} from '../../../../redux/axios/apis/events';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../redux/store';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
+import {
+  DeliveryDetailsApi,
+  UpdateDeliveryDetailsApi,
+} from '../../../../redux/axios/apis/user';
+import { setDeliveryDetails } from '../../../../redux/features/user/userSlice';
+import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 
 const DeliveryDetailsForm = ({ step, setStep }) => {
-  const delivery = JSON.parse(localStorage.getItem('delivery'));
+  const { user, deliveryDetails } = useSelector(state => state.user);
   const toast = useToast();
-  const [address, setAddress] = useState(delivery ? delivery.address : '');
-  const [city, setCity] = useState(delivery ? delivery.city : '');
-  const [state, setState] = useState(delivery ? delivery.state : '');
-  const [country, setCountry] = useState(delivery ? delivery.country : '');
+  const [address, setAddress] = useState(
+    deliveryDetails[0] ? deliveryDetails[0].address : ''
+  );
+  const [city, setCity] = useState(
+    deliveryDetails[0] ? deliveryDetails[0].city : ''
+  );
+  const [state, setState] = useState(
+    deliveryDetails[0] ? deliveryDetails[0].state : ''
+  );
+  const [country, setCountry] = useState(
+    deliveryDetails[0] ? deliveryDetails[0].country : ''
+  );
   const [postalCode, setPostalCode] = useState(
-    delivery ? delivery.postalCode : ''
+    deliveryDetails[0] ? deliveryDetails[0].postalCode : ''
   );
   const [phoneNumber1, setPhoneNumber1] = useState(
-    delivery ? delivery.tel : ''
+    deliveryDetails[0] ? deliveryDetails[0].tel : ''
   );
   const [phoneNumber2, setPhoneNumber2] = useState(
-    delivery ? delivery.tel2 : ''
+    deliveryDetails[0] ? deliveryDetails[0].tel2 : ''
   );
-  const { user } = useSelector(state => state.user);
+
+  useEffect(() => {
+    const Delivery = JSON.parse(localStorage.getItem('delivery'));
+    if (Delivery) {
+      dispatch(setDeliveryDetails(Delivery));
+    } else {
+      dispatch(GetDeliveryDetails(user.id));
+    }
+  }, []);
 
   const handleSubmit = async () => {
     const formBody = {
@@ -52,8 +70,11 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
 
     if (address && city && state && country && postalCode && phoneNumber1) {
       try {
-        if (delivery) {
-          const res = await UpdateDeliveryDetailsApi(formBody, delivery.id);
+        if (deliveryDetails.length > 0) {
+          const res = await UpdateDeliveryDetailsApi(
+            formBody,
+            deliveryDetails[0].id
+          );
           localStorage.setItem('delivery', JSON.stringify(res.data));
           setStep(step + 1);
         } else {

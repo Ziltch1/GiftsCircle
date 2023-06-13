@@ -13,7 +13,15 @@ import lockIcon from '../../../components/assets/lock.svg';
 import { CheckIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 
-const EventItem = ({ id, image, title, descSummary, published, date }) => {
+const EventItem = ({
+  id,
+  image,
+  title,
+  descSummary,
+  published,
+  date,
+  guest,
+}) => {
   return (
     <Box bg="white" mb="5" py="7" px="8" borderRadius={5} key={id}>
       <HStack justifyContent={'space-between'} alignItems="center">
@@ -46,16 +54,20 @@ const EventItem = ({ id, image, title, descSummary, published, date }) => {
                     <Image src={calendarIcon} />
                     <Text>{new Date(date).toDateString()}</Text>
                   </Flex>
-                  <Flex alignItems={'center'} gap={1}>
-                    <Image src={lockIcon} />
-                    {id}
-                  </Flex>
-                  <Flex alignItems={'center'} gap={1}>
-                    <CheckIcon color={published ? '#00BFB2' : '#717171'} />{' '}
-                    <Text color={published ? '#00BFB2' : '#717171'}>
-                      {published ? 'Active' : 'saved to draft'}
-                    </Text>
-                  </Flex>
+                  {!guest && (
+                    <Flex alignItems={'center'} gap={1}>
+                      <Image src={lockIcon} />
+                      {id}
+                    </Flex>
+                  )}
+                  {!guest && (
+                    <Flex alignItems={'center'} gap={1}>
+                      <CheckIcon color={published ? '#00BFB2' : '#717171'} />{' '}
+                      <Text color={published ? '#00BFB2' : '#717171'}>
+                        {published ? 'Active' : 'saved to draft'}
+                      </Text>
+                    </Flex>
+                  )}
                 </Flex>
               </Box>
             </Box>
