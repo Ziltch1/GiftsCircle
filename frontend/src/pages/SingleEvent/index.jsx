@@ -38,7 +38,9 @@ const Index = () => {
   const [newEvent, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { events, fundRaising } = useSelector(state => state.event);
+  const { events, fundRaising, eventGuests } = useSelector(
+    state => state.event
+  );
   const { user } = useSelector(state => state.user);
 
   let userId = user.id;
@@ -55,15 +57,22 @@ const Index = () => {
 
   useEffect(() => {
     if (newEvent) {
-      dispatch(GetGiftItems());
-      dispatch(GetComplimentaryGiftItems());
-      dispatch(GetEventGuests(newEvent.id));
-      dispatch(GetEventFundRaising(newEvent.id));
-      dispatch(GetEventMediaFiles(newEvent.id));
-      dispatch(GetHostRecievedFiles(newEvent.id));
-      // dispatch(GetEventAsoebiBuyers(newEvent.id));
-      dispatch(GetEventGiftsTransactions(newEvent.id));
-      setLoading(false);
+      if (newEvent.published) {
+        dispatch(GetGiftItems());
+        dispatch(GetComplimentaryGiftItems());
+        dispatch(GetEventGuests(newEvent.id));
+        dispatch(GetEventFundRaising(newEvent.id));
+        dispatch(GetEventMediaFiles(newEvent.id));
+        dispatch(GetHostRecievedFiles(newEvent.id));
+        // dispatch(GetEventAsoebiBuyers(newEvent.id));
+        dispatch(GetEventGiftsTransactions(newEvent.id));
+        setLoading(false);
+      } else {
+        dispatch(GetEventGuests(newEvent.id));
+        dispatch(GetGiftItems());
+        dispatch(GetComplimentaryGiftItems());
+        setLoading(false);
+      }
     }
   }, [newEvent]);
 
@@ -90,17 +99,27 @@ const Index = () => {
           <>
             <Box>
               <BackButton action={() => navigate(-1)} />
-              <EventImages newEvent={newEvent} />
+              <EventImages newEvent={newEvent} eventGuests={eventGuests} />
             </Box>
             <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
-            <Box>
-              {navPosition === 0 && <EventDetails newEvent={newEvent} />}
-              {navPosition === 1 && <EventGifts newEvent={newEvent} />}
-              {navPosition === 2 && <EventMedia />}
-              {navPosition === 3 && <EventGuests />}
-              {navPosition === 4 && <Asoebi newEvent={newEvent} />}
-              {navPosition === 5 && <Fundraising />}
-            </Box>
+
+            {newEvent.published ? (
+              <Box>
+                {navPosition === 0 && <EventDetails newEvent={newEvent} />}
+                {navPosition === 1 && <EventGifts newEvent={newEvent} />}
+                {navPosition === 2 && <EventMedia />}
+                {navPosition === 3 && <EventGuests />}
+                {navPosition === 4 && <Asoebi newEvent={newEvent} />}
+                {navPosition === 5 && <Fundraising />}
+              </Box>
+            ) : (
+              <Box>
+                {navPosition === 0 && <EventDetails newEvent={newEvent} />}
+                {navPosition === 1 && <EventGifts newEvent={newEvent} />}
+                {navPosition === 2 && <Asoebi newEvent={newEvent} />}
+                {navPosition === 3 && <Fundraising />}
+              </Box>
+            )}
           </>
         )}
       </Box>

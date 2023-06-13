@@ -4,8 +4,12 @@ import clock from '../../../../components/assets/clock.svg';
 import location from '../../../../components/assets/map-pin.svg';
 import Fundraising from './Fundraising';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { dispatch } from '../../../../redux/store';
+import { setEditEvent } from '../../../../redux/features/events/eventSlice';
 
 const EventSchedule = ({ newEvent }) => {
+  const navigate = useNavigate();
   const date = newEvent.date;
   const dateString = date;
   const newDate = new Date(dateString).toDateString();
@@ -35,6 +39,22 @@ const EventSchedule = ({ newEvent }) => {
         </Box>
 
         <Box w="295px" h="auto">
+          {!newEvent.published && (
+            <Button
+              width="100%"
+              fontSize={16}
+              mb="5"
+              bg="#EEEEEE"
+              borderRadius={5}
+              p="5"
+              onClick={() => {
+                dispatch(setEditEvent(true));
+                navigate('/create_event');
+              }}
+            >
+              Edit Event
+            </Button>
+          )}
           {!fundRaising && (
             <Button
               w="100%"

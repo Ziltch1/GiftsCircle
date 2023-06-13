@@ -9,11 +9,14 @@ import {
   Select,
   useToast,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BackButton from '../../../../components/Buttons/BackButton';
 import TimezoneSelect from 'react-timezone-select';
 import { useSelector } from 'react-redux';
-import { CreateEventApi1 } from '../../../../redux/axios/apis/events';
+import {
+  CreateEventApi1,
+  UpdateEventApi1,
+} from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
@@ -23,20 +26,28 @@ import { GetEventGifts } from '../../../../redux/features/events/service';
 import { CancelModal } from '../../components/FormHeader';
 
 const BasicForm = ({ step, setStep }) => {
-  const event = JSON.parse(localStorage.getItem('newEvent'));
   const { user } = useSelector(state => state.user);
-  const { newEvent } = useSelector(state => state.event);
+  const { newEvent, editEvent } = useSelector(state => state.event);
   const [openModal, setOpenModal] = useState(false);
-  const [title, setTitle] = useState(event ? event.title : '');
-  const [hosts, setHosts] = useState(event ? event.host : '');
-  const [category, setCategory] = useState(event ? event.category : '');
-  const [venue, setVenue] = useState(event ? event.venue : '');
-  const [date, setDate] = useState(event ? event.date : '');
-  const [startTime, setStartTime] = useState(event ? event.startTime : '');
-  const [endTime, setEndTime] = useState(event ? event.endTime : '');
-  const [selectedTimezone, setSelectedTimezone] = useState(
-    event ? event.timezone : ''
+  const [title, setTitle] = useState(newEvent ? newEvent.title : '');
+  const [hosts, setHosts] = useState(newEvent ? newEvent.host : '');
+  const [category, setCategory] = useState(newEvent ? newEvent.category : '');
+  const [venue, setVenue] = useState(newEvent ? newEvent.venue : '');
+  const [date, setDate] = useState(newEvent ? newEvent.date : '');
+  const [startTime, setStartTime] = useState(
+    newEvent ? newEvent.startTime : ''
   );
+  const [endTime, setEndTime] = useState(newEvent ? newEvent.endTime : '');
+  const [selectedTimezone, setSelectedTimezone] = useState(
+    newEvent ? newEvent.timezone : ''
+  );
+
+  useEffect(() => {
+    const event = JSON.parse(localStorage.getItem('newEvent'));
+    if (event) {
+      dispatch(setNewEvent(event));
+    }
+  }, []);
   const toast = useToast();
   const HandleSubmit = async e => {
     if (
@@ -59,15 +70,23 @@ const BasicForm = ({ step, setStep }) => {
         end_time: endTime,
         timezone: selectedTimezone.label,
         userId: user.id,
+        id: newEvent.id,
       };
 
-      console.log(selectedTimezone);
       try {
-        const res = await CreateEventApi1(formBody);
-        localStorage.setItem('newEvent', JSON.stringify(res.data));
-        dispatch(setNewEvent(res.data));
-        dispatch(GetEventGifts(res.data.id));
-        setStep(step + 1);
+        if (editEvent) {
+          const res = await UpdateEventApi1(formBody);
+          localStorage.setItem('newEvent', JSON.stringify(res.data));
+          dispatch(setNewEvent(res.data));
+          dispatch(GetEventGifts(res.data.id));
+          setStep(step + 1);
+        } else {
+          const res = await CreateEventApi1(formBody);
+          localStorage.setItem('newEvent', JSON.stringify(res.data));
+          dispatch(setNewEvent(res.data));
+          dispatch(GetEventGifts(res.data.id));
+          setStep(step + 1);
+        }
       } catch (error) {
         dispatch(createResponse(ErrorHandler(error)));
       }

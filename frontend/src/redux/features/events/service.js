@@ -170,7 +170,7 @@ const DonateFundRaising = (data, eventId) => async () => {
     dispatch(GetEventFundRaising(eventId));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -180,7 +180,7 @@ const StopFundRaising = data => async () => {
     dispatch(setFundRaising(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -191,7 +191,7 @@ const DeleteEvent = id => async () => {
     dispatch(setNewEvent(null));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
@@ -201,7 +201,7 @@ const DeleteAsoebi = (id, eventId) => async () => {
     dispatch(GetEventAsoebis(eventId));
   } catch (error) {
     console.log(ErrorHandler(error));
-    dispatch(createResponse(ErrorHandler(error)));
+    // dispatch(createResponse(ErrorHandler(error)));
   }
 };
 
