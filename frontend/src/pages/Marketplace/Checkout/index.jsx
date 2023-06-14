@@ -34,7 +34,7 @@ const Index = ({ setShowCheckout }) => {
         <Box bg="white" w={{ base: '100%', lg: '65%' }} borderRadius={5} p="4">
           <DeliveryDetailsHeader />
           <Divider />
-          {deliveryData.length < 0 ? (
+          {deliveryData.length > 0 ? (
             <DeliveryDetailsCard data={deliveryData} />
           ) : (
             <DeliveryDetailsForm />
