@@ -8,15 +8,16 @@ datasource db {
 }
 
 model delivery {
-  id           String   @id @db.VarChar(255)
-  address      String   @db.VarChar(255)
-  city         String   @db.VarChar(255)
-  state        String   @db.VarChar(255)
-  country      String   @db.VarChar(255)
-  postalCode   String?   @db.VarChar(255)
-  tel          String   @db.VarChar(255)
-  tel2         String   @db.VarChar(255)
-  userId       String   @db.VarChar(255)
+  id        String  @id @db.VarChar(255)
+  firstname String  @db.VarChar(255)
+  lastname  String  @db.VarChar(255)
+  address   String  @db.VarChar
+  info      String? @db.VarChar
+  lga       String  @db.VarChar(255)
+  state     String  @db.VarChar(255)
+  tel       String  @db.VarChar(255)
+  tel2      String? @db.VarChar(255)
+  userId    String  @db.VarChar(255)
 
   @@index([userId], map: "Delivery_userId_fkey")
 }
