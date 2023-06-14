@@ -10,7 +10,7 @@ import {
   useToast,
   Button,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LGAs } from '../../../../Utils/data/LGA';
 import { useSelector } from 'react-redux';
 import { DeliveryDetailsApi } from '../../../../redux/axios/apis/user';
@@ -25,7 +25,7 @@ const DeliveryDetailsForm = () => {
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [additionalInformation, setAdditionalInformation] = useState('');
-  const [selectedState, setSelectedState] = useState('');
+  const [selectedState, setSelectedState] = useState('Abia');
   const [selectedCity, setSelectedCity] = useState([]);
   const { user } = useSelector(state => state.user);
 
@@ -65,15 +65,10 @@ const DeliveryDetailsForm = () => {
     }
   };
 
-  const getSelectedCities = () => {
-    const newCities = LGAs[selectedState];
-    setSelectedCity(newCities);
-  };
-
-  const handleChange = e => {
-    setSelectedState(e.target.value);
-    getSelectedCities();
-  };
+  useEffect(() => {
+    console.log(LGAs[selectedState]);
+    setLgas(LGAs[selectedState]);
+  }, [selectedState]);
 
   const handleSelectedCity = e => {
     setSelectedCity(e.target.value);
@@ -175,10 +170,14 @@ const DeliveryDetailsForm = () => {
         >
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>Region</FormLabel>
-            <Select w="100%" value={selectedState} onChange={handleChange}>
-              {lgas.map((lga, index) => (
-                <option key={index} value={lga}>
-                  {lga}
+            <Select
+              w="100%"
+              value={selectedState}
+              onChange={e => setSelectedState(e.target.value)}
+            >
+              {Object.keys(LGAs).map((state, index) => (
+                <option key={index} value={state}>
+                  {state}
                 </option>
               ))}
             </Select>
@@ -186,7 +185,7 @@ const DeliveryDetailsForm = () => {
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>City</FormLabel>
             <Select w="100%" value={selectedCity} onChange={handleSelectedCity}>
-              {selectedCity.map((lga, index) => (
+              {lgas.map((lga, index) => (
                 <option key={index} value={lga}>
                   {lga}
                 </option>
