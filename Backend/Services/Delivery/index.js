@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const prisma = new PrismaClient();
 
 const Get = async (userId) => {
-  const delivery = await prisma.delivery.findMany({
+  const delivery = await prisma.delivery.deleteMany({
     where: {
       userId: userId,
     },
@@ -18,14 +18,15 @@ const Create = async (data) => {
   const Data = await prisma.delivery.create({
     data: {
       id: id,
+      firstname: data.firstname,
+      lastname: data.lastname,
       address: data.address,
-      city: data.city,
+      info: data.info,
+      lga: data.lga,
       state: data.state,
-      country: data.country,
       tel: data.tel,
-      tel2: data.tel2,
+      tel2: data.tel2 ? data.tel2 : "",
       userId: data.userId,
-      postalCode: data.postalCode,
     },
   });
 
@@ -46,13 +47,14 @@ const Update = async (id, data) => {
         id: id,
       },
       data: {
+        firstname: data.firstname ? data.firstname : delivery.firstname,
+        lastname: data.lastname ? data.lastname : delivery.lastname,
         address: data.address ? data.address : delivery.address,
-        city: data.city ? data.city : delivery.city,
+        info: data.info ? data.info : delivery.info,
+        lga: data.lga ? data.lga : delivery.lga,
         state: data.state ? data.state : delivery.state,
-        country: data.country ? data.country : delivery.country,
         tel: data.tel ? data.tel : delivery.tel,
         tel2: data.tel2 ? data.tel2 : delivery.tel2,
-        postalCode: data.postalCode,
       },
     });
 
