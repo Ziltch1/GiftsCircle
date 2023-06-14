@@ -7,23 +7,19 @@ import CartSummary from './subpages/CartSummary';
 import DeliveryDetailsCard from './subpages/DeliveryDetailsCard';
 import BackButton from '../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
-import { dispatch } from '../../../redux/store';
-import { GetDeliveryDetails } from '../../../redux/features/user/service';
 
 const Index = ({ setShowCheckout }) => {
   const [deliveryData, setDeliveryData] = useState([]);
-  const { user, deliveryDetails } = useSelector(state => state.user);
+  const { deliveryDetails } = useSelector(state => state.user);
 
-  useEffect(() => {
-    dispatch(GetDeliveryDetails(user.id));
-  }, []);
   const handleClick = () => {
     setShowCheckout(false);
   };
 
   useEffect(() => {
     if (deliveryDetails) {
-      setDeliveryData(deliveryDetails);
+      console.log([...deliveryDetails], deliveryData.data)
+      setDeliveryData([...deliveryDetails]);
     }
   }, [deliveryDetails]);
 
@@ -38,7 +34,11 @@ const Index = ({ setShowCheckout }) => {
         <Box bg="white" w={{ base: '100%', lg: '65%' }} borderRadius={5} p="4">
           <DeliveryDetailsHeader />
           <Divider />
-          {!deliveryDetails ? <DeliveryDetailsCard /> : <DeliveryDetailsForm />}
+          {deliveryData.length < 0 ? (
+            <DeliveryDetailsCard data={deliveryData} />
+          ) : (
+            <DeliveryDetailsForm />
+          )}
           {/* <Divider /> */}
           <DeliveryDetailsFooter />
         </Box>
