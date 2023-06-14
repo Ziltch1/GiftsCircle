@@ -62,27 +62,37 @@ const BasicForm = ({ step, setStep }) => {
       endTime &&
       selectedTimezone
     ) {
-      const formBody = {
-        title,
-        host: hosts,
-        category,
-        venue,
-        date,
-        start_time: startTime,
-        end_time: endTime,
-        timezone: selectedTimezone.label,
-        userId: user.id,
-        id: newEvent.id,
-      };
-
       try {
         if (editEvent) {
+          const formBody = {
+            title,
+            host: hosts,
+            category,
+            venue,
+            date,
+            start_time: startTime,
+            end_time: endTime,
+            timezone: selectedTimezone.label,
+            userId: user.id,
+            id: newEvent.id,
+          };
           const res = await UpdateEventApi1(formBody);
           localStorage.setItem('newEvent', JSON.stringify(res.data));
           dispatch(setNewEvent(res.data));
           dispatch(GetEventGifts(res.data.id));
           setStep(step + 1);
         } else {
+          const formBody = {
+            title,
+            host: hosts,
+            category,
+            venue,
+            date,
+            start_time: startTime,
+            end_time: endTime,
+            timezone: selectedTimezone.label,
+            userId: user.id,
+          };
           const res = await CreateEventApi1(formBody);
           localStorage.setItem('newEvent', JSON.stringify(res.data));
           dispatch(setNewEvent(res.data));
