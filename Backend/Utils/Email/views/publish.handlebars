@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Event Published</title>
+  </head>
+  <body>
+    <div style="display:flex, flex-direction:column, gap: 12px; font-size:14px">
+      <h2>
+        <b>Hello {{username}}</b>
+      </h2>
+      <br />
+      <p>
+        Your event with id
+        {{id}}
+        has been published.
+        <br />
+        Below are the details:
+      </p>
+      <div>
+        <p>
+          <b>Name:</b>
+          {{eventName}}
+        </p>
+        <p>
+          <b>Date:</b>
+          {{eventDate}}
+        </p>
+        <p>
+          <b>Time:</b>
+          {{eventTime}}
+          {{timezone}}
+        </p>
+      </div>
+
+      <a href={{url}} rel="noreferrer">
+        <button
+          style="
+            background-color:#00BFB2;color: #FFFFFF;font-weight:600;border-radius:5px;font-size:14px;padding:8px;width:200px;border:none"
+        >
+          About Event
+        </button>
+      </a>
+      <p>Thanks</p>
+
+      <p><b>The Event Circle Team</b></p>
+    </div>
+  </body>
+</html>

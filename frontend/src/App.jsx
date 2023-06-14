@@ -24,6 +24,7 @@ import UserCheck from './pages/SingleEvent/UserCheck';
 import Settings from './pages/Settings';
 import Deliveries from './pages/Deliveries';
 import JoinFromDashboard from './pages/JoinEvent/subpages/JoinFromDashboard';
+import EmailTemplate from './emailTemplate';
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
         <Route path="/event/join/:id" element={<JoinEvent />} />
         <Route path="/view_event/:id" element={<ViewEvent />} />
         <Route path="/create_event" element={<CreateEvent />} />
+        <Route path="/email" element={<EmailTemplate />} />
       </Routes>
     </BrowserRouter>
   );
