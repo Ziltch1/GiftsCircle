@@ -30,7 +30,7 @@ const PurchasedBy = ({ events }) => {
               Gift list is empty
             </Heading>
             <Text color="#8C8C8C" fontSize={16}>
-              This is where you will see if any gift has been purchsed for you
+              This is where you will see if any gift has been purchased for you
             </Text>
           </Box>
         </Box>
