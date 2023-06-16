@@ -18,7 +18,6 @@ const UpdateUser = (data, id) => async () => {
 
 const GetDeliveryDetails = userId => async () => {
   try {
-    console.log('hey');
     const res = await GetDeliveryDetailsApi(userId);
     dispatch(setDeliveryDetails(res.data));
   } catch (error) {

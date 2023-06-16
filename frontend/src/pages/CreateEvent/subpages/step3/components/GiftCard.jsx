@@ -62,7 +62,7 @@ const GiftCard = ({ step, setStep }) => {
               id={item.id}
               data={item}
               action={AddGift}
-              text="Add to Cart"
+              text="Add to List"
               disabled={addedGiftItems.includes(item.id)}
             />
           );

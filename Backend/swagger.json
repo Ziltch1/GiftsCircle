@@ -12,7 +12,7 @@
       "name": "authorization"
     }
   },
-  "host": "gift-circle-server.onrender.com",
+  "host": "https://gift-circle-server.onrender.com",
   "basePath": "/api",
   "schemes": ["http", "https"],
   "consumes": ["application/json"],
@@ -975,7 +975,7 @@
             "name": "body",
             "in": "body",
             "required": true,
-            "schema": { "$ref": "#/definitions/schema/Delivery" }
+            "schema": { "$ref": "#/definitions/schema/UpdateDelivery" }
           }
         ],
         "security": [
@@ -2383,11 +2383,23 @@
       "Delivery": {
         "type": "object",
         "properties": {
+          "firstname": {
+            "type": "string",
+            "required": true
+          },
+          "lastname": {
+            "type": "string",
+            "required": true
+          },
           "address": {
             "type": "string",
             "required": true
           },
-          "city": {
+          "info": {
+            "type": "string",
+            "required": true
+          },
+          "lga": {
             "type": "string",
             "required": true
           },
@@ -2406,10 +2418,42 @@
           "userId": {
             "type": "string",
             "required": true
-          },
-          "postalCode": {
+          }
+        }
+      },
+      "UpdateDelivery": {
+        "type": "object",
+        "properties": {
+          "firstname": {
             "type": "string",
             "required": true
+          },
+          "lastname": {
+            "type": "string",
+            "required": true
+          },
+          "address": {
+            "type": "string",
+            "required": true
+          },
+          "info": {
+            "type": "string",
+            "required": true
+          },
+          "lga": {
+            "type": "string",
+            "required": true
+          },
+          "state": {
+            "type": "string",
+            "required": true
+          },
+          "tel": {
+            "type": "string",
+            "required": true
+          },
+          "tel2": {
+            "type": "string"
           }
         }
       },

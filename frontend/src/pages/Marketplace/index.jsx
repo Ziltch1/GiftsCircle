@@ -1,15 +1,23 @@
 import { Box, Heading, Text, Button } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MarketplaceOptions from './MarketplaceOptions';
 import SourvenirMarket from './subpages/Market/Sourvenir';
 import GiftMarket from './subpages/Market/Gifts';
 import Asoebi from './subpages/Market/Asoebi';
 import Checkout from './Checkout'
+import { dispatch } from '../../redux/store';
+import { GetDeliveryDetails } from '../../redux/features/user/service';
+import { useSelector } from 'react-redux';
 
 const Index = () => {
+  const {user} = useSelector(state => state.user)
   const [position, setPosition] = useState(-1);
   const [showProducts, setShowProducts] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false)
+  
+  useEffect(() => {
+    dispatch(GetDeliveryDetails(user.id));
+  }, []);
 
   return (
     <Box>

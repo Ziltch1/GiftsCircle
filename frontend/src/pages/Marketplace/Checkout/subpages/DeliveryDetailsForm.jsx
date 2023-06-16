@@ -10,12 +10,12 @@ import {
   useToast,
   Button, Spinner
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { LGAs } from '../../../../Utils/data/LGA';
 import { useSelector } from 'react-redux';
 import { DeliveryDetailsApi } from '../../../../redux/axios/apis/user';
-import { Zones } from '../../../../Utils/data/ZONES';
 
-const DeliveryDetailsForm = ({setShowCheckout}) => {
+const DeliveryDetailsForm = ({setShowDeliveryForm}) => {
   const toast = useToast();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -23,37 +23,36 @@ const DeliveryDetailsForm = ({setShowCheckout}) => {
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [additionalInformation, setAdditionalInformation] = useState('');
-  const [loading, setLoading] = useState(false);
-  const { user } = useSelector(state => state.user);
-
   const [selectedState, setSelectedState] = useState("");
   const [selectedLGAs, setSelectedLGAs] = useState([]);
   const [selectedLGA, setSelectedLGA] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { user } = useSelector(state => state.user);
 
   const handleStateChange = (e) => {
     const state = e.target.value;
     setSelectedState(state);
-    setSelectedLGAs(Zones[state]);
+    setSelectedLGAs(LGAs[state]);
   };
 
   const handleLGAsChange = (e) => {
-    setSelectedLGA(e.target.value);
-    console.log(selectedState, selectedLGA);
+    setSelectedLGA(e.target.value)
+    // Handle changes in the second select field, if needed
   };
 
   const data = {
+    firstname: firstName,
+    lastname: lastName,
     address: deliveryAddress,
-    city: selectedLGA,
+    info: additionalInformation,
+    lga: selectedLGA,
     state: selectedState,
     tel: phoneNumber,
     tel2: additionalPhoneNumber,
     userId: user.id,
-    postalCode: '100001',
-    country: 'Nigeria'
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
     if (
       firstName &&
       lastName &&
@@ -62,27 +61,22 @@ const DeliveryDetailsForm = ({setShowCheckout}) => {
       selectedState &&
       selectedLGA
     ) {
+      setLoading(true);
       try {
         await DeliveryDetailsApi(data);
-        setAdditionalInformation('')
-        setAdditionalPhoneNumber('')
-        setDeliveryAddress('')
-        setPhoneNumber('')
+        setFirstName('');
         setLastName('')
-        setFirstName('')
+        setDeliveryAddress('');
+        setAdditionalInformation('');
         setSelectedLGA('')
-        setSelectedState('');
-        toast({
-          title: 'Success',
-          description: 'Delivery details added',
-          status: 'success',
-          duration: 2000,
-          isClosable: true,
-          position: 'top-right',
-        });
-        setLoading(false);
+        setSelectedState('')
+        setPhoneNumber('')
+        setAdditionalPhoneNumber('')
+        await setLoading(false)
+        setShowDeliveryForm(false)
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     } else {
       toast({
@@ -141,8 +135,8 @@ const DeliveryDetailsForm = ({setShowCheckout}) => {
             <Input
               type="text"
               w="100%"
-              value={phoneNumber}
               maxLength={11}
+              value={phoneNumber}
               onChange={e => setPhoneNumber(e.target.value)}
             />
           </Box>
@@ -150,9 +144,9 @@ const DeliveryDetailsForm = ({setShowCheckout}) => {
             <FormLabel fontSize={14}>Additional Phone Number</FormLabel>
             <Input
               type="text"
+              maxLength={11}
               w="100%"
               value={additionalPhoneNumber}
-              maxLength={11}
               onChange={e => setAdditionalPhoneNumber(e.target.value)}
             />
           </Box>
@@ -190,12 +184,12 @@ const DeliveryDetailsForm = ({setShowCheckout}) => {
           spacing={7}
           justifyContent="space-between"
           alignItems="center"
-          mb="6"
+          mb="3"
         >
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>Region</FormLabel>
-            <Select w="100%" value={selectedState} onChange={handleStateChange} placeholder='Select region'>
-              {Object.keys(Zones).map((state) => (
+            <Select value={selectedState} onChange={handleStateChange}>
+              {Object.keys(LGAs).map((state) => (
                 <option key={state} value={state}>
                   {state}
                 </option>
@@ -203,8 +197,8 @@ const DeliveryDetailsForm = ({setShowCheckout}) => {
             </Select>
           </Box>
           <Box w={{ base: '100%', lg: '50%' }}>
-            <FormLabel fontSize={14}>State</FormLabel>
-            <Select w="100%" value={selectedLGA} onChange={handleLGAsChange}>
+            <FormLabel fontSize={14}>City</FormLabel>
+            <Select value={selectedLGA} onChange={handleLGAsChange}>
               {selectedLGAs?.map((lga) => (
                 <option key={lga} value={lga}>
                   {lga}
@@ -213,16 +207,9 @@ const DeliveryDetailsForm = ({setShowCheckout}) => {
             </Select>
           </Box>
         </Stack>
-        {/* <Divider my='3' /> */}
-        <Box textAlign="right" mt="3">
-          <Button 
-            mr="4" 
-            fontSize={15}
-            fontWeight="medium"
-            onClick={() => setShowCheckout(false)}
-          >
-            Cancel
-          </Button>
+        <Divider />
+        <Box p="3" textAlign="right" mt="3">
+          <Button mr="4">Cancel</Button>
           <Button
             bg="#00BFB2"
             color="white"

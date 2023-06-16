@@ -3,6 +3,7 @@ const { CreateEventId, CreateCoHostId, CreateGuestId } = require("./service");
 const prisma = new PrismaClient();
 const { v4: uuidv4 } = require("uuid");
 const ResponseDTO = require("../../DTO/Response");
+const { SendEventPublishEmail } = require("../../Utils/Email/NodemailerEmailService");
 
 const GetEvent = async (id) => {
   const event = await prisma.event.findUnique({
@@ -174,6 +175,11 @@ const Update3 = async (data) => {
       id: data.id,
     },
   });
+  const user = await prisma.user.findUnique({
+    where: {
+      id: event.user_id,
+    },
+  });
 
   if (event) {
     let Data = await prisma.event.update({
@@ -186,6 +192,9 @@ const Update3 = async (data) => {
         applyDonation: data.applyDonation,
       },
     });
+    if (data.published) {
+      SendEventPublishEmail(user.email, user.firstname, event);
+    }
 
     await prisma.$disconnect();
     return Data;

@@ -6,7 +6,7 @@ const { Get, Create, Delete, Update } = require("../Services/Delivery");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const prisma = new PrismaClient();
 
-router.get("/user/:id", EnsureAuthenticated, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     let data = await Get(req.params.id);
     return res.status(200).send(data);

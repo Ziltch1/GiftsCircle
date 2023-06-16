@@ -57,7 +57,7 @@ const DisplayCard = ({ id, data, disabled, action, text, purchased }) => {
               {disabled
                 ? purchased
                   ? 'Purchased'
-                  : 'Added to Cart'
+                  : 'Added to List'
                 : purchased
                 ? 'Purchased'
                 : text}
