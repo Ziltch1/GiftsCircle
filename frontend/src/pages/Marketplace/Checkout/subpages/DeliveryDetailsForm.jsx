@@ -8,48 +8,79 @@ import {
   Stack,
   Select,
   useToast,
-  Button,
+  Button, Spinner
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { LGAs } from '../../../../Utils/data/LGA';
 import { useSelector } from 'react-redux';
 import { DeliveryDetailsApi } from '../../../../redux/axios/apis/user';
+import { Zones } from '../../../../Utils/data/ZONES';
 
-const DeliveryDetailsForm = () => {
-  const states = Object.keys(LGAs);
+const DeliveryDetailsForm = ({setShowCheckout}) => {
   const toast = useToast();
-  const [lgas, setLgas] = useState(states);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [additionalInformation, setAdditionalInformation] = useState('');
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCity, setSelectedCity] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { user } = useSelector(state => state.user);
+
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedLGAs, setSelectedLGAs] = useState([]);
+  const [selectedLGA, setSelectedLGA] = useState('')
+
+  const handleStateChange = (e) => {
+    const state = e.target.value;
+    setSelectedState(state);
+    setSelectedLGAs(Zones[state]);
+  };
+
+  const handleLGAsChange = (e) => {
+    setSelectedLGA(e.target.value);
+    console.log(selectedState, selectedLGA);
+  };
 
   const data = {
     address: deliveryAddress,
-    city: selectedCity,
+    city: selectedLGA,
     state: selectedState,
     tel: phoneNumber,
     tel2: additionalPhoneNumber,
     userId: user.id,
     postalCode: '100001',
+    country: 'Nigeria'
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     if (
       firstName &&
       lastName &&
       phoneNumber &&
       deliveryAddress &&
       selectedState &&
-      selectedCity
+      selectedLGA
     ) {
       try {
         await DeliveryDetailsApi(data);
+        setAdditionalInformation('')
+        setAdditionalPhoneNumber('')
+        setDeliveryAddress('')
+        setPhoneNumber('')
+        setLastName('')
+        setFirstName('')
+        setSelectedLGA('')
+        setSelectedState('');
+        toast({
+          title: 'Success',
+          description: 'Delivery details added',
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -63,20 +94,6 @@ const DeliveryDetailsForm = () => {
         position: 'top',
       });
     }
-  };
-
-  const getSelectedCities = () => {
-    const newCities = LGAs[selectedState];
-    setSelectedCity(newCities);
-  };
-
-  const handleChange = e => {
-    setSelectedState(e.target.value);
-    getSelectedCities();
-  };
-
-  const handleSelectedCity = e => {
-    setSelectedCity(e.target.value);
   };
 
   return (
@@ -125,6 +142,7 @@ const DeliveryDetailsForm = () => {
               type="text"
               w="100%"
               value={phoneNumber}
+              maxLength={11}
               onChange={e => setPhoneNumber(e.target.value)}
             />
           </Box>
@@ -134,6 +152,7 @@ const DeliveryDetailsForm = () => {
               type="text"
               w="100%"
               value={additionalPhoneNumber}
+              maxLength={11}
               onChange={e => setAdditionalPhoneNumber(e.target.value)}
             />
           </Box>
@@ -171,32 +190,39 @@ const DeliveryDetailsForm = () => {
           spacing={7}
           justifyContent="space-between"
           alignItems="center"
-          mb="3"
+          mb="6"
         >
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>Region</FormLabel>
-            <Select w="100%" value={selectedState} onChange={handleChange}>
-              {lgas.map((lga, index) => (
-                <option key={index} value={lga}>
-                  {lga}
+            <Select w="100%" value={selectedState} onChange={handleStateChange} placeholder='Select region'>
+              {Object.keys(Zones).map((state) => (
+                <option key={state} value={state}>
+                  {state}
                 </option>
               ))}
             </Select>
           </Box>
           <Box w={{ base: '100%', lg: '50%' }}>
-            <FormLabel fontSize={14}>City</FormLabel>
-            <Select w="100%" value={selectedCity} onChange={handleSelectedCity}>
-              {selectedCity.map((lga, index) => (
-                <option key={index} value={lga}>
+            <FormLabel fontSize={14}>State</FormLabel>
+            <Select w="100%" value={selectedLGA} onChange={handleLGAsChange}>
+              {selectedLGAs?.map((lga) => (
+                <option key={lga} value={lga}>
                   {lga}
                 </option>
               ))}
             </Select>
           </Box>
         </Stack>
-        <Divider />
-        <Box p="3" textAlign="right" mt="3">
-          <Button mr="4">Cancel</Button>
+        {/* <Divider my='3' /> */}
+        <Box textAlign="right" mt="3">
+          <Button 
+            mr="4" 
+            fontSize={15}
+            fontWeight="medium"
+            onClick={() => setShowCheckout(false)}
+          >
+            Cancel
+          </Button>
           <Button
             bg="#00BFB2"
             color="white"
@@ -204,7 +230,7 @@ const DeliveryDetailsForm = () => {
             fontWeight="medium"
             onClick={handleSubmit}
           >
-            Save
+            {loading ? <Spinner size='md' /> : 'Save'}
           </Button>
         </Box>
       </FormControl>

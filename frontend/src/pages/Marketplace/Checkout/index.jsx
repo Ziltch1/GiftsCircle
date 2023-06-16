@@ -26,6 +26,7 @@ const Index = ({ setShowCheckout }) => {
       setDeliveryData(deliveryDetails);
     }
   }, [deliveryDetails]);
+  console.log(deliveryDetails);
 
   return (
     <Box w="80%" mx="auto" my="8">
@@ -38,7 +39,7 @@ const Index = ({ setShowCheckout }) => {
         <Box bg="white" w={{ base: '100%', lg: '65%' }} borderRadius={5} p="4">
           <DeliveryDetailsHeader />
           <Divider />
-          {!deliveryDetails ? <DeliveryDetailsCard /> : <DeliveryDetailsForm />}
+          {deliveryDetails ? <DeliveryDetailsCard deliveryDetails={deliveryDetails} /> : <DeliveryDetailsForm setShowCheckout={setShowCheckout} />}
           {/* <Divider /> */}
           <DeliveryDetailsFooter />
         </Box>
