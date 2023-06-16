@@ -76,8 +76,8 @@ const ProfileForms = () => {
                     placeholder="Select Gender"
                     fontSize={15}
                   >
-                    <option value="lagos">Male</option>
-                    <option value="lagos">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                   </Select>
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">

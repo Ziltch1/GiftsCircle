@@ -25,27 +25,14 @@ import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 const DeliveryDetailsForm = ({ step, setStep }) => {
   const { user, deliveryDetails } = useSelector(state => state.user);
   const toast = useToast();
-  const [address, setAddress] = useState(
-    deliveryDetails[0] ? deliveryDetails[0].address : ''
-  );
-  const [city, setCity] = useState(
-    deliveryDetails[0] ? deliveryDetails[0].city : ''
-  );
-  const [state, setState] = useState(
-    deliveryDetails[0] ? deliveryDetails[0].state : ''
-  );
-  const [country, setCountry] = useState(
-    deliveryDetails[0] ? deliveryDetails[0].country : ''
-  );
-  const [postalCode, setPostalCode] = useState(
-    deliveryDetails[0] ? deliveryDetails[0].postalCode : ''
-  );
-  const [phoneNumber1, setPhoneNumber1] = useState(
-    deliveryDetails[0] ? deliveryDetails[0].tel : ''
-  );
-  const [phoneNumber2, setPhoneNumber2] = useState(
-    deliveryDetails[0] ? deliveryDetails[0].tel2 : ''
-  );
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState(''); 
+  const [address, setAddress] = useState('');
+  const [info, setInfo] = useState('');
+  const [lga, setLga] = useState('');
+  const [state, setState] = useState('');
+  const [phoneNumber1, setPhoneNumber1] = useState('');
+  const [phoneNumber2, setPhoneNumber2] = useState('');
 
   useEffect(() => {
     const Delivery = JSON.parse(localStorage.getItem('delivery'));
@@ -58,17 +45,18 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
 
   const handleSubmit = async () => {
     const formBody = {
+      firstname: firstName,
+      lastname: lastName,
       address: address,
-      city: city,
+      info: info,
+      lga: lga,
       state: state,
       tel: phoneNumber1,
       tel2: phoneNumber2,
       userId: user.id,
-      postalCode: postalCode,
-      country: country,
     };
 
-    if (address && city && state && country && postalCode && phoneNumber1) {
+    if (address && lga && state && firstName && lastName && phoneNumber1) {
       try {
         if (deliveryDetails.length > 0) {
           const res = await UpdateDeliveryDetailsApi(
@@ -123,6 +111,26 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
               <FormControl isRequired>
                 <Box mb="6">
                   <FormLabel fontWeight="semibold" fontSize={15}>
+                    First Name
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    value={firstName}
+                    onChange={e => setFirstName(e.target.value)}
+                  />
+                </Box>
+                <Box mb="6">
+                  <FormLabel fontWeight="semibold" fontSize={15}>
+                    Last Name
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    value={lastName}
+                    onChange={e => setLastName(e.target.value)}
+                  />
+                </Box>
+                <Box mb="6">
+                  <FormLabel fontWeight="semibold" fontSize={15}>
                     Address
                   </FormLabel>
                   <Input
@@ -131,18 +139,16 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
                     onChange={e => setAddress(e.target.value)}
                   />
                 </Box>
-
                 <Box mb="6">
                   <FormLabel fontWeight="semibold" fontSize={15}>
-                    City
+                    Additional Information
                   </FormLabel>
                   <Input
                     type="text"
-                    value={city}
-                    onChange={e => setCity(e.target.value)}
+                    value={info}
+                    onChange={e => setInfo(e.target.value)}
                   />
                 </Box>
-
                 <Box mb="6">
                   <FormLabel fontWeight="semibold" fontSize={15}>
                     State
@@ -156,23 +162,12 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
 
                 <Box mb="6">
                   <FormLabel fontWeight="semibold" fontSize={15}>
-                    Country
+                    LGA
                   </FormLabel>
                   <Input
                     type="text"
-                    value={country}
-                    onChange={e => setCountry(e.target.value)}
-                  />
-                </Box>
-
-                <Box mb="6">
-                  <FormLabel fontWeight="semibold" fontSize={15}>
-                    Postal Code
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    value={postalCode}
-                    onChange={e => setPostalCode(e.target.value)}
+                    value={lga}
+                    onChange={e => setLga(e.target.value)}
                   />
                 </Box>
 

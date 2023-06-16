@@ -8,7 +8,7 @@ import {
   FormHelperText,
   InputGroup,
   InputRightElement,
-  Button,
+  Button, Spinner
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
@@ -30,6 +30,7 @@ const SignInWithEmail = () => {
   const [emailTest, setEmailTest] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const EmailRegex =
@@ -44,11 +45,14 @@ const SignInWithEmail = () => {
   const HandleSubmit = async () => {
     if (emailTest) {
       const formBody = { email, password };
+      setLoading(true);
       try {
         const res = await SignInApi(formBody);
         dispatch(EmailSignIn(res.data));
+        await setLoading(false)
       } catch (error) {
         setError(ErrorHandler(error));
+        setLoading(false)
       }
     }
   };
@@ -221,7 +225,7 @@ const SignInWithEmail = () => {
             disabled={!emailTest}
             onClick={() => HandleSubmit()}
           >
-            Login
+            {loading ? <Spinner size='md' /> : 'Login'}
           </Button>
 
           <Flex justifyContent="center">

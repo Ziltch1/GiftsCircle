@@ -4,9 +4,13 @@ import FirstPage from './First-page'
 import SecondPage from './Second-page';
 import 'swiper/css'
 import { Autoplay } from 'swiper';
+import { Box } from '@chakra-ui/react';
+import Navbar from './Navbar';
 
 function index() {
   return (
+    <Box>
+      <Navbar />
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -24,6 +28,7 @@ function index() {
           <SecondPage />
         </SwiperSlide>
       </Swiper>
+    </Box>
   )
 }
 
