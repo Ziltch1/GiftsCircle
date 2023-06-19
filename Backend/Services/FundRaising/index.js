@@ -122,9 +122,20 @@ const Donate = async (data) => {
         amountPaid: fundRaising.amountPaid + parseInt(data.amount),
       },
     });
+    const event = await prisma.event.findUnique({
+      where: { id: fundRaising.eventId },
+    });
+    const message = `FundRaising: ${data.firstName} donated ${data.amount} to the FundRaising`;
+    const notification = await prisma.notifications.create({
+      data: {
+        userId: event.user_id,
+        type: "FUNDRAISING",
+        message: message,
+      },
+    });
     await prisma.$disconnect();
 
-    return donation;
+    return { donation, notification };
   }
   return null;
 };
@@ -146,7 +157,6 @@ const GetFundDonors = async (id) => {
   await prisma.$disconnect();
   return donors;
 };
-
 
 const DeleteFundRaising = async (id) => {
   let fundRaising = await prisma.fundRaising.delete({

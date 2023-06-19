@@ -1,7 +1,11 @@
-import { GetDeliveryDetailsApi, UpdateUserApi } from '../../axios/apis/user';
+import {
+  GetDeliveryDetailsApi,
+  GetUserNotificationApi,
+  UpdateUserApi,
+} from '../../axios/apis/user';
 import { dispatch } from '../../store';
 import { createResponse } from '../../utils/UtilSlice';
-import { setDeliveryDetails, setUser } from './userSlice';
+import { setDeliveryDetails, setUser, setUserNotifications } from './userSlice';
 
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 
@@ -26,4 +30,14 @@ const GetDeliveryDetails = userId => async () => {
   }
 };
 
-export { UpdateUser, GetDeliveryDetails };
+const GetUserNotifications = userId => async () => {
+  try {
+    const res = await GetUserNotificationApi(userId);
+    dispatch(setUserNotifications(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    // dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+export { UpdateUser, GetDeliveryDetails, GetUserNotifications };

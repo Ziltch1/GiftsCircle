@@ -7,7 +7,6 @@ const { upload, dataUri, dataUriMultiple } = require("../config/multer");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const {
   Create,
-  CreateMediaFile,
   GetGuestSentMedia,
   GetEventGuestMedia,
   GetEventMediaFiles,

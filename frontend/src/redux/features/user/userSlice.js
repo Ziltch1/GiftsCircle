@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: JSON.parse(sessionStorage.getItem('user')) || null,
   deliveryDetails: null,
+  notifications: [],
 };
 
 const UserSlice = createSlice({
@@ -15,9 +16,13 @@ const UserSlice = createSlice({
     setDeliveryDetails: (state, action) => {
       state.deliveryDetails = action.payload;
     },
+    setUserNotifications: (state, action) => {
+      state.notifications = action.payload;
+    },
   },
 });
 
-export const { setUser, setDeliveryDetails } = UserSlice.actions;
+export const { setUser, setDeliveryDetails, setUserNotifications } =
+  UserSlice.actions;
 
 export default UserSlice.reducer;

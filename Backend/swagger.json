@@ -12,7 +12,7 @@
       "name": "authorization"
     }
   },
-  "host": "https://gift-circle-server.onrender.com",
+  "host": "localhost:4000",
   "basePath": "/api",
   "schemes": ["http", "https"],
   "consumes": ["application/json"],
@@ -258,6 +258,33 @@
     },
 
     "/user/{id}": {
+      "get": {
+        "description": "",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/user/notifications/{id}": {
       "get": {
         "description": "",
         "tags": ["User"],
@@ -797,7 +824,7 @@
     "/gift/Buy": {
       "post": {
         "description": "",
-        "tags": ["Asoebi"],
+        "tags": ["Gift"],
         "parameters": [
           {
             "name": "body",
@@ -1236,7 +1263,7 @@
     "/complimentaryGift/Buy": {
       "post": {
         "description": "",
-        "tags": ["Asoebi"],
+        "tags": ["ComplimentaryGift"],
         "parameters": [
           {
             "name": "body",

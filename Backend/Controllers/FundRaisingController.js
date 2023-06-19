@@ -91,7 +91,8 @@ router.post("/Donate", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Donate(req.body);
     if (data) {
-      return res.status(200).send(data);
+      req.io.emit(data.notification.userId, data.notification);
+      return res.status(200).send(data.donation);
     }
     return res
       .status(400)

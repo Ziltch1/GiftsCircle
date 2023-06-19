@@ -9,6 +9,16 @@ const { hashPassword } = require("./service");
 const { v4: uuidv4 } = require("uuid");
 const prisma = new PrismaClient();
 
+const GetUserNotifications = async (id) => {
+  const notifications = await prisma.notifications.findMany({
+    where: {
+      userId: id,
+    },
+  });
+  await prisma.$disconnect();
+  return notifications;
+};
+
 const Create = async (data) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -168,6 +178,7 @@ const UpdateUser = async (data, id) => {
 };
 
 module.exports = {
+  GetUserNotifications,
   Create,
   GetUser,
   SetPassword,

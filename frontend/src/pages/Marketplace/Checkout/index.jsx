@@ -7,39 +7,21 @@ import CartSummary from './subpages/CartSummary';
 import DeliveryDetailsCard from './subpages/DeliveryDetailsCard';
 import BackButton from '../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
-import { GetDeliveryDetailsApi } from '../../../redux/axios/apis/user';
-
 
 const Index = ({ setShowCheckout }) => {
   const [deliveryData, setDeliveryData] = useState([]);
-  const [showDeliveryForm, setShowDeliveryForm] = useState(false)
-  const { user } = useSelector(state => state.user);
+  const { deliveryDetails } = useSelector(state => state.user);
 
   const handleClick = () => {
     setShowCheckout(false);
   };
 
-  const getDeliveryDetails = async() => {
-    try {
-      const res = await GetDeliveryDetailsApi(user.id)
-      const data = await res.data;
-      setDeliveryData(data)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   useEffect(() => {
-    getDeliveryDetails();
-    if (deliveryData) {
-      // setDeliveryData([...deliveryDetails]);
-      setShowDeliveryForm(false)
-    }else{
-      setShowDeliveryForm(true);
+    if (deliveryDetails) {
+      console.log([...deliveryDetails], deliveryData.data);
+      setDeliveryData([...deliveryDetails]);
     }
   }, [deliveryData]);
-
-  console.log(deliveryData);
 
   return (
     <Box w="80%" mx="auto" my="8">
@@ -52,10 +34,10 @@ const Index = ({ setShowCheckout }) => {
         <Box bg="white" w={{ base: '100%', lg: '65%' }} borderRadius={5} p="4">
           <DeliveryDetailsHeader />
           <Divider />
-          {!setShowDeliveryForm ? (
+          {deliveryData.length > 0 ? (
             <DeliveryDetailsCard data={deliveryData} />
           ) : (
-            <DeliveryDetailsForm setShowDeliveryForm={setShowDeliveryForm} />
+            <DeliveryDetailsForm />
           )}
           {/* <Divider /> */}
           <DeliveryDetailsFooter />

@@ -7,6 +7,7 @@ const {
   GetUsers,
   DeleteUser,
   UpdateUser,
+  GetUserNotifications,
 } = require("../Services/Users");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const router = express.Router();
@@ -17,6 +18,20 @@ router.get("/:id", async (req, res) => {
     let data = await GetUser(req.params.id);
     if (data) {
       return res.status(200).send({ user: data });
+    }
+    return res.status(400).send(ResponseDTO("Failed", "User not Found"));
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.get("/notifications/:id", async (req, res) => {
+  try {
+    let data = await GetUserNotifications(req.params.id);
+    if (data) {
+      return res.status(200).send(data);
     }
     return res.status(400).send(ResponseDTO("Failed", "User not Found"));
   } catch (err) {
