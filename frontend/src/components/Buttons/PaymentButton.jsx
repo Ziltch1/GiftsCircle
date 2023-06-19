@@ -20,7 +20,6 @@ const PaymentButton = ({ amount, action, text }) => {
           title: 'Payment Successful',
         })
       );
-      console.log(response)
       action();
     },
     onClose: () =>

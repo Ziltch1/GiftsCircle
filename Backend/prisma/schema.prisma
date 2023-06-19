@@ -139,6 +139,7 @@ model user {
   asoebiTransaction     asoebiTransaction[]
   giftTransaction       giftTransaction[]
   marketGiftTransaction marketGiftTransaction[]
+  Notifications         Notifications[]
 }
 
 model otp {
@@ -260,6 +261,16 @@ model ComplimentaryMessage {
   message String   @db.VarChar
 }
 
+model Notifications {
+  id         String       @id @default(uuid())
+  type       NOTIFICATION
+  author     user         @relation(fields: [userId], references: [id])
+  userId     String       @db.VarChar(255)
+  created_at DateTime     @default(now())
+  read       Boolean      @default(false)
+  message    String       @db.VarChar
+}
+
 enum Status {
   PAID
   COMPLETED
@@ -287,4 +298,13 @@ enum VISBILITY {
 enum USERTYPE {
   GUEST
   HOST
+}
+
+enum NOTIFICATION {
+  JOIN
+  EVENTCREATION
+  EVENTDELETION
+  GUESTJOIN
+  FUNDRAISING
+  PURCHASE
 }

@@ -24,43 +24,44 @@ import UserCheck from './pages/SingleEvent/UserCheck';
 import Settings from './pages/Settings';
 import Deliveries from './pages/Deliveries';
 import JoinFromDashboard from './pages/JoinEvent/subpages/JoinFromDashboard';
-import EmailTemplate from './emailTemplate';
 
 function App() {
+ 
   return (
     <BrowserRouter>
+    
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route element={<AuthLayout />} path="/">
-          <Route path="signin" element={<SignIn />} />
-          <Route path="signin_with_email" element={<SignInWithEmail />} />
-          <Route path="signup" element={<SignUp />} />
-          <Route path="signup_with_email" element={<SignWithEmail />} />
-          <Route path="signup_verify_otp" element={<VerifyOtp />} />
-          <Route path="signup_set_password" element={<SetPassword />} />
-          <Route path="signup_loading" element={<SignUpLoading />} />
-          <Route path="forgot_password" element={<ForgotPassword />} />
-          <Route path="forgot_password_mail" element={<PasswordMail />} />
-          <Route path="change_password" element={<ResetPassword />} />
-        </Route>
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index path="" element={<Events />} />
-          <Route path="/dashboard/gifts" element={<Gift />} />
-          <Route path="/dashboard/marketplace" element={<Marketplace />} />
-          <Route path="/dashboard/event_details" element={<EventDetails />} />
-          <Route path="/dashboard/settings" element={<Settings />} />
-          <Route path="/dashboard/deliveries" element={<Deliveries />} />
-          <Route
-            path="/dashboard/gift/gift_details/:id"
-            element={<GiftDetails />}
-          />
-        </Route>
-        <Route path="/dashboard/event_details/:id" element={<UserCheck />} />
-        <Route path="/event/join" element={<JoinFromDashboard />} />
-        <Route path="/event/join/:id" element={<JoinEvent />} />
-        <Route path="/view_event/:id" element={<ViewEvent />} />
-        <Route path="/create_event" element={<CreateEvent />} />
-        <Route path="/email" element={<EmailTemplate />} />
+        
+          <Route path="/" element={<Homepage />} />
+          <Route element={<AuthLayout />} path="/">
+            <Route path="signin" element={<SignIn />} />
+            <Route path="signin_with_email" element={<SignInWithEmail />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route path="signup_with_email" element={<SignWithEmail />} />
+            <Route path="signup_verify_otp" element={<VerifyOtp />} />
+            <Route path="signup_set_password" element={<SetPassword />} />
+            <Route path="signup_loading" element={<SignUpLoading />} />
+            <Route path="forgot_password" element={<ForgotPassword />} />
+            <Route path="forgot_password_mail" element={<PasswordMail />} />
+            <Route path="change_password" element={<ResetPassword />} />
+          </Route>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index path="" element={<Events />} />
+            <Route path="/dashboard/gifts" element={<Gift />} />
+            <Route path="/dashboard/marketplace" element={<Marketplace />} />
+            <Route path="/dashboard/event_details" element={<EventDetails />} />
+            <Route path="/dashboard/settings" element={<Settings />} />
+            <Route path="/dashboard/deliveries" element={<Deliveries />} />
+            <Route
+              path="/dashboard/gift/gift_details/:id"
+              element={<GiftDetails />}
+            />
+          </Route>
+          <Route path="/dashboard/event_details/:id" element={<UserCheck />} />
+          <Route path="/event/join" element={<JoinFromDashboard />} />
+          <Route path="/event/join/:id" element={<JoinEvent />} />
+          <Route path="/view_event/:id" element={<ViewEvent />} />
+          <Route path="/create_event" element={<CreateEvent />} />
       </Routes>
     </BrowserRouter>
   );

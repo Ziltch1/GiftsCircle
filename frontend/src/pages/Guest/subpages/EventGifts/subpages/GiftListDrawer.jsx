@@ -96,7 +96,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
       giftFormBody.push(formData);
     });
     if (giftFormBody.length > 0) {
-      dispatch(BuyGifts(giftFormBody, newEvent.id));
+      dispatch(BuyGifts(giftFormBody, giftFormBody[0].eventId));
       setGiftItems([]);
       setAddedGiftItems([]);
     }

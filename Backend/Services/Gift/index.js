@@ -207,9 +207,22 @@ const Buy = async (data) => {
     data: [...data],
     skipDuplicates: true,
   });
+
+  const user = await prisma.user.findFirst({ where: { id: data.userId } });
+  const event = await prisma.event.findUnique({
+    where: { id: data[0].eventId },
+  });
+  const message = `${user.firstname} bought some gifts`;
+  const notification = await prisma.notifications.create({
+    data: {
+      userId: event.user_id,
+      type: "PURCHASE",
+      message: message,
+    },
+  });
   await prisma.$disconnect();
 
-  return transactions;
+  return { transactions, notification };
 };
 
 const Delete = async (id) => {

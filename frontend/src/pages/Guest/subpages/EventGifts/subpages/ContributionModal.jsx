@@ -121,7 +121,6 @@ export const ContributionAmount = ({
     setOpenModal(false);
     setAmount(0);
   };
-  console.log(amount);
   return (
     <Box>
       <Modal

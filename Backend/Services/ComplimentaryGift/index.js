@@ -49,8 +49,6 @@ const Buy = async (data) => {
   });
   await prisma.$disconnect();
 
-  console.log(transactions);
-
   return transactions;
 };
 
