@@ -39,9 +39,6 @@ const BasicForm = ({ step, setStep }) => {
     newEvent ? newEvent.startTime : ''
   );
   const [endTime, setEndTime] = useState(newEvent ? newEvent.endTime : '');
-  const [selectedTimezone, setSelectedTimezone] = useState(
-    newEvent ? newEvent.timezone : ''
-  );
 
   useEffect(() => {
     const event = JSON.parse(localStorage.getItem('newEvent'));
@@ -59,8 +56,7 @@ const BasicForm = ({ step, setStep }) => {
       venue &&
       date &&
       startTime &&
-      endTime &&
-      selectedTimezone
+      endTime
     ) {
       try {
         if (editEvent) {
@@ -72,7 +68,7 @@ const BasicForm = ({ step, setStep }) => {
             date,
             start_time: startTime,
             end_time: endTime,
-            timezone: selectedTimezone.label,
+            timezone: '(GMT+1:00) West Central Africa',
             userId: user.id,
             id: newEvent.id,
           };
@@ -90,7 +86,7 @@ const BasicForm = ({ step, setStep }) => {
             date,
             start_time: startTime,
             end_time: endTime,
-            timezone: selectedTimezone.label,
+            timezone: '(GMT + 1:00) West Central Africa',
             userId: user.id,
           };
           const res = await CreateEventApi1(formBody);
@@ -297,7 +293,7 @@ const BasicForm = ({ step, setStep }) => {
                 </Flex>
               </Box>
 
-              <Box mb="8">
+              {/* <Box mb="8">
                 <FormLabel fontWeight="semibold" fontSize={13.5}>
                   Choose timezone
                 </FormLabel>
@@ -305,7 +301,7 @@ const BasicForm = ({ step, setStep }) => {
                   value={selectedTimezone}
                   onChange={setSelectedTimezone}
                 />
-              </Box>
+              </Box> */}
             </FormControl>
           </Box>
         </Flex>

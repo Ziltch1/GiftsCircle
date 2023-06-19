@@ -18,10 +18,10 @@ const Index = ({ setShowCheckout }) => {
 
   useEffect(() => {
     if (deliveryDetails) {
-      console.log([...deliveryDetails], deliveryData.data)
+      console.log([...deliveryDetails], deliveryData.data);
       setDeliveryData([...deliveryDetails]);
     }
-  }, [deliveryDetails]);
+  }, [deliveryData]);
 
   return (
     <Box w="80%" mx="auto" my="8">

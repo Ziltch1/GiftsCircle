@@ -8,35 +8,48 @@ import {
   Stack,
   Select,
   useToast,
-  Button,
+  Button, Spinner
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { LGAs } from '../../../../Utils/data/LGA';
 import { useSelector } from 'react-redux';
 import { DeliveryDetailsApi } from '../../../../redux/axios/apis/user';
 
-const DeliveryDetailsForm = () => {
-  const states = Object.keys(LGAs);
+const DeliveryDetailsForm = ({setShowDeliveryForm}) => {
   const toast = useToast();
-  const [lgas, setLgas] = useState(states);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [additionalInformation, setAdditionalInformation] = useState('');
-  const [selectedState, setSelectedState] = useState('Abia');
-  const [selectedCity, setSelectedCity] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedLGAs, setSelectedLGAs] = useState([]);
+  const [selectedLGA, setSelectedLGA] = useState('')
+  const [loading, setLoading] = useState(false)
   const { user } = useSelector(state => state.user);
 
+  const handleStateChange = (e) => {
+    const state = e.target.value;
+    setSelectedState(state);
+    setSelectedLGAs(LGAs[state]);
+  };
+
+  const handleLGAsChange = (e) => {
+    setSelectedLGA(e.target.value)
+    // Handle changes in the second select field, if needed
+  };
+
   const data = {
+    firstname: firstName,
+    lastname: lastName,
     address: deliveryAddress,
-    city: selectedCity,
+    info: additionalInformation,
+    lga: selectedLGA,
     state: selectedState,
     tel: phoneNumber,
     tel2: additionalPhoneNumber,
     userId: user.id,
-    postalCode: '100001',
   };
 
   const handleSubmit = async () => {
@@ -46,12 +59,24 @@ const DeliveryDetailsForm = () => {
       phoneNumber &&
       deliveryAddress &&
       selectedState &&
-      selectedCity
+      selectedLGA
     ) {
+      setLoading(true);
       try {
         await DeliveryDetailsApi(data);
+        setFirstName('');
+        setLastName('')
+        setDeliveryAddress('');
+        setAdditionalInformation('');
+        setSelectedLGA('')
+        setSelectedState('')
+        setPhoneNumber('')
+        setAdditionalPhoneNumber('')
+        await setLoading(false)
+        setShowDeliveryForm(false)
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     } else {
       toast({
@@ -63,15 +88,6 @@ const DeliveryDetailsForm = () => {
         position: 'top',
       });
     }
-  };
-
-  useEffect(() => {
-    console.log(LGAs[selectedState]);
-    setLgas(LGAs[selectedState]);
-  }, [selectedState]);
-
-  const handleSelectedCity = e => {
-    setSelectedCity(e.target.value);
   };
 
   return (
@@ -119,6 +135,7 @@ const DeliveryDetailsForm = () => {
             <Input
               type="text"
               w="100%"
+              maxLength={11}
               value={phoneNumber}
               onChange={e => setPhoneNumber(e.target.value)}
             />
@@ -127,6 +144,7 @@ const DeliveryDetailsForm = () => {
             <FormLabel fontSize={14}>Additional Phone Number</FormLabel>
             <Input
               type="text"
+              maxLength={11}
               w="100%"
               value={additionalPhoneNumber}
               onChange={e => setAdditionalPhoneNumber(e.target.value)}
@@ -170,13 +188,9 @@ const DeliveryDetailsForm = () => {
         >
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>Region</FormLabel>
-            <Select
-              w="100%"
-              value={selectedState}
-              onChange={e => setSelectedState(e.target.value)}
-            >
-              {Object.keys(LGAs).map((state, index) => (
-                <option key={index} value={state}>
+            <Select value={selectedState} onChange={handleStateChange}>
+              {Object.keys(LGAs).map((state) => (
+                <option key={state} value={state}>
                   {state}
                 </option>
               ))}
@@ -184,9 +198,9 @@ const DeliveryDetailsForm = () => {
           </Box>
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>City</FormLabel>
-            <Select w="100%" value={selectedCity} onChange={handleSelectedCity}>
-              {lgas.map((lga, index) => (
-                <option key={index} value={lga}>
+            <Select value={selectedLGA} onChange={handleLGAsChange}>
+              {selectedLGAs?.map((lga) => (
+                <option key={lga} value={lga}>
                   {lga}
                 </option>
               ))}
@@ -203,7 +217,7 @@ const DeliveryDetailsForm = () => {
             fontWeight="medium"
             onClick={handleSubmit}
           >
-            Save
+            {loading ? <Spinner size='md' /> : 'Save'}
           </Button>
         </Box>
       </FormControl>

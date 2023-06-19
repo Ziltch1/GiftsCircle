@@ -27,7 +27,7 @@ const Index = ({ setShowMediaOption, isOpen, setData }) => {
   };
 
   const [navPosition, setNavPosition] = useState(-1);
-  const texts = ['Record Audio', 'Record Video', 'Send Message'];
+  const texts = ['Record Audio', 'Record Video', 'Written Message'];
 
   const handleClick = index => {
     setNavPosition(index);

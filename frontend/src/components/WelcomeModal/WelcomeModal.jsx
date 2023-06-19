@@ -28,7 +28,7 @@ const WelcomeModal = () => {
 
     if (currentHour >= 5 && currentHour < 12) {
       newGreeting = 'Good morning';
-    } else if (currentHour >= 12 && currentHour < 18) {
+    } else if (currentHour >= 12 && currentHour < 17) {
       newGreeting = 'Good afternoon';
     } else {
       newGreeting = 'Good evening';

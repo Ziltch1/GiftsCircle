@@ -4,14 +4,18 @@ import FirstPage from './First-page'
 import SecondPage from './Second-page';
 import 'swiper/css'
 import { Autoplay } from 'swiper';
+import { Box } from '@chakra-ui/react';
+import Navbar from './Navbar';
 
 function index() {
   return (
+    <Box>
+      <Navbar />
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 5000,
+          delay: 20000,
           disableOnInteraction: false,
         }}
         modules={[Autoplay]}
@@ -24,6 +28,7 @@ function index() {
           <SecondPage />
         </SwiperSlide>
       </Swiper>
+    </Box>
   )
 }
 
