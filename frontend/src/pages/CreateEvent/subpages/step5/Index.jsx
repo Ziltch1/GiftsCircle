@@ -37,22 +37,25 @@ import {
 
 const SummaryForm = ({ setStep }) => {
   const { newEvent } = useSelector(state => state.event);
-  const event = JSON.parse(localStorage.getItem("newEvent"));
+  const event = JSON.parse(localStorage.getItem('newEvent'));
   const [openModal, setOpenModal] = useState(false);
-  const [percentage, setPercentage] = useState(event ? event.percentageDonation : '');
+  const [percentage, setPercentage] = useState(
+    event ? event.percentageDonation : ''
+  );
   const [publish, setPublish] = useState(false);
   const toast = useToast();
 
   console.log(publish, percentage);
 
-  const showModal = async() => {
+  const showModal = async () => {
     if (percentage && publish) {
       setOpenModal(true);
       try {
-        localStorage.setItem('newEvent', JSON.stringify({percentDonation: percentage})) 
-      } catch (error) {
-        
-      }
+        localStorage.setItem(
+          'newEvent',
+          JSON.stringify({ percentDonation: percentage })
+        );
+      } catch (error) {}
     } else {
       toast({
         title: 'Error!',
@@ -148,7 +151,7 @@ const SummaryForm = ({ setStep }) => {
         <Box w="250px" mb="3">
           <DropdownList
             value={percentage}
-            onChange={nextValue => setPercentage(nextValue)}
+            onChange={nextValue => setPercentage(nextValue.replace('%', ''))}
             data={['0.5%', '1%', '1.5%', '2%', '3.5', '4.5%', '5%']}
           />
         </Box>
@@ -195,7 +198,7 @@ export const ConfirmationModal = ({
     const formBody = {
       id: newEvent.id,
       published: publish,
-      percentDonation: parseInt(percentage.split('')[0]),
+      percentDonation: parseFloat(percentage),
       applyDonation: true,
     };
     if (isChecked) {
