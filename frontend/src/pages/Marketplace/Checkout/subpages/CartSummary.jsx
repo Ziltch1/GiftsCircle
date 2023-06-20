@@ -7,18 +7,18 @@ import { GiftContext } from '../../subpages/Market/Gifts'
 
 
 const CartSummary = () => {
-  // const { GiftItems, setGiftItems, amount, setAddedGiftItems } =
-  //   useContext(GiftContext);
+  const { GiftItems, setGiftItems, amount, setAddedGiftItems } =
+    useContext(GiftContext);
     
   const HandleSubmit = () => {
-    // if (GiftItems.length > 0) {
-      // dispatch(BuyItems(GiftItems));
-      // setGiftItems([]);
-      // setAddedGiftItems([]);
-      // closeModal();
-    // } else {
-    //   setShowDrawer();
-    // }
+    if (GiftItems.length > 0) {
+      dispatch(BuyItems(GiftItems));
+      setGiftItems([]);
+      setAddedGiftItems([]);
+      closeModal();
+    } else {
+      setShowDrawer();
+    }
   };
 
   return (
