@@ -16,8 +16,8 @@ import GiftHeader from './components/GiftHeader';
 import GiftTabs from './components/GiftTabs';
 import Search from '../../components/Search/Search';
 import SkeletonLoader from '../../components/Skeleton';
-import PurchasedFor from './subpages/PurchasedFor/subpages/PurchasedFor';
-import PurchasedBy from './subpages/PurchasedBy/subpages/PurchasedBy';
+import PurchasedFor from './subpages/PurchasedFor/';
+import PurchasedBy from './subpages/PurchasedBy/PurchasedBy';
 import GiftAndSourvenir from './subpages/GiftAndSourvenir';
 import { GetUserMarketItems } from '../../redux/features/marketplace/service';
 
@@ -57,13 +57,16 @@ const Events = () => {
       } else {
         const newData = events.filter(
           item =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            item.category?.toLowerCase().includes(filter.toLowerCase())
+            (filter === '' ? false : item.category === filter) ||
+            (searchQuery === ''
+              ? false
+              : item.title.toLowerCase().includes(searchQuery.toLowerCase()))
         );
         setData(newData);
       }
     }
   }, [searchQuery, events, filter]);
+
   return (
     <Box bg="#F5F5F5" h="100%" pb="8">
       <Box w="100%" bg="#f5f5f5" h="100%" pb="5">
