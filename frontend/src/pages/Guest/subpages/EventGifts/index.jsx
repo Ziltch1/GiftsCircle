@@ -1,4 +1,4 @@
-import React, { useState, createContext, useMemo } from 'react';
+import React, { useState, createContext, useMemo, useEffect } from 'react';
 import GiftHeader from './subpages/GiftHeader';
 import { Box, Flex } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import ComplimentaryModal from './subpages/ComplimentaryModal';
 import GiftListDrawer from './subpages/GiftListDrawer';
 import DisplayCard from '../../../../components/Card';
 import ContributionModal from './subpages/ContributionModal';
+import { GetEventAsoebiApi } from '../../../../redux/axios/apis/asoebi';
 
 export const CartContext = createContext(null);
 
@@ -14,7 +15,7 @@ const Index = () => {
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
   const [data, setData] = useState([]);
-  const { eventGifts } = useSelector(state => state.event);
+  const { eventGifts, } = useSelector(state => state.event);
   const { giftItems, complimentaryGifts } = useSelector(state => state.gift);
   const [GiftItems, setGiftItems] = useState([]);
   const [ComplimentaryItems, setComplimentaryItems] = useState([]);

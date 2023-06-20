@@ -12,7 +12,7 @@ import { GetDeliveryDetailsApi } from '../../../redux/axios/apis/user';
 
 const Index = ({ setShowCheckout }) => {
   const [deliveryData, setDeliveryData] = useState([]);
-  const [showDeliveryForm, setShowDeliveryForm] = useState(false)
+  const [showDeliveryForm, setShowDeliveryForm] = useState(null)
   const { user } = useSelector(state => state.user);
 
   const handleClick = () => {
@@ -21,25 +21,25 @@ const Index = ({ setShowCheckout }) => {
 
   const getDeliveryDetails = async() => {
     try {
-      const res = await GetDeliveryDetailsApi(user.id)
+      const res = await GetDeliveryDetailsApi(user.id);
       const data = await res.data;
+      console.log(data, res);
       setDeliveryData(data)
     } catch (error) {
       console.log(error);
     }
   }
 
+  console.log(deliveryData);
+
   useEffect(() => {
     getDeliveryDetails();
-    if (deliveryData) {
-      // setDeliveryData([...deliveryDetails]);
+    if (deliveryData.length > 0) {
       setShowDeliveryForm(false)
-    }else{
+    }else if(deliveryData.length === 0){
       setShowDeliveryForm(true);
     }
-  }, [deliveryData]);
-
-  console.log(deliveryData);
+  }, []);
 
   return (
     <Box w="80%" mx="auto" my="8">
@@ -52,12 +52,11 @@ const Index = ({ setShowCheckout }) => {
         <Box bg="white" w={{ base: '100%', lg: '65%' }} borderRadius={5} p="4">
           <DeliveryDetailsHeader />
           <Divider />
-          {!setShowDeliveryForm ? (
-            <DeliveryDetailsCard data={deliveryData} />
-          ) : (
-            <DeliveryDetailsForm setShowDeliveryForm={setShowDeliveryForm} />
-          )}
-          {/* <Divider /> */}
+            {deliveryData.length > 0 ? (
+              <DeliveryDetailsCard data={deliveryData} />
+            ) : (
+              <DeliveryDetailsForm setShowDeliveryForm={setShowDeliveryForm} />
+            )}
           <DeliveryDetailsFooter />
         </Box>
 

@@ -7,7 +7,7 @@ import {
   Button,
   Flex,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { states } from '../data';
 import { dispatch } from '../../../redux/store';
@@ -15,7 +15,13 @@ import { UpdateUser } from '../../../redux/features/user/service';
 import {DatePicker} from 'react-widgets'
 
 const ProfileForms = () => {
+
   const { user } = useSelector(state => state.user);
+
+  
+  // const inputDate = '2023-06-09T17:30:33.591Z';
+  
+
   const [edited, setEdited] = useState(false);
   const [firstName, setFirstName] = useState(user.firstname);
   const [lastName, setLastName] = useState(user.lastname);
@@ -25,6 +31,18 @@ const ProfileForms = () => {
   const [dateOfBirth, setDateOfBirth] = useState(user.dob);
   const [phoneNumber, setPhoneNumber] = useState(user.tel);
   const [state, setState] = useState(user.state);
+
+  useEffect(() => {
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      const options = { day: '2-digit', month: 'short' };
+      const formattedDate = date.toLocaleDateString('en-US', options);
+      const [month, day] = formattedDate.split(' ');
+      return `${day} ${month}`;
+    };
+    const formattedDate = formatDate(user?.dob);
+    setDateOfBirth(formattedDate)
+  }, [])
 
   const formBody = {
     gender,
@@ -38,6 +56,9 @@ const ProfileForms = () => {
     setEdited(false);
     dispatch(UpdateUser(formBody, user.id));
   };
+
+  console.log(new Date(dateOfBirth).toDateString());
+  
 
   return (
     <Box w="100%" h="auto" bg="white" p={{ base: 5, md: 7 }} borderRadius={5}>
@@ -123,12 +144,12 @@ const ProfileForms = () => {
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
                   <FormLabel fontSize={14}>Date of Birth</FormLabel>
-                  <DatePicker 
-                    defaultValue={new Date()}
-                    valueFormat={{ day: "numeric", month: "short" }}
+                  <Input 
+                    type='text'
+                    bg="#EEEEEE"
                     value={dateOfBirth}
-                    onChange={value => setDateOfBirth(value)}
-                    disabled={!edited ? 'disabled' : null}
+                    disabled='disabled'
+                    border="1px solid #C6C6C6"
                   />
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">

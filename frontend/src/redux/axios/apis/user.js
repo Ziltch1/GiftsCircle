@@ -17,7 +17,7 @@ const DeliveryDetailsApi = data => {
 };
 
 const GetDeliveryDetailsApi = id => {
-  return api.get(`/delivery/user/${id}`);
+  return api.get(`/delivery/${id}`);
 };
 
 const UpdateDeliveryDetailsApi = (data, id) => {

@@ -131,7 +131,7 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout }) => {
           <Search />
         </Box>
 
-        <Flex gap="24px" alignItems="center" flexWrap="wrap">
+        <Flex justifyContent='space-between' alignItems="center" flexWrap="wrap">
           {asoebiItems?.map(item => (
             <DisplayCard
               id={item.id}
