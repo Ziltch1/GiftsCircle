@@ -14,6 +14,8 @@ const Index = () => {
   const [addedAsoebiItems, setAddedAsoebiItems] = useState([]);
   const [amount, setAmount] = useState(0);
 
+  console.log(eventAsoebis);
+
   const addAsoebi = id => {
     let newItem = eventAsoebis.find(x => x.asoebiItem === id);
     if (!addedAsoebiItems.includes(newItem.id)) {
@@ -65,6 +67,7 @@ const Index = () => {
                 action={addAsoebi}
                 disabled={addedAsoebiItems.includes(item.id)}
                 text="Purchase"
+                increment={item.increment}
               />
             );
           })}

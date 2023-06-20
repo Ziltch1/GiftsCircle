@@ -37,16 +37,22 @@ import {
 
 const SummaryForm = ({ setStep }) => {
   const { newEvent } = useSelector(state => state.event);
+  const event = JSON.parse(localStorage.getItem("newEvent"));
   const [openModal, setOpenModal] = useState(false);
-  const [percentage, setPercentage] = useState('');
+  const [percentage, setPercentage] = useState(event ? event.percentageDonation : '');
   const [publish, setPublish] = useState(false);
   const toast = useToast();
 
   console.log(publish, percentage);
 
-  const showModal = () => {
+  const showModal = async() => {
     if (percentage && publish) {
       setOpenModal(true);
+      try {
+        localStorage.setItem('newEvent', JSON.stringify({percentDonation: percentage})) 
+      } catch (error) {
+        
+      }
     } else {
       toast({
         title: 'Error!',

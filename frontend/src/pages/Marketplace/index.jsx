@@ -45,20 +45,7 @@ const Index = () => {
                 setPosition={setPosition}
                 setShowProducts={setShowProducts}
               />
-              <Box textAlign="center" onClick={() => setShowProducts(true)}>
-                <Button
-                  fontWeight="medium"
-                  fontSize={14}
-                  color="white"
-                  bg="#00BFB2"
-                  h="50px"
-                  w="210px"
-                  _hover={{ bg: '#00BFB2' }}
-                >
-                  {' '}
-                  Proceed to market
-                </Button>
-              </Box>
+              
             </Box>
           ) : (
             <>
