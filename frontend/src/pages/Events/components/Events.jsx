@@ -1,17 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Box, Text } from '@chakra-ui/react';
 import EventItem from './EventItem';
 import { useSelector } from 'react-redux';
-import { SearchContext } from '../index';
 
 
 const Events = ({events}) => {
   const { user } = useSelector(state => state.user);
-  const [filtered] = useContext(SearchContext);
   return (
     <Box textAlign={'center'} mt="20px">
       <>
-        {filtered?.length === 0 ? (
+        {events?.length === 0 ? (
           <Box
             minH={320}
             display="flex"
@@ -30,7 +28,7 @@ const Events = ({events}) => {
           </Box>
         ) : (
           <Box>
-            {filtered?.map(event => {
+            {events?.map(event => {
               const guest = event.user_id !== user.id
               return (
                 <EventItem

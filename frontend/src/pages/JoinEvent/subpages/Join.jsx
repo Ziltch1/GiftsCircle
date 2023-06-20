@@ -41,8 +41,6 @@ const Join = ({ event, user }) => {
 
         try {
           const res = await GoogleSignInApi(formBody);
-
-          console.log(res.data);
           if (res.data) {
             setGuestId(res.data.user.id);
             dispatch(GuestSignIn(res.data));

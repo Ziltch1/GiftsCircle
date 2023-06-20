@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@chakra-ui/react';
 import Search from '../../components/Search/Search';
 import WelcomeModal from '../../components/WelcomeModal/WelcomeModal';
@@ -11,17 +11,14 @@ import Events from './components/Events';
 import EventHistory from './components/EventHistory';
 import SkeletonLoader from '../../components/Skeleton';
 
-
-export const SearchContext = React.createContext()
-
 const Index = () => {
   const { user } = useSelector(state => state.user);
   const { events } = useSelector(state => state.event);
-  const [filtered, setFiltered] = useState([]);
+  const [filter, setFilter] = useState('');
   const [navPosition, setNavPosition] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [filterKeyword, setFilterKeyword] = useState('')
-
+  const [searchQuery, setSearchQuery] = useState('');
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -33,39 +30,48 @@ const Index = () => {
   useEffect(() => {
     if (events) {
       setLoading(false);
-      setFiltered(events)
+      setData(events);
     }
   }, [events, loading]);
 
-
-  const updateEvents = (e) => {
-    const newData = events.filter((item) => item.title.toLowerCase().startsWith(e.target.value.toLowerCase()));
-    const newFilter = events.filter((item) => item.category.toLowerCase().startsWith(filterKeyword.toLowerCase()));
-    setFiltered(newData || newFilter);
-  };
-  
-  console.log(filtered, filterKeyword);
-
-
+  useEffect(() => {
+    if (events) {
+      if (filter === '' && searchQuery === '') {
+        setData(events);
+      } else {
+        const newData = events.filter(
+          item =>
+            (filter === '' ? false : item.category === filter) ||
+            (searchQuery === ''
+              ? false
+              : item.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
+        setData(newData);
+      }
+    }
+  }, [searchQuery, events, filter]);
   return (
     <Box bg="#F5F5F5" h="100%" pb="8">
       <WelcomeModal />
-      <SearchContext.Provider value={[filtered, updateEvents, setFilterKeyword, filterKeyword]}>
       <Box w="90%" mx="auto">
         <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
-        <Search />
+        <Search
+          setSearchQuery={setSearchQuery}
+          searchQuery={searchQuery}
+          filter={filter}
+          setFilter={setFilter}
+        />
         <Box>
           {loading ? (
             <SkeletonLoader />
           ) : (
             <>
-              {navPosition === 0 && <Events />}
-              {navPosition === 1 && <EventHistory events={events} />}
+              {navPosition === 0 && <Events events={data} />}
+              {navPosition === 1 && <EventHistory events={data} />}
             </>
           )}
         </Box>
       </Box>
-      </SearchContext.Provider>
     </Box>
   );
 };

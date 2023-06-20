@@ -58,10 +58,12 @@ const Index = () => {
         >
           {eventAsoebis?.map(item => {
             const newData = asoebiItems?.find(x => x.id === item?.asoebiItem);
+            let data = { ...newData };
+            data.amount = newData.amount + item.increment;
             return (
               <DisplayCard
                 id={item.id}
-                data={newData}
+                data={data}
                 action={addAsoebi}
                 disabled={addedAsoebiItems.includes(item.id)}
                 text="Purchase"
