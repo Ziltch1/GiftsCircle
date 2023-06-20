@@ -18,7 +18,7 @@ const Index = () => {
   }, [fundRaising]);
 
   return (
-    <Box>
+    <Box minH='550px'>
       {openModal && (
         <CancelModal setOpenModal={setOpenModal} id={fundRaising?.id} />
       )}

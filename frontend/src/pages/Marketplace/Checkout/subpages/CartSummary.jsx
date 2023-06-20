@@ -15,9 +15,9 @@ const CartSummary = () => {
       dispatch(BuyItems(GiftItems));
       setGiftItems([]);
       setAddedGiftItems([]);
-      closeModal();
+      // closeModal();
     } else {
-      setShowDrawer();
+      // setShowDrawer();
     }
   };
 

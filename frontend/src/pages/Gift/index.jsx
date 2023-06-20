@@ -50,9 +50,10 @@ const Events = () => {
     }
   }, [events]);
 
+  console.log(events);
+
   const updateEvents = (e) => {
     const newData = events.filter((item) => item.title.toLowerCase().startsWith(e.target.value.toLowerCase()));
-    // const newFilter = events.filter((item) => item.category.toLowerCase().startsWith(filterKeyword.toLowerCase()));
     setFiltered(newData);
   };
 
@@ -63,34 +64,34 @@ const Events = () => {
         <Box w="90%" mx="auto">
           <GiftHeader />
           <GiftTabs navPosition={navPosition} setNavPosition={setNavPosition} />
-          <SearchContext.Provider value={[filtered, updateEvents,]}>
-          <Search />
-          {loading ? (
-            <Stack spacing="20px">
-              <Skeleton height="50px" width="100%" />
-              <Skeleton height="50px" width="75%" />
-              <Skeleton height="50px" width="50%" />
-            </Stack>
-          ) : (
-            <>
-              <Box w="100%" mx="auto">
-                {loading ? (
-                  <SkeletonLoader />
-                ) : (
-                  <>
-                    {navPosition === 0 && <PurchasedFor />}
-                    {navPosition === 1 && <PurchasedBy events={events} />}
-                    {navPosition === 2 && (
-                      <GiftAndSourvenir
-                        sourvenir={sourvenirItems}
-                        gifts={giftItems}
-                      />
+          <SearchContext.Provider value={[filtered, updateEvents]}>
+              <Search />
+              {loading ? (
+                <Stack spacing="20px">
+                  <Skeleton height="50px" width="100%" />
+                  <Skeleton height="50px" width="75%" />
+                  <Skeleton height="50px" width="50%" />
+                </Stack>
+              ) : (
+                <>
+                  <Box w="100%" mx="auto">
+                    {loading ? (
+                      <SkeletonLoader />
+                    ) : (
+                      <>
+                        {navPosition === 0 && <PurchasedFor />}
+                        {navPosition === 1 && <PurchasedBy events={events} />}
+                        {navPosition === 2 && (
+                          <GiftAndSourvenir
+                            sourvenir={sourvenirItems}
+                            gifts={giftItems}
+                          />
+                        )}
+                      </>
                     )}
-                  </>
-                )}
-              </Box>
-            </>
-          )}
+                  </Box>
+                </>
+              )}
           </SearchContext.Provider>
         </Box>
       </Box>

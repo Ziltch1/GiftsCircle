@@ -4,7 +4,7 @@ import {SearchIcon,} from '@chakra-ui/icons'
 import { SearchContext } from '../../pages/Events'
 
 const Search = ({data, setData,}) => {
-    const [filtered, updateEvents, ] = useContext(SearchContext);
+    // const [filtered, updateEvents, ] = useContext(SearchContext);
     return (
         <Box>
             <FormControl>
@@ -14,7 +14,7 @@ const Search = ({data, setData,}) => {
                             pointerEvents='none'
                             children={<SearchIcon color='#8C8C8C' />}
                         />
-                        <Input type='text' onChange={updateEvents} outline='none' placeholder='Search anything in events' bg='white' border='none' fontSize={13} color='#8C8C8C' letterSpacing={0.5} />
+                        <Input type='text'  outline='none' placeholder='Search anything in events' bg='white' border='none' fontSize={13} color='#8C8C8C' letterSpacing={0.5} />
                     </InputGroup>
 
                     <Select placeholder='Filter' variant={'flushed'} bg='#555555' w='10%' borderRadius='5px' _placeholder={{color: 'white'}}>

@@ -1,22 +1,24 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import GiftItemList from '../../../components/GiftItemList';
 import { useSelector } from 'react-redux';
+import { SearchContext } from '../../..';
 
 const PurchasedFor = ({ events }) => {
   const { user } = useSelector(state => state.user);
   const [data, setData] = useState([]);
+  const [filtered] = useContext(SearchContext)
 
   useEffect(() => {
-    if (events.length > 0) {
-      let data = events.filter(x => x.user_id === user.id);
+    if (filtered.length > 0) {
+      let data = filtered.filter(x => x.user_id === user.id);
       setData(data);
     }
-  }, [events, user]);
+  }, [filtered, user]);
 
   return (
     <Box>
-      {events?.length < 1 ? (
+      {filtered?.length < 1 ? (
         <Box
           textAlign="center"
           w="100%"
