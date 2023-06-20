@@ -311,6 +311,33 @@
         }
       }
     },
+    "/user/notifications//{id}": {
+      "put": {
+        "description": "",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/user/changePassword": {
       "post": {
         "description": "",
@@ -448,7 +475,7 @@
         }
       }
     },
-    "/events/create": {
+    "/event/": {
       "post": {
         "description": "",
         "tags": ["Event"],
@@ -559,7 +586,7 @@
         }
       }
     },
-    "/events//create": {
+    "/event/create": {
       "put": {
         "description": "",
         "tags": ["Event"],
@@ -2242,6 +2269,7 @@
       "Update1": {
         "type": "object",
         "properties": {
+          "id": { "type": "string", "required": true },
           "title": {
             "type": "string",
             "required": true

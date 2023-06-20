@@ -17,7 +17,7 @@ const GetEventGuestsApi = eventId => {
 };
 
 const CreateEventApi1 = data => {
-  return api.post(`/event/create`, data);
+  return api.post(`/event/`, data);
 };
 
 const UpdateEventApi1 = data => {

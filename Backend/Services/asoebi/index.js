@@ -122,7 +122,7 @@ const Buy = async (data) => {
     const event = await prisma.event.findUnique({
       where: { id: data.eventId },
     });
-    const message = `${user.firstname} bought ${data.quantity} of asoebi`;
+    const message = `${user.firstname} bought ${data.quantity} quantity of asoebi`;
     const notification = await prisma.notifications.create({
       data: {
         userId: event.user_id,

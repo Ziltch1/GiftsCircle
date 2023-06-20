@@ -71,7 +71,7 @@ router.get("/:id/guests", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.post("/create", EnsureAuthenticated, async (req, res) => {
+router.post("/", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Create(req.body);
     if (data) {
