@@ -41,14 +41,15 @@ const Index = () => {
       } else {
         const newData = events.filter(
           item =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            item.category?.toLowerCase().includes(filter.toLowerCase())
+            (filter === '' ? false : item.category === filter) ||
+            (searchQuery === ''
+              ? false
+              : item.title.toLowerCase().includes(searchQuery.toLowerCase()))
         );
         setData(newData);
       }
     }
   }, [searchQuery, events, filter]);
-
   return (
     <Box bg="#F5F5F5" h="100%" pb="8">
       <WelcomeModal />

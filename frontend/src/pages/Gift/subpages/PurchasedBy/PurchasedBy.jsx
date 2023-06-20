@@ -1,20 +1,17 @@
-import { Box, Heading, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import GiftItemList from '../../../components/GiftItemList';
+import React, { useState, useEffect } from 'react';
+import { Heading, Text, Box } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
+import GiftItemList from '../../components/GiftItemList';
 
-const PurchasedFor = ({ events }) => {
+const PurchasedBy = ({ events }) => {
   const { user } = useSelector(state => state.user);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if(events){
-      if (events.length > 0) {
-        let data = events.filter(x => x.user_id === user.id);
-        setData(data);
-      }
+    if (events.length > 0) {
+      let data = events.filter(x => x.user_id !== user.id);
+      setData(data);
     }
-   
   }, [events, user]);
 
   return (
@@ -33,7 +30,7 @@ const PurchasedFor = ({ events }) => {
               Gift list is empty
             </Heading>
             <Text color="#8C8C8C" fontSize={16}>
-              This is where you will see if any gift has been purchsed for you
+              This is where you will see if any gift has been purchased for you
             </Text>
           </Box>
         </Box>
@@ -48,4 +45,4 @@ const PurchasedFor = ({ events }) => {
   );
 };
 
-export default PurchasedFor;
+export default PurchasedBy;
