@@ -19,6 +19,19 @@ const GetUserNotifications = async (id) => {
   return notifications;
 };
 
+const UpdateNotifications = async (id) => {
+  const notifications = await prisma.notifications.update({
+    where: {
+      id: id,
+    },
+    data: {
+      read: true,
+    },
+  });
+  await prisma.$disconnect();
+  return notifications;
+};
+
 const Create = async (data) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -179,6 +192,7 @@ const UpdateUser = async (data, id) => {
 
 module.exports = {
   GetUserNotifications,
+  UpdateNotifications,
   Create,
   GetUser,
   SetPassword,

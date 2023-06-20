@@ -195,7 +195,7 @@ const Update3 = async (data) => {
       },
     });
     if (data.published) {
-      const message = `Event: ${event.title} created`;
+      const message = `Event: ${event.title} is published`;
       const notification = await prisma.notifications.create({
         data: {
           userId: data.userId,
