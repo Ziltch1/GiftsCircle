@@ -1,14 +1,11 @@
 import { Box, } from '@chakra-ui/react';
-import React, {useContext} from 'react';
+import React from 'react';
 import PurchasedFor from './subpages/PurchasedFor';
-import { SearchContext } from '../..';
 
 const Index = ({ events }) => {
-  const [filtered] = useContext(SearchContext);
-  console.log(filtered);
   return (
     <Box>
-      <PurchasedFor events={filtered} />
+      <PurchasedFor events={events} />
     </Box>
   );
 };
