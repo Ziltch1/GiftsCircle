@@ -111,7 +111,6 @@ const Index = () => {
         >
           {eventGifts.map(item => {
             const giftItem = giftItems.find(x => x.id === item?.giftItemId);
-            console.log(item.amountPaid >= giftItem.amount);
             return (
               <DisplayCard
                 id={item.id}

@@ -12,6 +12,10 @@ const GetUserApi = id => {
   return api.get(`/user/${id}`);
 };
 
+const GetUserNotificationApi = id => {
+  return api.get(`/user/notifications/${id}`);
+};
+
 const DeliveryDetailsApi = data => {
   return api.post(`/delivery/create`, data);
 };
@@ -27,6 +31,7 @@ const UpdateDeliveryDetailsApi = (data, id) => {
 export {
   CreateUserApi,
   GetUserApi,
+  GetUserNotificationApi,
   UpdateUserApi,
   DeliveryDetailsApi,
   GetDeliveryDetailsApi,

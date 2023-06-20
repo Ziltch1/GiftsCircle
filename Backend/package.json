@@ -28,6 +28,7 @@
     "nodemailer": "^6.9.1",
     "nodemailer-express-handlebars": "^6.1.0",
     "otp-generator": "^4.0.0",
+    "socket.io": "^4.6.2",
     "swagger-autogen": "^2.23.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.0",

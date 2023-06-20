@@ -7,8 +7,6 @@ import CartSummary from './subpages/CartSummary';
 import DeliveryDetailsCard from './subpages/DeliveryDetailsCard';
 import BackButton from '../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
-import { GetDeliveryDetailsApi } from '../../../redux/axios/apis/user';
-
 
 const Index = ({ setShowCheckout }) => {
   const [deliveryData, setDeliveryData] = useState([]);

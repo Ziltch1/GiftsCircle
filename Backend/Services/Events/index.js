@@ -3,7 +3,9 @@ const { CreateEventId, CreateCoHostId, CreateGuestId } = require("./service");
 const prisma = new PrismaClient();
 const { v4: uuidv4 } = require("uuid");
 const ResponseDTO = require("../../DTO/Response");
-const { SendEventPublishEmail } = require("../../Utils/Email/NodemailerEmailService");
+const {
+  SendEventPublishEmail,
+} = require("../../Utils/Email/NodemailerEmailService");
 
 const GetEvent = async (id) => {
   const event = await prisma.event.findUnique({
@@ -193,24 +195,46 @@ const Update3 = async (data) => {
       },
     });
     if (data.published) {
+      const message = `Event: ${event.title} created`;
+      const notification = await prisma.notifications.create({
+        data: {
+          userId: data.userId,
+          type: "EVENTCREATION",
+          message: message,
+        },
+      });
       SendEventPublishEmail(user.email, user.firstname, event);
+      return { Data, notification };
     }
 
     await prisma.$disconnect();
-    return Data;
+    return { Data };
   }
   return null;
 };
 
 const DeleteEvent = async (id) => {
-  let event = await prisma.event.delete({
+  let event = await prisma.event.findUnique({
     where: {
       id: id,
     },
   });
+  await prisma.event.delete({
+    where: {
+      id: id,
+    },
+  });
+  const message = `Event: ${event.title} deleted`;
+  const notification = await prisma.notifications.create({
+    data: {
+      userId: event.user_id,
+      type: "EVENTCREATION",
+      message: message,
+    },
+  });
 
   await prisma.$disconnect();
-  return event;
+  return { notification };
 };
 
 const AddGuest = async (data) => {
@@ -252,8 +276,17 @@ const AddGuest = async (data) => {
           },
         });
 
+        const message = `Event: A new guest joined ${event.title} event`;
+        const notification = await prisma.notifications.create({
+          data: {
+            userId: event.user_id,
+            type: "GUESTJOIN",
+            message: message,
+          },
+        });
+
         await prisma.$disconnect();
-        return ResponseDTO("Success", Data);
+        return ResponseDTO("Success", { Data, notification });
       } else {
         return ResponseDTO("Failed", "Event Owner can't join as Guest");
       }

@@ -23,8 +23,17 @@ const BuyMarketItems = async (data) => {
     skipDuplicates: true,
   });
 
+  const message = `Market Items purchased`;
+  const notification = await prisma.notifications.create({
+    data: {
+      userId: data.userId,
+      type: "PURCHASE",
+      message: message,
+    },
+  });
+
   await prisma.$disconnect();
-  return Data;
+  return { Data, notification };
 };
 
 const UpdateTransaction = async (id, data) => {

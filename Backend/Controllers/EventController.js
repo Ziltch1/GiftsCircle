@@ -105,28 +105,24 @@ router.post(
   EnsureAuthenticated,
   async (req, res) => {
     try {
-      if(req.file){
+      if (req.file) {
         const file = dataUri(req).content;
         const response = await cloudinary.uploader.upload(file, {
           folder: "eventcircle/events",
         });
-  
+
         let data = await Update2(req.body, response.url);
         if (data) {
           return res.status(200).send(data);
         }
         return res.status(400).send(ResponseDTO("Failed", "Event not found"));
-      }
-      else{
+      } else {
         let data = await Update2(req.body, req.body.image);
         if (data) {
           return res.status(200).send(data);
         }
         return res.status(400).send(ResponseDTO("Failed", "Event not found"));
       }
-      
-      
-      
     } catch (err) {
       console.log(err);
       await prisma.$disconnect();
@@ -139,7 +135,11 @@ router.post("/create3", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Update3(req.body);
     if (data) {
-      return res.status(200).send(data);
+      if (data.notification) {
+        req.io.emit(data.notification.userId, data.notification);
+        return res.status(200).send(data.Data);
+      }
+      return res.status(200).send(data.Data);
     }
     return res.status(400).send(ResponseDTO("Failed", "Event not found"));
   } catch (err) {
@@ -151,15 +151,18 @@ router.post("/create3", EnsureAuthenticated, async (req, res) => {
 
 router.delete("/:id", EnsureAuthenticated, async (req, res) => {
   try {
-    await DeleteEvent(req.params.id);
-    return res
-      .status(200)
-      .send(
-        ResponseDTO(
-          "Success",
-          `Event with id ${req.params.id} deleted successfully`
-        )
-      );
+    const res = await DeleteEvent(req.params.id);
+    if (res.notification) {
+      req.io.emit(data.notification.userId, data.notification);
+      return res
+        .status(200)
+        .send(
+          ResponseDTO(
+            "Success",
+            `Event with id ${req.params.id} deleted successfully`
+          )
+        );
+    }
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -173,14 +176,13 @@ router.post("/addGuest", EnsureAuthenticated, async (req, res) => {
     if (data.status === "Failed") {
       return res.status(400).send(ResponseDTO("Failed", data.message));
     }
-    return res.status(200).send(data);
+    req.io.emit(data.notification.userId, data.message.notification);
+    return res.status(200).send(data.message.Data);
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
     return res.status(400).send(ResponseDTO("Failed", "Event Not Found"));
   }
 });
-
-
 
 module.exports = router;

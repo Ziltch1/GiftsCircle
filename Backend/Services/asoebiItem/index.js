@@ -14,6 +14,7 @@ const Get = async (id) => {
 };
 
 const GetAll = async () => {
+
   const asoebiItems = await prisma.asoebiitem.findMany({});
   await prisma.$disconnect();
   return asoebiItems;

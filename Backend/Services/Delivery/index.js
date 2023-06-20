@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const prisma = new PrismaClient();
 
 const Get = async (userId) => {
-  const delivery = await prisma.delivery.deleteMany({
+  const delivery = await prisma.delivery.findMany({
     where: {
       userId: userId,
     },

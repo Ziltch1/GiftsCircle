@@ -117,9 +117,22 @@ const Buy = async (data) => {
         quantity: asoebi.quantity + data.quantity,
       },
     });
+
+    const user = await prisma.user.findFirst({ where: { id: data.userId } });
+    const event = await prisma.event.findUnique({
+      where: { id: data.eventId },
+    });
+    const message = `${user.firstname} bought ${data.quantity} of asoebi`;
+    const notification = await prisma.notifications.create({
+      data: {
+        userId: event.user_id,
+        type: "PURCHASE",
+        message: message,
+      },
+    });
     await prisma.$disconnect();
 
-    return buy;
+    return { buy, notification };
   }
   return null;
 };
