@@ -7,21 +7,38 @@ import CartSummary from './subpages/CartSummary';
 import DeliveryDetailsCard from './subpages/DeliveryDetailsCard';
 import BackButton from '../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
+import { GetDeliveryDetailsApi } from '../../../redux/axios/apis/user';
 
 const Index = ({ setShowCheckout }) => {
   const [deliveryData, setDeliveryData] = useState([]);
-  const { deliveryDetails } = useSelector(state => state.user);
+  const [showDeliveryForm, setShowDeliveryForm] = useState(null)
+  const { user } = useSelector(state => state.user);
 
   const handleClick = () => {
     setShowCheckout(false);
   };
 
-  useEffect(() => {
-    if (deliveryDetails) {
-      console.log([...deliveryDetails], deliveryData.data);
-      setDeliveryData([...deliveryDetails]);
+  const getDeliveryDetails = async() => {
+    try {
+      const res = await GetDeliveryDetailsApi(user.id);
+      const data = await res.data;
+      console.log(data, res);
+      setDeliveryData(data)
+    } catch (error) {
+      console.log(error);
     }
-  }, [deliveryData]);
+  }
+
+  console.log(deliveryData);
+
+  useEffect(() => {
+    getDeliveryDetails();
+    if (deliveryData.length > 0) {
+      setShowDeliveryForm(false)
+    }else if(deliveryData.length === 0){
+      setShowDeliveryForm(true);
+    }
+  }, []);
 
   return (
     <Box w="80%" mx="auto" my="8">
@@ -34,12 +51,11 @@ const Index = ({ setShowCheckout }) => {
         <Box bg="white" w={{ base: '100%', lg: '65%' }} borderRadius={5} p="4">
           <DeliveryDetailsHeader />
           <Divider />
-          {deliveryData.length > 0 ? (
-            <DeliveryDetailsCard data={deliveryData} />
-          ) : (
-            <DeliveryDetailsForm />
-          )}
-          {/* <Divider /> */}
+            {deliveryData.length > 0 ? (
+              <DeliveryDetailsCard data={deliveryData} />
+            ) : (
+              <DeliveryDetailsForm setShowDeliveryForm={setShowDeliveryForm} />
+            )}
           <DeliveryDetailsFooter />
         </Box>
 

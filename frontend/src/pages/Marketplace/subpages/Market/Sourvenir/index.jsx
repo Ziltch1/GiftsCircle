@@ -117,7 +117,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
             <Box mb="7">
               <Search />
             </Box>
-            <Flex gap="24px" alignItems="center" flexWrap="wrap">
+            <Flex justifyContent='space-between' alignItems="center" flexWrap="wrap">
               {sourvernirItems.map(item => (
                 <DisplayCard
                   id={item.id}

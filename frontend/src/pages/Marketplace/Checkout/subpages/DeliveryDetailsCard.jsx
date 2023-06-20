@@ -13,13 +13,14 @@ import React, { useState } from 'react';
 
 const DeliveryDetails = ({ data }) => {
   const [checked, setChecked] = useState(1);
+  console.log(checked);
 
   console.log(checked);
   return (
     <Box w="100%">
-      <RadioGroup onChange={e => setChecked(e)} value={checked}>
-        {data.map(ele => (
-          <DeliveryItem data={ele} index={data.indexOf(ele) + 1} />
+      <RadioGroup onChange={setChecked} value={checked}>
+        {data.map((ele, index) => (
+          <DeliveryItem data={ele} checked={checked} index={index} />
         ))}
       </RadioGroup>
 
@@ -39,32 +40,35 @@ const DeliveryDetails = ({ data }) => {
 
 
 
-const DeliveryItem = ({ data, index }) => {
+const DeliveryItem = ({ data, index, checked }) => {
+  console.log(typeof(index, checked));
   return (
-    <Box value={index}>
+    <Box value={index} my='3'>
       <Heading fontSize={14} fontWeight="semibold" mb="2">
-        ADDRESS BOOK {index}
+        ADDRESS BOOK {index + 1}
       </Heading>
-      <Box mb="4" border="2px solid lightgray" borderRadius={7} p="5">
+      <Box mb="4" border={index === checked ? "2px solid #00BFB2" : '2px solid lightgray'} borderRadius={7} p="5">
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="flex-start"
         >
           <Stack direction="row" spacing={3} alignItems="flex-start">
-            <Radio colorScheme="teal" />
+            <Radio value='1' colorScheme="teal" />
             <Box>
-              <Heading fontSize={15} mb="1">
-                JOSEPH GABRIEL
+              <Heading fontSize={15} mb="1" textTransform='capitalize'>
+                {data.firstname} {data.lastname}
               </Heading>
               <Text fontSize={14} mb="1">
                 {data.address +
                   ' ' +
-                  data.city +
+                  data.info +
                   ' ' +
+                  '|' + ' ' +
                   data.state +
                   ' ' +
-                  data.country}
+                  data.lga +
+                  ' '}
               </Text>
               <Text fontSize={14} mb="1">
                 {data.tel}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import { Box, Stack, Skeleton } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../redux/store';
@@ -21,11 +21,14 @@ import PurchasedBy from './subpages/PurchasedBy/subpages/PurchasedBy';
 import GiftAndSourvenir from './subpages/GiftAndSourvenir';
 import { GetUserMarketItems } from '../../redux/features/marketplace/service';
 
+export const SearchContext = React.createContext()
+
 const Events = () => {
   const { user } = useSelector(state => state.user);
   const [navPosition, setNavPosition] = useState(0);
   const [loading, setLoading] = useState(true);
   const { events } = useSelector(state => state.event);
+  const [filtered, setFiltered] = useState([]);
   const { giftItems, sourvenirItems } = useSelector(state => state.gift);
 
   useEffect(() => {
@@ -43,8 +46,16 @@ const Events = () => {
   useEffect(() => {
     if (events) {
       setLoading(false);
+      setFiltered(events)
     }
   }, [events]);
+
+  const updateEvents = (e) => {
+    const newData = events.filter((item) => item.title.toLowerCase().startsWith(e.target.value.toLowerCase()));
+    // const newFilter = events.filter((item) => item.category.toLowerCase().startsWith(filterKeyword.toLowerCase()));
+    setFiltered(newData);
+  };
+
 
   return (
     <Box bg="#F5F5F5" h="100%" pb="8">
@@ -52,6 +63,7 @@ const Events = () => {
         <Box w="90%" mx="auto">
           <GiftHeader />
           <GiftTabs navPosition={navPosition} setNavPosition={setNavPosition} />
+          <SearchContext.Provider value={[filtered, updateEvents,]}>
           <Search />
           {loading ? (
             <Stack spacing="20px">
@@ -66,7 +78,7 @@ const Events = () => {
                   <SkeletonLoader />
                 ) : (
                   <>
-                    {navPosition === 0 && <PurchasedFor events={events} />}
+                    {navPosition === 0 && <PurchasedFor />}
                     {navPosition === 1 && <PurchasedBy events={events} />}
                     {navPosition === 2 && (
                       <GiftAndSourvenir
@@ -79,6 +91,7 @@ const Events = () => {
               </Box>
             </>
           )}
+          </SearchContext.Provider>
         </Box>
       </Box>
     </Box>

@@ -2,7 +2,7 @@ import { Box, Flex, Button, Text, Image } from '@chakra-ui/react';
 import DetailsDrawer from './component/Details';
 import React, { useState } from 'react';
 
-const DisplayCard = ({ id, data, disabled, action, text, purchased }) => {
+const DisplayCard = ({ id, data, disabled, action, text, purchased, increment }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -41,7 +41,7 @@ const DisplayCard = ({ id, data, disabled, action, text, purchased }) => {
           </Text>
           <Flex alignItems="center" justifyContent="space-between">
             <Text color="#27272E" fontWeight={600} fontSize={18}>
-              ₦ {data.amount}
+              ₦ {increment ? data.amount + increment : data.amount}
             </Text>
             <Button
               fontSize={13}
