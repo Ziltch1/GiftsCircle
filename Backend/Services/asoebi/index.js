@@ -71,8 +71,17 @@ const CreateMany = async (data) => {
     skipDuplicates: true,
   });
 
+  
+  const message = `Asoebis has been added for guest`;
+  const notification = await prisma.notifications.create({
+    data: {
+      userId: data.userId,
+      type: "ASOEBI_ADDITION",
+      message: message,
+    },
+  });
   await prisma.$disconnect();
-  return data;
+  return {data, notification};
 };
 
 const Delete = async (id) => {

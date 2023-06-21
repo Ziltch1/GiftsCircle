@@ -182,9 +182,17 @@ const UpdateUser = async (data, id) => {
           : user.placeOfResidence,
       },
     });
+    const message = `Your profile has been updated`;
+    const notification = await prisma.notifications.create({
+      data: {
+        userId: id,
+        type: "USER_PROFILE",
+        message: message,
+      },
+    });
 
     await prisma.$disconnect();
-    return updatedUser;
+    return { updatedUser, notification };
   }
 
   return null;
