@@ -35,7 +35,7 @@ const PurchasedFor = ({ events }) => {
           </Box>
         </Box>
       ) : (
-        <Box w="100%" h="100%">
+        <Box w="100%" minH="500px">
           {data?.map(event => (
             <GiftItemList key={event.id} event={event} />
           ))}

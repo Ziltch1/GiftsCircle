@@ -20,9 +20,14 @@ const DesignViewModal = ({
 }) => {
   const { onClose } = useDisclosure({ defaultIsOpen: true });
   const HandleSubmit = option => {
-    setShowAsoebi(true);
-    setShowModal(false);
-    setAddForGuest(option);
+    if(option === true){
+      setShowModal(false);
+      setAddForGuest(option);
+    }else{
+      setShowAsoebi(true);
+      setShowModal(false);
+      setAddForGuest(option);
+    }
   };
   return (
     <>
