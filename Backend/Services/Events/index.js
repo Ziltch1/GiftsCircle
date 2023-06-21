@@ -206,9 +206,16 @@ const Update3 = async (data) => {
       SendEventPublishEmail(user.email, user.firstname, event);
       return { Data, notification };
     }
-
+    const message = `Event: ${event.title} was edited`;
+    const notification = await prisma.notifications.create({
+      data: {
+        userId: data.userId,
+        type: "EVENTEDIT",
+        message: message,
+      },
+    });
     await prisma.$disconnect();
-    return { Data };
+    return { Data, notification };
   }
   return null;
 };

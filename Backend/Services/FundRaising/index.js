@@ -41,8 +41,17 @@ const Create = async (data, image) => {
       },
     });
 
+    const message = `FundRaising has been created and is active`;
+    const notification = await prisma.notifications.create({
+      data: {
+        userId: event.user_id,
+        type: "FUNDRAISING",
+        message: message,
+      },
+    });
+
     await prisma.$disconnect();
-    return fundRaising;
+    return { fundRaising, notification };
   }
   return null;
 };

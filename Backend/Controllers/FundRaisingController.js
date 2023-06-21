@@ -44,7 +44,8 @@ router.post(
       });
       let data = await Create(req.body, response.url);
       if (data) {
-        return res.status(200).send(data);
+        req.io.emit(data.notification.userId, data.notification);
+        return res.status(200).send(data.fundRaising);
       }
       return res.status(400).send(ResponseDTO("Failed", "Event not found"));
     } catch (err) {

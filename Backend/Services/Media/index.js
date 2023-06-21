@@ -123,9 +123,19 @@ const CreateComplimentaryMessage = async (data) => {
       message: data.message,
     },
   });
+  const user = await prisma.user.findFirst({ where: { id: data.userId } });
+  const event = await prisma.event.findFirst({ where: { id: data.eventId } });
+  const message = `Media : ${user.firstname} sent you a complimentary message`;
+  const notification = await prisma.notifications.create({
+    data: {
+      userId: event.user_id,
+      type: "MEDIA",
+      message: message,
+    },
+  });
 
   await prisma.$disconnect();
-  return Data;
+  return { Data, notification };
 };
 
 const Delete = async (id) => {

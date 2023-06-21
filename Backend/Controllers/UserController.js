@@ -104,7 +104,8 @@ router.put("/:id", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await UpdateUser(req.body, req.params.id);
     if (data) {
-      return res.status(201).send(data);
+      req.io.emit(data.notification.userId, data.notification);
+      return res.status(201).send(data.updatedUser);
     }
     return res.status(400).send(ResponseDTO("Failed", "User not found"));
   } catch (err) {

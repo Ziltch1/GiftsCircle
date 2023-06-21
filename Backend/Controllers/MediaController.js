@@ -119,6 +119,25 @@ router.post(
           })
           .catch((err) => console.log(err));
       });
+      if (data[0].uploadedBy === "HOST") {
+        const user = await prisma.user.findFirst({
+          where: { id: data.userId },
+        });
+        const event = await prisma.event.findFirst({
+          where: { id: data.eventId },
+        });
+        const message = `Media : ${user.firstname} sent you some media files`;
+        const notification = await prisma.notifications.create({
+          data: {
+            userId: event.user_id,
+            type: "MEDIA",
+            message: message,
+          },
+        });
+
+        req.io.emit(notification.userId, data.notification);
+      }
+
       return res.sendStatus(200);
     } catch (err) {
       console.log(err);
@@ -141,8 +160,10 @@ router.post("/UploadVideo", EnsureAuthenticated, async (req, res) => {
 
 router.post("/UploadMessage", EnsureAuthenticated, async (req, res) => {
   try {
-    let Data = await CreateComplimentaryMessage(req.body);
-    return res.status(200).send(Data);
+    let data = await CreateComplimentaryMessage(req.body);
+
+    req.io.emit(data.notification.userId, data.notification);
+    return res.status(200).send(data.Data);
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

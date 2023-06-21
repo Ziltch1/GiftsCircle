@@ -39,11 +39,11 @@ const DesignViewModal = ({
             <ModalBody>
               <Box textAlign="center" mb="4">
                 <Heading fontWeight={600} fontSize="25px" mb="3">
-                  Asoebi Addition
+                  Add Asoebi
                 </Heading>
                 <Text fontSize={14}>
-                  Do you really want to add the asoebi for guest or buy for
-                  oneself?
+                  Do you want to add the asoebi for guest or buy for
+                  yourself?
                 </Text>
               </Box>
 
@@ -70,7 +70,7 @@ const DesignViewModal = ({
                   bg="#00BFB2"
                   onClick={() => HandleSubmit(false)}
                 >
-                  Buy for self
+                  Buy for yourself
                 </Button>
               </Box>
             </ModalBody>
