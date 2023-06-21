@@ -29,6 +29,7 @@ const ProfileForms = () => {
   const [email, setEmail] = useState(user.email);
   const [residence, setResidence] = useState(user.placeOfResidence);
   const [dateOfBirth, setDateOfBirth] = useState(user.dob);
+  const [newDate, setNewDate] = useState('')
   const [phoneNumber, setPhoneNumber] = useState(user.tel);
   const [state, setState] = useState(user.state);
 
@@ -40,9 +41,15 @@ const ProfileForms = () => {
       const [month, day] = formattedDate.split(' ');
       return `${day} ${month}`;
     };
+
     const formattedDate = formatDate(user?.dob);
-    setDateOfBirth(formattedDate)
-  }, [])
+    setDateOfBirth(formattedDate);
+  }, []);
+
+  console.log(dateOfBirth, user?.dob);
+
+
+  // console.log(formatDate(dateOfBirth))
 
   const formBody = {
     gender,
@@ -144,13 +151,21 @@ const ProfileForms = () => {
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
                   <FormLabel fontSize={14}>Date of Birth</FormLabel>
-                  <Input 
-                    type='text'
-                    bg="#EEEEEE"
-                    value={dateOfBirth}
-                    disabled='disabled'
-                    border="1px solid #C6C6C6"
+                 {!edited 
+                  ? 
+                    <Input
+                      type='text'
+                      bg="#EEEEEE"
+                      value={new Date(dateOfBirth).toDateString().slice(0,11)}
+                      disabled='disabled'
+                      border="1px solid #C6C6C6"
+                    />
+                  : 
+                  <DatePicker
+                    defaultValue={new Date()}
+                    onChange={value => setDateOfBirth(value)}
                   />
+                 }
                 </Box>
                 <Box w={{ base: '250px', md: '300px' }} mb="5">
                   <FormLabel fontSize={14}>Phone number</FormLabel>

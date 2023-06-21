@@ -32,6 +32,7 @@ const BasicForm = ({ step, setStep }) => {
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState(newEvent ? newEvent.title : '');
   const [hosts, setHosts] = useState(newEvent ? newEvent.host : '');
+  const [coHost, setCoHost] = useState(newEvent ? newEvent.coHost : '');
   const [category, setCategory] = useState(newEvent ? newEvent.category : '');
   const [venue, setVenue] = useState(newEvent ? newEvent.venue : '');
   const [date, setDate] = useState(newEvent ? newEvent.date : '');
@@ -162,6 +163,27 @@ const BasicForm = ({ step, setStep }) => {
                   _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setHosts(e.target.value)}
                 />
+              </Box>
+
+              <Box mb="5">
+                <FormLabel fontWeight="semibold" fontSize={13.5}>
+                  Do you want to have co-host(s) for this event?
+                </FormLabel>
+                <Select
+                  
+                  placeholder={
+                    newEvent ? newEvent.coHost : 'Enter the hosts of the event'
+                  }
+                  fontSize={14}
+                  bg="#FAFAFA"
+                  color="black"
+                  value={coHost}
+                  _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
+                  onChange={e => setCoHost(e.target.value)}
+                >
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </Select>
               </Box>
 
               <Box mb="8">

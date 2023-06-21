@@ -13,7 +13,7 @@ import {
 
 const DisplayTable = ({ data, auxData, category }) => {
   return (
-    <Box my="8">
+    <Box my="8" minH='200px'>
       <TableContainer bg="white">
         <Table variant="simple">
           <Thead bg="#EEEEEE" px="17px" py="40px">

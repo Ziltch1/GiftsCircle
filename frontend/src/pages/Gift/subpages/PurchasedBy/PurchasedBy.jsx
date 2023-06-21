@@ -12,7 +12,7 @@ const PurchasedBy = ({ events }) => {
       let data = events.filter(x => x.user_id !== user.id);
       setData(data);
     }
-  }, [events, user]);
+  }, [, user]);
 
   return (
     <Box>
@@ -35,7 +35,7 @@ const PurchasedBy = ({ events }) => {
           </Box>
         </Box>
       ) : (
-        <Box w="100%" h="100%">
+        <Box w="100%" minH="500px">
           {data?.map(event => (
             <GiftItemList key={event.id} event={event} />
           ))}
