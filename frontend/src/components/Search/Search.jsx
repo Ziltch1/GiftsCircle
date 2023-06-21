@@ -10,21 +10,6 @@ import {
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 
-<<<<<<< HEAD
-const Search = ({data, setData,}) => {
-    // const [filtered, updateEvents, ] = useContext(SearchContext);
-    return (
-        <Box>
-            <FormControl>
-                <Flex justifyContent={'space-between'}>
-                    <InputGroup w='87%'>
-                        <InputLeftElement
-                            pointerEvents='none'
-                            children={<SearchIcon color='#8C8C8C' />}
-                        />
-                        <Input type='text'  outline='none' placeholder='Search anything in events' bg='white' border='none' fontSize={13} color='#8C8C8C' letterSpacing={0.5} />
-                    </InputGroup>
-=======
 const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
   return (
     <Box>
@@ -48,7 +33,6 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
               letterSpacing={0.5}
             />
           </InputGroup>
->>>>>>> 9386e92cca906af0771c18b7135d80a755f8a73f
 
           <Select
             placeholder="Filter"

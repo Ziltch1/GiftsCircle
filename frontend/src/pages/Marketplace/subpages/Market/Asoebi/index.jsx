@@ -28,7 +28,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const [data, setData] = useState([...AsoebiItems, ...eventAsoebis]);
   const [amount, setAmount] = useState(0);
   const [addForGuest, setAddforGuest] = useState(false);
-  const [designModal, setDesignModal] = useState(false);
+  const [designModal, setDesignModal] = useState(true);
 
   useEffect(() => {
     dispatch(GetAsoebiItems());
@@ -52,7 +52,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const handleClick = () => {
     if (eventId !== '') {
       dispatch(GetEventAsoebis(eventId));
-      setDesignModal(true);
+      setShowAsoebi(true);
     } else {
       toast({
         title: 'Error',

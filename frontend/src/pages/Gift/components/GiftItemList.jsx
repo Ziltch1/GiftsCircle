@@ -21,7 +21,7 @@ const GiftItemList = ({ event }) => {
           <Box>
             <HStack gap={2.5}>
               <Box>
-                <Image src={image} w="120px" h="110px" borderRadius={5} />
+                <Image src={image} w="120px" h="110px" objectFit='cover' borderRadius={5} />
               </Box>
               <Box>
                 <Box textAlign={'left'}>

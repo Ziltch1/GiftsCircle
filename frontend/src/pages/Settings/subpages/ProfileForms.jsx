@@ -29,7 +29,7 @@ const ProfileForms = () => {
   const [email, setEmail] = useState(user.email);
   const [residence, setResidence] = useState(user.placeOfResidence);
   const [dateOfBirth, setDateOfBirth] = useState(user.dob);
-  const [formattedDate, setFormattedDate] = useState('')
+  const [newDate, setNewDate] = useState('')
   const [phoneNumber, setPhoneNumber] = useState(user.tel);
   const [state, setState] = useState(user.state);
 
@@ -46,28 +46,7 @@ const ProfileForms = () => {
     setDateOfBirth(formattedDate);
   }, []);
 
-
- useEffect(() => {
-   const standardDate = (dateString) => {
-     const date = new Date(dateString);
-
-     // Get the day of the month with leading zero
-     const day = date.getDate().toString().padStart(2, '0');
-
-     // Get the abbreviated month name
-     const month = date.toLocaleString('default', { month: 'short' });
-
-     return `${day} ${month}`;
-   };
-
-   const newDate = standardDate(dateOfBirth)
-   setFormattedDate(newDate);
- }, [])
-  
-
-  
-
-  console.log(dateOfBirth);
+  console.log(dateOfBirth, user?.dob);
 
 
   // console.log(formatDate(dateOfBirth))
@@ -177,7 +156,7 @@ const ProfileForms = () => {
                     <Input
                       type='text'
                       bg="#EEEEEE"
-                      value={formattedDate ? formattedDate : 'loading'}
+                      value={new Date(dateOfBirth).toDateString().slice(0,11)}
                       disabled='disabled'
                       border="1px solid #C6C6C6"
                     />
