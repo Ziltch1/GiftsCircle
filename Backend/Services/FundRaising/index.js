@@ -41,8 +41,17 @@ const Create = async (data, image) => {
       },
     });
 
+    const message = `FundRaising has been created and is active`;
+    const notification = await prisma.notifications.create({
+      data: {
+        userId: event.user_id,
+        type: "FUNDRAISING",
+        message: message,
+      },
+    });
+
     await prisma.$disconnect();
-    return fundRaising;
+    return { fundRaising, notification };
   }
   return null;
 };
@@ -133,9 +142,18 @@ const Donate = async (data) => {
         message: message,
       },
     });
+
+    const guestMessage = `FundRaising: You made a donation to ${event.title} event fundRaising`;
+    const guestNotification = await prisma.notifications.create({
+      data: {
+        userId: data.userId,
+        type: "FUNDRAISING",
+        message: guestMessage,
+      },
+    });
     await prisma.$disconnect();
 
-    return { donation, notification };
+    return { donation, notification, guestNotification };
   }
   return null;
 };

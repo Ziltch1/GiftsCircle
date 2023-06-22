@@ -77,7 +77,8 @@ router.post("/create", EnsureAuthenticated, async (req, res) => {
 router.post("/createMany", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await CreateMany(req.body);
-    return res.status(200).send(data);
+    req.io.emit(data.notification.userId, data.notification);
+    return res.status(200).send(data.data);
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -90,6 +91,7 @@ router.post("/Buy", EnsureAuthenticated, async (req, res) => {
     let data = await Buy(req.body);
     if (data) {
       req.io.emit(data.notification.userId, data.notification);
+      req.io.emit(data.guestNotification.userId, data.guestNotification);
       return res.status(200).send(data.buy);
     }
     return res

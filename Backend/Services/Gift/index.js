@@ -212,7 +212,7 @@ const Buy = async (data) => {
   const event = await prisma.event.findUnique({
     where: { id: data[0].eventId },
   });
-  const message = `${user.firstname} bought some gifts`;
+  const message = `${user.firstname} paid for some gifts for ${event.title} event`;
   const notification = await prisma.notifications.create({
     data: {
       userId: event.user_id,
@@ -220,9 +220,18 @@ const Buy = async (data) => {
       message: message,
     },
   });
+
+  const guestMessage = `Gifts for ${event.title} bought successfully`;
+  const guestNotification = await prisma.notifications.create({
+    data: {
+      userId: data.userId,
+      type: "PURCHASE",
+      message: guestMessage,
+    },
+  });
   await prisma.$disconnect();
 
-  return { transactions, notification };
+  return { transactions, notification, guestNotification };
 };
 
 const Delete = async (id) => {

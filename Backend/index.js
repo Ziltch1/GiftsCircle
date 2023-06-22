@@ -11,7 +11,7 @@ const io = new Server(server, {
     origin: [
       "http://localhost:3000",
       // "http://localhost:3001",
-      // "https://giftscircle.netlify.app",
+      "https://giftscircle.netlify.app",
     ],
   },
 });
@@ -72,8 +72,6 @@ app.use("/api/docs/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // );
 const PORT = process.env.PORT || 4000;
 
-io.listen(3100);
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });

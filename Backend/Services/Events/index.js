@@ -85,6 +85,7 @@ const Create = async (data) => {
   });
 
   if (user) {
+    const coHostId = data.coHost ? "" : CreateCoHostId();
     let event = await prisma.event.create({
       data: {
         id: CreateEventId(),
@@ -100,7 +101,7 @@ const Create = async (data) => {
         co_hosts: undefined,
         published: false,
         applyDonation: false,
-        coHostCode: CreateCoHostId(),
+        coHostCode: coHostId,
         coHostLink: "",
         guestCode: CreateGuestId(),
         eventLink: "",
@@ -136,7 +137,6 @@ const Update1 = async (data) => {
         end_time: data.end_time,
         timezone: data.timezone,
         host: data.host,
-        created_at: new Date(Date.now()),
       },
     });
 
@@ -198,7 +198,7 @@ const Update3 = async (data) => {
       const message = `Event: ${event.title} is published`;
       const notification = await prisma.notifications.create({
         data: {
-          userId: data.userId,
+          userId: event.user_id,
           type: "EVENTCREATION",
           message: message,
         },
@@ -206,9 +206,16 @@ const Update3 = async (data) => {
       SendEventPublishEmail(user.email, user.firstname, event);
       return { Data, notification };
     }
-
+    const message = `Event: ${event.title} was edited`;
+    const notification = await prisma.notifications.create({
+      data: {
+        userId: event.user_id,
+        type: "EVENTEDIT",
+        message: message,
+      },
+    });
     await prisma.$disconnect();
-    return { Data };
+    return { Data, notification };
   }
   return null;
 };

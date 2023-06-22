@@ -14,6 +14,12 @@ const GetUserNotifications = async (id) => {
     where: {
       userId: id,
     },
+    orderBy: [
+      {
+        created_at: "desc",
+      },
+    ],
+    take: 10,
   });
   await prisma.$disconnect();
   return notifications;
@@ -182,9 +188,17 @@ const UpdateUser = async (data, id) => {
           : user.placeOfResidence,
       },
     });
+    const message = `Your profile has been updated`;
+    const notification = await prisma.notifications.create({
+      data: {
+        userId: id,
+        type: "USER_EDIT",
+        message: message,
+      },
+    });
 
     await prisma.$disconnect();
-    return updatedUser;
+    return { updatedUser, notification };
   }
 
   return null;

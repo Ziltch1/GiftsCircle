@@ -7,22 +7,29 @@ import {
   Button,
   Radio,
   Divider,
-  RadioGroup,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
-const DeliveryDetails = ({ data }) => {
-  const [checked, setChecked] = useState(1);
-  console.log(checked);
+const DeliveryDetails = ({
+  data,
+  setShowDeliveryForm,
+  setSelectedDeliveryDetails,
+}) => {
+  const [checked, setChecked] = useState(-1);
 
-  console.log(checked);
   return (
     <Box w="100%">
-      <RadioGroup onChange={setChecked} value={checked}>
-        {data.map((ele, index) => (
-          <DeliveryItem data={ele} checked={checked} index={index} />
-        ))}
-      </RadioGroup>
+      {data.map((ele, index) => {
+        return (
+          <DeliveryItem
+            data={ele}
+            setChecked={setChecked}
+            checked={index === checked}
+            index={index}
+            setSelectedDeliveryDetails={setSelectedDeliveryDetails}
+          />
+        );
+      })}
 
       <Button
         bg="#00BFB2"
@@ -30,6 +37,7 @@ const DeliveryDetails = ({ data }) => {
         mb="4"
         fontWeight="medium"
         color="white"
+        onClick={() => setShowDeliveryForm(true)}
       >
         <AddIcon mr="2" /> ADD ADDRESS
       </Button>
@@ -38,25 +46,40 @@ const DeliveryDetails = ({ data }) => {
   );
 };
 
-
-
-const DeliveryItem = ({ data, index, checked }) => {
-  console.log(typeof(index, checked));
+const DeliveryItem = ({
+  data,
+  index,
+  checked,
+  setChecked,
+  setSelectedDeliveryDetails,
+}) => {
   return (
-    <Box value={index} my='3'>
+    <Box value={index} my="3">
       <Heading fontSize={14} fontWeight="semibold" mb="2">
         ADDRESS BOOK {index + 1}
       </Heading>
-      <Box mb="4" border={index === checked ? "2px solid #00BFB2" : '2px solid lightgray'} borderRadius={7} p="5">
+      <Box
+        mb="4"
+        border={index === checked ? '2px solid #00BFB2' : '2px solid lightgray'}
+        borderRadius={7}
+        p="5"
+      >
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="flex-start"
         >
           <Stack direction="row" spacing={3} alignItems="flex-start">
-            <Radio value='1' colorScheme="teal" />
+            <Radio
+              isChecked={checked}
+              onClick={() => {
+                setChecked(index);
+                setSelectedDeliveryDetails(data);
+              }}
+              colorScheme="teal"
+            />
             <Box>
-              <Heading fontSize={15} mb="1" textTransform='capitalize'>
+              <Heading fontSize={15} mb="1" textTransform="capitalize">
                 {data.firstname} {data.lastname}
               </Heading>
               <Text fontSize={14} mb="1">
@@ -64,7 +87,8 @@ const DeliveryItem = ({ data, index, checked }) => {
                   ' ' +
                   data.info +
                   ' ' +
-                  '|' + ' ' +
+                  '|' +
+                  ' ' +
                   data.state +
                   ' ' +
                   data.lga +

@@ -50,7 +50,7 @@ const DashboardLayout = () => {
     if (user) {
       dispatch(GetUserNotifications(user.id));
       socket.on(user.id, (...args) => {
-        dispatch(setUserNotifications([...notifications, ...args]));
+        dispatch(setUserNotifications([...args, ...notifications]));
       });
     }
   }, [user]);

@@ -8,6 +8,11 @@ const GetEventMediaFiles = async (id) => {
       eventId: id,
       uploadedBy: "HOST",
     },
+    orderBy: [
+      {
+        date: "desc",
+      },
+    ],
     select: {
       url: true,
       date: true,
@@ -25,6 +30,11 @@ const GetEventGuestMedia = async (id) => {
       eventId: id,
       uploadedBy: "GUEST",
     },
+    orderBy: [
+      {
+        date: "desc",
+      },
+    ],
     include: {
       user: true,
     },
@@ -49,6 +59,11 @@ const GetGuestSentMedia = async (eventId, userId) => {
       eventId: eventId,
       userId: userId,
     },
+    orderBy: [
+      {
+        date: "desc",
+      },
+    ],
     select: {
       url: true,
       date: true,
@@ -95,8 +110,28 @@ const Create = async (data, url) => {
     },
   });
 
+  const user = await prisma.user.findFirst({ where: { id: data.userId } });
+  const event = await prisma.event.findFirst({ where: { id: data.eventId } });
+  const message = `Media : ${user.firstname} sent you a media file`;
+  const notification = await prisma.notifications.create({
+    data: {
+      userId: event.user_id,
+      type: "MEDIA",
+      message: message,
+    },
+  });
+
+  const guestMessage = `Media : Media file has been sent to the host`;
+  const guestNotification = await prisma.notifications.create({
+    data: {
+      userId: data.userId,
+      type: "MEDIA",
+      message: guestMessage,
+    },
+  });
+
   await prisma.$disconnect();
-  return Data;
+  return { Data, notification, guestNotification };
 };
 
 const UpdateVisibility = async (id, data) => {
@@ -123,9 +158,28 @@ const CreateComplimentaryMessage = async (data) => {
       message: data.message,
     },
   });
+  const user = await prisma.user.findFirst({ where: { id: data.userId } });
+  const event = await prisma.event.findFirst({ where: { id: data.eventId } });
+  const message = `Media : ${user.firstname} sent you a complimentary message`;
+  const notification = await prisma.notifications.create({
+    data: {
+      userId: event.user_id,
+      type: "MEDIA",
+      message: message,
+    },
+  });
+
+  const guestMessage = `Media : Complimentary mesage has been sent to the host`;
+  const guestNotification = await prisma.notifications.create({
+    data: {
+      userId: data.userId,
+      type: "MEDIA",
+      message: guestMessage,
+    },
+  });
 
   await prisma.$disconnect();
-  return Data;
+  return { Data, notification, guestNotification };
 };
 
 const Delete = async (id) => {

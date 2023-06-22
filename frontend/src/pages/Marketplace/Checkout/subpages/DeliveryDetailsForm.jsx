@@ -8,14 +8,17 @@ import {
   Stack,
   Select,
   useToast,
-  Button, Spinner
+  Button,
+  Spinner,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { LGAs } from '../../../../Utils/data/LGA';
 import { useSelector } from 'react-redux';
 import { DeliveryDetailsApi } from '../../../../redux/axios/apis/user';
+import { dispatch } from '../../../../redux/store';
+import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 
-const DeliveryDetailsForm = ({setShowDeliveryForm}) => {
+const DeliveryDetailsForm = ({ setShowDeliveryForm }) => {
   const toast = useToast();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -23,20 +26,20 @@ const DeliveryDetailsForm = ({setShowDeliveryForm}) => {
   const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [additionalInformation, setAdditionalInformation] = useState('');
-  const [selectedState, setSelectedState] = useState("");
+  const [selectedState, setSelectedState] = useState('');
   const [selectedLGAs, setSelectedLGAs] = useState([]);
-  const [selectedLGA, setSelectedLGA] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [selectedLGA, setSelectedLGA] = useState('');
+  const [loading, setLoading] = useState(false);
   const { user } = useSelector(state => state.user);
 
-  const handleStateChange = (e) => {
+  const handleStateChange = e => {
     const state = e.target.value;
     setSelectedState(state);
     setSelectedLGAs(LGAs[state]);
   };
 
-  const handleLGAsChange = (e) => {
-    setSelectedLGA(e.target.value)
+  const handleLGAsChange = e => {
+    setSelectedLGA(e.target.value);
     // Handle changes in the second select field, if needed
   };
 
@@ -54,26 +57,28 @@ const DeliveryDetailsForm = ({setShowDeliveryForm}) => {
 
   const handleSubmit = async () => {
     if (
-      firstName &&
-      lastName &&
-      phoneNumber &&
-      deliveryAddress &&
-      selectedState &&
-      selectedLGA
+      firstName !== '' &&
+      lastName !== '' &&
+      phoneNumber !== '' &&
+      deliveryAddress !== '' &&
+      selectedState !== '' &&
+      selectedLGA !== ''
     ) {
       setLoading(true);
       try {
-        await DeliveryDetailsApi(data);
+        const res = await DeliveryDetailsApi(data);
+        if (res.data) {
+          dispatch(GetDeliveryDetails(user.id));
+        }
         setFirstName('');
-        setLastName('')
+        setLastName('');
         setDeliveryAddress('');
         setAdditionalInformation('');
-        setSelectedLGA('')
-        setSelectedState('')
-        setPhoneNumber('')
-        setAdditionalPhoneNumber('')
-        await setLoading(false)
-        setShowDeliveryForm(false)
+        setSelectedLGA('');
+        setSelectedState('');
+        setPhoneNumber('');
+        setAdditionalPhoneNumber('');
+        setShowDeliveryForm(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -189,7 +194,7 @@ const DeliveryDetailsForm = ({setShowDeliveryForm}) => {
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>Region</FormLabel>
             <Select value={selectedState} onChange={handleStateChange}>
-              {Object.keys(LGAs).map((state) => (
+              {Object.keys(LGAs).map(state => (
                 <option key={state} value={state}>
                   {state}
                 </option>
@@ -199,7 +204,7 @@ const DeliveryDetailsForm = ({setShowDeliveryForm}) => {
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>City</FormLabel>
             <Select value={selectedLGA} onChange={handleLGAsChange}>
-              {selectedLGAs?.map((lga) => (
+              {selectedLGAs?.map(lga => (
                 <option key={lga} value={lga}>
                   {lga}
                 </option>
@@ -217,7 +222,7 @@ const DeliveryDetailsForm = ({setShowDeliveryForm}) => {
             fontWeight="medium"
             onClick={handleSubmit}
           >
-            {loading ? <Spinner size='md' /> : 'Save'}
+            {loading ? <Spinner size="md" /> : 'Save'}
           </Button>
         </Box>
       </FormControl>
