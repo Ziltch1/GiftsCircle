@@ -7,19 +7,18 @@ import { GiftContext } from '../../subpages/Market/Gifts'
 
 
 const CartSummary = () => {
-  const { GiftItems, setGiftItems, amount, setAddedGiftItems } =
-    useContext(GiftContext);
+  // const { GiftItems, setGiftItems, amount, setAddedGiftItems } = useContext(GiftContext);
     
-  const HandleSubmit = () => {
-    if (GiftItems.length > 0) {
-      dispatch(BuyItems(GiftItems));
-      setGiftItems([]);
-      setAddedGiftItems([]);
-      // closeModal();
-    } else {
-      // setShowDrawer();
-    }
-  };
+  // const HandleSubmit = () => {
+  //   if (GiftItems?.length > 0) {
+  //     dispatch(BuyItems(GiftItems));
+  //     setGiftItems([]);
+  //     setAddedGiftItems([]);
+  //     // closeModal();
+  //   } else {
+  //     // setShowDrawer();
+  //   }
+  // };
 
   return (
     <Box bg='white' p='4' w='100%' borderRadius={5}>
@@ -36,7 +35,7 @@ const CartSummary = () => {
           <Heading fontWeight='medium' fontSize={18}>₦ 175,000</Heading>
         </Flex>
         <Divider />
-        <PaymentButton action={HandleSubmit} amount={175000}/>
+        <PaymentButton amount={175000}/>
       </Stack>
     </Box>
   )

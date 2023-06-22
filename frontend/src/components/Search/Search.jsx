@@ -15,7 +15,7 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
     <Box>
       <FormControl>
         <Flex justifyContent={'space-between'}>
-          <InputGroup w="87%">
+          <InputGroup w="80%">
             <InputLeftElement
               pointerEvents="none"
               children={<SearchIcon color="#8C8C8C" />}
@@ -35,22 +35,25 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
           </InputGroup>
 
           <Select
-            placeholder="Filter"
             variant={'flushed'}
             bg="#555555"
-            w="10%"
+            w="17%"
             borderRadius="5px"
-            _placeholder={{ color: 'white' }}
             onChange={e => setFilter(e.target.value)}
             value={filter}
+            color="white"
+            textAlign='center'
+            border='none'
+            outline='none'
+            placeholder='filter'
           >
-            <option value="Birthday">Birthday</option>
-            <option value="Naming Ceremony">Naming Ceremony</option>
-            <option value="Retirement Ceremony">Retirement Ceremony</option>
-            <option value="Graduation">Graduation Ceremony</option>
-            <option value="Induction">Induction Ceremony</option>
-            <option value="Wedding">Wedding Ceremony</option>
-            <option value="Funeral">Funeral Ceremony</option>
+            <option value="Birthday" style={{ color: 'black' }}>Birthday</option>
+            <option value="Naming Ceremony" style={{ color: 'black' }}>Naming Ceremony</option>
+            <option value="Retirement Ceremony" style={{ color: 'black' }}>Retirement Ceremony</option>
+            <option value="Graduation" style={{ color: 'black' }}>Graduation Ceremony</option>
+            <option value="Induction" style={{ color: 'black' }}>Induction Ceremony</option>
+            <option value="Wedding" style={{ color: 'black' }}>Wedding Ceremony</option>
+            <option value="Funeral" style={{ color: 'black' }}>Funeral Ceremony</option>
           </Select>
         </Flex>
       </FormControl>

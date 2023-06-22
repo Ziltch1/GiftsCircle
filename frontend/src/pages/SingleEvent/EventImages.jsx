@@ -80,7 +80,7 @@ const EventImages = ({ newEvent, eventGuests }) => {
                 src={imageUrl}
                 w="100%"
                 h="100%"
-                // objectFit="contain"
+                objectFit="contain"
                 borderRadius={5}
               />
             ) : (

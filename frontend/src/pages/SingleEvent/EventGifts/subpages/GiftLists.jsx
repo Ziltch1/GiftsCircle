@@ -21,7 +21,6 @@ const GiftLists = ({ data }) => {
             <Tr fontSize={14} color="black">
               <Th>S/N</Th>
               <Th>Gift name</Th>
-              <Th>Quantity purchased</Th>
               <Th>Action</Th>
             </Tr>
           </Thead>
@@ -33,7 +32,6 @@ const GiftLists = ({ data }) => {
                   <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
                     <Td>{index + 1}</Td>
                     <Td>{giftItem.title}</Td>
-                    <Td>1</Td>
                     <Td color="#009F94">
                       {gift.purchased ? 'Purchased' : 'Available'}
                     </Td>

@@ -69,53 +69,59 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
     <>
       {!showAsoebi ? (
         <Box w={{ base: '350px', md: '500px', lg: '500px' }} mx="auto" h="auto">
-          <BackButton action={() => setShowProducts(false)} />
           <DesignViewModal
             setShowModal={setDesignModal}
             setAddForGuest={setAddforGuest}
             setShowAsoebi={setShowAsoebi}
             modalOpen={designModal}
           />
-          <Heading
-            textAlign="center"
-            my="8"
-            fontWeight="medium"
-            fontSize={25}
-            textTransform="capitalize"
-          >
-            Add Asoebi to event
-          </Heading>
+          <>
+           {addForGuest && 
+            <Box>
+                <BackButton action={() => setShowProducts(false)} />
+                <Heading
+                  textAlign="center"
+                  my="8"
+                  fontWeight="medium"
+                  fontSize={25}
+                  textTransform="capitalize"
+                >
+                  Add Asoebi to event
+                </Heading>
 
-          <FormControl>
-            <Box mb="5">
-              <FormLabel>Enter Event Id</FormLabel>
-              <Input
-                placeholder="Please enter the event id"
-                bg="#F4F4F4"
-                fontSize={14}
-                _placeholder={{ color: '#A8A8A8' }}
-                value={eventId}
-                onChange={e => setEventId(e.target.value)}
-              />
-            </Box>
+                <FormControl>
+                  <Box mb="5">
+                    <FormLabel>Enter Event Id</FormLabel>
+                    <Input
+                      placeholder="Please enter the event id"
+                      bg="#F4F4F4"
+                      fontSize={14}
+                      _placeholder={{ color: '#A8A8A8' }}
+                      value={eventId}
+                      onChange={e => setEventId(e.target.value)}
+                    />
+                  </Box>
 
-            <Text fontSize={14} mb="5" fontWeight="medium">
-              By clicking "Add Asoebi", you agree to our Terms of Services and
-              Privacy Statement
-            </Text>
-            <Box textAlign="center">
-              <Button
-                w="100%"
-                bg="#00BFB2"
-                fontWeight="medium"
-                fontSize={14}
-                color="white"
-                onClick={() => handleClick()}
-              >
-                Proceed to marketplace
-              </Button>
+                  <Text fontSize={14} mb="5" fontWeight="medium">
+                    By clicking "Add Asoebi", you agree to our Terms of Services and
+                    Privacy Statement
+                  </Text>
+                  <Box textAlign="center">
+                    <Button
+                      w="100%"
+                      bg="#00BFB2"
+                      fontWeight="medium"
+                      fontSize={14}
+                      color="white"
+                      onClick={() => handleClick()}
+                    >
+                      Proceed to marketplace
+                    </Button>
+                  </Box>
+                </FormControl>
             </Box>
-          </FormControl>
+           }
+          </>
         </Box>
       ) : (
         <AsoebiContext.Provider
