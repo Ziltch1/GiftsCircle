@@ -122,57 +122,61 @@ const EventImages = ({ newEvent, eventGuests }) => {
                 </Flex>
               </Box>
 
-              <Box>
-                <Text fontSize={14} mb="1">
-                  Co-host Code
-                </Text>
-                <Flex justifyContent={'space-between'} alignItems="center">
-                  <Heading fontWeight={'medium'} fontSize="14">
-                    {newEvent.coHostCode}
-                  </Heading>
-                  {copyElement === 'COHOST_CODE' ? (
-                    <CheckIcon onClick={() => setCopyElement('')} />
-                  ) : (
-                    <Image
-                      src={copyIcon}
-                      w="20px"
-                      h="20px"
-                      onClick={() =>
-                        HandleCopy('COHOST_CODE', newEvent.coHostCode)
-                      }
-                    />
-                  )}
-                </Flex>
-              </Box>
+              {newEvent.coHostCode !== '' && (
+                <Box>
+                  <Text fontSize={14} mb="1">
+                    Co-host Code
+                  </Text>
+                  <Flex justifyContent={'space-between'} alignItems="center">
+                    <Heading fontWeight={'medium'} fontSize="14">
+                      {newEvent.coHostCode}
+                    </Heading>
+                    {copyElement === 'COHOST_CODE' ? (
+                      <CheckIcon onClick={() => setCopyElement('')} />
+                    ) : (
+                      <Image
+                        src={copyIcon}
+                        w="20px"
+                        h="20px"
+                        onClick={() =>
+                          HandleCopy('COHOST_CODE', newEvent.coHostCode)
+                        }
+                      />
+                    )}
+                  </Flex>
+                </Box>
+              )}
 
-              <Box>
-                <Text fontSize={14} mb="1">
-                  Co-host link
-                </Text>
-                <Flex justifyContent={'space-between'} alignItems="center">
-                  <Heading
-                    fontWeight={'medium'}
-                    fontSize="12"
-                    w="220px"
-                    lineHeight={5}
-                  >{`https://giftscircle.netlify.app/event/join/${newEvent.id}`}</Heading>
-                  {copyElement === 'COHOST_LINK' ? (
-                    <CheckIcon onClick={() => setCopyElement('')} />
-                  ) : (
-                    <Image
-                      src={copyIcon}
-                      w="20px"
-                      h="20px"
-                      onClick={() =>
-                        HandleCopy(
-                          'COHOST_LINK',
-                          `https://giftscircle.netlify.app/event/join/${newEvent.id}`
-                        )
-                      }
-                    />
-                  )}
-                </Flex>
-              </Box>
+              {newEvent.coHostCode !== '' && (
+                <Box>
+                  <Text fontSize={14} mb="1">
+                    Co-host link
+                  </Text>
+                  <Flex justifyContent={'space-between'} alignItems="center">
+                    <Heading
+                      fontWeight={'medium'}
+                      fontSize="12"
+                      w="220px"
+                      lineHeight={5}
+                    >{`https://giftscircle.netlify.app/event/join/${newEvent.id}`}</Heading>
+                    {copyElement === 'COHOST_LINK' ? (
+                      <CheckIcon onClick={() => setCopyElement('')} />
+                    ) : (
+                      <Image
+                        src={copyIcon}
+                        w="20px"
+                        h="20px"
+                        onClick={() =>
+                          HandleCopy(
+                            'COHOST_LINK',
+                            `https://giftscircle.netlify.app/event/join/${newEvent.id}`
+                          )
+                        }
+                      />
+                    )}
+                  </Flex>
+                </Box>
+              )}
 
               <Box>
                 <Text fontSize={14} mb="1">

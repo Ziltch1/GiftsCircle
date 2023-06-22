@@ -10,19 +10,13 @@ import {
   TableContainer,
   Text,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import SkeletonLoader from '../../../../components/Skeleton';
 
 const DonationHistory = () => {
   const { fundRaisingDonors } = useSelector(state => state.event);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (fundRaisingDonors) {
-      setLoading(false);
-    }
-  }, [fundRaisingDonors]);
   return (
     <Box>
       <Heading mb="4" fontSize={24} fontWeight={500}>

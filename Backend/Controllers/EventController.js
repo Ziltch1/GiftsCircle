@@ -148,8 +148,8 @@ router.post("/create3", EnsureAuthenticated, async (req, res) => {
 
 router.delete("/:id", EnsureAuthenticated, async (req, res) => {
   try {
-    const res = await DeleteEvent(req.params.id);
-    if (res.notification) {
+    const data = await DeleteEvent(req.params.id);
+    if (data.notification) {
       req.io.emit(data.notification.userId, data.notification);
       return res
         .status(200)

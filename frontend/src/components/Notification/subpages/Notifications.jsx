@@ -7,10 +7,10 @@ import moment from 'moment';
 const Notifications = () => {
   const { notifications } = useSelector(state => state.user);
   return (
-    <Box fontSize={14}>
-      <Heading fontWeight={'semibold'} fontSize="17px" mb="4">
+    <Box fontSize={14} >
+      {/* <Heading fontWeight={'semibold'} fontSize="17px" mb="4">
         New
-      </Heading>
+      </Heading> */}
       <Box>
         <VStack>
           {notifications.map(item => (
@@ -20,12 +20,11 @@ const Notifications = () => {
                 alignItems="flex-start"
                 spacing={3}
               >
-                <Image src={avatar} />
+                {/* <Image src={avatar} /> */}
                 <Box>
                   <Heading
                     fontWeight={'medium'}
                     fontSize="13px"
-                    mb="1"
                     _hover={{ textDecoration: 'underline' }}
                   >
                     {item.message}
