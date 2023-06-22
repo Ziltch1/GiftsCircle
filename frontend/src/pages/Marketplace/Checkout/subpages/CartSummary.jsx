@@ -39,7 +39,10 @@ const CartSummary = ({ amount, data, deliveryAmount }) => {
           </Heading>
         </Flex>
         <Divider />
-        <PaymentButton amount={amount + deliveryAmount} />
+
+        {deliveryAmount !== 0 && (
+          <PaymentButton amount={amount + deliveryAmount} />
+        )}
       </Stack>
     </Box>
   );

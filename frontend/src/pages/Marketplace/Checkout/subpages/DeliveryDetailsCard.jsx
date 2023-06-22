@@ -15,7 +15,7 @@ const DeliveryDetails = ({
   setShowDeliveryForm,
   setSelectedDeliveryDetails,
 }) => {
-  const [checked, setChecked] = useState(1);
+  const [checked, setChecked] = useState(-1);
 
   return (
     <Box w="100%">
