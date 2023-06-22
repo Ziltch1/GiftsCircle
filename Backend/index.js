@@ -72,8 +72,6 @@ app.use("/api/docs/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // );
 const PORT = process.env.PORT || 4000;
 
-io.listen(3100);
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
