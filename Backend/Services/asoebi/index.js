@@ -71,7 +71,6 @@ const CreateMany = async (data) => {
     skipDuplicates: true,
   });
 
-  
   const message = `Asoebis has been added for guest`;
   const notification = await prisma.notifications.create({
     data: {
@@ -81,7 +80,7 @@ const CreateMany = async (data) => {
     },
   });
   await prisma.$disconnect();
-  return {data, notification};
+  return { data, notification };
 };
 
 const Delete = async (id) => {
@@ -132,6 +131,7 @@ const Buy = async (data) => {
       where: { id: data.eventId },
     });
     const message = `${user.firstname} bought ${data.quantity} quantity of asoebi`;
+    const guestMessage = `You have bought ${data.quantity} quantity of asoebi`;
     const notification = await prisma.notifications.create({
       data: {
         userId: event.user_id,
@@ -139,9 +139,17 @@ const Buy = async (data) => {
         message: message,
       },
     });
+
+    const guestNotification = await prisma.notifications.create({
+      data: {
+        userId: data.userId,
+        type: "PURCHASE",
+        message: guestMessage,
+      },
+    });
     await prisma.$disconnect();
 
-    return { buy, notification };
+    return { buy, notification, guestNotification };
   }
   return null;
 };

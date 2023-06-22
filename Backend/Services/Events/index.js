@@ -198,7 +198,7 @@ const Update3 = async (data) => {
       const message = `Event: ${event.title} is published`;
       const notification = await prisma.notifications.create({
         data: {
-          userId: data.userId,
+          userId: event.user_id,
           type: "EVENTCREATION",
           message: message,
         },
@@ -209,7 +209,7 @@ const Update3 = async (data) => {
     const message = `Event: ${event.title} was edited`;
     const notification = await prisma.notifications.create({
       data: {
-        userId: data.userId,
+        userId: event.user_id,
         type: "EVENTEDIT",
         message: message,
       },

@@ -45,17 +45,9 @@ const SummaryForm = ({ setStep }) => {
   const [publish, setPublish] = useState(false);
   const toast = useToast();
 
-  console.log(publish, percentage);
-
   const showModal = async () => {
-    if (percentage && publish) {
+    if (percentage) {
       setOpenModal(true);
-      try {
-        localStorage.setItem(
-          'newEvent',
-          JSON.stringify({ percentDonation: percentage })
-        );
-      } catch (error) {}
     } else {
       toast({
         title: 'Error!',

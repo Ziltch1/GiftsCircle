@@ -37,7 +37,7 @@ model event {
   descSummary     String?       @db.VarChar
   published       Boolean
   applyDonation   Boolean
-  percentDonation Int
+  percentDonation Float
   coHostCode      String        @db.VarChar(6)
   coHostLink      String        @db.VarChar(100)
   eventLink       String        @db.VarChar(100)
@@ -266,6 +266,7 @@ model Notifications {
   type       NOTIFICATION
   author     user         @relation(fields: [userId], references: [id])
   userId     String       @db.VarChar(255)
+  eventId    String?      @db.VarChar 
   created_at DateTime     @default(now())
   read       Boolean      @default(false)
   message    String       @db.VarChar
@@ -308,5 +309,6 @@ enum NOTIFICATION {
   GUESTJOIN
   FUNDRAISING
   PURCHASE
-
+  USER_EDIT
+  MEDIA
 }
