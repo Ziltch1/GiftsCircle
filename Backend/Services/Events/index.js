@@ -85,6 +85,7 @@ const Create = async (data) => {
   });
 
   if (user) {
+    const coHostId = data.coHost ? "" : CreateCoHostId();
     let event = await prisma.event.create({
       data: {
         id: CreateEventId(),
@@ -100,7 +101,7 @@ const Create = async (data) => {
         co_hosts: undefined,
         published: false,
         applyDonation: false,
-        coHostCode: CreateCoHostId(),
+        coHostCode: coHostId,
         coHostLink: "",
         guestCode: CreateGuestId(),
         eventLink: "",
@@ -136,7 +137,6 @@ const Update1 = async (data) => {
         end_time: data.end_time,
         timezone: data.timezone,
         host: data.host,
-        created_at: new Date(Date.now()),
       },
     });
 

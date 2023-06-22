@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import BackButton from '../../../../components/Buttons/BackButton';
-import TimezoneSelect from 'react-timezone-select';
 import { useSelector } from 'react-redux';
 import {
   CreateEventApi1,
@@ -46,19 +45,10 @@ const BasicForm = ({ step, setStep }) => {
     if (event) {
       dispatch(setNewEvent(event));
     }
-    dispatch(GetDeliveryDetails(user.id));
   }, []);
   const toast = useToast();
   const HandleSubmit = async e => {
-    if (
-      title &&
-      hosts &&
-      category &&
-      venue &&
-      date &&
-      startTime &&
-      endTime
-    ) {
+    if (title && hosts && category && venue && date && startTime && endTime) {
       try {
         if (editEvent) {
           const formBody = {
@@ -89,6 +79,7 @@ const BasicForm = ({ step, setStep }) => {
             end_time: endTime,
             timezone: '(GMT + 1:00) West Central Africa',
             userId: user.id,
+            coHost: coHost,
           };
           const res = await CreateEventApi1(formBody);
           localStorage.setItem('newEvent', JSON.stringify(res.data));
@@ -114,7 +105,6 @@ const BasicForm = ({ step, setStep }) => {
   const BackAction = () => {
     setOpenModal(true);
   };
-
   return (
     <Box mt="10">
       <Box h="100%" overflow="auto" mb="12" w="750px" mx="auto">
@@ -170,7 +160,6 @@ const BasicForm = ({ step, setStep }) => {
                   Do you want to have co-host(s) for this event?
                 </FormLabel>
                 <Select
-                  
                   placeholder={
                     newEvent ? newEvent.coHost : 'Enter the hosts of the event'
                   }
@@ -181,8 +170,8 @@ const BasicForm = ({ step, setStep }) => {
                   _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setCoHost(e.target.value)}
                 >
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
                 </Select>
               </Box>
 
