@@ -9,13 +9,14 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
+import {DropdownList} from 'react-widgets'
 
 const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
   return (
     <Box>
       <FormControl>
         <Flex justifyContent={'space-between'}>
-          <InputGroup w="80%">
+          <InputGroup w="78%">
             <InputLeftElement
               pointerEvents="none"
               children={<SearchIcon color="#8C8C8C" />}
@@ -34,6 +35,18 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
             />
           </InputGroup>
 
+          {/* <Box w='20%'>
+            <DropdownList
+              value={filter}
+              defaultValue={"Filter"}
+              onChange={value => setFilter(value)}
+              // style={{ width: '15%' }}
+              // placeholder='Filter'
+              // defaultValue="Filter"
+              data={["Birthday", "Naming", "Retirement", "Graduation", "Induction", "Wedding", "Funeral"]}
+            />
+          </Box> */}
+          
           <Select
             variant={'flushed'}
             bg="#555555"
