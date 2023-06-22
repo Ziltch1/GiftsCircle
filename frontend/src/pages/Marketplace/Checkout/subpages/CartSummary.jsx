@@ -1,32 +1,15 @@
-import {
-  Box,
-  Heading,
-  Text,
-  Divider,
-  Stack,
-  Flex,
-} from '@chakra-ui/react';
+import { Box, Heading, Text, Divider, Stack, Flex } from '@chakra-ui/react';
 import React from 'react';
 import PaymentButton from '../../../../components/Buttons/PaymentButton';
-// import { dispatch } from '../../../../redux/store';
-// import { BuyItems } from '../../../../redux/features/marketplace/service';
-// import { GiftContext } from '../../subpages/Market/Gifts';
+import { dispatch } from '../../../../redux/store';
+import { BuyItems } from '../../../../redux/features/marketplace/service';
 
-const CartSummary = () => {
-  // const { GiftItems, setGiftItems, amount, setAddedGiftItems } =
-  //   useContext(GiftContext);
-  // // console.log(GiftItems);
-
-  // const HandleSubmit = () => {
-  //   if (GiftItems?.length > 0) {
-  //     dispatch(BuyItems(GiftItems));
-  //     setGiftItems([]);
-  //     setAddedGiftItems([]);
-  //     // closeModal();
-  //   } else {
-  //     // setShowDrawer();
-  //   }
-  // };
+const CartSummary = ({ amount, data, deliveryAmount }) => {
+  const HandleSubmit = () => {
+    if (data?.length > 0) {
+      dispatch(BuyItems(data));
+    }
+  };
 
   return (
     <Box bg="white" p="4" w="100%" borderRadius={5}>
@@ -36,20 +19,30 @@ const CartSummary = () => {
         </Heading>
         <Divider />
         <Flex alignItems="center" justifyContent="space-between">
-          <Text>Item's total (2)</Text>
+          <Text>{`Item's total (${data.length})`}</Text>
           <Heading fontWeight="medium" fontSize={18}>
-            ₦ 155,000
+            ₦ {amount}
+          </Heading>
+        </Flex>
+
+        <Flex alignItems="center" justifyContent="space-between">
+          <Text>Delivery Fee</Text>
+          <Heading fontWeight="medium" fontSize={18}>
+            ₦ {deliveryAmount}
           </Heading>
         </Flex>
         <Divider />
         <Flex alignItems="center" justifyContent="space-between">
           <Text>Total</Text>
           <Heading fontWeight="medium" fontSize={18}>
-            ₦ 175,000
+            ₦ {amount + deliveryAmount}
           </Heading>
         </Flex>
         <Divider />
-        <PaymentButton amount={17500} />
+
+        {deliveryAmount !== 0 && (
+          <PaymentButton amount={amount + deliveryAmount} />
+        )}
       </Stack>
     </Box>
   );

@@ -7,19 +7,29 @@ import {
   Button,
   Radio,
   Divider,
-  RadioGroup,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
-const DeliveryDetails = ({ data, setShowDeliveryForm }) => {
-  const [checked, setChecked] = useState(1);
+const DeliveryDetails = ({
+  data,
+  setShowDeliveryForm,
+  setSelectedDeliveryDetails,
+}) => {
+  const [checked, setChecked] = useState(-1);
+
   return (
     <Box w="100%">
-      <RadioGroup onChange={setChecked} value={checked}>
-        {data.map((ele, index) => (
-          <DeliveryItem data={ele} checked={checked} index={index} />
-        ))}
-      </RadioGroup>
+      {data.map((ele, index) => {
+        return (
+          <DeliveryItem
+            data={ele}
+            setChecked={setChecked}
+            checked={index === checked}
+            index={index}
+            setSelectedDeliveryDetails={setSelectedDeliveryDetails}
+          />
+        );
+      })}
 
       <Button
         bg="#00BFB2"
@@ -36,7 +46,13 @@ const DeliveryDetails = ({ data, setShowDeliveryForm }) => {
   );
 };
 
-const DeliveryItem = ({ data, index, checked }) => {
+const DeliveryItem = ({
+  data,
+  index,
+  checked,
+  setChecked,
+  setSelectedDeliveryDetails,
+}) => {
   return (
     <Box value={index} my="3">
       <Heading fontSize={14} fontWeight="semibold" mb="2">
@@ -54,7 +70,14 @@ const DeliveryItem = ({ data, index, checked }) => {
           alignItems="flex-start"
         >
           <Stack direction="row" spacing={3} alignItems="flex-start">
-            <Radio value="1" colorScheme="teal" />
+            <Radio
+              isChecked={checked}
+              onClick={() => {
+                setChecked(index);
+                setSelectedDeliveryDetails(data);
+              }}
+              colorScheme="teal"
+            />
             <Box>
               <Heading fontSize={15} mb="1" textTransform="capitalize">
                 {data.firstname} {data.lastname}
