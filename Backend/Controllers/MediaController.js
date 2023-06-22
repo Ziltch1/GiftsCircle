@@ -119,13 +119,14 @@ router.post(
           })
           .catch((err) => console.log(err));
       });
-      if (data[0].uploadedBy === "HOST") {
+      const event = await prisma.event.findFirst({
+        where: { id: data.eventId },
+      });
+      if (req.body.uploadedBy === "GUEST") {
         const user = await prisma.user.findFirst({
           where: { id: data.userId },
         });
-        const event = await prisma.event.findFirst({
-          where: { id: data.eventId },
-        });
+
         const message = `Media : ${user.firstname} sent you some media files`;
         const notification = await prisma.notifications.create({
           data: {
@@ -135,7 +136,20 @@ router.post(
           },
         });
 
-        req.io.emit(notification.userId, data.notification);
+        req.io.emit(notification.userId, notification);
+      }
+      if (req.body.uploadedBy === "HOST") {
+        const message = `Media : Host has uploaded some media files for ${event.title}`;
+        const notification = await prisma.notifications.create({
+          data: {
+            userId: event.user_id,
+            eventId: event.id,
+            type: "MEDIA",
+            message: message,
+          },
+        });
+
+        req.io.emit(event.id, notification);
       }
 
       return res.sendStatus(200);
@@ -149,8 +163,10 @@ router.post(
 
 router.post("/UploadVideo", EnsureAuthenticated, async (req, res) => {
   try {
-    let Data = await Create(req.body, req.body.files);
-    return res.status(200).send(Data);
+    let data = await Create(req.body, req.body.files);
+    req.io.emit(data.guestNotification.userId, data.guestNotification);
+    req.io.emit(data.notification.userId, data.notification);
+    return res.status(200).send(data.Data);
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
@@ -161,7 +177,7 @@ router.post("/UploadVideo", EnsureAuthenticated, async (req, res) => {
 router.post("/UploadMessage", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await CreateComplimentaryMessage(req.body);
-
+    req.io.emit(data.guestNotification.userId, data.guestNotification);
     req.io.emit(data.notification.userId, data.notification);
     return res.status(200).send(data.Data);
   } catch (err) {

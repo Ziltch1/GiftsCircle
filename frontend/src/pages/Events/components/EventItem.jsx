@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Text,
@@ -12,6 +12,10 @@ import calendarIcon from '../../../components/assets/calendar.svg';
 import lockIcon from '../../../components/assets/lock.svg';
 import { CheckIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { socket } from '../../../socket';
+import { dispatch } from '../../../redux/store';
+import { setUserNotifications } from '../../../redux/features/user/userSlice';
 
 const EventItem = ({
   id,
@@ -22,6 +26,16 @@ const EventItem = ({
   date,
   guest,
 }) => {
+  const { user, notifications } = useSelector(state => state.user);
+
+  useEffect(() => {
+    if (user && guest) {
+      socket.on(id, (...args) => {
+        dispatch(setUserNotifications([...args, ...notifications]));
+      });
+    }
+  }, [user, id, guest, notifications]);
+
   return (
     <Box bg="white" mb="5" py="7" px="8" borderRadius={5} key={id}>
       <HStack justifyContent={'space-between'} alignItems="center">

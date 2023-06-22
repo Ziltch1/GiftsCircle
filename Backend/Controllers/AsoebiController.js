@@ -91,6 +91,7 @@ router.post("/Buy", EnsureAuthenticated, async (req, res) => {
     let data = await Buy(req.body);
     if (data) {
       req.io.emit(data.notification.userId, data.notification);
+      req.io.emit(data.guestNotification.userId, data.guestNotification);
       return res.status(200).send(data.buy);
     }
     return res
