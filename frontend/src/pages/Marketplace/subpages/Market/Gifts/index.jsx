@@ -15,6 +15,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const { user } = useSelector(state => state.user);
   const { giftItems } = useSelector(state => state.gift);
+  const { checkoutData } = useSelector(state => state.market);
   const [GiftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
   const [amount, setAmount] = useState(0);
@@ -26,6 +27,14 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   useEffect(() => {
     dispatch(GetGiftItems());
   }, []);
+
+  useEffect(() => {
+    const { data } = checkoutData;
+    setGiftItems([...data]);
+    const ids = [];
+    data.forEach(x => ids.push(x.ItemId));
+    setAddedGiftItems([...ids]);
+  }, [checkoutData]);
 
   const contextValue = useMemo(
     () => ({
@@ -71,7 +80,11 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
           setAmount,
         }}
       >
-        <GiftListDrawer setShowDrawer={setShowDrawer} setShowCheckout={setShowCheckout} isOpen={showDrawer} />
+        <GiftListDrawer
+          setShowDrawer={setShowDrawer}
+          setShowCheckout={setShowCheckout}
+          isOpen={showDrawer}
+        />
         <Box bg="#F5F5F5">
           <Box minH="600px" w="100%" mx="auto" pt="8">
             <BackButton action={showOptions} />
@@ -119,7 +132,11 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
             <Box mb="7">
               <Search />
             </Box>
-            <Flex justifyContent='space-between' alignItems="center" flexWrap="wrap">
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+              flexWrap="wrap"
+            >
               {giftItems.map(item => (
                 <DisplayCard
                   id={item.id}
