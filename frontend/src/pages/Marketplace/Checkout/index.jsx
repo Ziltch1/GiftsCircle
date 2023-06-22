@@ -6,10 +6,16 @@ import CartSummary from './subpages/CartSummary';
 import DeliveryDetailsCard from './subpages/DeliveryDetailsCard';
 import BackButton from '../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
+import { Zones } from '../../../Utils/data/ZONES';
 
 const Index = ({ setShowCheckout }) => {
   const [showDeliveryForm, setShowDeliveryForm] = useState(true);
+  const [selectedDeliveryDetails, setSelectedDeliveryDetails] = useState(null);
+  const [deliveryAmount, setDeliveryAmount] = useState(0);
   const { deliveryDetails } = useSelector(state => state.user);
+  const { checkoutData } = useSelector(state => state.market);
+
+  const { amount, type, data } = checkoutData;
 
   const handleClick = () => {
     if (showDeliveryForm) {
@@ -29,6 +35,16 @@ const Index = ({ setShowCheckout }) => {
     }
   }, [deliveryDetails]);
 
+  useEffect(() => {
+    if (selectedDeliveryDetails) {
+      Object.values(Zones).forEach(val => {
+        if (val.States.includes(selectedDeliveryDetails.state)) {
+          setDeliveryAmount(val.Amount);
+        }
+      });
+    }
+  }, [selectedDeliveryDetails]);
+
   return (
     <Box w="80%" mx="auto" my="8">
       <BackButton action={handleClick} />
@@ -46,12 +62,17 @@ const Index = ({ setShowCheckout }) => {
             <DeliveryDetailsCard
               data={deliveryDetails}
               setShowDeliveryForm={setShowDeliveryForm}
+              setSelectedDeliveryDetails={setSelectedDeliveryDetails}
             />
           )}
         </Box>
 
         <Box w={{ base: '100%', lg: '30%' }}>
-          <CartSummary />
+          <CartSummary
+            amount={amount}
+            data={data}
+            deliveryAmount={deliveryAmount}
+          />
         </Box>
       </Stack>
     </Box>
