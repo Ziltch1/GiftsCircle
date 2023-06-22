@@ -19,7 +19,7 @@ const GetUserNotifications = async (id) => {
         created_at: "desc",
       },
     ],
-    take: 15,
+    take: 10,
   });
   await prisma.$disconnect();
   return notifications;
@@ -192,7 +192,7 @@ const UpdateUser = async (data, id) => {
     const notification = await prisma.notifications.create({
       data: {
         userId: id,
-        type: "USER_PROFILE",
+        type: "USER_EDIT",
         message: message,
       },
     });

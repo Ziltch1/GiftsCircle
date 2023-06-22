@@ -45,7 +45,8 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
             textAlign='center'
             border='none'
             outline='none'
-            placeholder='filter'
+            placeholder='Filter'
+            gap="8px"
           >
             <option value="Birthday" style={{ color: 'black' }}>Birthday</option>
             <option value="Naming Ceremony" style={{ color: 'black' }}>Naming Ceremony</option>
