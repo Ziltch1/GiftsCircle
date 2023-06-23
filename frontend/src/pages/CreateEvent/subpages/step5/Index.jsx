@@ -87,7 +87,7 @@ const SummaryForm = ({ setStep }) => {
         </Box>
 
         <Box>
-          <Button color="#00BFB2" bg="none" onClick={() => setStep(6)}>
+          <Button color="#00BFB2" bg="none" onClick={() => setStep(5)}>
             <Flex alignItems="center" gap={2}>
               <Text>Preview your event</Text>
               <ExternalLinkIcon />
@@ -111,7 +111,7 @@ const SummaryForm = ({ setStep }) => {
           w="100%"
           h="100%"
           borderRadius={5}
-          objectFit="cover"
+          objectFit="contain"
         />
       </Box>
 

@@ -17,6 +17,7 @@ const DesignViewModal = ({
   setShowModal,
   setShowAsoebi,
   setAddForGuest,
+  setShowProducts,
 }) => {
   const { onClose } = useDisclosure({ defaultIsOpen: true });
   const HandleSubmit = option => {
@@ -29,6 +30,11 @@ const DesignViewModal = ({
       setAddForGuest(option);
     }
   };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setShowProducts(false);
+  };
   return (
     <>
       <Modal
@@ -40,7 +46,7 @@ const DesignViewModal = ({
         <ModalOverlay />
         <ModalContent maxW="420px" bg="white" py="8" px="6">
           <Box>
-            <ModalCloseButton onClick={() => setShowModal(false)} />
+            <ModalCloseButton onClick={closeModal} />
             <ModalBody>
               <Box textAlign="center" mb="4">
                 <Heading fontWeight={600} fontSize="25px" mb="3">

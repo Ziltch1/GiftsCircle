@@ -18,8 +18,8 @@ const Index = () => {
     dispatch(GetGiftItems());
   }, []);
   return (
-    <Box py={step !== 6 ? '4' : '0'}>
-      {step !== 6 && (
+    <Box py={step !== 5 ? '4' : '0'}>
+      {step !== 5 && (
         <>
           <FormHeader step={step} setStep={setStep} />
           <Stepper step={step} />

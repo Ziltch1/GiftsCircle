@@ -3,13 +3,28 @@ import React from 'react';
 import PaymentButton from '../../../../components/Buttons/PaymentButton';
 import { dispatch } from '../../../../redux/store';
 import { BuyItems } from '../../../../redux/features/marketplace/service';
+import { useSelector } from 'react-redux';
 
-const CartSummary = ({ amount, data, deliveryAmount }) => {
+const CartSummary = ({ data, amount, deliveryAmount }) => {
+
+  console.log(data);
+
   const HandleSubmit = () => {
     if (data?.length > 0) {
       dispatch(BuyItems(data));
     }
   };
+
+  // const handleSubmit = () => {
+  //   if (SourvenirItems.length > 0) {
+  //     dispatch(BuyItems(SourvenirItems));
+  //     setSourvernirItems([]);
+  //     setAddedSourvernirItems([]);
+  //     closeModal();
+  //   } else {
+  //     setShowDrawer();
+  //   }
+  // };
 
   return (
     <Box bg="white" p="4" w="100%" borderRadius={5}>
@@ -40,9 +55,9 @@ const CartSummary = ({ amount, data, deliveryAmount }) => {
         </Flex>
         <Divider />
 
-        {deliveryAmount !== 0 && (
-          <PaymentButton amount={amount + deliveryAmount} />
-        )}
+        {/* {deliveryAmount !== 0 && ( */}
+          <PaymentButton amount={amount + deliveryAmount} onClick={HandleSubmit} />
+        {/* )} */}
       </Stack>
     </Box>
   );

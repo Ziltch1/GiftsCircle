@@ -65,6 +65,11 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
     }
   };
 
+  const changeView = () => {
+    setAddforGuest(false);
+    setDesignModal(true)
+  };
+
   return (
     <>
       {!showAsoebi ? (
@@ -74,11 +79,12 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
             setAddForGuest={setAddforGuest}
             setShowAsoebi={setShowAsoebi}
             modalOpen={designModal}
+            setShowProducts={setShowProducts}
           />
           <>
            {addForGuest && 
             <Box>
-                <BackButton action={() => setShowProducts(false)} />
+                <BackButton action={changeView} />
                 <Heading
                   textAlign="center"
                   my="8"

@@ -28,6 +28,10 @@ const DeleteAsoebiApi = id => {
   return api.delete(`/asoebi/${id}`);
 };
 
+const GetUserPurchasedAsoebiApi = id => {
+  return api.get(`/MarketPlace/Get/All/${id}`);
+};
+
 export {
   GetAsoebiItemsApi,
   AddEventAsoebiApi,
@@ -36,4 +40,5 @@ export {
   DeleteAsoebiApi,
   GetEventAsoebiApi,
   GetEventAsoebiBuyersApi,
+  GetUserPurchasedAsoebiApi,
 };

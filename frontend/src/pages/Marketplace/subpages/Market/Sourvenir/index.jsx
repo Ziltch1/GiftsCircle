@@ -18,6 +18,8 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const [SourvenirItems, setSourvernirItems] = useState([]);
   const [addedSourvernirItems, setAddedSourvernirItems] = useState([]);
   const [amount, setAmount] = useState(0);
+  const {checkoutData} = useSelector(state => state.market);
+
   const showOptions = () => {
     setShowProducts(false);
   };
@@ -25,6 +27,14 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   useEffect(() => {
     dispatch(GetSourvenirItems());
   }, []);
+
+  useEffect(() => {
+    const {data} = checkoutData;
+    setSourvernirItems([...data]);
+    const ids = [];
+    data.forEach(x => ids.push(x.ItemId));
+    setAddedSourvernirItems([...ids]);
+  }, [checkoutData])
 
   const contextValue = useMemo(
     () => ({
@@ -69,7 +79,11 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
           setAmount,
         }}
       >
-        <GiftListDrawer setShowDrawer={setShowDrawer} isOpen={showDrawer} setShowCheckout={setShowCheckout}/>
+        <GiftListDrawer 
+          setShowDrawer={setShowDrawer} 
+          isOpen={showDrawer} 
+          setShowCheckout={setShowCheckout}
+        />
         <Box bg="#F5F5F5">
           <Box minH="600px" w="100%" mx="auto" pt="8">
             <BackButton action={showOptions} />

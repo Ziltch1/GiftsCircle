@@ -18,6 +18,7 @@ import PaymentButton from '../../../../../components/Buttons/PaymentButton';
 import { SourvenirContext } from '.';
 import { dispatch } from '../../../../../redux/store';
 import { BuyItems } from '../../../../../redux/features/marketplace/service';
+import { setCheckoutData } from '../../../../../redux/features/marketplace/marketSlice';
 
 const GiftListDrawer = ({ setShowDrawer, isOpen, setShowCheckout }) => {
   const {
@@ -33,16 +34,23 @@ const GiftListDrawer = ({ setShowDrawer, isOpen, setShowCheckout }) => {
     setShowDrawer(false);
   };
 
-  const HandleSubmit = () => {
-    if (SourvenirItems.length > 0) {
-      dispatch(BuyItems(SourvenirItems));
-      setSourvernirItems([]);
-      setAddedSourvernirItems([]);
-      closeModal();
-    } else {
-      setShowDrawer();
-    }
-  };
+  // const HandleSubmit = () => {
+  //   if (SourvenirItems.length > 0) {
+  //     dispatch(BuyItems(SourvenirItems));
+  //     setSourvernirItems([]);
+  //     setAddedSourvernirItems([]);
+  //     closeModal();
+  //   } else {
+  //     setShowDrawer();
+  //   }
+  // };
+
+  const Proceed = () => {
+    dispatch(
+      setCheckoutData({type: 'SOURVENIR', data: SourvenirItems, amount: amount})
+    )
+    setShowCheckout(true);
+  }
 
   return (
     <Box>
@@ -75,9 +83,8 @@ const GiftListDrawer = ({ setShowDrawer, isOpen, setShowCheckout }) => {
               </Heading>
             </Box>
           </DrawerBody>
-          <DrawerFooter borderTop="1px solid lightgray">
-            {/* <PaymentButton amount={amount} action={HandleSubmit} /> */}
-            <Button bg='#00BFB2' color='white' onClick={() => setShowCheckout(true)}>Proceed to checkout</Button>
+          <DrawerFooter borderTop="1px solid lightgray"> 
+            <Button bg='#00BFB2' color='white' onClick={() => Proceed()}>Proceed to checkout</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
