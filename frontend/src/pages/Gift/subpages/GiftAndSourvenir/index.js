@@ -5,6 +5,7 @@ import DisplayTable from './subpages/DisplayTable';
 import { GetUserSourvenirApi } from '../../../../redux/axios/apis/sourvenir';
 import { GetUserGiftApi, GetUserPurchasedGiftsApi } from '../../../../redux/axios/apis/gift';
 import { GetUserPurchasedAsoebiApi } from '../../../../redux/axios/apis/asoebi';
+import { GetMarkeplaceTransApi } from '../../../../redux/axios/apis/marketPlace';
 
 const Index = () => {
   const [gifts, setGifts] = useState([]);
@@ -15,9 +16,9 @@ const Index = () => {
   const { giftItems, sourvernirItems } = useSelector(state => state.gift);
   const { user } = useSelector(state => state.user);
 
-   const getUserPurchasedGifts = async () => {
+   const getUserPurchasedItems = async () => {
      try {
-       const res = await GetUserPurchasedGiftsApi(user.id);
+       const res = await GetMarkeplaceTransApi(user.id);
        const data = await res.data;
        setGifts(data);
        console.log(data);
@@ -26,47 +27,11 @@ const Index = () => {
      }
    };
 
-  const getUserPurchasedSourvenirs = async () => {
-    try {
-      const res = await GetUserSourvenirApi(user.id);
-      const data = await res.data;
-      setSourvenir(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getUserPurchasedAsoebis = async () => {
-    try {
-      const res = await GetUserPurchasedAsoebiApi(user.id);
-      const data = await res.data;
-      setAsoebi(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-
-
   useEffect(() => {
-    getUserPurchasedSourvenirs();
-    getUserPurchasedGifts();
-    getUserPurchasedAsoebis();
-    // if (userPurchasedItems) {
-    //   const sourvenirs = userPurchasedItems.filter(
-    //     x => x.category === 'SOURVENIR'
-    //   );
-    //   setSourvenir(sourvenirs);
-
-    //   const Gifts = userPurchasedItems.filter(x => x.category === 'GIFT');
-    //   setGifts(Gifts);
-
-    //   const Asoebis = userPurchasedItems.filter(x => x.category === 'ASOEBI');
-    //   setAsoebi(Asoebis);
-    // }
+    getUserPurchasedItems();
   }, []);
+
+  console.log(gifts, userPurchasedItems);
 
   return (
     <Box>

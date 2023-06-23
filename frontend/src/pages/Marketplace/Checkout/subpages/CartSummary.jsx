@@ -7,24 +7,11 @@ import { useSelector } from 'react-redux';
 
 const CartSummary = ({ data, amount, deliveryAmount }) => {
 
-  console.log(data);
-
   const HandleSubmit = () => {
     if (data?.length > 0) {
       dispatch(BuyItems(data));
     }
   };
-
-  // const handleSubmit = () => {
-  //   if (SourvenirItems.length > 0) {
-  //     dispatch(BuyItems(SourvenirItems));
-  //     setSourvernirItems([]);
-  //     setAddedSourvernirItems([]);
-  //     closeModal();
-  //   } else {
-  //     setShowDrawer();
-  //   }
-  // };
 
   return (
     <Box bg="white" p="4" w="100%" borderRadius={5}>

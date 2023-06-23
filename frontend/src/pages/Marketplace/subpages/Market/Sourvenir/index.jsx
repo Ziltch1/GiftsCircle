@@ -45,6 +45,8 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
     }),
     [sourvernirItems, addedSourvernirItems, amount, SourvenirItems]
   );
+
+
   const AddSourvenir = async id => {
     if (!addedSourvernirItems.includes(id)) {
       const data = sourvernirItems.find(x => x.id === id);
@@ -61,9 +63,9 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
     }
   };
 
+
   useEffect(() => {
     let totalAmount = 0;
-
     SourvenirItems.forEach(ele => {
       totalAmount = totalAmount + ele.amountPaid;
     });

@@ -5,7 +5,7 @@ const GetSourvenirApi = () => {
 }
 
 const AddSourvenirApi = (data) => {
-    return api.post(`/sourvenir/create`, data)
+    return api.post(`/sourvenir/createMany`, data)
 }
 
 const GetUserSourvenirApi = (id) => {
