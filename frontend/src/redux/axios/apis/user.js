@@ -28,6 +28,10 @@ const UpdateDeliveryDetailsApi = (data, id) => {
   return api.put(`/delivery/${id}`, data);
 };
 
+const DeleteDeliveryDetailsApi = id => {
+  return api.delete(`/delivery/${id}`);
+};
+
 export {
   CreateUserApi,
   GetUserApi,
@@ -36,4 +40,5 @@ export {
   DeliveryDetailsApi,
   GetDeliveryDetailsApi,
   UpdateDeliveryDetailsApi,
+  DeleteDeliveryDetailsApi
 };

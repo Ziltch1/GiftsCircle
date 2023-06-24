@@ -57,7 +57,7 @@ const GiftListDrawer = ({ setShowDrawer, isOpen, setShowCheckout }) => {
             <DrawerBody>
               <Flex justifyContent="space-between" flexWrap="wrap" mb="5">
                 {GiftItems.map(ele => (
-                  <GiftListItem id={ele.ItemId} item={ele} />
+                  <GiftListItem id={ele.ItemId} item={ele} key={ele.ItemId} />
                 ))}
               </Flex>
               <Box mb="5" textAlign="right">

@@ -15,7 +15,7 @@ const Index = ({ setShowCheckout }) => {
   const { deliveryDetails } = useSelector(state => state.user);
   const { checkoutData } = useSelector(state => state.market);
 
-  const { amount, type, data } = checkoutData;
+  const { amount, data } = checkoutData;
 
   const handleClick = () => {
     if (showDeliveryForm) {
@@ -57,7 +57,11 @@ const Index = ({ setShowCheckout }) => {
           <DeliveryDetailsHeader />
           <Divider />
           {showDeliveryForm ? (
-            <DeliveryDetailsForm setShowDeliveryForm={setShowDeliveryForm} />
+            <DeliveryDetailsForm
+              setShowDeliveryForm={setShowDeliveryForm}
+              selectedDeliveryDetails={selectedDeliveryDetails}
+              setSelectedDeliveryDetails={setSelectedDeliveryDetails}
+            />
           ) : (
             <DeliveryDetailsCard
               data={deliveryDetails}
@@ -72,6 +76,7 @@ const Index = ({ setShowCheckout }) => {
             amount={amount}
             data={data}
             deliveryAmount={deliveryAmount}
+            setShowCheckout={setShowCheckout}
           />
         </Box>
       </Stack>

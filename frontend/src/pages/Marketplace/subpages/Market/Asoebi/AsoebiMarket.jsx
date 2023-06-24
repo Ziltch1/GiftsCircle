@@ -20,8 +20,6 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
     addedAsoebiItems,
     setAsoebiItems,
     addForGuest,
-    setDesignModal,
-    setAddForGuest,
   } = useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
 
