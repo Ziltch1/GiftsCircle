@@ -8,7 +8,7 @@ const PreviewHeader = ({setStep}) => {
     console.log(setStep);
     const backButton = () => {
         navigate('/create_event');
-        setStep(5);
+        setStep(4);
     }
   return (
     <Box borderBottom='1.5px solid lightgray'>
@@ -18,7 +18,7 @@ const PreviewHeader = ({setStep}) => {
                       <Flex alignItems="center" gap={6}>
                           <CloseIcon
                               fontSize={10}
-                              onClick={() => setStep(5)}
+                              onClick={() => setStep(4)}
                               cursor="pointer"
                           />
                           <Heading fontWeight="medium" fontSize="18px">

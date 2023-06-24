@@ -8,9 +8,11 @@ import AsoebiDrawer from './AsoebiDrawer';
 import { useSelector } from 'react-redux';
 import DisplayCard from '../../../../../components/Card';
 
-const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout }) => {
+const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
   const { asoebiItems } = useSelector(state => state.event);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { checkoutData } = useSelector(state => state.market);
+
   const {
     data,
     setAddedAsoebiItems,
@@ -18,6 +20,8 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout }) => {
     addedAsoebiItems,
     setAsoebiItems,
     addForGuest,
+    setDesignModal,
+    setAddForGuest,
   } = useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
 
@@ -43,6 +47,14 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout }) => {
     });
     setAmount(amount);
   }, [data, setAddedAsoebiItems, asoebiItems, setAmount, addForGuest]);
+
+  useEffect(() => {
+    const { data } = checkoutData;
+    setAsoebiItems([...data]);
+    const ids = [];
+    data.forEach(x => ids.push(x.ItemId));
+    setAddedAsoebiItems([...ids]);
+  },[checkoutData])
 
   const AddAsoebi = id => {
     if (!addedAsoebiItems.includes(id)) {
@@ -72,6 +84,8 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout }) => {
       }
     }
   };
+
+
   return (
     <Box bg="#F5F5F5">
       <AsoebiDrawer
