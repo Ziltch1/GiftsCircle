@@ -11,32 +11,53 @@ import {
   Button,
   Spinner,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LGAs } from '../../../../Utils/data/LGA';
 import { useSelector } from 'react-redux';
-import { DeliveryDetailsApi } from '../../../../redux/axios/apis/user';
+import {
+  DeliveryDetailsApi,
+  UpdateDeliveryDetailsApi,
+} from '../../../../redux/axios/apis/user';
 import { dispatch } from '../../../../redux/store';
 import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 
-const DeliveryDetailsForm = ({ setShowDeliveryForm }) => {
+const DeliveryDetailsForm = ({
+  setShowDeliveryForm,
+  selectedDeliveryDetails,
+  setSelectedDeliveryDetails,
+}) => {
   const toast = useToast();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState('');
-  const [deliveryAddress, setDeliveryAddress] = useState('');
-  const [additionalInformation, setAdditionalInformation] = useState('');
-  const [selectedState, setSelectedState] = useState('');
+  const [firstName, setFirstName] = useState(
+    selectedDeliveryDetails ? selectedDeliveryDetails.firstname : ''
+  );
+  const [lastName, setLastName] = useState(
+    selectedDeliveryDetails ? selectedDeliveryDetails.lastname : ''
+  );
+  const [phoneNumber, setPhoneNumber] = useState(
+    selectedDeliveryDetails ? selectedDeliveryDetails.tel : ''
+  );
+  const [additionalPhoneNumber, setAdditionalPhoneNumber] = useState(
+    selectedDeliveryDetails ? selectedDeliveryDetails.tel2 : ''
+  );
+  const [deliveryAddress, setDeliveryAddress] = useState(
+    selectedDeliveryDetails ? selectedDeliveryDetails.address : ''
+  );
+  const [additionalInformation, setAdditionalInformation] = useState(
+    selectedDeliveryDetails ? selectedDeliveryDetails.info : ''
+  );
+  const [selectedState, setSelectedState] = useState(
+    selectedDeliveryDetails ? selectedDeliveryDetails.state : 'Abia'
+  );
   const [selectedLGAs, setSelectedLGAs] = useState([]);
-  const [selectedLGA, setSelectedLGA] = useState('');
+  const [selectedLGA, setSelectedLGA] = useState(
+    selectedDeliveryDetails ? selectedDeliveryDetails.lga : 'Ukwa East'
+  );
   const [loading, setLoading] = useState(false);
   const { user } = useSelector(state => state.user);
 
-  const handleStateChange = e => {
-    const state = e.target.value;
-    setSelectedState(state);
-    setSelectedLGAs(LGAs[state]);
-  };
+  useEffect(() => {
+    setSelectedLGAs(LGAs[selectedState]);
+  }, [selectedState]);
 
   const handleLGAsChange = e => {
     setSelectedLGA(e.target.value);
@@ -56,6 +77,8 @@ const DeliveryDetailsForm = ({ setShowDeliveryForm }) => {
   };
 
   const handleSubmit = async () => {
+    if (selectedDeliveryDetails) {
+    }
     if (
       firstName !== '' &&
       lastName !== '' &&
@@ -92,6 +115,18 @@ const DeliveryDetailsForm = ({ setShowDeliveryForm }) => {
         isClosable: true,
         position: 'top',
       });
+    }
+  };
+
+  const UpdateDeliveryDetails = async () => {
+    const res = await UpdateDeliveryDetailsApi(
+      data,
+      selectedDeliveryDetails.id
+    );
+    if (res.data) {
+      dispatch(GetDeliveryDetails(selectedDeliveryDetails.userId));
+      setShowDeliveryForm(false);
+      setSelectedDeliveryDetails(null);
     }
   };
 
@@ -193,7 +228,10 @@ const DeliveryDetailsForm = ({ setShowDeliveryForm }) => {
         >
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>Region</FormLabel>
-            <Select value={selectedState} onChange={handleStateChange}>
+            <Select
+              value={selectedState}
+              onChange={e => setSelectedState(e.target.value)}
+            >
               {Object.keys(LGAs).map(state => (
                 <option key={state} value={state}>
                   {state}
@@ -220,7 +258,9 @@ const DeliveryDetailsForm = ({ setShowDeliveryForm }) => {
             color="white"
             fontSize={15}
             fontWeight="medium"
-            onClick={handleSubmit}
+            onClick={() =>
+              selectedDeliveryDetails ? UpdateDeliveryDetails() : handleSubmit()
+            }
           >
             {loading ? <Spinner size="md" /> : 'Save'}
           </Button>

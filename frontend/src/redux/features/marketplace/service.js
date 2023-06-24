@@ -1,12 +1,11 @@
 import { dispatch } from '../../store';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 import {
-  BuyItemsApi,
   GetMarkeplaceTransApi,
 } from '../../axios/apis/marketPlace';
 import { setUserPurchasedItems } from './marketSlice';
 
-const GetUserMarketItems = (id) => async () => {
+const GetUserMarketItems = id => async () => {
   try {
     const res = await GetMarkeplaceTransApi(id);
     dispatch(setUserPurchasedItems(res.data));
@@ -16,13 +15,4 @@ const GetUserMarketItems = (id) => async () => {
   }
 };
 
-const BuyItems = data => async () => {
-  try {
-    await BuyItemsApi(data);
-  } catch (error) {
-    console.log(ErrorHandler(error));
-    // dispatch(createResponse(ErrorHandler(error)));
-  }
-};
-
-export { GetUserMarketItems, BuyItems };
+export { GetUserMarketItems };

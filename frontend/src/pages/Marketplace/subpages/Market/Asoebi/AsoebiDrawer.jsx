@@ -18,7 +18,6 @@ import CartItem from './CartItem';
 import { AddManyEventAsoebiApi } from '../../../../../redux/axios/apis/asoebi';
 import { dispatch } from '../../../../../redux/store';
 import { GetEventAsoebis } from '../../../../../redux/features/events/service';
-import { BuyItems } from '../../../../../redux/features/marketplace/service';
 import { setCheckoutData } from '../../../../../redux/features/marketplace/marketSlice';
 
 const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) => {
@@ -30,7 +29,6 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) =
     setAsoebiItems,
     addForGuest,
     amount,
-    setAddedAsoebiItems,
   } = useContext(AsoebiContext);
 
   const btnRef = React.useRef();
@@ -57,17 +55,6 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) =
     );
     setShowCheckout(true);
   };
-
-  // const BuyMarketAsoebi = async () => {
-  //   if (AsoebiItems.length > 0) {
-  //     dispatch(BuyItems(AsoebiItems));
-  //     setAsoebiItems([]);
-  //     setAddedAsoebiItems([]);
-  //     closeModal();
-  //   } else {
-  //     closeModal();
-  //   }
-  // };
 
   return (
     <Box>

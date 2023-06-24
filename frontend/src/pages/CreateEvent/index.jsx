@@ -6,7 +6,6 @@ import FormHeader from './components/FormHeader';
 import BasicForm from './subpages/step1';
 import EventImageForm from './subpages/step2/Index';
 import AddGiftForm from './subpages/step3';
-import DeliveryDetailsForm from './subpages/step4/Index';
 import SummaryForm from './subpages/step5/Index';
 import Stepper from './components/Stepper';
 import EventPreview from './subpages/EventPreview';

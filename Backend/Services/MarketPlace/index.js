@@ -26,7 +26,7 @@ const BuyMarketItems = async (data) => {
   const message = `Market Items purchased`;
   const notification = await prisma.notifications.create({
     data: {
-      userId: data.userId,
+      userId: data[0].userId,
       type: "PURCHASE",
       message: message,
     },

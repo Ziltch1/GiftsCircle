@@ -1,4 +1,4 @@
-import { EditIcon, AddIcon } from '@chakra-ui/icons';
+import { EditIcon, AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import {
   Box,
   Heading,
@@ -9,6 +9,9 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { DeleteDeliveryDetailsApi } from '../../../../redux/axios/apis/user';
+import { dispatch } from '../../../../redux/store';
+import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 
 const DeliveryDetails = ({
   data,
@@ -22,11 +25,13 @@ const DeliveryDetails = ({
       {data.map((ele, index) => {
         return (
           <DeliveryItem
+            key={index}
             data={ele}
             setChecked={setChecked}
             checked={index === checked}
             index={index}
             setSelectedDeliveryDetails={setSelectedDeliveryDetails}
+            setShowDeliveryForm={setShowDeliveryForm}
           />
         );
       })}
@@ -52,7 +57,14 @@ const DeliveryItem = ({
   checked,
   setChecked,
   setSelectedDeliveryDetails,
+  setShowDeliveryForm,
 }) => {
+  const DeleteDelivery = async id => {
+    const res = await DeleteDeliveryDetailsApi(id);
+    if (res.data) {
+      dispatch(GetDeliveryDetails(data.userId));
+    }
+  };
   return (
     <Box value={index} my="3">
       <Heading fontSize={14} fontWeight="semibold" mb="2">
@@ -105,8 +117,19 @@ const DeliveryItem = ({
             </Box>
           </Stack>
           <Box display="flex" alignItems="center" gap={2}>
-            <Text color="#00BFB2">Edit</Text>
-            <EditIcon color="#00BFB2" />
+            <EditIcon
+              color="#00BFB2"
+              onClick={() => {
+                setSelectedDeliveryDetails(data);
+                setShowDeliveryForm(true);
+              }}
+            />
+            <DeleteIcon
+              color="#00BFB2"
+              onClick={() => {
+                DeleteDelivery(data.id);
+              }}
+            />
           </Box>
         </Stack>
       </Box>
