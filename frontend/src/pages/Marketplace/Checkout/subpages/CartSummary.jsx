@@ -2,34 +2,19 @@ import { Box, Heading, Text, Divider, Stack, Flex } from '@chakra-ui/react';
 import React from 'react';
 import PaymentButton from '../../../../components/Buttons/PaymentButton';
 import { dispatch } from '../../../../redux/store';
-import { BuyItems } from '../../../../redux/features/marketplace/service';
-import { useSelector } from 'react-redux';
+import { GetUserMarketItems } from '../../../../redux/features/marketplace/service';
+import { setCheckoutData } from '../../../../redux/features/marketplace/marketSlice';
 import { BuyItemsApi } from '../../../../redux/axios/apis/marketPlace';
 
-const CartSummary = ({ data, amount, deliveryAmount }) => {
-
-  const addUserPurchasedItems = async () => {
-    // const purchasedItems = data.map(item => {
-    //   return {
-    //     id: item.id,
-    //     userId: item.userId,
-    //     quantity: item.quantity,
-    //     amount: item.amountPaid,
-    //     status: item.status,
-    //     category: item.category,
-    //   };
-    // });
-    try {
-      await BuyItemsApi(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const handleSubmit = () => {
-    console.log('clicked');
+const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout }) => {
+  const HandleSubmit = async () => {
     if (data?.length > 0) {
-      addUserPurchasedItems()
+      const res = await BuyItemsApi(data);
+      if (res.data) {
+        dispatch(GetUserMarketItems(data[0].userId));
+        setCheckoutData({ type: '', data: [], amount: 0 });
+        setShowCheckout(false)
+      }
     }
   };
 
@@ -65,7 +50,10 @@ const CartSummary = ({ data, amount, deliveryAmount }) => {
         <Divider />
 
         {/* {deliveryAmount !== 0 && ( */}
-          <PaymentButton amount={amount + deliveryAmount} onClick={handleSubmit} />
+          <PaymentButton
+            amount={amount + deliveryAmount}
+            action={HandleSubmit}
+          />
         {/* )} */}
       </Stack>
     </Box>

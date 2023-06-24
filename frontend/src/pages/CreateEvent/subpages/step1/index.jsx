@@ -23,8 +23,6 @@ import FormFooter from '../../components/FormFooter';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { GetEventGifts } from '../../../../redux/features/events/service';
 import { CancelModal } from '../../components/FormHeader';
-import { GetDeliveryDetails } from '../../../../redux/features/user/service';
-import { DatePicker } from 'react-widgets';
 
 const BasicForm = ({ step, setStep }) => {
   const { user } = useSelector(state => state.user);

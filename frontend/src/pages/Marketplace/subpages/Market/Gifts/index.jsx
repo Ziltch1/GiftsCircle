@@ -139,6 +139,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
             >
               {giftItems.map(item => (
                 <DisplayCard
+                  key={item.id}
                   id={item.id}
                   data={item}
                   action={AddGift}

@@ -20,8 +20,6 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
     addedAsoebiItems,
     setAsoebiItems,
     addForGuest,
-    setDesignModal,
-    setAddForGuest,
   } = useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
 
@@ -41,9 +39,8 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
     let amount = 0;
 
     data.forEach(ele => {
-      amount += addForGuest
-        ? asoebiItems.find(x => x.id === ele.asoebiItem).amount
-        : asoebiItems.find(x => x.id === ele.ItemId).amount;
+      amount += addForGuest ? asoebiItems.find(x => x.id === ele.asoebiItem)?.amount
+        : asoebiItems.find(x => x.id === ele.ItemId)?.amount;
     });
     setAmount(amount);
   }, [data, setAddedAsoebiItems, asoebiItems, setAmount, addForGuest]);

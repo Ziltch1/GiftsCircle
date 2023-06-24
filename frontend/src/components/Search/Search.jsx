@@ -9,7 +9,6 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
-import {DropdownList} from 'react-widgets'
 
 const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
   return (
@@ -46,7 +45,7 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
               data={["Birthday", "Naming", "Retirement", "Graduation", "Induction", "Wedding", "Funeral"]}
             />
           </Box> */}
-          
+
           <Select
             variant={'flushed'}
             bg="#555555"
@@ -55,19 +54,33 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
             onChange={e => setFilter(e.target.value)}
             value={filter}
             color="white"
-            textAlign='center'
-            border='none'
-            outline='none'
-            placeholder='Filter'
+            textAlign="center"
+            border="none"
+            outline="none"
+            placeholder="Filter"
             gap="8px"
           >
-            <option value="Birthday" style={{ color: 'black' }}>Birthday</option>
-            <option value="Naming Ceremony" style={{ color: 'black' }}>Naming Ceremony</option>
-            <option value="Retirement Ceremony" style={{ color: 'black' }}>Retirement Ceremony</option>
-            <option value="Graduation" style={{ color: 'black' }}>Graduation Ceremony</option>
-            <option value="Induction" style={{ color: 'black' }}>Induction Ceremony</option>
-            <option value="Wedding" style={{ color: 'black' }}>Wedding Ceremony</option>
-            <option value="Funeral" style={{ color: 'black' }}>Funeral Ceremony</option>
+            <option value="Birthday" style={{ color: 'black' }}>
+              Birthday
+            </option>
+            <option value="Naming Ceremony" style={{ color: 'black' }}>
+              Naming Ceremony
+            </option>
+            <option value="Retirement Ceremony" style={{ color: 'black' }}>
+              Retirement Ceremony
+            </option>
+            <option value="Graduation" style={{ color: 'black' }}>
+              Graduation Ceremony
+            </option>
+            <option value="Induction" style={{ color: 'black' }}>
+              Induction Ceremony
+            </option>
+            <option value="Wedding" style={{ color: 'black' }}>
+              Wedding Ceremony
+            </option>
+            <option value="Funeral" style={{ color: 'black' }}>
+              Funeral Ceremony
+            </option>
           </Select>
         </Flex>
       </FormControl>

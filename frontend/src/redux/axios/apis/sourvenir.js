@@ -8,8 +8,5 @@ const AddSourvenirApi = (data) => {
     return api.post(`/sourvenir/createMany`, data)
 }
 
-const GetUserSourvenirApi = (id) => {
-    return api.get(`/sourvenir/Get/UserSourvenir/${id}`)
-}
 
-export {GetSourvenirApi, GetUserSourvenirApi, AddSourvenirApi}
+export {GetSourvenirApi, AddSourvenirApi}
