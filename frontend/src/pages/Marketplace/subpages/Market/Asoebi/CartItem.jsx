@@ -78,7 +78,7 @@ const CartItem = ({ item }) => {
       <Flex alignItems="center">
         <Box w="20%" m="3">
           <Image
-            src={asoebiItem.image}
+            src={asoebiItem?.image}
             h="100px"
             w="120px"
             objectFit="cover"
@@ -89,10 +89,10 @@ const CartItem = ({ item }) => {
         <Box w="80%">
           <Box mb="2" display="flex" justifyContent="space-between">
             <Text w="75%" fontWeight={600} fontSize={16}>
-              {asoebiItem.title}
+              {asoebiItem?.title}
             </Text>
             <Text fontWeight={600} fontSize={16}>
-              ₦ {asoebiItem.amount}
+              ₦ {asoebiItem?.amount}
             </Text>
           </Box>
 
@@ -102,7 +102,7 @@ const CartItem = ({ item }) => {
                 Purchase Price
               </Text>
               <Text fontWeight={400} fontSize={16}>
-                ₦ {asoebiItem.amount + item.increment}
+                ₦ {asoebiItem?.amount + item.increment}
               </Text>
             </Box>
           )}

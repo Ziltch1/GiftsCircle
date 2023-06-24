@@ -12,11 +12,21 @@ const UserCheck = () => {
   const { id } = useParams();
   const { events } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
+  const {auth} = useSelector(state => state.auth);
   const [activeUser, setActiveUser] = useState(false);
   const [newEvent, setNewEvent] = useState(null);
   const navigate = useNavigate();
 
   let userId = user?.id;
+
+  useEffect(() => {
+    if (auth) {
+      setActiveUser(true)
+    } else {
+      setActiveUser(false)
+      navigate('/signin')
+    }
+  }, [auth])
 
   useEffect(() => {
     if (events?.length > 0) {
@@ -27,13 +37,7 @@ const UserCheck = () => {
     }
   }, [events, id, userId]);
 
-  if(user?.id !== null){
-    setActiveUser(true)
-  }else{
-    setActiveUser(false)
-    navigate('/signin')
-  }
-
+  
   return (
     <>
       {activeUser &&
