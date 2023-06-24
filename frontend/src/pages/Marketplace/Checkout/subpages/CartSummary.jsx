@@ -4,14 +4,36 @@ import PaymentButton from '../../../../components/Buttons/PaymentButton';
 import { dispatch } from '../../../../redux/store';
 import { BuyItems } from '../../../../redux/features/marketplace/service';
 import { useSelector } from 'react-redux';
+import { BuyItemsApi } from '../../../../redux/axios/apis/marketPlace';
 
 const CartSummary = ({ data, amount, deliveryAmount }) => {
 
-  const HandleSubmit = () => {
+  const addUserPurchasedItems = async () => {
+    // const purchasedItems = data.map(item => {
+    //   return {
+    //     id: item.id,
+    //     userId: item.userId,
+    //     quantity: item.quantity,
+    //     amount: item.amountPaid,
+    //     status: item.status,
+    //     category: item.category,
+    //   };
+    // });
+    try {
+      await BuyItemsApi(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleSubmit = () => {
+    console.log('clicked');
     if (data?.length > 0) {
-      dispatch(BuyItems(data));
+      addUserPurchasedItems()
     }
   };
+
+  console.log(data);
 
   return (
     <Box bg="white" p="4" w="100%" borderRadius={5}>
@@ -43,7 +65,7 @@ const CartSummary = ({ data, amount, deliveryAmount }) => {
         <Divider />
 
         {/* {deliveryAmount !== 0 && ( */}
-          <PaymentButton amount={amount + deliveryAmount} onClick={HandleSubmit} />
+          <PaymentButton amount={amount + deliveryAmount} onClick={handleSubmit} />
         {/* )} */}
       </Stack>
     </Box>
