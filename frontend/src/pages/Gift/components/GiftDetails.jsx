@@ -97,7 +97,7 @@ export default function GiftDetails() {
                 </Heading>
               </Box>
             ) : (
-              <TableContainer mt="8">
+              <TableContainer mt="8" minH='500px'>
                 <Table variant="simple" size="lg">
                   <Thead
                     bg="#EEEEEE"

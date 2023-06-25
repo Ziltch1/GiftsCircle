@@ -14,8 +14,6 @@ const PurchasedFor = ({ events }) => {
     }
   }, [events, user]);
 
-  console.log(data);
-
   return (
     <Box>
       {events?.length < 1 ? (
