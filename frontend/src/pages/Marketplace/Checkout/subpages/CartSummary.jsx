@@ -49,12 +49,12 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout }) => {
         </Flex>
         <Divider />
 
-        {/* {deliveryAmount !== 0 && ( */}
+        {deliveryAmount !== 0 && (
           <PaymentButton
             amount={amount + deliveryAmount}
             action={HandleSubmit}
           />
-        {/* )} */}
+        )}
       </Stack>
     </Box>
   );
