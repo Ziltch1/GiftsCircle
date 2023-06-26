@@ -59,14 +59,6 @@ export default function GiftDetails() {
     }
   }, [eventGiftTrans, userEventGiftTrans]);
 
-  const options = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    daySuffix: 'numeric'
-  };
-  const date = new Date(currentEvent?.date).toLocaleDateString('en-US', options);
-
   return (
     <Box bg="#F5F5F5">
       <Box w="85%" mx="auto" pt="10" pb="5">
@@ -85,7 +77,7 @@ export default function GiftDetails() {
           <SkeletonLoader />
         ) : (
           <>
-            {currentEvent?.gifts.length === 0 ? (
+            {data.length === 0 ? (
               <Box h="100vh">
                 <Heading
                   textAlign="center"
@@ -97,7 +89,7 @@ export default function GiftDetails() {
                 </Heading>
               </Box>
             ) : (
-              <TableContainer mt="8" minH='500px'>
+              <TableContainer mt="8">
                 <Table variant="simple" size="lg">
                   <Thead
                     bg="#EEEEEE"
@@ -107,27 +99,27 @@ export default function GiftDetails() {
                     <Tr borderRadius={5} textTransform="capitalize">
                       <Th>Name</Th>
                       <Th>Date</Th>
-                      <Th>Qty</Th>
+                      <Th isNumeric>Qty</Th>
                       <Th>Payment status</Th>
-                      <Th>Amount</Th>
+                      <Th>Amount left</Th>
                       <Th>Actions</Th>
                     </Tr>
                   </Thead>
                   <Tbody bg="white">
-                    {currentEvent.gifts.map(ele => {
-                      const gift = giftItems.find(x => x.id === ele.giftItemId);
+                    {data.map(ele => {
+                      const gift = ele.giftId
+                        ? giftItems.find(x => x.id === ele.gift.giftItemId)
+                        : complimentaryGifts.find(
+                          x => x.id === ele.complimentaryGift.id
+                        );
                       return (
                         <Tr fontSize={13} textAlign="center" key={ele.id}>
                           <Td>{gift?.title}</Td>
-                          <Td>{date}</Td>
-                          <Td>
-                            {/* {ele?.quantity} */}
-                            1
-                          </Td>
+                          <Td>June 12th, 2022</Td>
+                          <Td>{ele?.quantity}</Td>
                           <Td>{ele?.gift ? ele.gift.status : 'COMPLETED'}</Td>
-                          <Td>
-                            {gift?.amount}
-                            {/* {parseInt(gift?.amount) - ele?.amount} */}
+                          <Td isNumeric>
+                            {parseInt(gift?.amount) - ele?.amount}
                           </Td>
                           <Td>Complete payment</Td>
                         </Tr>
