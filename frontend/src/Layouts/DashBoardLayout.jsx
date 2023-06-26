@@ -26,7 +26,7 @@ const DashboardLayout = () => {
   );
 
   useEffect(() => {
-    if (!token) {
+    if (!token || !user) {
       navigate('/signin');
     }
   }, [token, navigate]);
@@ -57,7 +57,7 @@ const DashboardLayout = () => {
 
   return (
     <>
-      {token && (
+      {token !== null && (
         <Box>
           <SocketContext.Provider value={{ ...contextValue }}>
             <Response />
