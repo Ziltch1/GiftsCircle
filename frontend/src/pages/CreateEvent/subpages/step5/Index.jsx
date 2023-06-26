@@ -61,7 +61,7 @@ const SummaryForm = ({ setStep }) => {
   };
 
   const backAction = () => {
-    setStep(4);
+    setStep(3);
   };
 
   return (
