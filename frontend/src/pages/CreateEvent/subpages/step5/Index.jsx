@@ -142,7 +142,7 @@ const SummaryForm = ({ setStep }) => {
           <DropdownList
             value={percentage}
             onChange={nextValue => setPercentage(nextValue.replace('%', ''))}
-            data={['0.5%', '1%', '1.5%', '2%', '3.5', '4.5%', '5%']}
+            data={['0.5%', '1%', '1.5%', '2%', '3.5%', '4.5%', '5%']}
           />
         </Box>
         <Box mb="2" display="flex" alignItems="center" gap={2}>
