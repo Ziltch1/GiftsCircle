@@ -177,7 +177,7 @@ const EnableContribution = async (data, id) => {
 
 const Buy = async (data) => {
   data.forEach(async (ele) => {
-    let check = ele.amountPaid + ele.amount > ele.giftItemAmount;
+    let check = ele.amountPaid + ele.amount > ele.giftItemAmount * ele.quantity;
 
     await prisma.gift.update({
       where: {
@@ -224,7 +224,7 @@ const Buy = async (data) => {
   const guestMessage = `Gifts for ${event.title} bought successfully`;
   const guestNotification = await prisma.notifications.create({
     data: {
-      userId: data.userId,
+      userId: data[0].userId,
       type: "PURCHASE",
       message: guestMessage,
     },

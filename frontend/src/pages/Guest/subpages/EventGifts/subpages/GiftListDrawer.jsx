@@ -81,6 +81,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
       let amount = item.contributionAmount
         ? item.contributionAmount
         : newData.amount;
+
       const formData = {
         status:
           amount + item.amountPaid >= newData.amount ? 'COMPLETED' : 'PARTIAL',
@@ -88,7 +89,8 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
         userId: user.id,
         eventId: item.eventId,
         amountPaid: item.amountPaid,
-        giftItemAmount: amount,
+        quantity: item.quantity,
+        giftItemAmount: newData.amount,
         complimentaryGift:
           ComplimentaryItems.length > 0 ? ComplimentaryItems[0].id : '',
         amount: amount,

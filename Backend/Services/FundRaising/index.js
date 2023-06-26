@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 const { v4: uuidv4 } = require("uuid");
 
 const GetFundRaising = async (id) => {
-  const fundRaising = await prisma.fundRaising.findFirst({
+  const fundRaising = await prisma.fundRaising.findMany({
     where: {
       eventId: id,
     },

@@ -107,7 +107,7 @@ const GetEventAsoebiBuyers = id => async () => {
 const GetEventFundRaising = id => async () => {
   try {
     const res = await GetFundraisingApi(id);
-    dispatch(setFundRaising(res.data));
+    dispatch(setFundRaising(res.data[0]));
   } catch (error) {
     console.log(ErrorHandler(error));
     // dispatch(createResponse(ErrorHandler(error)));

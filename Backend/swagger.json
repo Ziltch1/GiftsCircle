@@ -2429,6 +2429,10 @@
             "type": "number",
             "required": true
           },
+          "quantity": {
+            "type": "number",
+            "required": true
+          },
           "giftId": {
             "type": "string",
             "required": true

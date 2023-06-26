@@ -261,7 +261,6 @@ const AddGuest = async (data) => {
       id: data.eventId,
     },
   });
-
   if (event) {
     if (event.guestCode === data.guestCode) {
       if (data.userId !== event.user_id) {

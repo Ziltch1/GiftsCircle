@@ -15,11 +15,6 @@ const GiftCard = ({ step, setStep }) => {
   const [data, setData] = useState([]);
   const [currentGift, setCurrentGift] = useState(null);
 
-  const openDrawer = gift => {
-    setCurrentGift(gift);
-    setOpenGiftDetails(true);
-  };
-
   const AddGift = id => {
     if (!addedGiftItems.includes(id)) {
       const formBody = {
