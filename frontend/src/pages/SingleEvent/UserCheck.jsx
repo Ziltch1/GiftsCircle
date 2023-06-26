@@ -9,6 +9,7 @@ import { GetUserEvents } from '../../redux/features/events/service';
 import Response from '../../components/ResponseToast';
 
 const UserCheck = () => {
+  const navigate = useNavigate()
   const { id } = useParams();
   const { events } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
@@ -24,7 +25,7 @@ const UserCheck = () => {
       setActiveUser(false)
       navigate('/signin')
     }
-  }, [auth])
+  }, [user])
 
   useEffect(() => {
     if (events?.length > 0) {
