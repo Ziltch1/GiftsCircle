@@ -22,7 +22,7 @@ const DeliveryDetails = ({
 
   return (
     <Box w="100%">
-      {data.map((ele, index) => {
+      {data?.map((ele, index) => {
         return (
           <DeliveryItem
             key={index}
