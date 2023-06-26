@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Guest from '../Guest';
 import Host from '.';
 import { Box } from '@chakra-ui/react';
@@ -13,11 +13,12 @@ const UserCheck = () => {
   const { events } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
   const [newEvent, setNewEvent] = useState(null);
+  const [activeUser, setActiveUser] = useState(false)
 
   let userId = user?.id;
 
   useEffect(() => {
-    if (user) {
+    if (user?.id) {
       setActiveUser(true)
     } else {
       setActiveUser(false)
@@ -38,7 +39,13 @@ const UserCheck = () => {
   return (
     <>
       <Response />
-      <Box>{newEvent?.user_id === userId ? <Host /> : <Guest />}</Box>
+      <Box>
+        {activeUser && 
+          <>
+            <Box>{newEvent?.user_id === userId ? <Host /> : <Guest />}</Box>
+          </>
+        }
+      </Box>
     </>
   );
 };
