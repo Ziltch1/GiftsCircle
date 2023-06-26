@@ -110,8 +110,8 @@ export default function GiftDetails() {
                       const gift = ele.giftId
                         ? giftItems.find(x => x.id === ele.gift.giftItemId)
                         : complimentaryGifts.find(
-                            x => x.id === ele.complimentaryGift.id
-                          );
+                          x => x.id === ele.complimentaryGift.id
+                        );
                       return (
                         <Tr fontSize={13} textAlign="center" key={ele.id}>
                           <Td>{gift?.title}</Td>

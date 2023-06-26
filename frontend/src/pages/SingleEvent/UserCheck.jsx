@@ -17,6 +17,15 @@ const UserCheck = () => {
   let userId = user?.id;
 
   useEffect(() => {
+    if (auth) {
+      setActiveUser(true)
+    } else {
+      setActiveUser(false)
+      navigate('/signin')
+    }
+  }, [auth])
+
+  useEffect(() => {
     if (events?.length > 0) {
       const specificEvent = events.filter(event => event.id === id)[0];
       setNewEvent(specificEvent);

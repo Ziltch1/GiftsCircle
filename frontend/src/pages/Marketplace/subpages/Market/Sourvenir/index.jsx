@@ -71,6 +71,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
     });
     setAmount(totalAmount);
   }, [SourvenirItems]);
+
   return (
     <>
       <SourvenirContext.Provider

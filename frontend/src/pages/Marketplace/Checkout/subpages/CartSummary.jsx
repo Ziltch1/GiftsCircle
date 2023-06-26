@@ -18,6 +18,8 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout }) => {
     }
   };
 
+  console.log(data);
+
   return (
     <Box bg="white" p="4" w="100%" borderRadius={5}>
       <Stack direction="column" spacing={4}>
