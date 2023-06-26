@@ -20,7 +20,7 @@ const UserCheck = () => {
   let userId = user?.id;
 
   useEffect(() => {
-    if (auth) {
+    if (user) {
       setActiveUser(true)
     } else {
       setActiveUser(false)
