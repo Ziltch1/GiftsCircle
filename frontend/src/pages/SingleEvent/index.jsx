@@ -43,7 +43,7 @@ const Index = () => {
   );
   const { user } = useSelector(state => state.user);
 
-  let userId = user.id;
+  let userId = user?.id;
 
   useEffect(() => {
     if (events.length > 0) {
