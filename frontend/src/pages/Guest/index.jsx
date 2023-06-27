@@ -15,7 +15,6 @@ import {
 } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../../components/Buttons/BackButton';
-import Header from '../../components/Header/Header';
 import { GetEventApi } from '../../redux/axios/apis/events';
 import {
   GetComplimentaryGiftItems,
@@ -70,7 +69,6 @@ const Index = () => {
 
   return (
     <Box bg="#F5F5F5">
-      <Header />
       <Box w="76%" mx="auto" pt="8" pb="7">
         {loading ? (
           <Stack spacing="20px">

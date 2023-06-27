@@ -22,9 +22,6 @@ router.get("/:id", EnsureAuthenticated, async (req, res) => {
     if (data) {
       return res.status(200).send(data);
     }
-    return res
-      .status(400)
-      .send(ResponseDTO("Failed", "Fund Details not found"));
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();

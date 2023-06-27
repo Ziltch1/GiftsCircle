@@ -12,7 +12,7 @@
       "name": "authorization"
     }
   },
-  "host": "localhost:4000",
+  "host": "gift-circle-server.onrender.com",
   "basePath": "/api",
   "schemes": ["http", "https"],
   "consumes": ["application/json"],
@@ -2426,6 +2426,10 @@
           },
 
           "amount": {
+            "type": "number",
+            "required": true
+          },
+          "quantity": {
             "type": "number",
             "required": true
           },

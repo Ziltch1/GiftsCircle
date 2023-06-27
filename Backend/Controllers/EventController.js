@@ -173,12 +173,15 @@ router.post("/addGuest", EnsureAuthenticated, async (req, res) => {
     if (data.status === "Failed") {
       return res.status(400).send(ResponseDTO("Failed", data.message));
     }
-    req.io.emit(data.notification.userId, data.message.notification);
-    return res.status(200).send(data.message.Data);
+    if (data.message.notification) {
+      req.io.emit(data.message.notification.userId, data.message.notification);
+      return res.status(200).send(data.message.Data);
+    }
+    return res.status(200).send(data.message);
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Event Not Found"));
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
   }
 });
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, createContext } from 'react';
 import { Box } from '@chakra-ui/react';
 import Header from '../components/Header/Header';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Response from '../components/ResponseToast';
 import Navbar from '../components/Navbar/Navbar';
 import { useSelector } from 'react-redux';
@@ -24,6 +24,9 @@ const DashboardLayout = () => {
     }),
     [isConnected, notifications]
   );
+
+  const { pathname } = useLocation();
+  console.log(pathname);
 
   useEffect(() => {
     if (!token) {
@@ -55,15 +58,15 @@ const DashboardLayout = () => {
     }
   }, [user]);
 
-
   return (
     <>
-      {token  && (
+      {token && (
         <Box>
           <SocketContext.Provider value={{ ...contextValue }}>
             <Response />
             <Header />
-            <Navbar />
+            {!pathname.includes('/event_details/') && <Navbar />}
+
             <Outlet />
           </SocketContext.Provider>
         </Box>
