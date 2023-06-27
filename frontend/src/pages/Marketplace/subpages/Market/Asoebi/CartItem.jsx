@@ -163,13 +163,14 @@ export const ContributionAmount = ({
           <ModalCloseButton onClick={() => setModalOpen(false)} />
           <ModalBody>
             <Heading
-              mb="5"
+              mb="2"
               fontWeight="semibold"
-              fontSize={24}
+              fontSize={22}
               textAlign="center"
             >
               How much do you want to Mark Up?
             </Heading>
+            <Text mb='5'>This markup amount will be added to the original price for guests</Text>
             <Flex w="70%" mx="auto" justifyContent="space-between" mb="5">
               <Button
                 bg="#CCF2F0"
