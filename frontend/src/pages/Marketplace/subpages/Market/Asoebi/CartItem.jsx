@@ -20,8 +20,10 @@ import { AsoebiContext } from '.';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../../redux/store';
 import { DeleteAsoebi } from '../../../../../redux/features/events/service';
+import Counter from '../../../../../components/Counter/Counter';
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, id }) => {
+  console.log(item, id);
   const [modalOpen, setModalOpen] = useState(false);
   const [increment, setIncrement] = useState(0);
   const {
@@ -29,7 +31,7 @@ const CartItem = ({ item }) => {
     addForGuest,
     setAsoebiItems,
     AsoebiItems,
-    addedAseobiItems,
+    addedAseobiItems, handleIncrement, handleDecrement
   } = useContext(AsoebiContext);
 
   const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
@@ -88,12 +90,29 @@ const CartItem = ({ item }) => {
 
         <Box w="80%">
           <Box mb="2" display="flex" justifyContent="space-between">
-            <Text w="75%" fontWeight={600} fontSize={16}>
-              {asoebiItem?.title}
-            </Text>
-            <Text fontWeight={600} fontSize={16}>
-              ₦ {asoebiItem?.amount}
-            </Text>
+            <Box w="75%">
+              <Text fontWeight={600} fontSize={16} mb='4'>
+                {asoebiItem?.title}
+              </Text>
+              {!addForGuest && (
+                <Box display="flex" justifyContent="space-between">
+                  <Text
+                    color="#F5222D"
+                    fontSize={14}
+                    cursor="pointer"
+                    onClick={() => removeItem(item)}
+                  >
+                    <DeleteIcon /> Remove from list
+                  </Text>
+                </Box>
+              )}
+            </Box>
+            <Box>
+              <Text fontWeight={600} fontSize={16} mb='3'>
+                ₦ {item?.quantity ? asoebiItem?.amount * item?.quantity : asoebiItem?.amount}
+              </Text>
+              <Counter quantity={item?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={id} />
+            </Box>
           </Box>
 
           {addForGuest && (
@@ -112,19 +131,6 @@ const CartItem = ({ item }) => {
               <Button fontSize={14} onClick={() => setModalOpen(true)}>
                 Markup Asoebi?
               </Button>
-            </Box>
-          )}
-
-          {!addForGuest && (
-            <Box display="flex" justifyContent="space-between">
-              <Text
-                color="#F5222D"
-                fontSize={14}
-                cursor="pointer"
-                onClick={() => removeItem(item)}
-              >
-                <DeleteIcon /> Remove from list
-              </Text>
             </Box>
           )}
         </Box>
@@ -157,13 +163,14 @@ export const ContributionAmount = ({
           <ModalCloseButton onClick={() => setModalOpen(false)} />
           <ModalBody>
             <Heading
-              mb="5"
+              mb="2"
               fontWeight="semibold"
-              fontSize={24}
+              fontSize={22}
               textAlign="center"
             >
               How much do you want to Mark Up?
             </Heading>
+            <Text mb='5'>This markup amount will be added to the original price for guests</Text>
             <Flex w="70%" mx="auto" justifyContent="space-between" mb="5">
               <Button
                 bg="#CCF2F0"

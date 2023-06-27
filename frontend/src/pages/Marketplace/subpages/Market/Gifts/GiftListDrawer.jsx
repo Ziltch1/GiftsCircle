@@ -19,7 +19,7 @@ import { dispatch } from '../../../../../redux/store';
 import { setCheckoutData } from '../../../../../redux/features/marketplace/marketSlice';
 
 const GiftListDrawer = ({ setShowDrawer, isOpen, setShowCheckout }) => {
-  const { GiftItems, amount } = useContext(GiftContext);
+  const { GiftItems, amount,} = useContext(GiftContext);
   const { onClose } = useDisclosure();
   const btnRef = React.useRef();
 
@@ -33,6 +33,9 @@ const GiftListDrawer = ({ setShowDrawer, isOpen, setShowCheckout }) => {
     );
     setShowCheckout(true);
   };
+
+
+
   return (
     <>
       <Box>
@@ -62,6 +65,7 @@ const GiftListDrawer = ({ setShowDrawer, isOpen, setShowCheckout }) => {
               </Flex>
               <Box mb="5" textAlign="right">
                 <Heading fontWeight="medium" fontSize="18px" mb="2">
+
                   Subtotal (₦{amount})
                 </Heading>
               </Box>

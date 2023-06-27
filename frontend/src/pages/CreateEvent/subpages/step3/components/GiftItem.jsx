@@ -14,10 +14,11 @@ import { useSelector } from 'react-redux';
 import { DeleteGiftItems } from '../../../../../redux/features/gift/service';
 import { dispatch } from '../../../../../redux/store';
 import { GiftContext } from '..';
+import Counter from '../../../../../components/Counter/Counter';
 
-const GiftItem = ({ gift, setData, data }) => {
+const GiftItem = ({ gift, setData, data, id }) => {
   const toast = useToast();
-  const { setAddedGiftItems, setGiftItems } = useContext(GiftContext);
+  const { setAddedGiftItems, setGiftItems, handleIncrement, handleDecrement } = useContext(GiftContext);
   const { giftItems } = useSelector(state => state.gift);
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
   const [enableContribution, setEnableContribution] = useState(
@@ -36,20 +37,6 @@ const GiftItem = ({ gift, setData, data }) => {
     }
   };
 
-  // useEffect(() => {
-  //   data.map(ele => {
-  //     if (ele.giftItemId === gift.giftItemId) {
-  //       if (enableContribution) {
-  //         ele.enableContribution = true;
-  //       } else {
-  //         ele.enableContribution = false;
-  //       }
-  //     }
-  //     return ele;
-  //   });
-  //   setGiftItems(data);
-  // }, [enableContribution]);
-
   const ShowToast = () => {
     toast({
       title: `Error`,
@@ -57,6 +44,7 @@ const GiftItem = ({ gift, setData, data }) => {
       status: 'error',
       duration: 5000,
       isClosable: true,
+      position: 'top'
     });
   };
 
@@ -115,7 +103,8 @@ const GiftItem = ({ gift, setData, data }) => {
         </Box>
 
         <Box>
-          <Text>₦{giftItem.amount}</Text>
+          <Text mb='3'>₦{giftItem.amount * gift.quantity}</Text>
+          <Counter quantity={gift?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={id} />
         </Box>
       </Flex>
     </Box>

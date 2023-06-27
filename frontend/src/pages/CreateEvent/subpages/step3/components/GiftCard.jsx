@@ -1,3 +1,4 @@
+
 import { Box, Image, Button, Text, Flex } from '@chakra-ui/react';
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
@@ -7,7 +8,7 @@ import { GiftContext } from '..';
 import DisplayCard from '../../../../../components/Card';
 
 const GiftCard = ({ step, setStep }) => {
-  const { setAddedGiftItems, addedGiftItems, setGiftItems } =
+  const { setAddedGiftItems, addedGiftItems, setGiftItems, quantity, GiftItems, setQuantity } =
     useContext(GiftContext);
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
@@ -17,9 +18,13 @@ const GiftCard = ({ step, setStep }) => {
 
   const AddGift = id => {
     if (!addedGiftItems.includes(id)) {
+      if (GiftItems.length > 0) {
+        const newGiftItem = GiftItems?.find(x => x?.ItemId === id);
+        setQuantity(newGiftItem?.quantity)
+      }
       const formBody = {
         eventId: newEvent.id,
-        quantity: 1,
+        quantity: quantity ? quantity : 1,
         giftItemId: id,
         complimentaryGift: 'none',
         enableContribution: false,
