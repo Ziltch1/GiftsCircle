@@ -29,6 +29,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const [amount, setAmount] = useState(0);
   const [addForGuest, setAddforGuest] = useState(false);
   const [designModal, setDesignModal] = useState(true);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     dispatch(GetAsoebiItems());
@@ -49,6 +50,8 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const [showAsoebi, setShowAsoebi] = useState(false);
   const toast = useToast();
 
+  
+
   const handleClick = () => {
     if (eventId !== '') {
       dispatch(GetEventAsoebis(eventId));
@@ -68,6 +71,25 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const changeView = () => {
     setAddforGuest(false);
     setDesignModal(true)
+  };
+
+
+  const handleIncrement = (id) => {
+    setAsoebiItems((prevItems) =>
+      prevItems.map((item) =>
+        item.ItemId === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const handleDecrement = (id) => {
+    setAsoebiItems((prevItems) =>
+      prevItems.map((item) =>
+        item.ItemId === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
   };
 
   return (
@@ -137,6 +159,10 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
             setAsoebiItems,
             setData,
             setAmount,
+            handleIncrement,
+            handleDecrement,
+            quantity,
+            setQuantity,
           }}
         >
           <>

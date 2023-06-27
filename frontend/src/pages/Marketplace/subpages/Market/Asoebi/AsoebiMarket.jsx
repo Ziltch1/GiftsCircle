@@ -19,7 +19,7 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
     setAmount,
     addedAsoebiItems,
     setAsoebiItems,
-    addForGuest,
+    addForGuest, quantity, setQuantity, AsoebiItems
   } = useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
 
@@ -67,11 +67,14 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
         setAddedAsoebiItems(prev => [...prev, id]);
       } else {
         const data = asoebiItems.find(x => x.id === id);
-
+        if (AsoebiItems.length > 0) {
+          const newGiftItem = AsoebiItems?.find(x => x?.ItemId === id);
+          setQuantity(newGiftItem?.quantity)
+        }
         const formBody = {
           ItemId: id,
           userId: user.id,
-          quantity: 1,
+          quantity: quantity ? quantity : 1,
           amountPaid: data.amount,
           status: 'PAID',
           category: 'ASOEBI',

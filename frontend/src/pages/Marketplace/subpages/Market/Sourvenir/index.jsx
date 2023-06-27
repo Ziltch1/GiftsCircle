@@ -19,6 +19,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const [addedSourvernirItems, setAddedSourvernirItems] = useState([]);
   const [amount, setAmount] = useState(0);
   const {checkoutData} = useSelector(state => state.market);
+  const [quantity, setQuantity] = useState(1)
 
   const showOptions = () => {
     setShowProducts(false);
@@ -30,6 +31,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
 
   useEffect(() => {
     const {data} = checkoutData;
+    console.log(data);
     setSourvernirItems([...data]);
     const ids = [];
     data.forEach(x => ids.push(x.ItemId));
@@ -50,10 +52,15 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const AddSourvenir = async id => {
     if (!addedSourvernirItems.includes(id)) {
       const data = sourvernirItems.find(x => x.id === id);
+      console.log(SourvenirItems);
+      if(SourvenirItems.length > 0){
+        const newSourvenirItem = SourvenirItems?.find(x => x?.ItemId === id);
+        setQuantity(newSourvenirItem?.quantity)
+      }
       const formBody = {
         ItemId: id,
         userId: user.id,
-        quantity: 1,
+        quantity: quantity ? quantity : 1,
         amountPaid: data.amount,
         status: 'PAID',
         category: 'SOURVENIR',
@@ -72,6 +79,26 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
     setAmount(totalAmount);
   }, [SourvenirItems]);
 
+
+  const handleIncrement = (id) => {
+    setSourvernirItems((prevItems) =>
+      prevItems.map((item) =>
+        item.ItemId === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const handleDecrement = (id) => {
+    setSourvernirItems((prevItems) =>
+      prevItems.map((item) =>
+        item.ItemId === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+
+
   return (
     <>
       <SourvenirContext.Provider
@@ -80,6 +107,9 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
           setAddedSourvernirItems,
           setSourvernirItems,
           setAmount,
+          handleIncrement,
+          handleDecrement,
+          quantity
         }}
       >
         <GiftListDrawer 

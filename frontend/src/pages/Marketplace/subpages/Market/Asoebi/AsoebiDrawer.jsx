@@ -81,7 +81,7 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) =
 
           <DrawerBody>
             {data.map(ele => (
-              <CartItem item={ele} key={data.indexOf(ele)} />
+              <CartItem item={ele} key={data.indexOf(ele)} id={ele.ItemId} />
             ))}
           </DrawerBody>
           {!addForGuest && (

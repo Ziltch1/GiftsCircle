@@ -2,14 +2,15 @@ import React, { useContext } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { SourvenirContext } from '.';
+import Counter from '../../../../../components/Counter/Counter';
 
-const GiftListItem = ({ item }) => {
+const GiftListItem = ({ item, id }) => {
   const {
     setSourvernirItems,
     setAddedSourvernirItems,
     SourvenirItems,
     addedSourvernirItems,
-    sourvernirItems,
+    sourvernirItems, handleIncrement, handleDecrement
   } = useContext(SourvenirContext);
 
   const handleDelete = id => {
@@ -61,9 +62,10 @@ const GiftListItem = ({ item }) => {
           </Button>
         </Box>
         <Box>
-          <Text fontWeight="bold" fontSize={15}>
-            ₦ {data?.amount}
+          <Text fontWeight="bold" fontSize={15} mb='3'>
+            ₦ {item?.quantity ? data?.amount * item?.quantity : data?.amount}
           </Text>
+          <Counter quantity={item?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={id} />
         </Box>
       </Flex>
     </Box>

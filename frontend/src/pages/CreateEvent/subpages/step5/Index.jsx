@@ -115,6 +115,31 @@ const SummaryForm = ({ setStep }) => {
         />
       </Box>
 
+      
+
+      <Box w="500px" mb="12">
+        <Heading mb="4" fontWeight={600} fontSize={18}>
+          Apply Donation to charity
+        </Heading>
+        <FormLabel fontWeight={550} fontSize={14}>
+          How many percentage do you want to add?
+        </FormLabel>
+        <Box w="250px" mb="3">
+          <DropdownList
+            value={percentage}
+            onChange={nextValue => setPercentage(nextValue.replace('%', ''))}
+            data={['0%', '0.5%', '1%', '1.5%', '2%', '3.5', '4.5%', '5%']}
+          />
+        </Box>
+        <Box mb="2" display="flex" alignItems="center" gap={2}>
+          <Checkbox isChecked={true} />
+          <Text fontSize={14}>
+            Apply {percentage} to all cost of items to be donated to charity
+            homes
+          </Text>
+        </Box>
+      </Box>
+
       <Box mb="10">
         <Heading mb="4" fontWeight={600} fontSize={18}>
           When should we publish your event?
@@ -129,29 +154,6 @@ const SummaryForm = ({ setStep }) => {
             </Radio>
           </Stack>
         </RadioGroup>
-      </Box>
-
-      <Box w="500px" mb="12">
-        <Heading mb="4" fontWeight={600} fontSize={18}>
-          Apply Donation to charity
-        </Heading>
-        <FormLabel fontWeight={550} fontSize={14}>
-          How many percentage do you want to add?
-        </FormLabel>
-        <Box w="250px" mb="3">
-          <DropdownList
-            value={percentage}
-            onChange={nextValue => setPercentage(nextValue.replace('%', ''))}
-            data={['0.5%', '1%', '1.5%', '2%', '3.5', '4.5%', '5%']}
-          />
-        </Box>
-        <Box mb="2" display="flex" alignItems="center" gap={2}>
-          <Checkbox isChecked={true} />
-          <Text fontSize={14}>
-            Apply {percentage} to all cost of items to be donated to charity
-            homes
-          </Text>
-        </Box>
       </Box>
 
       <Box w="182px" mx="auto">
