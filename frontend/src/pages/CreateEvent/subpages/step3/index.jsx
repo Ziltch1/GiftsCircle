@@ -19,6 +19,7 @@ const Index = ({ step, setStep }) => {
   const [GiftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
   const { newEvent } = useSelector(state => state.event);
+  const [quantity, setQuantity] = useState(1)
 
   const contextValue = useMemo(
     () => ({
@@ -42,11 +43,33 @@ const Index = ({ step, setStep }) => {
     setStep(2);
   };
 
+
+  const handleIncrement = (id) => {
+    setGiftItems((prevItems) =>
+      prevItems.map((item) =>
+        item.giftItemId === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+
+  const handleDecrement = (id) => {
+    setGiftItems((prevItems) =>
+      prevItems.map((item) =>
+        item.giftItemId === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+
+
+
   return (
     <Box bg="#F5F5F5" h="100%" py="10" px="5">
       <Box w="90%" mx="auto">
         <GiftContext.Provider
-          value={{ ...contextValue, setAddedGiftItems, setGiftItems }}
+          value={{ ...contextValue, setAddedGiftItems, setGiftItems, quantity, setQuantity, handleIncrement, handleDecrement }}
         >
           <BackButton action={BackAction} />
           <GiftHeader openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
