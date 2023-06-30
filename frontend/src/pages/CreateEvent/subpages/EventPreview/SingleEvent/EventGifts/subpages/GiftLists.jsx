@@ -7,7 +7,7 @@ import {
   Tr,
   Th,
   Td,
-  TableContainer, Heading, Text
+  TableContainer,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
@@ -15,11 +15,7 @@ const GiftLists = ({ data }) => {
   const { giftItems } = useSelector(state => state.gift);
   return (
     <Box>
-      <Box textAlign='center'>
-        <Heading>Your purchase history is empty</Heading>
-        <Text>Start adding gifts</Text>
-      </Box>
-      {/* <TableContainer bg="white">
+      <TableContainer bg="white">
         <Table variant="simple">
           <Thead bg="#EEEEEE" px="17px" py="40px">
             <Tr fontSize={14} color="black">
@@ -38,16 +34,13 @@ const GiftLists = ({ data }) => {
                     <Td>{index + 1}</Td>
                     <Td>{giftItem.title}</Td>
                     <Td>1</Td>
-                    <Td color="#009F94">
-                      {gift.purchased ? 'Purchased' : 'Available'}
-                    </Td>
                   </Tr>
                 </>
               );
             })}
           </Tbody>
         </Table>
-      </TableContainer> */}
+      </TableContainer>
     </Box>
   );
 };

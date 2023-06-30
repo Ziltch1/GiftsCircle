@@ -249,7 +249,7 @@ model Media {
   userId     String    @db.VarChar(255)
   date       DateTime  @default(now())
   uploadedBy USERTYPE
-  visibility VISBILITY @default(PUBLIC)
+  visibility VISBILITY @default(PRIVATE)
 }
 
 model ComplimentaryMessage {
@@ -266,7 +266,7 @@ model Notifications {
   type       NOTIFICATION
   author     user         @relation(fields: [userId], references: [id])
   userId     String       @db.VarChar(255)
-  eventId    String?      @db.VarChar 
+  eventId    String?      @db.VarChar
   created_at DateTime     @default(now())
   read       Boolean      @default(false)
   message    String       @db.VarChar
@@ -294,6 +294,7 @@ enum Role {
 enum VISBILITY {
   PUBLIC
   PRIVATE
+  HOST
 }
 
 enum USERTYPE {

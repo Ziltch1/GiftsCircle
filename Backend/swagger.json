@@ -2027,7 +2027,7 @@
 
     "/media/UpdateVisibility/{id}": {
       "put": {
-        "description": "Two options are PRIVATE or PUBLIC",
+        "description": "Two options are PRIVATE or PUBLIC or HOST",
         "tags": ["Media"],
         "parameters": [
           {
