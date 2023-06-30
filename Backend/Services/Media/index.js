@@ -107,6 +107,7 @@ const Create = async (data, url) => {
       eventId: data.eventId,
       url: url,
       uploadedBy: data.uploadedBy,
+      
     },
   });
 

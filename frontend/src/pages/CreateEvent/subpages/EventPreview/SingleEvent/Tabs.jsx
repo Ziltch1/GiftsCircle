@@ -3,7 +3,7 @@ import { Box, Flex, Button } from '@chakra-ui/react'
 
 const Tabs = ({navPosition, setNavPosition}) => {
 
-    const links = ['About events', 'Gift', 'Media', 'Guests'];
+    const links = ['About events', 'Gift'];
     const handleClick = (index) => {
         setNavPosition(index);
     }
