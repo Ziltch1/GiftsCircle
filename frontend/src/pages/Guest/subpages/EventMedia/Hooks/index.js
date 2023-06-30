@@ -54,7 +54,8 @@ const useUpload = (data, setShowModal, setImage, recorded = false) => {
 
   return Data;
 };
-const UploadVideoReq = async (data, setShowModal) => {
+
+const UploadVideoReq = async (data, setShowModal, setImage) => {
   if (data.size > 104857600) {
     setShowModal(false);
     dispatch(
@@ -91,8 +92,8 @@ export const UploadVideo = async (
 ) => {
   try {
     let res = recorded
-      ? await UploadVideoReq(data, setShowModal)
-      : await UploadVideoReq(data[0], setShowModal);
+      ? await UploadVideoReq(data, setShowModal, setImage)
+      : await UploadVideoReq(data[0], setShowModal, setImage);
     if (res) {
       setShowModal(false);
       setImage(null);
