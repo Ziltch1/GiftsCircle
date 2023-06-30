@@ -43,6 +43,7 @@ app.use(
 );
 
 app.get("/", async (req, res) => {
+  // console.log("enetred");
   return res.json({ msg: "hello world" });
 });
 // app.use('/images', express.static('images'))
