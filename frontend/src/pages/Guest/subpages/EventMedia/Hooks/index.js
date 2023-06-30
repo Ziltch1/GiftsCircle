@@ -64,6 +64,7 @@ const UploadVideoReq = async (data, setShowModal) => {
         title: 'Error',
       })
     );
+    setImage(null);
   } else {
     const formData = new FormData();
     formData.append('image', data);
@@ -74,6 +75,7 @@ const UploadVideoReq = async (data, setShowModal) => {
       return result.data;
     } catch (error) {
       setShowModal(false);
+      setImage(null);
       dispatch(createResponse(ErrorHandler(error)));
     }
   }
@@ -103,12 +105,14 @@ export const UploadVideo = async (
 
       const response = await UploadVideoApi(formBody);
       if (response) {
+        setImage(null);
         setTimeout(() => {
           dispatch(GetGuestSentFiles(eventId, userId));
         }, 1000);
       }
     }
   } catch (err) {
+    setImage(null);
     console.log(err);
   }
 };
@@ -132,13 +136,14 @@ const UploadImages = async (data, eventId, userId, setShowModal, setImage) => {
   try {
     const response = await UploadImagesReq(data, eventId, userId);
     if (response) {
+      setImage(null);
+      setShowModal(false);
       setTimeout(() => {
         dispatch(GetGuestSentFiles(eventId, userId));
       }, 1000);
-      setShowModal(false);
-      setImage(null);
     }
   } catch (err) {
+    setImage(null);
     console.log(err);
   }
 };
