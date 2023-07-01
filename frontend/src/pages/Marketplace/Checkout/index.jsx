@@ -12,6 +12,7 @@ const Index = ({ setShowCheckout }) => {
   const [showDeliveryForm, setShowDeliveryForm] = useState(true);
   const [selectedDeliveryDetails, setSelectedDeliveryDetails] = useState(null);
   const [deliveryAmount, setDeliveryAmount] = useState(0);
+  const [deliveryPercent, setDeliveryPercent] = useState(0);
   const { deliveryDetails } = useSelector(state => state.user);
   const { checkoutData } = useSelector(state => state.market);
 
@@ -37,13 +38,23 @@ const Index = ({ setShowCheckout }) => {
 
   useEffect(() => {
     if (selectedDeliveryDetails) {
-      Object.values(Zones).forEach(val => {
-        if (val.States.includes(selectedDeliveryDetails.state)) {
-          setDeliveryAmount(val.Amount);
+      Object.keys(Zones).forEach(val => {
+        const states = Object.keys(Zones[val]);
+        if (states.includes(selectedDeliveryDetails.state)) {
+          const amount = Zones[val][selectedDeliveryDetails.state];
+          setDeliveryPercent(amount);
         }
       });
     }
   }, [selectedDeliveryDetails]);
+
+  useEffect(() => {
+    if (deliveryPercent !== 0) {
+      const fee = amount * (deliveryPercent / 100);
+      console.log(fee);
+      setDeliveryAmount(fee);
+    }
+  }, [deliveryPercent]);
 
   return (
     <Box w="80%" mx="auto" my="8">

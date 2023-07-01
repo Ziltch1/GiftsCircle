@@ -8,16 +8,23 @@ datasource db {
 }
 
 model delivery {
-  id        String  @id @db.VarChar(255)
-  firstname String  @db.VarChar(255)
-  lastname  String  @db.VarChar(255)
-  address   String  @db.VarChar
-  info      String? @db.VarChar
-  lga       String  @db.VarChar(255)
-  state     String  @db.VarChar(255)
-  tel       String  @db.VarChar(255)
-  tel2      String? @db.VarChar(255)
-  userId    String  @db.VarChar(255)
+  id         String    @id @db.VarChar(255)
+  firstname  String    @db.VarChar(255)
+  lastname   String    @db.VarChar(255)
+  address    String    @db.VarChar
+  info       String?   @db.VarChar
+  lga        String    @db.VarChar(255)
+  state      String    @db.VarChar(255)
+  tel        String    @db.VarChar(255)
+  tel2       String?   @db.VarChar(255)
+  userId     String    @db.VarChar(255)
+  eventId    String?   @db.VarChar(255)
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
+  created_by String?   @db.VarChar(255)
+  updated_by String?   @db.VarChar(255)
+  deleted_by String?   @db.VarChar(255)
 
   @@index([userId], map: "Delivery_userId_fkey")
 }
@@ -43,8 +50,13 @@ model event {
   eventLink       String        @db.VarChar(100)
   guestCode       String        @db.VarChar(6)
   user_id         String
-  created_at      DateTime
+  created_at      DateTime      @default(now())
   host            String        @db.VarChar(255)
+  updated_at      DateTime?     @updatedAt
+  deleted_at      DateTime?
+  created_by      String?       @db.VarChar(255)
+  updated_by      String?       @db.VarChar(255)
+  deleted_by      String?       @db.VarChar(255)
   gifts           gift[]
   co_hosts        user[]
   Guests          Guests[]
@@ -64,6 +76,12 @@ model gift {
   complimentaryGift  String            @db.VarChar(255)
   amountPaid         Int
   eventId            String?           @db.VarChar(255)
+  created_at         DateTime          @default(now())
+  updated_at         DateTime?         @updatedAt
+  deleted_at         DateTime?
+  created_by         String?           @db.VarChar(255)
+  updated_by         String?           @db.VarChar(255)
+  deleted_by         String?           @db.VarChar(255)
   event              event?            @relation(fields: [eventId], references: [id])
   giftTransaction    giftTransaction[]
 
@@ -85,6 +103,12 @@ model giftTransaction {
   eventId             String             @db.VarChar(50)
   userId              String             @db.VarChar(255)
   complimentarygiftId String?            @db.VarChar(255)
+  created_at          DateTime           @default(now())
+  updated_at          DateTime?          @updatedAt
+  deleted_at          DateTime?
+  created_by          String?            @db.VarChar(255)
+  updated_by          String?            @db.VarChar(255)
+  deleted_by          String?            @db.VarChar(255)
 }
 
 model marketGiftTransaction {
@@ -97,15 +121,27 @@ model marketGiftTransaction {
   date        DateTime       @default(now())
   category    MarketCategory
   userId      String         @db.VarChar(255)
+  created_at  DateTime       @default(now())
+  updated_at  DateTime?      @updatedAt
+  deleted_at  DateTime?
+  created_by  String?        @db.VarChar(255)
+  updated_by  String?        @db.VarChar(255)
+  deleted_by  String?        @db.VarChar(255)
 }
 
 model giftitem {
-  id       String  @id @db.VarChar(255)
-  title    String? @db.VarChar(255)
-  category String  @db.VarChar(255)
-  image    String? @db.VarChar(255)
-  details  String? @db.VarChar(255)
-  amount   Int
+  id         String    @id @db.VarChar(255)
+  title      String?   @db.VarChar(255)
+  category   String    @db.VarChar(255)
+  image      String?   @db.VarChar(255)
+  details    String?   @db.VarChar(255)
+  amount     Int
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
+  created_by String?   @db.VarChar(255)
+  updated_by String?   @db.VarChar(255)
+  deleted_by String?   @db.VarChar(255)
 }
 
 model complimentarygift {
@@ -116,6 +152,12 @@ model complimentarygift {
   details         String?           @db.VarChar(255)
   amount          Int
   giftTransaction giftTransaction[]
+  created_at      DateTime          @default(now())
+  updated_at      DateTime?         @updatedAt
+  deleted_at      DateTime?
+  created_by      String?           @db.VarChar(255)
+  updated_by      String?           @db.VarChar(255)
+  deleted_by      String?           @db.VarChar(255)
 }
 
 model user {
@@ -133,6 +175,9 @@ model user {
   eventId               String?                 @db.VarChar(255)
   event                 event?                  @relation(fields: [eventId], references: [id])
   role                  Role                    @default(USER)
+  created_at            DateTime                @default(now())
+  updated_at            DateTime?               @updatedAt
+  deleted_at            DateTime?
   Media                 Media[]
   ComplimentaryMessage  ComplimentaryMessage[]
   Guests                Guests[]
@@ -143,20 +188,29 @@ model user {
 }
 
 model otp {
-  id      String   @id @db.VarChar(50)
-  code    String   @db.VarChar(5)
-  expires DateTime
-  user    String   @db.VarChar(100)
+  id         String    @id @db.VarChar(50)
+  code       String    @db.VarChar(5)
+  expires    DateTime
+  user       String    @db.VarChar(100)
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
+  created_by String?   @db.VarChar(255)
 }
 
 model Guests {
-  id          String   @id @db.VarChar(50)
-  eventId     String   @db.VarChar(50)
+  id          String    @id @db.VarChar(50)
+  eventId     String    @db.VarChar(50)
   coHost      Boolean
-  user        user     @relation(fields: [userId], references: [id])
-  userId      String   @db.VarChar(255)
-  event       event    @relation(fields: [eventId], references: [id])
-  date_joined DateTime @default(now())
+  user        user      @relation(fields: [userId], references: [id])
+  userId      String    @db.VarChar(255)
+  event       event     @relation(fields: [eventId], references: [id])
+  date_joined DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+  deleted_at  DateTime?
+  created_by  String?   @db.VarChar(255)
+  updated_by  String?   @db.VarChar(255)
+  deleted_by  String?   @db.VarChar(255)
 }
 
 model FundRaising {
@@ -169,19 +223,30 @@ model FundRaising {
   title               String                @default("") @db.VarChar(255)
   description         String                @default("") @db.VarChar
   image               String                @default("") @db.VarChar(255)
+  created_at          DateTime              @default(now())
+  updated_at          DateTime?             @updatedAt
+  deleted_at          DateTime?
+  created_by          String?               @db.VarChar(255)
+  updated_by          String?               @db.VarChar(255)
+  deleted_by          String?               @db.VarChar(255)
   FundRaisingDonation FundRaisingDonation[]
 }
 
 model FundRaisingDonation {
-  id        String      @id @db.VarChar(50)
-  fundId    String      @db.VarChar(50)
-  fund      FundRaising @relation(fields: [fundId], references: [id])
-  firstName String      @db.VarChar(50)
-  lastName  String      @db.VarChar(50)
-  email     String      @db.VarChar(50)
-  phone     String      @db.VarChar(50)
-  amount    Int
-  date      DateTime
+  id         String      @id @db.VarChar(50)
+  fundId     String      @db.VarChar(50)
+  fund       FundRaising @relation(fields: [fundId], references: [id])
+  firstName  String      @db.VarChar(50)
+  lastName   String      @db.VarChar(50)
+  email      String      @db.VarChar(50)
+  phone      String      @db.VarChar(50)
+  amount     Int
+  date       DateTime    @default(now())
+  updated_at DateTime?   @updatedAt
+  deleted_at DateTime?
+  created_by String?     @db.VarChar(255)
+  updated_by String?     @db.VarChar(255)
+  deleted_by String?     @db.VarChar(255)
 }
 
 model asoebiitem {
@@ -191,6 +256,12 @@ model asoebiitem {
   image             String?             @db.VarChar(255)
   details           String?             @db.VarChar
   amount            Int
+  created_at        DateTime            @default(now())
+  updated_at        DateTime?           @updatedAt
+  deleted_at        DateTime?
+  created_by        String?             @db.VarChar(255)
+  updated_by        String?             @db.VarChar(255)
+  deleted_by        String?             @db.VarChar(255)
   asoebiTransaction asoebiTransaction[]
 }
 
@@ -203,6 +274,12 @@ model asoebi {
   userId            String?             @db.VarChar(255)
   increment         Int
   purchasedByHost   Boolean             @default(false)
+  created_at        DateTime            @default(now())
+  updated_at        DateTime?           @updatedAt
+  deleted_at        DateTime?
+  created_by        String?             @db.VarChar(255)
+  updated_by        String?             @db.VarChar(255)
+  deleted_by        String?             @db.VarChar(255)
   asoebiTransaction asoebiTransaction[]
 }
 
@@ -210,7 +287,7 @@ model asoebiTransaction {
   id           String      @id @db.VarChar(50)
   aseobi       asoebi      @relation(fields: [asoebiId], references: [id])
   amount       Int
-  date         DateTime
+  date         DateTime    @default(now())
   asoebiId     String      @db.VarChar(255)
   purchasedBy  user        @relation(fields: [userId], references: [id])
   quantity     Int
@@ -219,16 +296,27 @@ model asoebiTransaction {
   asoebiitem   asoebiitem? @relation(fields: [asoebiitemId], references: [id])
   asoebiitemId String?     @db.VarChar(255)
   userId       String      @db.VarChar(255)
+  updated_at   DateTime?   @updatedAt
+  deleted_at   DateTime?
+  created_by   String?     @db.VarChar(255)
+  updated_by   String?     @db.VarChar(255)
+  deleted_by   String?     @db.VarChar(255)
 }
 
 model sourvenirItem {
-  id        String      @id @db.VarChar(255)
-  title     String?     @db.VarChar(255)
-  category  String      @db.VarChar(255)
-  image     String?     @db.VarChar(255)
-  details   String?     @db.VarChar
-  amount    Int
-  sourvenir sourvenir[]
+  id         String      @id @db.VarChar(255)
+  title      String?     @db.VarChar(255)
+  category   String      @db.VarChar(255)
+  image      String?     @db.VarChar(255)
+  details    String?     @db.VarChar
+  amount     Int
+  created_at DateTime    @default(now())
+  updated_at DateTime?   @updatedAt
+  deleted_at DateTime?
+  created_by String?     @db.VarChar(255)
+  updated_by String?     @db.VarChar(255)
+  deleted_by String?     @db.VarChar(255)
+  sourvenir  sourvenir[]
 }
 
 model sourvenir {
@@ -239,6 +327,12 @@ model sourvenir {
   eventId         String?       @default("") @db.VarChar(255)
   userId          String?       @db.VarChar(255)
   sourvenirItemId String        @db.VarChar(255)
+  created_at      DateTime      @default(now())
+  updated_at      DateTime?     @updatedAt
+  deleted_at      DateTime?
+  created_by      String?       @db.VarChar(255)
+  updated_by      String?       @db.VarChar(255)
+  deleted_by      String?       @db.VarChar(255)
 }
 
 model Media {
@@ -248,17 +342,27 @@ model Media {
   user       user      @relation(fields: [userId], references: [id])
   userId     String    @db.VarChar(255)
   date       DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
+  created_by String?   @db.VarChar(255)
+  updated_by String?   @db.VarChar(255)
+  deleted_by String?   @db.VarChar(255)
   uploadedBy USERTYPE
   visibility VISBILITY @default(PRIVATE)
 }
 
 model ComplimentaryMessage {
-  id      String   @id @db.VarChar(255)
-  eventId String   @db.VarChar(255)
-  user    user     @relation(fields: [userId], references: [id])
-  userId  String   @db.VarChar(255)
-  date    DateTime @default(now())
-  message String   @db.VarChar
+  id         String    @id @db.VarChar(255)
+  eventId    String    @db.VarChar(255)
+  user       user      @relation(fields: [userId], references: [id])
+  userId     String    @db.VarChar(255)
+  date       DateTime  @default(now())
+  message    String    @db.VarChar
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
+  created_by String?   @db.VarChar(255)
+  updated_by String?   @db.VarChar(255)
+  deleted_by String?   @db.VarChar(255)
 }
 
 model Notifications {
@@ -270,6 +374,11 @@ model Notifications {
   created_at DateTime     @default(now())
   read       Boolean      @default(false)
   message    String       @db.VarChar
+  updated_at DateTime?    @updatedAt
+  deleted_at DateTime?
+  created_by String?      @db.VarChar(255)
+  updated_by String?      @db.VarChar(255)
+  deleted_by String?      @db.VarChar(255)
 }
 
 enum Status {

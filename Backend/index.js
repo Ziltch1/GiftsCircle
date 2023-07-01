@@ -32,18 +32,18 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "https://giftscircle.netlify.app",
-    ],
-  })
-);
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:3000",
+//       "http://localhost:3001",
+//       "https://giftscircle.netlify.app",
+//     ],
+//   })
+// );
 
 app.get("/", async (req, res) => {
-  // console.log("enetred");
+  console.log("enetred");
   return res.json({ msg: "hello world" });
 });
 // app.use('/images', express.static('images'))
@@ -71,7 +71,7 @@ app.use("/api/docs/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //   swaggerUi.serve,
 //   swaggerUi.setup(AdminSwaggerDocument)
 // );
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 80;
 
 server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

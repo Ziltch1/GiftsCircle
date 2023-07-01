@@ -26,7 +26,6 @@ const DashboardLayout = () => {
   );
 
   const { pathname } = useLocation();
-  console.log(pathname);
 
   useEffect(() => {
     if (!token) {

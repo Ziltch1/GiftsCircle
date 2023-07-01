@@ -7,18 +7,17 @@ import { setCheckoutData } from '../../../../redux/features/marketplace/marketSl
 import { BuyItemsApi } from '../../../../redux/axios/apis/marketPlace';
 
 const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout }) => {
+  
   const HandleSubmit = async () => {
     if (data?.length > 0) {
       const res = await BuyItemsApi(data);
       if (res.data) {
         dispatch(GetUserMarketItems(data[0].userId));
         setCheckoutData({ type: '', data: [], amount: 0 });
-        setShowCheckout(false)
+        setShowCheckout(false);
       }
     }
   };
-
-  console.log(data);
 
   return (
     <Box bg="white" p="4" w="100%" borderRadius={5}>

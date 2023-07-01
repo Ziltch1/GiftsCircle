@@ -8,17 +8,19 @@ const { upload, dataUri } = require("../config/multer");
 const prisma = new PrismaClient();
 
 router.get("/:id", async (req, res) => {
-  try {
-    let data = await Get(req.params.id);
-    if (data) {
-      return res.status(200).send(data);
-    }
-    return res.status(400).send(ResponseDTO("Failed", "GiftItem not found"));
-  } catch (err) {
-    console.log(err);
-    await prisma.$disconnect();
-    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
-  }
+  console.log("entered", "hey");
+  return res.sendStatus(200);
+  // try {
+  //   let data = await Get(req.params.id);
+  //   if (data) {
+  //     return res.status(200).send(data);
+  //   }
+  //   return res.status(400).send(ResponseDTO("Failed", "GiftItem not found"));
+  // } catch (err) {
+  //   console.log(err);
+  //   await prisma.$disconnect();
+  //   return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  // }
 });
 
 router.get("/Get/All", async (req, res) => {
