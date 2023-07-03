@@ -19,7 +19,7 @@ import {
   Radio,
   Stack,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import errorImg from '../../../assets/errorImg.svg';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -39,9 +39,7 @@ const SummaryForm = ({ setStep }) => {
   const { newEvent } = useSelector(state => state.event);
   const event = JSON.parse(localStorage.getItem('newEvent'));
   const [openModal, setOpenModal] = useState(false);
-  const [percentage, setPercentage] = useState(
-    event ? event.percentageDonation : ''
-  );
+  const [percentage, setPercentage] = useState('');
   const [publish, setPublish] = useState(false);
   const toast = useToast();
 
@@ -63,6 +61,17 @@ const SummaryForm = ({ setStep }) => {
   const backAction = () => {
     setStep(3);
   };
+
+  useEffect(() => {
+    const savedPerccentage = localStorage.getItem('percentage');
+    if (savedPerccentage) {
+      setPercentage(savedPerccentage);
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('percentage', percentage);
+  }, [percentage])
 
   return (
     <Box mt="8" w="80%" mx="auto" mb="16">
@@ -127,7 +136,7 @@ const SummaryForm = ({ setStep }) => {
         <Box w="250px" mb="3">
           <DropdownList
             value={percentage}
-            onChange={nextValue => setPercentage(nextValue.replace('%', ''))}
+            onChange={nextValue => setPercentage(nextValue)}
             data={['0%', '0.5%', '1%', '1.5%', '2%', '3.5', '4.5%', '5%']}
           />
         </Box>
@@ -199,6 +208,7 @@ export const ConfirmationModal = ({
         if (res.data) {
           localStorage.removeItem('newEvent');
           localStorage.removeItem('delivery');
+          localStorage.removeItem('percentage');
           dispatch(setEditEvent(false));
           dispatch(setNewEvent(null));
           setOpenModal(false);
