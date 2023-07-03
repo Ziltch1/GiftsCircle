@@ -63,7 +63,6 @@ const SendVerifyEmail = async (email) => {
         },
       });
 
-      console.log(data)
       let result = await SendEmail(email, user.firstname, otp);
       return result.response;
     } catch (error) {

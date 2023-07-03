@@ -70,6 +70,7 @@ const Update = async (id, data, image) => {
         details: data.details ? data.details : complimentaryItem.details,
         category: data.category ? data.category : complimentaryItem.category,
         title: data.title ? data.title : complimentaryItem.title,
+        updated_at: new Date(Date.now()),
       },
     });
 

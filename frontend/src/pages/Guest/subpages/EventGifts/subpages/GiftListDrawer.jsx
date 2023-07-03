@@ -42,6 +42,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
     amount,
     setGiftAmount,
     setComplimentaryGiftAmount,
+    deliveryPercent,
   } = useContext(CartContext);
 
   useEffect(() => {
@@ -91,6 +92,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
         amountPaid: item.amountPaid,
         quantity: item.quantity,
         giftItemAmount: newData.amount,
+        deliveryAmount: newData.amount * (deliveryPercent / 100),
         complimentaryGift:
           ComplimentaryItems.length > 0 ? ComplimentaryItems[0].id : '',
         amount: amount,

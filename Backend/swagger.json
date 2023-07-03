@@ -986,6 +986,33 @@
         }
       }
     },
+    "/delivery/EventDetails/{id}": {
+      "get": {
+        "description": "",
+        "tags": ["Delivery"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/delivery/create": {
       "post": {
         "description": "",
@@ -1047,6 +1074,7 @@
         }
       }
     },
+
     "/delivery///{id}": {
       "delete": {
         "description": "",

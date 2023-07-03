@@ -43,6 +43,7 @@ const UpdateTransaction = async (id, data) => {
     },
     data: {
       status: data.status,
+      updated_at: new Date(Date.now())
     },
   });
 

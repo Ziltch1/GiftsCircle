@@ -110,7 +110,6 @@ const Buy = async (data) => {
         userId: data.userId,
         eventId: data.eventId,
         quantity: data.quantity,
-        date: new Date(Date.now()),
         delivered: false,
         asoebiitemId: asoebi.asoebiItem,
       },
@@ -123,6 +122,8 @@ const Buy = async (data) => {
       data: {
         amountPaid: asoebi.amountPaid + data.amount,
         quantity: asoebi.quantity + data.quantity,
+        updated_at: new Date(Date.now()),
+        updated_by: data.userId,
       },
     });
 

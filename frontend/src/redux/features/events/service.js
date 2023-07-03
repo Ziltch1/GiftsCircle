@@ -10,6 +10,7 @@ import {
   setAsoebisItems,
   setEventAsoebiBuyers,
   setEventAsoebis,
+  setEventDeliveryDetails,
   setEventGifts,
   setEventGuests,
   setEventMediaFiles,
@@ -40,6 +41,7 @@ import {
   GetGuestSentFilesApi,
   GetHostRecievedFilesApi,
 } from '../../axios/apis/media';
+import { GetEventDeliveryDetailsApi } from '../../axios/apis/delivery';
 
 const GetUserEvents = id => async () => {
   dispatch(setLoading(false));
@@ -58,6 +60,16 @@ const GetEventGifts = id => async () => {
   try {
     const res = await GetEventGiftsApi(id);
     dispatch(setEventGifts(res.data));
+  } catch (error) {
+    console.log(ErrorHandler(error));
+    // dispatch(createResponse(ErrorHandler(error)));
+  }
+};
+
+const GetEventDeliveryDetails = id => async () => {
+  try {
+    const res = await GetEventDeliveryDetailsApi(id);
+    dispatch(setEventDeliveryDetails(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
     // dispatch(createResponse(ErrorHandler(error)));
@@ -210,6 +222,7 @@ export {
   GetEventGifts,
   GetEventGuests,
   GetEventAsoebis,
+  GetEventDeliveryDetails,
   GetEventAsoebiBuyers,
   DeleteEvent,
   GetEventFundRaising,

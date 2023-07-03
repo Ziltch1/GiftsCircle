@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 import {
   DeliveryDetailsApi,
   UpdateDeliveryDetailsApi,
-} from '../../../../redux/axios/apis/user';
+} from '../../../../redux/axios/apis/delivery';
 import { dispatch } from '../../../../redux/store';
 import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 
@@ -230,7 +230,7 @@ const DeliveryDetailsForm = ({
             <Select
               value={selectedState}
               onChange={e => setSelectedState(e.target.value)}
-              placeholder='Select State'
+              placeholder="Select State"
             >
               {Object.keys(LGAs).map(state => (
                 <option key={state} value={state}>
@@ -241,10 +241,10 @@ const DeliveryDetailsForm = ({
           </Box>
           <Box w={{ base: '100%', lg: '50%' }}>
             <FormLabel fontSize={14}>City</FormLabel>
-            <Select 
-              value={selectedLGA} 
+            <Select
+              value={selectedLGA}
               onChange={handleLGAsChange}
-              placeholder='Select LGA'
+              placeholder="Select LGA"
             >
               {selectedLGAs?.map(lga => (
                 <option key={lga} value={lga}>
@@ -256,7 +256,9 @@ const DeliveryDetailsForm = ({
         </Stack>
         <Divider />
         <Box p="3" textAlign="right" mt="3">
-          <Button mr="4" onClick={() => setShowDeliveryForm(false)}>Cancel</Button>
+          <Button mr="4" onClick={() => setShowDeliveryForm(false)}>
+            Cancel
+          </Button>
           <Button
             bg="#00BFB2"
             color="white"

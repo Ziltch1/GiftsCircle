@@ -15,6 +15,7 @@ const initialState = {
   eventMediaFiles: null,
   hostRecievedFiles: null,
   guestSentFiles: null,
+  eventDeliveryDetails: null,
 };
 
 const EventSlice = createSlice({
@@ -63,6 +64,9 @@ const EventSlice = createSlice({
     setGuestSentFiles: (state, action) => {
       state.guestSentFiles = action.payload;
     },
+    setEventDeliveryDetails: (state, action) => {
+      state.eventDeliveryDetails = action.payload;
+    },
   },
 });
 
@@ -81,6 +85,7 @@ export const {
   setEventMediaFiles,
   setHostRecievedFiles,
   setGuestSentFiles,
+  setEventDeliveryDetails,
 } = EventSlice.actions;
 
 export default EventSlice.reducer;
