@@ -1,4 +1,4 @@
-import { Button, Box } from '@chakra-ui/react';
+import { Button, Box, Text, Stack } from '@chakra-ui/react';
 import React, { useRef, useState, useEffect } from 'react';
 import { FaStop, FaPause, FaTrash } from 'react-icons/fa';
 import { BiPlay, BiSend } from 'react-icons/bi';
@@ -11,6 +11,8 @@ const VideoRecorder = ({ setData }) => {
   const [videoBlob, setVideoBlob] = useState(null);
   const [paused, setPaused] = useState(false);
   const [playingVideo, setPlayingVideo] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [startTime, setStartTime] = useState(null);
 
   const blobToFile = (blob, fileName, fileType) => {
     // Create a new File object from the Blob
@@ -90,6 +92,22 @@ const VideoRecorder = ({ setData }) => {
     setPlayingVideo(false);
   };
 
+  useEffect(() => {
+    let intervalId = null;
+
+    if (recording) {
+      intervalId = setInterval(() => {
+        setTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    } else {
+      setTimer(0);
+    }
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [recording]);
+
   return (
     <div>
       {videoBlob ? (
@@ -101,8 +119,13 @@ const VideoRecorder = ({ setData }) => {
       ) : (
         <WebcamView />
       )}
-      <Box mt="3">
+      <>
+      <Box my='4'>
+          {recording && <Text>Recording: {timer} seconds</Text>}
+      </Box>
+      <Box mt="3" display='flex' alignItems='center' gap={5} justifyContent='center'>
         {!playingVideo && !recording && (
+          <Stack direction='column'>
           <Button
             onClick={startRecording}
             fontWeight="medium"
@@ -117,72 +140,91 @@ const VideoRecorder = ({ setData }) => {
           >
             <BsCameraVideoFill />
           </Button>
+          <Text textAlign='center' color='black'>Start</Text>
+          </Stack>
         )}
         {recording && (
-          <Button
-            onClick={togglePauseResume}
-            fontWeight="medium"
-            fontSize={14}
-            color="white"
-            bg="#00BFB2"
-            borderRadius="50%"
-            w="40px"
-            h="40px"
-            p="0"
-            mx="2"
-          >
-            {paused ? <BiPlay /> : <FaPause />}
-          </Button>
-        )}
-        {recording && (
-          <Button
-            onClick={stopRecording}
-            fontWeight="medium"
-            fontSize={14}
-            color="white"
-            bg="#00BFB2"
-            borderRadius="50%"
-            w="40px"
-            h="40px"
-            p="0"
-            mx="2"
-          >
-            <FaStop />
-          </Button>
+          <Stack direction='row'>
+            <Box>
+              <Button
+                onClick={togglePauseResume}
+                fontWeight="medium"
+                fontSize={14}
+                color="white"
+                bg="#00BFB2"
+                borderRadius="50%"
+                w="40px"
+                h="40px"
+                p="0"
+                mx="2"
+                mb='1.5'
+              >
+                {paused ? <BiPlay /> : <FaPause />}
+              </Button>
+              <Text>Pause/Resume</Text>
+            </Box>
+          
+            <Box>
+              <Button
+                onClick={stopRecording}
+                fontWeight="medium"
+                fontSize={14}
+                color="white"
+                bg="#00BFB2"
+                borderRadius="50%"
+                w="40px"
+                h="40px"
+                p="0"
+                mx="2"
+                mb='1.5'
+              >
+                <FaStop />
+              </Button>
+              <Text>Stop</Text>
+            </Box>
+          </Stack>
         )}
         {videoBlob && !playingVideo && (
-          <>
-            <Button
-              onClick={clearRecording}
-              fontWeight="medium"
-              fontSize={15}
-              color="white"
-              bg="#00BFB2"
-              p="0"
-              mx="2"
-              borderRadius="50%"
-              w="40px"
-              h="40px"
-            >
-              <FaTrash />
-            </Button>
-            <Button
-              onClick={SendVideo}
-              fontWeight="medium"
-              fontSize={15}
-              color="white"
-              bg="#00BFB2"
-              p="0"
-              mx="2"
-              borderRadius="50%"
-              w="40px"
-              h="40px"
-            >
-              <BiSend />
-            </Button>
-          </>
+          <Stack direction='row' spacing={5}>
+            <Box>
+              <Button
+                onClick={clearRecording}
+                fontWeight="medium"
+                fontSize={15}
+                color="white"
+                bg="#00BFB2"
+                p="0"
+                mx="2"
+                borderRadius="50%"
+                w="40px"
+                h="40px"
+              >
+                <FaTrash />
+              </Button>
+              <Text>Delete</Text>
+            </Box>
+
+            <Box>
+              <Button
+                onClick={SendVideo}
+                fontWeight="medium"
+                fontSize={15}
+                color="white"
+                bg="#00BFB2"
+                p="0"
+                mx="2"
+                borderRadius="50%"
+                w="40px"
+                h="40px"
+              >
+                <BiSend />
+              </Button>
+              <Text>Send</Text>
+            </Box>
+          </Stack>
         )}
       </Box>
+      </>
     </div>
   );
 };

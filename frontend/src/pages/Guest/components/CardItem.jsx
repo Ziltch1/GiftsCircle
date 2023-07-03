@@ -12,10 +12,11 @@ const Card = ({ item, images, setImages }) => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [displayOptions, setDisplayOptions] = useState(false);
-  const options = ['Seen by host only', 'Seen by host and public']
+  const options = ['Private', 'Public', 'Host Only']
   const [checkedOption, setCheckedOption] = useState(-1)
   const publicMedia = {visibility: 'PUBLIC'}
   const privateMedia = {visibility: 'PRIVATE'}
+  const hostOnlyMedia = {visibility: 'HOST'}
 
   const handleClick = (event, item) => {
     event.stopPropagation();
@@ -55,8 +56,10 @@ const Card = ({ item, images, setImages }) => {
     try {
       if(index === 0){
         await MediaVisibilityApi(id, privateMedia);
-      }else{
+      }else if (index === 1){
         await MediaVisibilityApi(id, publicMedia);
+      } else if(index === 2){
+        await MediaVisibilityApi(id, hostOnlyMedia);
       }
     } catch (error) {
       console.log(error);

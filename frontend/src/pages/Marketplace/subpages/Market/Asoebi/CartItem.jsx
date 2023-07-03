@@ -111,7 +111,9 @@ const CartItem = ({ item, id }) => {
               <Text fontWeight={600} fontSize={16} mb='3'>
                 ₦ {item?.quantity ? asoebiItem?.amount * item?.quantity : asoebiItem?.amount}
               </Text>
-              <Counter quantity={item?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={id} />
+              {!addForGuest && (
+                <Counter quantity={item?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={id} />
+              )}
             </Box>
           </Box>
 

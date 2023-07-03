@@ -12,7 +12,7 @@ const Card = ({ item, images, setImages }) => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [displayOptions, setDisplayOptions] = useState(false);
-  const options = ['Seen by host only', 'Seen by host and public']
+  const options = ['PRIVATE', 'PUBLIC']
   const [checkedOption, setCheckedOption] = useState(-1)
   const publicMedia = { visibility: 'PUBLIC' }
   const privateMedia = { visibility: 'PRIVATE' }

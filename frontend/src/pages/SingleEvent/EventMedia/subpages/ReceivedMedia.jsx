@@ -102,7 +102,7 @@ const ReceivedMedia = () => {
          <EventMessages eventMessages={eventMessages}  />
         </>
         :
-        <Box mt='16'>
+        <Box mt='16' minH='400px' display='flex' alignItems='center' justifyContent='center'>
           <Heading textAlign='center' fontWeight='semibold' fontSize={25}>Sorry! You haven't been sent any media</Heading>
         </Box>
       }
@@ -116,6 +116,8 @@ export default ReceivedMedia;
 export const EventMessages = ({eventMessages}) => {
   const [showModal, setShowModal] = useState(false);
   const [eventMessage, setEventMessage] = useState({});
+
+  console.log(eventMessages, eventMessage);
 
   const handleClick = (message) => {
     setShowModal(true);
@@ -163,7 +165,7 @@ export const EventMessages = ({eventMessages}) => {
           </Table>
         </TableContainer>
         :
-        <Box mt='16'>
+        <Box mt='16' >
           <Heading textAlign='center' fontWeight='semibold' fontSize={25}>Sorry! You haven't been sent any media</Heading>
         </Box>
       }
