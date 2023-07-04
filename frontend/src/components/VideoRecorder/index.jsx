@@ -5,6 +5,7 @@ import { BiPlay, BiSend } from 'react-icons/bi';
 import { BsCameraVideoFill } from 'react-icons/bs';
 
 const VideoRecorder = ({ setData }) => {
+
   const mediaRecorderRef = useRef(null);
   const streamRef = useRef(null);
   const [recording, setRecording] = useState(false);
@@ -12,10 +13,11 @@ const VideoRecorder = ({ setData }) => {
   const [paused, setPaused] = useState(false);
   const [playingVideo, setPlayingVideo] = useState(false);
   const [timer, setTimer] = useState(0);
-  const [startTime, setStartTime] = useState(null);
+  const [initialTimer, setInitialTimer] = useState(0);
+  const [stream, setStream] = useState(null);
+
 
   const blobToFile = (blob, fileName, fileType) => {
-    // Create a new File object from the Blob
     const file = new File([blob], fileName, { type: fileType });
     return file;
   };
@@ -34,11 +36,11 @@ const VideoRecorder = ({ setData }) => {
 
   const startRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
       });
-      mediaRecorderRef.current = new MediaRecorder(stream);
+      mediaRecorderRef.current = new MediaRecorder(mediaStream);
 
       const chunks = [];
       mediaRecorderRef.current.ondataavailable = event => {
@@ -49,12 +51,15 @@ const VideoRecorder = ({ setData }) => {
         const blob = new Blob(chunks, { type: 'video/mp4' });
         setVideoBlob(blob);
         chunks.length = 0;
-        stream.getTracks().forEach(track => track.stop());
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach(track => track.stop());
+        }
       };
 
       mediaRecorderRef.current.start();
       setRecording(true);
-      streamRef.current = stream;
+      setStream(mediaStream)
+      // streamRef.current = stream;
     } catch (error) {
       console.error('Error accessing media devices:', error);
     }
@@ -72,11 +77,35 @@ const VideoRecorder = ({ setData }) => {
     }
   };
 
+  // const stopRecording = () => {
+  //   if (mediaRecorderRef.current && recording) {
+  //     mediaRecorderRef.current.stop();
+  //     setRecording(false);
+  //     setPaused(false);
+  //   }
+  // };
+
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+  };
+
   const stopRecording = () => {
     if (mediaRecorderRef.current && recording) {
       mediaRecorderRef.current.stop();
       setRecording(false);
       setPaused(false);
+      stopCamera();
+
+      // Stop the webcam stream
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+
+      // Turn off the webcam light (assuming it is controlled by a CSS class)
+      document.body.classList.remove('webcam-light-on');
     }
   };
 
@@ -92,21 +121,30 @@ const VideoRecorder = ({ setData }) => {
     setPlayingVideo(false);
   };
 
+
+
   useEffect(() => {
     let intervalId = null;
 
-    if (recording) {
+    if (recording && !paused) {
+      if (initialTimer === 0) {
+        setInitialTimer(timer);
+      }
       intervalId = setInterval(() => {
-        setTimer((prevTimer) => prevTimer + 1);
+        setTimer(prevTimer => prevTimer + 1);
       }, 1000);
+    } else if (paused) {
+      setInitialTimer(0);
+      clearInterval(intervalId);
     } else {
-      setTimer(0);
+      setTimer(initialTimer);
     }
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [recording]);
+  }, [recording, paused, initialTimer, timer]);
+
 
   return (
     <div>
@@ -159,7 +197,7 @@ const VideoRecorder = ({ setData }) => {
                 mx="2"
                 mb='1.5'
               >
-                {paused ? <BiPlay /> : <FaPause />}
+                {paused ? <BiPlay style={{fontSize: 28}} /> : <FaPause />}
               </Button>
               <Text>Pause/Resume</Text>
             </Box>
@@ -198,6 +236,7 @@ const VideoRecorder = ({ setData }) => {
                 borderRadius="50%"
                 w="40px"
                 h="40px"
+                mb='2'
               >
                 <FaTrash />
               </Button>
@@ -216,6 +255,7 @@ const VideoRecorder = ({ setData }) => {
                 borderRadius="50%"
                 w="40px"
                 h="40px"
+                mb='2'
               >
                 <BiSend />
               </Button>

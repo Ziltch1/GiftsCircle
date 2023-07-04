@@ -10,7 +10,7 @@ import {
   useDisclosure,
   Box,
   Heading,
-  Flex,
+  Flex, Button
 } from '@chakra-ui/react';
 import GiftListItem from './GiftListItem';
 import { useSelector } from 'react-redux';
@@ -178,7 +178,19 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
             </Box>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
-            <PaymentButton amount={amount} action={HandleSubmit} />
+            <Button
+                mb="3"
+                bg="#00BFB2"
+                fontSize={14}
+                fontWeight="medium"
+                color="white"
+                // onClick={() => submitHandler()}
+                w='180px'
+                h='50px'
+              >
+                Proceed to Checkout
+            </Button>
+            {/* <PaymentButton amount={amount} action={HandleSubmit} /> */}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

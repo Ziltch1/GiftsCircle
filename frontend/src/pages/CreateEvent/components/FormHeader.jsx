@@ -49,7 +49,7 @@ const FormHeader = ({ step }) => {
           </Box>
           <Box fontSize={14}>
             Step {step}/5 -{' '}
-            <span style={{ color: '#00BFB2' }}>{texts[step - 1]}</span>
+            <span style={{ color: '#00BFB2' }}>  {texts[step - 1]} </span>
           </Box>
         </Flex>
       </Box>
