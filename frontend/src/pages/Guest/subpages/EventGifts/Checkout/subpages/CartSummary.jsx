@@ -12,6 +12,7 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout,}) => {
   const {checkoutAmount, cartLength, deliveryFee} = useContext(CheckoutContext);
 
   const HandleSubmit = async () => {
+    await setShowCheckout(false);
     // if (cartLength?.length > 0) {
     //   const res = await BuyItemsApi(data);
     //   if (res.data) {
