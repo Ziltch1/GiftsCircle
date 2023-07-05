@@ -22,8 +22,9 @@ import {
   BuyComplimentaryGifts,
   BuyGifts,
 } from '../../../../../redux/features/gift/service';
+import { CheckoutContext } from '../../..';
 
-const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
+const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
   const { giftItems } = useSelector(state => state.gift);
   const { user } = useSelector(state => state.user);
   const { newEvent } = useSelector(state => state.event);
@@ -42,8 +43,10 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
     amount,
     setGiftAmount,
     setComplimentaryGiftAmount,
-    deliveryPercent,
+    deliveryPercent, setShowCheckout
   } = useContext(CartContext);
+
+  const {setCheckoutAmount, setCartLength, setDeliveryFee} = useContext(CheckoutContext);
 
   useEffect(() => {
     let complimentaryAmount = 0;
@@ -66,6 +69,9 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
     setGiftAmount(giftAmount);
 
     setAmount(complimentaryAmount + giftAmount + deliveryAmount);
+    setCheckoutAmount(complimentaryAmount + giftAmount);
+    setCartLength(GiftItems.length + ComplimentaryItems.length);
+    setDeliveryFee(deliveryAmount);
   }, [
     ComplimentaryItems,
     setAmount,
@@ -73,6 +79,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
     setGiftAmount,
     GiftItems,
   ]);
+
 
   const { onClose } = useDisclosure();
   const btnRef = React.useRef();
@@ -126,6 +133,10 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
 
     setShowListDrawer(false);
   };
+
+  const proceedCheckout = () => {
+    setShowCheckout(true)
+  }
 
   return (
     <Box>
@@ -188,11 +199,12 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
                 fontSize={14}
                 fontWeight="medium"
                 color="white"
+                onClick={proceedCheckout}
                 // onClick={() => submitHandler()}
-                w='180px'
+                w='auto'
                 h='50px'
               >
-                Proceed to Checkout
+                Proceed to Checkout {giftAmount + complimentaryGiftAmount}
             </Button>
             {/* <PaymentButton amount={amount} action={HandleSubmit} /> */}
           </DrawerFooter>

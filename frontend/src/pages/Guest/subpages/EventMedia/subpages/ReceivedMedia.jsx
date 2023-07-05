@@ -29,7 +29,7 @@ const ReceivedMedia = () => {
   return (
     <Box>
       {eventMediaFiles?.length > 0 ? (
-        <TableContainer bg="white">
+        <TableContainer bg="white" minH='400px'>
           <Table variant="simple">
             <Thead bg="#EEEEEE" px="17px" py="40px">
               <Tr fontSize={14} color="black">
@@ -62,7 +62,7 @@ const ReceivedMedia = () => {
           </Table>
         </TableContainer>
       ) : (
-        <Box mt="16">
+        <Box mt="16" minH='400px'>
           <Heading textAlign="center" fontWeight="semibold" fontSize={25}>
             Sorry! You haven't been sent any media
           </Heading>

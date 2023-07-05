@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import EventImages from './subpages/EventImages';
 import Tabs from './Tabs';
 import EventDetails from './subpages/EventDetails';
@@ -26,6 +26,9 @@ import Fundraising from './subpages/Fundraising';
 import Asoebi from './subpages/Asoebi';
 import { setNewEvent } from '../../redux/features/events/eventSlice';
 import { useSelector } from 'react-redux';
+import Checkout from './subpages/EventGifts/Checkout'
+
+export const CheckoutContext = createContext(null);
 
 const Index = () => {
   const navigate = useNavigate();
@@ -34,6 +37,10 @@ const Index = () => {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [checkoutAmount, setCheckoutAmount] = useState(0);
+  const [cartLength, setCartLength] = useState('');
+  const [deliveryFee, setDeliveryFee] = useState(0);
 
   useEffect(() => {
     let check = localStorage.getItem('Cart');
@@ -81,24 +88,32 @@ const Index = () => {
             <Skeleton height="50px" width="50%" />
           </Stack>
         ) : (
-          <>
-            <Box>
-              <BackButton action={() => navigate('/dashboard')} />
-              <EventImages newEvent={event} />
-            </Box>
-            <Tabs
-              navPosition={navPosition}
-              setNavPosition={setNavPosition}
-              event={event}
-            />
-            <Box>
-              {navPosition === 0 && <EventDetails newEvent={event} />}
-              {navPosition === 1 && <EventGifts event={event} />}
-              {navPosition === 2 && <EventMedia />}
-              {navPosition === 3 && <Asoebi event={event} />}
-              {navPosition === 4 && <Fundraising event={event} />}
-            </Box>
-          </>
+          <CheckoutContext.Provider
+            value={{checkoutAmount, setCheckoutAmount, cartLength, setCartLength, deliveryFee, setDeliveryFee}}
+          >
+            {showCheckout ? 
+              <Checkout setShowCheckout={setShowCheckout} /> 
+              :
+              <>
+                  <Box>
+                    <BackButton action={() => navigate('/dashboard')} />
+                    <EventImages newEvent={event} />
+                  </Box>
+                  <Tabs
+                    navPosition={navPosition}
+                    setNavPosition={setNavPosition}
+                    event={event}
+                  />
+                  <Box>
+                    {navPosition === 0 && <EventDetails newEvent={event} />}
+                    {navPosition === 1 && <EventGifts event={event} setShowCheckout={setShowCheckout} />}
+                    {navPosition === 2 && <EventMedia />}
+                    {navPosition === 3 && <Asoebi event={event} />}
+                    {navPosition === 4 && <Fundraising event={event} />}
+                  </Box>
+              </>
+            }
+          </CheckoutContext.Provider>
         )}
       </Box>
     </Box>
