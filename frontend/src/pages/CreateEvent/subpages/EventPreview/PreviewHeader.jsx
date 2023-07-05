@@ -1,13 +1,9 @@
  import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
 import { CloseIcon } from '@chakra-ui/icons';
-import { useNavigate } from 'react-router-dom';
 
 const PreviewHeader = ({setStep}) => {
-    const navigate = useNavigate()
-    console.log(setStep);
     const backButton = () => {
-        navigate('/create_event');
         setStep(5);
     }
   return (

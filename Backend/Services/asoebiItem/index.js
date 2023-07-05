@@ -14,7 +14,6 @@ const Get = async (id) => {
 };
 
 const GetAll = async () => {
-
   const asoebiItems = await prisma.asoebiitem.findMany({});
   await prisma.$disconnect();
   return asoebiItems;
@@ -55,6 +54,7 @@ const Update = async (id, data, image) => {
         details: data.details ? data.details : asoebiItem.details,
         category: data.category ? data.category : asoebiItem.category,
         title: data.title ? data.title : asoebiItem.title,
+        updated_at: new Date(Date.now()),
       },
     });
 

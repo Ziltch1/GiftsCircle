@@ -25,8 +25,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { EventSummaryApi } from '../../../../redux/axios/apis/events';
 import { dispatch } from '../../../../redux/store';
-import { createResponse } from '../../../../redux/utils/UtilSlice';
-import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 import { DropdownList } from 'react-widgets';
 import 'react-widgets/styles.css';
 import BackButton from '../../../../components/Buttons/BackButton';
@@ -37,7 +35,6 @@ import {
 
 const SummaryForm = ({ setStep }) => {
   const { newEvent } = useSelector(state => state.event);
-  const event = JSON.parse(localStorage.getItem('newEvent'));
   const [openModal, setOpenModal] = useState(false);
   const [percentage, setPercentage] = useState('');
   const [publish, setPublish] = useState(false);
@@ -67,11 +64,11 @@ const SummaryForm = ({ setStep }) => {
     if (savedPerccentage) {
       setPercentage(savedPerccentage);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('percentage', percentage);
-  }, [percentage])
+  }, [percentage]);
 
   return (
     <Box mt="8" w="80%" mx="auto" mb="16">
@@ -123,8 +120,6 @@ const SummaryForm = ({ setStep }) => {
           objectFit="contain"
         />
       </Box>
-
-      
 
       <Box w="500px" mb="12">
         <Heading mb="4" fontWeight={600} fontSize={18}>
@@ -216,7 +211,7 @@ export const ConfirmationModal = ({
         }
       } catch (error) {
         setOpenModal(false);
-        dispatch(createResponse(ErrorHandler(error)));
+        // dispatch(createResponse(ErrorHandler(error)));
       }
     }
   };

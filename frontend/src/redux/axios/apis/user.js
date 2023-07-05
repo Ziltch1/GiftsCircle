@@ -16,29 +16,4 @@ const GetUserNotificationApi = id => {
   return api.get(`/user/notifications/${id}`);
 };
 
-const DeliveryDetailsApi = data => {
-  return api.post(`/delivery/create`, data);
-};
-
-const GetDeliveryDetailsApi = id => {
-  return api.get(`/delivery/${id}`);
-};
-
-const UpdateDeliveryDetailsApi = (data, id) => {
-  return api.put(`/delivery/${id}`, data);
-};
-
-const DeleteDeliveryDetailsApi = id => {
-  return api.delete(`/delivery/${id}`);
-};
-
-export {
-  CreateUserApi,
-  GetUserApi,
-  GetUserNotificationApi,
-  UpdateUserApi,
-  DeliveryDetailsApi,
-  GetDeliveryDetailsApi,
-  UpdateDeliveryDetailsApi,
-  DeleteDeliveryDetailsApi
-};
+export { CreateUserApi, GetUserApi, GetUserNotificationApi, UpdateUserApi };

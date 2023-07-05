@@ -88,6 +88,7 @@ const Buy = async (id) => {
       },
       data: {
         purchased: true,
+        updated_at:new Date(Date.now())
       },
     });
 

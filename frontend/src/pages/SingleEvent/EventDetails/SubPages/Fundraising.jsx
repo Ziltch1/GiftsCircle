@@ -17,6 +17,7 @@ import {
   FormLabel,
   Checkbox,
   FormControl,
+  useToast,
 } from '@chakra-ui/react';
 import axiosInstance from '../../../../redux/axios/axios';
 import { setFundRaising } from '../../../../redux/features/events/eventSlice';
@@ -31,6 +32,8 @@ const Fundraising = ({ setOpenDrawer, id }) => {
   const [image, setImage] = useState(null);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const btnRef = React.useRef();
+
+  const toast = useToast();
 
   const closeModal = () => {
     setOpenDrawer(false);
@@ -54,11 +57,20 @@ const Fundraising = ({ setOpenDrawer, id }) => {
       } catch (error) {
         console.log(error);
       }
+    } else {
+      toast({
+        title: 'Error!',
+        description: 'Please fill all fields',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+      });
     }
   };
 
   useEffect(() => {
-    if (amount === '' || title === '' || description === '' || image === '') {
+    if (amount === '' || title === '' || description === '' || image === null) {
       setBtnDisabled(true);
     } else {
       setBtnDisabled(false);

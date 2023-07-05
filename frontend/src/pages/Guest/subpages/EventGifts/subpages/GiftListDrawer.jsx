@@ -42,6 +42,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
     amount,
     setGiftAmount,
     setComplimentaryGiftAmount,
+    deliveryPercent,
   } = useContext(CartContext);
 
   useEffect(() => {
@@ -52,17 +53,19 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
       complimentaryAmount = complimentaryAmount + newData.amount;
     });
     setComplimentaryGiftAmount(complimentaryAmount);
-
+    let deliveryAmount = 0;
     GiftItems.forEach(ele => {
       const newData = giftItems?.find(x => x.id === ele?.giftItemId);
       let amount = ele.contributionAmount
         ? ele.contributionAmount
         : newData.amount;
       giftAmount = giftAmount + amount;
+      deliveryAmount = deliveryAmount + giftAmount * (deliveryPercent / 100);
     });
+
     setGiftAmount(giftAmount);
 
-    setAmount(complimentaryAmount + giftAmount);
+    setAmount(complimentaryAmount + giftAmount + deliveryAmount);
   }, [
     ComplimentaryItems,
     setAmount,
@@ -91,6 +94,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
         amountPaid: item.amountPaid,
         quantity: item.quantity,
         giftItemAmount: newData.amount,
+        deliveryAmount: newData.amount * (deliveryPercent / 100),
         complimentaryGift:
           ComplimentaryItems.length > 0 ? ComplimentaryItems[0].id : '',
         amount: amount,

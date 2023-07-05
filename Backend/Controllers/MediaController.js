@@ -14,6 +14,7 @@ const {
   CreateComplimentaryMessage,
   GetComplimentaryMessage,
   UpdateVisibility,
+  GetUserUploadedMedia,
 } = require("../Services/Media");
 const prisma = new PrismaClient();
 
@@ -44,11 +45,11 @@ router.get("/Get/GuestSentFiles/:id", EnsureAuthenticated, async (req, res) => {
 });
 
 router.get(
-  "/Get/GuestSentMedia/:eventId/:userId",
+  "/Get/UserUploadedMedia/:eventId/:userId",
   EnsureAuthenticated,
   async (req, res) => {
     try {
-      let data = await GetGuestSentMedia(req.params.eventId, req.params.userId);
+      let data = await GetUserUploadedMedia(req.params.eventId, req.params.userId);
       return res.status(200).send(data);
     } catch (err) {
       console.log(err);

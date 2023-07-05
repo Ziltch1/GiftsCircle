@@ -613,6 +613,33 @@
         }
       }
     },
+    "/event//{id}": {
+      "delete": {
+        "description": "",
+        "tags": ["Event"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
 
     "/giftItem/{id}": {
       "get": {
@@ -986,6 +1013,33 @@
         }
       }
     },
+    "/delivery/EventDetails/{id}": {
+      "get": {
+        "description": "",
+        "tags": ["Delivery"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/delivery/create": {
       "post": {
         "description": "",
@@ -1047,6 +1101,7 @@
         }
       }
     },
+
     "/delivery///{id}": {
       "delete": {
         "description": "",
@@ -1828,7 +1883,7 @@
     },
     "/media/Get/GuestSentFiles/{id}": {
       "get": {
-        "description": "Get Media files uploaded by all guests for the event",
+        "description": "Get Media files uploaded by all guests for the event by passing the eventId",
         "tags": ["Media"],
         "parameters": [
           {
@@ -1853,7 +1908,7 @@
         }
       }
     },
-    "/media/Get/GuestSentMedia/{eventId}/{userId}": {
+    "/media/Get/UserUploadedMedia/{eventId}/{userId}": {
       "get": {
         "description": "Get Media files uploaded by a guest for the event",
         "tags": ["Media"],

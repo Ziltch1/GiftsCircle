@@ -9,9 +9,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
   GetAsoebiItems,
   GetEventAsoebis,
+  GetEventDeliveryDetails,
   GetEventFundRaising,
   GetEventGifts,
-  GetGuestSentFiles,
+  GetEventMediaFiles,
+  GetUserUploadedFiles,
 } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../../components/Buttons/BackButton';
@@ -53,7 +55,9 @@ const Index = () => {
     };
     GetEvent();
     dispatch(GetEventGifts(id));
-    dispatch(GetGuestSentFiles(id, user.id));
+    dispatch(GetUserUploadedFiles(id, user.id));
+    dispatch(GetEventMediaFiles(id));
+    dispatch(GetEventDeliveryDetails(id));
     dispatch(GetEventAsoebis(id));
     dispatch(GetEventFundRaising(id));
     dispatch(GetAsoebiItems());

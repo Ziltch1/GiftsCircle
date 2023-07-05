@@ -42,7 +42,6 @@ app.use(
   }));
 
 app.get("/", async (req, res) => {
-  console.log("enetred");
   return res.json({ msg: "hello world" });
 });
 // app.use('/images', express.static('images'))
@@ -70,7 +69,7 @@ app.use("/api/docs/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //   swaggerUi.serve,
 //   swaggerUi.setup(AdminSwaggerDocument)
 // );
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 4000;
 
 server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

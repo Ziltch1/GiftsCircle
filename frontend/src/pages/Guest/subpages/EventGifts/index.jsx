@@ -1,4 +1,4 @@
-import React, { useState, createContext, useMemo } from 'react';
+import React, { useState, createContext, useMemo, useEffect } from 'react';
 import GiftHeader from './subpages/GiftHeader';
 import { Box, Flex } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import ComplimentaryModal from './subpages/ComplimentaryModal';
 import GiftListDrawer from './subpages/GiftListDrawer';
 import DisplayCard from '../../../../components/Card';
 import ContributionModal from './subpages/ContributionModal';
+import { Zones } from '../../../../Utils/data/ZONES';
 
 export const CartContext = createContext(null);
 
@@ -14,7 +15,9 @@ const Index = () => {
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
   const [data, setData] = useState([]);
-  const { eventGifts } = useSelector(state => state.event);
+  const { eventGifts, eventDeliveryDetails } = useSelector(
+    state => state.event
+  );
   const { giftItems, complimentaryGifts } = useSelector(state => state.gift);
   const [GiftItems, setGiftItems] = useState([]);
   const [ComplimentaryItems, setComplimentaryItems] = useState([]);
@@ -25,6 +28,7 @@ const Index = () => {
   const [giftAmount, setGiftAmount] = useState(0);
   const [complimentaryGiftAmount, setComplimentaryGiftAmount] = useState(0);
   const [contributionAmount, setContributionAmount] = useState(0);
+  const [deliveryPercent, setDeliveryPercent] = useState(0);
   const [currentItem, setCurrentItem] = useState(null);
 
   const addGift = id => {
@@ -55,6 +59,7 @@ const Index = () => {
       complimentaryGiftAmount,
       contributionAmount,
       currentItem,
+      deliveryPercent,
     }),
     [
       eventGifts,
@@ -69,8 +74,21 @@ const Index = () => {
       complimentaryGiftAmount,
       contributionAmount,
       currentItem,
+      deliveryPercent,
     ]
   );
+
+  useEffect(() => {
+    if (eventDeliveryDetails) {
+      Object.keys(Zones).forEach(val => {
+        const states = Object.keys(Zones[val]);
+        if (states.includes(eventDeliveryDetails.state)) {
+          const percent = Zones[val][eventDeliveryDetails.state];
+          setDeliveryPercent(percent);
+        }
+      });
+    }
+  }, [eventDeliveryDetails]);
 
   return (
     <Box>

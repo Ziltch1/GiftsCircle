@@ -1,4 +1,3 @@
-
 import { Flex } from '@chakra-ui/react';
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
@@ -8,8 +7,14 @@ import { GiftContext } from '..';
 import DisplayCard from '../../../../../components/Card';
 
 const GiftCard = ({ step, setStep }) => {
-  const { setAddedGiftItems, addedGiftItems, setGiftItems, quantity, GiftItems, setQuantity } =
-    useContext(GiftContext);
+  const {
+    setAddedGiftItems,
+    addedGiftItems,
+    setGiftItems,
+    quantity,
+    GiftItems,
+    setQuantity,
+  } = useContext(GiftContext);
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
   const { newEvent } = useSelector(state => state.event);
@@ -20,7 +25,7 @@ const GiftCard = ({ step, setStep }) => {
     if (!addedGiftItems.includes(id)) {
       if (GiftItems.length > 0) {
         const newGiftItem = GiftItems?.find(x => x?.ItemId === id);
-        setQuantity(newGiftItem?.quantity)
+        setQuantity(newGiftItem?.quantity);
       }
       const formBody = {
         eventId: newEvent.id,
@@ -59,6 +64,7 @@ const GiftCard = ({ step, setStep }) => {
         {data.map(item => {
           return (
             <DisplayCard
+              key={item.id}
               id={item.id}
               data={item}
               action={AddGift}

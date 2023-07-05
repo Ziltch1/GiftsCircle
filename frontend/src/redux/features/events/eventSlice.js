@@ -13,8 +13,9 @@ const initialState = {
   asoebiItems: null,
   eventAsoebiBuyers: null,
   eventMediaFiles: null,
-  hostRecievedFiles: null,
+  userUploadedFiles: null,
   guestSentFiles: null,
+  eventDeliveryDetails: null,
 };
 
 const EventSlice = createSlice({
@@ -57,11 +58,14 @@ const EventSlice = createSlice({
     setEventMediaFiles: (state, action) => {
       state.eventMediaFiles = action.payload;
     },
-    setHostRecievedFiles: (state, action) => {
-      state.hostRecievedFiles = action.payload;
+    setUserUploadedFiles: (state, action) => {
+      state.userUploadedFiles = action.payload;
     },
     setGuestSentFiles: (state, action) => {
       state.guestSentFiles = action.payload;
+    },
+    setEventDeliveryDetails: (state, action) => {
+      state.eventDeliveryDetails = action.payload;
     },
   },
 });
@@ -79,8 +83,9 @@ export const {
   setFundRaising,
   setFundRaisingDonors,
   setEventMediaFiles,
-  setHostRecievedFiles,
   setGuestSentFiles,
+  setEventDeliveryDetails,
+  setUserUploadedFiles,
 } = EventSlice.actions;
 
 export default EventSlice.reducer;

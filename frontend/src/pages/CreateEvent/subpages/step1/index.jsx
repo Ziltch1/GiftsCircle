@@ -23,6 +23,7 @@ import FormFooter from '../../components/FormFooter';
 import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { GetEventGifts } from '../../../../redux/features/events/service';
 import { CancelModal } from '../../components/FormHeader';
+import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 
 const BasicForm = ({ step, setStep }) => {
   const { user } = useSelector(state => state.user);
@@ -84,6 +85,7 @@ const BasicForm = ({ step, setStep }) => {
           localStorage.setItem('newEvent', JSON.stringify(res.data));
           dispatch(setNewEvent(res.data));
           dispatch(GetEventGifts(res.data.id));
+          dispatch(GetDeliveryDetails(res.data.id));
           setStep(step + 1);
         }
       } catch (error) {

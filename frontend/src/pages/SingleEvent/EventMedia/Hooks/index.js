@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { UploadVideoApi } from '../../../../redux/axios/apis/media';
 import { dispatch } from '../../../../redux/store';
-import { GetEventMediaFiles } from '../../../../redux/features/events/service';
+import { GetUserUploadedFiles } from '../../../../redux/features/events/service';
 import { useSelector } from 'react-redux';
 import axiosInstance from '../../../../redux/axios/axios';
 import { createResponse } from '../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../redux/axios/Utils/ErrorHandler';
 
 const useUpload = (data, setShowModal, setImage, recorded = false) => {
-  const { newEvent, eventMediaFiles } = useSelector(state => state.event);
+  const { newEvent, userUploadedFiles } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
   const [Data, setData] = useState([]);
 
@@ -45,12 +45,12 @@ const useUpload = (data, setShowModal, setImage, recorded = false) => {
   }, [data]);
 
   useEffect(() => {
-    if (eventMediaFiles) {
-      if (eventMediaFiles.length > 0) {
-        setData(eventMediaFiles);
+    if (userUploadedFiles) {
+      if (userUploadedFiles.length > 0) {
+        setData(userUploadedFiles);
       }
     }
-  }, [eventMediaFiles]);
+  }, [userUploadedFiles]);
 
   return Data;
 };
@@ -104,7 +104,7 @@ const UploadVideo = async (
       const response = await UploadVideoApi(formBody);
       if (response) {
         setTimeout(() => {
-          dispatch(GetEventMediaFiles(eventId));
+          dispatch(GetUserUploadedFiles(eventId, userId));
         }, 1000);
       }
     }
@@ -133,7 +133,7 @@ const UploadImages = async (data, eventId, userId, setShowModal, setImage) => {
     const response = await UploadImagesReq(data, eventId, userId);
     if (response) {
       setTimeout(() => {
-        dispatch(GetEventMediaFiles(eventId));
+        dispatch(GetUserUploadedFiles(eventId, userId));
       }, 1000);
       setShowModal(false);
       setImage(null);

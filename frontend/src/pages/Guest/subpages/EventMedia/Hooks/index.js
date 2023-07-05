@@ -5,10 +5,10 @@ import { dispatch } from '../../../../../redux/store';
 import { createResponse } from '../../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../../redux/axios/Utils/ErrorHandler';
 import { UploadVideoApi } from '../../../../../redux/axios/apis/media';
-import { GetGuestSentFiles } from '../../../../../redux/features/events/service';
+import { GetUserUploadedFiles } from '../../../../../redux/features/events/service';
 
 const useUpload = (data, setShowModal, setImage, recorded = false) => {
-  const { newEvent, guestSentFiles } = useSelector(state => state.event);
+  const { newEvent, userUploadedFiles } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
   const [Data, setData] = useState([]);
 
@@ -45,12 +45,12 @@ const useUpload = (data, setShowModal, setImage, recorded = false) => {
   }, [data]);
 
   useEffect(() => {
-    if (guestSentFiles) {
-      if (guestSentFiles.length > 0) {
-        setData(guestSentFiles);
+    if (userUploadedFiles) {
+      if (userUploadedFiles.length > 0) {
+        setData(userUploadedFiles);
       }
     }
-  }, [guestSentFiles]);
+  }, [userUploadedFiles]);
 
   return Data;
 };
@@ -108,7 +108,7 @@ export const UploadVideo = async (
       if (response) {
         setImage(null);
         setTimeout(() => {
-          dispatch(GetGuestSentFiles(eventId, userId));
+          dispatch(GetUserUploadedFiles(eventId, userId));
         }, 1000);
       }
     }
@@ -125,7 +125,7 @@ const UploadImagesReq = async (data, eventId, userId) => {
   });
   formData.append('userId', userId);
   formData.append('eventId', eventId);
-  formData.append('uploadedBy', 'HOST');
+  formData.append('uploadedBy', 'GUEST');
 
   const result = await axiosInstance.post('/media/UploadImages', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
@@ -140,7 +140,7 @@ const UploadImages = async (data, eventId, userId, setShowModal, setImage) => {
       setImage(null);
       setShowModal(false);
       setTimeout(() => {
-        dispatch(GetGuestSentFiles(eventId, userId));
+        dispatch(GetUserUploadedFiles(eventId, userId));
       }, 1000);
     }
   } catch (err) {
