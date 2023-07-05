@@ -86,7 +86,6 @@ const Index = () => {
 
   useEffect(() => {
     if (user && newEvent) {
-      console.log(user)
       dispatch(GetUserUploadedFiles(newEvent.id, user.id));
     }
   }, [user, newEvent]);

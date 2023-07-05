@@ -36,10 +36,15 @@ const SendEventPublishEmail = (reciever, name, event) => {
       id: event.id,
       eventVenue: event.venue,
       guestCode: event.guestCode,
-      guestLink: event.eventLink,
+      guestLink: `https://giftscircle.netlify.app/event/join/${event.guestCode}`,
       eventDate: moment(event.date).format("dddd, MMMM Do YYYY"),
-      eventTime: event.start_time,
-      timezone: event.timezone.split(" ")[0],
+      eventTime: `${event.start_time} ${
+        event.start_time.split(":")[0] > 12 ? "PM" : "AM"
+      }`,
+      endTime: `${event.end_time} ${
+        event.end_time.split(":")[0] > 12 ? "PM" : "AM"
+      }`,
+      timezone: "GMT + 1",
       url: `https://giftscircle.netlify.app/dashboard/event_details/${event.id}`,
     },
   };
