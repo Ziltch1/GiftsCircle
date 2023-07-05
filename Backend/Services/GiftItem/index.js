@@ -54,6 +54,7 @@ const Update = async (id, data, image) => {
         details: data.details ? data.details : giftItem.details,
         category: data.category ? data.category : giftItem.category,
         title: data.title ? data.title : giftItem.title,
+        updated_at: new Date(Date.now())
       },
     });
 

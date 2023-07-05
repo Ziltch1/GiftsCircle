@@ -13,6 +13,17 @@ const Get = async (userId) => {
   return delivery;
 };
 
+const GetEventDeliveryDetails = async (eventId) => {
+  const delivery = await prisma.delivery.findFirst({
+    where: {
+      eventId: eventId,
+    },
+  });
+
+  await prisma.$disconnect();
+  return delivery;
+};
+
 const Create = async (data) => {
   let id = uuidv4();
   const Data = await prisma.delivery.create({
@@ -27,6 +38,7 @@ const Create = async (data) => {
       tel: data.tel,
       tel2: data.tel2 ? data.tel2 : "",
       userId: data.userId,
+      eventId: data.eventId,
     },
   });
 
@@ -55,6 +67,8 @@ const Update = async (id, data) => {
         state: data.state ? data.state : delivery.state,
         tel: data.tel ? data.tel : delivery.tel,
         tel2: data.tel2 ? data.tel2 : delivery.tel2,
+        updated_at: new Date(Date.now()),
+        updated_by: delivery.userId,
       },
     });
 
@@ -78,6 +92,7 @@ const Delete = async (id) => {
 module.exports = {
   Create,
   Get,
+  GetEventDeliveryDetails,
   Delete,
   Update,
 };

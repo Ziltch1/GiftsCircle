@@ -70,7 +70,7 @@ app.use("/api/docs/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //   swaggerUi.serve,
 //   swaggerUi.setup(AdminSwaggerDocument)
 // );
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 4000;
 
 server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

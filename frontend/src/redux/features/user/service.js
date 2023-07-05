@@ -1,13 +1,10 @@
-import {
-  GetDeliveryDetailsApi,
-  GetUserNotificationApi,
-  UpdateUserApi,
-} from '../../axios/apis/user';
+import { GetUserNotificationApi, UpdateUserApi } from '../../axios/apis/user';
 import { dispatch } from '../../store';
 import { createResponse } from '../../utils/UtilSlice';
 import { setDeliveryDetails, setUser, setUserNotifications } from './userSlice';
 
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
+import { GetDeliveryDetailsApi } from '../../axios/apis/delivery';
 
 const UpdateUser = (data, id) => async () => {
   try {

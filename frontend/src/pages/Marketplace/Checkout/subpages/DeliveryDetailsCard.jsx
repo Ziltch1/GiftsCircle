@@ -9,7 +9,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { DeleteDeliveryDetailsApi } from '../../../../redux/axios/apis/user';
+import { DeleteDeliveryDetailsApi } from '../../../../redux/axios/apis/delivery';
 import { dispatch } from '../../../../redux/store';
 import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 

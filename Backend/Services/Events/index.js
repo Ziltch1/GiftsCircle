@@ -106,7 +106,6 @@ const Create = async (data) => {
         guestCode: CreateGuestId(),
         eventLink: "",
         percentDonation: 0,
-        created_at: new Date(Date.now()),
       },
     });
 
@@ -137,6 +136,8 @@ const Update1 = async (data) => {
         end_time: data.end_time,
         timezone: data.timezone,
         host: data.host,
+        updated_at: new Date(Date.now()),
+        updated_by: event.user_id,
       },
     });
 
@@ -162,6 +163,8 @@ const Update2 = async (data, image) => {
         image: image,
         descSummary: data.desc_summary,
         summary: data.summary,
+        updated_at: new Date(Date.now()),
+
       },
     });
 
@@ -192,6 +195,7 @@ const Update3 = async (data) => {
         published: data.published,
         percentDonation: data.percentDonation,
         applyDonation: data.applyDonation,
+        updated_at: new Date(Date.now())
       },
     });
     if (data.published) {

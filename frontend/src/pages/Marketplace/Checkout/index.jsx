@@ -51,7 +51,6 @@ const Index = ({ setShowCheckout }) => {
   useEffect(() => {
     if (deliveryPercent !== 0) {
       const fee = amount * (deliveryPercent / 100);
-      console.log(fee);
       setDeliveryAmount(fee);
     }
   }, [deliveryPercent]);

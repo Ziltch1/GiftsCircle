@@ -70,6 +70,7 @@ const UpdateStatus = async (data) => {
       },
       data: {
         active: data.status,
+        updated_at: new Date(Date.now())
       },
     });
 
@@ -93,6 +94,7 @@ const UpdateAmount = async (data) => {
       },
       data: {
         amount: data.amount,
+        updated_at: new Date(Date.now())
       },
     });
 
@@ -118,7 +120,6 @@ const Donate = async (data) => {
         email: data.email,
         phone: data.tel,
         amount: parseInt(data.amount),
-        date: new Date(Date.now()),
         fundId: data.fundId,
       },
     });
@@ -129,6 +130,7 @@ const Donate = async (data) => {
       },
       data: {
         amountPaid: fundRaising.amountPaid + parseInt(data.amount),
+        updated_at: new Date(Date.now()),
       },
     });
     const event = await prisma.event.findUnique({

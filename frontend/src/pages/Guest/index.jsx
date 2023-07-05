@@ -9,6 +9,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
   GetAsoebiItems,
   GetEventAsoebis,
+  GetEventDeliveryDetails,
   GetEventFundRaising,
   GetEventGifts,
   GetGuestSentFiles,
@@ -54,6 +55,7 @@ const Index = () => {
     GetEvent();
     dispatch(GetEventGifts(id));
     dispatch(GetGuestSentFiles(id, user.id));
+    dispatch(GetEventDeliveryDetails(id));
     dispatch(GetEventAsoebis(id));
     dispatch(GetEventFundRaising(id));
     dispatch(GetAsoebiItems());

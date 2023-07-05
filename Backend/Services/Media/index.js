@@ -142,6 +142,7 @@ const UpdateVisibility = async (id, data) => {
     },
     data: {
       visibility: data.visibility,
+      updated_at: new Date(Date.now())
     },
   });
 

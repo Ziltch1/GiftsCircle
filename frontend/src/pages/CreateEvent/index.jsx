@@ -9,6 +9,7 @@ import AddGiftForm from './subpages/step3';
 import SummaryForm from './subpages/step5/Index';
 import Stepper from './components/Stepper';
 import EventPreview from './subpages/EventPreview';
+import DeliveryDetailsForm from '../Marketplace/Checkout/subpages/DeliveryDetailsForm';
 
 const Index = () => {
   const [step, setStep] = useState(1);
@@ -17,8 +18,8 @@ const Index = () => {
     dispatch(GetGiftItems());
   }, []);
   return (
-    <Box py={step !== 5 ? '4' : '0'}>
-      {step !== 5 && (
+    <Box py={step !== 6 ? '5' : '0'}>
+      {step !== 6 && (
         <>
           <FormHeader step={step} setStep={setStep} />
           <Stepper step={step} />
@@ -28,9 +29,9 @@ const Index = () => {
         {step === 1 && <BasicForm step={step} setStep={setStep} />}
         {step === 2 && <EventImageForm step={step} setStep={setStep} />}
         {step === 3 && <AddGiftForm step={step} setStep={setStep} />}
-        {/* {step === 4 && <DeliveryDetailsForm step={step} setStep={setStep} />} */}
-        {step === 4 && <SummaryForm setStep={setStep} />}
-        {step === 5 && <EventPreview setStep={setStep} />}
+        {step === 4 && <DeliveryDetailsForm step={step} setStep={setStep} />}
+        {step === 5 && <SummaryForm setStep={setStep} />}
+        {step === 6 && <EventPreview setStep={setStep} />}
       </Box>
     </Box>
   );
