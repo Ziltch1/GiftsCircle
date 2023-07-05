@@ -27,6 +27,7 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
   const { user, deliveryDetails } = useSelector(state => state.user);
   const { newEvent } = useSelector(state => state.event);
   const toast = useToast();
+  
   const [firstName, setFirstName] = useState(
     deliveryDetails.firstName ? deliveryDetails.firstname : ''
   );

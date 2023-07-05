@@ -12,15 +12,22 @@ const Card = ({ item, images, setImages }) => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [displayOptions, setDisplayOptions] = useState(false);
-  const options = ['PRIVATE', 'PUBLIC']
-  const [checkedOption, setCheckedOption] = useState(-1)
+  const options = ['Private', 'Public']
+  const [checkedOption, setCheckedOption] = useState(item.visibility === 'PRIVATE' ? 0 : 1);
   const publicMedia = { visibility: 'PUBLIC' }
   const privateMedia = { visibility: 'PRIVATE' }
+
 
   const handleClick = (event, item) => {
     event.stopPropagation();
     downloadImage(item);
   };
+
+  useEffect(() => {
+
+  }, [])
+
+  console.log(item);
 
   const downloadImage = async item => {
     try {

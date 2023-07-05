@@ -17,6 +17,8 @@ import {
 } from '@chakra-ui/react';
 import errorImg from '../../../../assets/errorImg.svg';
 import { CartContext } from '..';
+import PaymentButton from '../../../../../components/Buttons/PaymentButton';
+
 
 const ContributionModal = ({ setOpenModal, isOpen }) => {
   const {
@@ -121,6 +123,13 @@ export const ContributionAmount = ({
     setOpenModal(false);
     setAmount(0);
   };
+
+  const HandleSubmit = () => {
+    submitHandler();
+  }
+
+
+
   return (
     <Box>
       <Modal
@@ -184,7 +193,8 @@ export const ContributionAmount = ({
               />
             </Box>
             <Box textAlign="center">
-              <Button
+              <PaymentButton amount={amount} action={HandleSubmit} />
+              {/* <Button
                 mb="3"
                 w="100%"
                 bg="#00BFB2"
@@ -194,7 +204,7 @@ export const ContributionAmount = ({
                 onClick={() => submitHandler()}
               >
                 Proceed
-              </Button>
+              </Button> */}
             </Box>
           </ModalBody>
         </ModalContent>

@@ -17,6 +17,11 @@ import { useSelector } from 'react-redux';
 const ReceivedMedia = () => {
   const { eventMediaFiles } = useSelector(state => state.event);
 
+  // useEffect(() => {
+  //   const filteredImages = media?.filter((item) => item.visibility === 'PUBLIC')
+  //   setNewFiles(filteredImages)
+  // }, [media])
+
   const HandleClick = url => {
     window.open(url);
   };
