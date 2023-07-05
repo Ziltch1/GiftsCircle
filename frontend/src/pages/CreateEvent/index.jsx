@@ -9,7 +9,8 @@ import AddGiftForm from './subpages/step3';
 import SummaryForm from './subpages/step5/Index';
 import Stepper from './components/Stepper';
 import EventPreview from './subpages/EventPreview';
-import DeliveryDetailsForm from '../Marketplace/Checkout/subpages/DeliveryDetailsForm';
+import DeliveryDetailsForm from './subpages/step4/Index';
+import Response from '../../components/ResponseToast';
 
 const Index = () => {
   const [step, setStep] = useState(1);
@@ -18,7 +19,8 @@ const Index = () => {
     dispatch(GetGiftItems());
   }, []);
   return (
-    <Box py={step !== 6 ? '5' : '0'}>
+    <Box py={step !== 6 ? '5' : '1'}>
+      <Response />
       {step !== 6 && (
         <>
           <FormHeader step={step} setStep={setStep} />

@@ -25,6 +25,16 @@ const GetEventDeliveryDetails = async (eventId) => {
 };
 
 const Create = async (data) => {
+  const delivery = await prisma.delivery.findFirst({
+    where: {
+      eventId: data.eventId,
+    },
+  });
+
+  if (delivery) {
+    await prisma.$disconnect();
+    return delivery;
+  }
   let id = uuidv4();
   const Data = await prisma.delivery.create({
     data: {

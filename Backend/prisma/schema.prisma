@@ -82,7 +82,7 @@ model gift {
   created_by         String?           @db.VarChar(255)
   updated_by         String?           @db.VarChar(255)
   deleted_by         String?           @db.VarChar(255)
-  event              event?            @relation(fields: [eventId], references: [id])
+  event              event?            @relation(fields: [eventId], references: [id], onDelete: Cascade)
   giftTransaction    giftTransaction[]
 
   @@index([eventId], map: "Gift_eventId_fkey")
@@ -92,8 +92,8 @@ model gift {
 
 model giftTransaction {
   id                  String             @id @db.VarChar(50)
-  gift                gift?              @relation(fields: [giftId], references: [id])
-  complimentaryGift   complimentarygift? @relation(fields: [complimentarygiftId], references: [id])
+  gift                gift?              @relation(fields: [giftId], references: [id], onDelete: SetNull)
+  complimentaryGift   complimentarygift? @relation(fields: [complimentarygiftId], references: [id], onDelete: SetNull)
   amount              Int
   date                DateTime
   giftId              String?            @db.VarChar(255)
@@ -115,7 +115,7 @@ model marketGiftTransaction {
   id          String         @id @db.VarChar(255)
   ItemId      String         @db.VarChar(255)
   quantity    Int
-  purchasedBy user           @relation(fields: [userId], references: [id])
+  purchasedBy user           @relation(fields: [userId], references: [id], onDelete: Cascade)
   status      Status
   amountPaid  Int
   date        DateTime       @default(now())
@@ -172,8 +172,6 @@ model user {
   emailVerified         Boolean?
   email                 String                  @unique
   password              String                  @db.VarChar(255)
-  eventId               String?                 @db.VarChar(255)
-  event                 event?                  @relation(fields: [eventId], references: [id])
   role                  Role                    @default(USER)
   created_at            DateTime                @default(now())
   updated_at            DateTime?               @updatedAt
@@ -185,6 +183,8 @@ model user {
   giftTransaction       giftTransaction[]
   marketGiftTransaction marketGiftTransaction[]
   Notifications         Notifications[]
+  event                 event?                  @relation(fields: [eventId], references: [id], onDelete: SetNull)
+  eventId               String?                 @db.VarChar(255)
 }
 
 model otp {
@@ -204,7 +204,7 @@ model Guests {
   coHost      Boolean
   user        user      @relation(fields: [userId], references: [id])
   userId      String    @db.VarChar(255)
-  event       event     @relation(fields: [eventId], references: [id])
+  event       event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
   date_joined DateTime  @default(now())
   updated_at  DateTime? @updatedAt
   deleted_at  DateTime?
@@ -216,7 +216,7 @@ model Guests {
 model FundRaising {
   id                  String                @id @db.VarChar(50)
   eventId             String                @db.VarChar(50)
-  event               event                 @relation(fields: [eventId], references: [id])
+  event               event                 @relation(fields: [eventId], references: [id], onDelete: Cascade)
   amount              Int
   amountPaid          Int
   active              Boolean
@@ -293,7 +293,7 @@ model asoebiTransaction {
   quantity     Int
   delivered    Boolean     @default(false)
   eventId      String      @db.VarChar(50)
-  asoebiitem   asoebiitem? @relation(fields: [asoebiitemId], references: [id])
+  asoebiitem   asoebiitem? @relation(fields: [asoebiitemId], references: [id], onDelete: SetNull)
   asoebiitemId String?     @db.VarChar(255)
   userId       String      @db.VarChar(255)
   updated_at   DateTime?   @updatedAt
@@ -321,7 +321,7 @@ model sourvenirItem {
 
 model sourvenir {
   id              String        @id @db.VarChar(255)
-  sourvenirItem   sourvenirItem @relation(fields: [sourvenirItemId], references: [id])
+  sourvenirItem   sourvenirItem @relation(fields: [sourvenirItemId], references: [id], onDelete: Cascade)
   quantity        Int
   purchased       Boolean       @default(false)
   eventId         String?       @default("") @db.VarChar(255)
