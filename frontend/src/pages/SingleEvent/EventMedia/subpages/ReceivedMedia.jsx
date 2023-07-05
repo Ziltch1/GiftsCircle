@@ -19,6 +19,7 @@ import MessageModal from '../../components/MessageModal';
 
 const ReceivedMedia = () => {
   const { guestSentFiles } = useSelector(state => state.event);
+  const [data, setData] = useState(null);
   const [showImageModal, setShowImageModal] = useState(false);
   const [eventMessages, setEventMessages] = useState([]);
   const [itemUrl, setItemUrl] = useState('');
@@ -51,59 +52,23 @@ const ReceivedMedia = () => {
     setItemUrl(url);
   };
 
-  console.log(guestSentFiles);
+  useEffect(() => {
+    if (guestSentFiles) {
+      if (guestSentFiles.length > 0) {
+        const filteredData = guestSentFiles.filter(
+          ele => ele.visibility !== 'PRIVATE'
+        );
+        setData(filteredData);
+      }
+    }
+  }, [guestSentFiles]);
 
   return (
     <Box>
       {showImageModal && (
         <ImageModal item={itemUrl} setShowImageModal={setShowImageModal} />
       )}
-      {guestSentFiles?.length > 0 ? (
-        <>
-          <TableContainer bg="white" mb="8">
-            <Table variant="simple">
-              <Thead bg="#EEEEEE" px="17px" py="40px">
-                <Tr fontSize={14} color="black">
-                  <Th>S/N</Th>
-                  <Th>Media Type</Th>
-                  <Th>Sent by</Th>
-                  <Th>Visibility</Th>
-                  <Th>Action</Th>
-                </Tr>
-              </Thead>
-              <>
-                <Tbody>
-                  <>
-                    {guestSentFiles?.map((file, index) => {
-                      return (
-                        <>
-                          {(file.visibility === 'HOST' ||
-                            file.visibility === 'PUBLIC') && (
-                            <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
-                              <Td>{index + 1}</Td>
-                              <Td>Media {index + 1}</Td>
-                              <Td>{file.user}</Td>
-                              <Td>{file.visibility}</Td>
-                              <Td color="#009F94">
-                                <Flex gap={8} cursor="pointer">
-                                  <Text onClick={() => HandleClick(file?.url)}>
-                                    View
-                                  </Text>
-                                </Flex>
-                              </Td>
-                            </Tr>
-                          )}
-                        </>
-                      );
-                    })}
-                  </>
-                </Tbody>
-              </>
-            </Table>
-          </TableContainer>
-          <EventMessages eventMessages={eventMessages} />
-        </>
-      ) : (
+      {!data ? (
         <Box
           mt="16"
           minH="400px"
@@ -115,6 +80,44 @@ const ReceivedMedia = () => {
             Sorry! You haven't been sent any media
           </Heading>
         </Box>
+      ) : (
+        <>
+          <TableContainer bg="white" mb="8">
+            <Table variant="simple">
+              <Thead bg="#EEEEEE" px="17px" py="40px">
+                <Tr fontSize={14} color="black">
+                  <Th>S/N</Th>
+                  <Th>Media Type</Th>
+                  <Th>Action</Th>
+                </Tr>
+              </Thead>
+              <>
+                <Tbody>
+                  <>
+                    {data.map((file, index) => {
+                      return (
+                        <>
+                          <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
+                            <Td>{index + 1}</Td>
+                            <Td>Media {index + 1}</Td>
+                            <Td color="#009F94">
+                              <Flex gap={8} cursor="pointer">
+                                <Text onClick={() => HandleClick(file?.url)}>
+                                  View
+                                </Text>
+                              </Flex>
+                            </Td>
+                          </Tr>
+                        </>
+                      );
+                    })}
+                  </>
+                </Tbody>
+              </>
+            </Table>
+          </TableContainer>
+          {/* <EventMessages eventMessages={eventMessages} /> */}
+        </>
       )}
     </Box>
   );

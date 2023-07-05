@@ -5,7 +5,7 @@ import { dispatch } from '../../../../../redux/store';
 import { createResponse } from '../../../../../redux/utils/UtilSlice';
 import ErrorHandler from '../../../../../redux/axios/Utils/ErrorHandler';
 import { UploadVideoApi } from '../../../../../redux/axios/apis/media';
-import { GetGuestSentFiles } from '../../../../../redux/features/events/service';
+import { GetUserUploadedFiles } from '../../../../../redux/features/events/service';
 
 const useUpload = (data, setShowModal, setImage, recorded = false) => {
   const { newEvent, userUploadedFiles } = useSelector(state => state.event);
@@ -108,7 +108,7 @@ export const UploadVideo = async (
       if (response) {
         setImage(null);
         setTimeout(() => {
-          dispatch(GetGuestSentFiles(eventId, userId));
+          dispatch(GetUserUploadedFiles(eventId, userId));
         }, 1000);
       }
     }
@@ -140,7 +140,7 @@ const UploadImages = async (data, eventId, userId, setShowModal, setImage) => {
       setImage(null);
       setShowModal(false);
       setTimeout(() => {
-        dispatch(GetGuestSentFiles(eventId, userId));
+        dispatch(GetUserUploadedFiles(eventId, userId));
       }, 1000);
     }
   } catch (err) {
