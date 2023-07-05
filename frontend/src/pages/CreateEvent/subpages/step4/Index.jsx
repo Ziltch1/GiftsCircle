@@ -7,6 +7,8 @@ import {
   FormControl,
   FormLabel,
   useToast,
+  Stack,
+  Select,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import BackButton from '../../../../components/Buttons/BackButton';
@@ -18,54 +20,78 @@ import { createResponse } from '../../../../redux/utils/UtilSlice';
 import {
   DeliveryDetailsApi,
   UpdateDeliveryDetailsApi,
-} from '../../../../redux/axios/apis/user';
-import { setDeliveryDetails } from '../../../../redux/features/user/userSlice';
-import { GetDeliveryDetails } from '../../../../redux/features/user/service';
+} from '../../../../redux/axios/apis/delivery';
+import { LGAs } from '../../../../Utils/data/LGA';
 
 const DeliveryDetailsForm = ({ step, setStep }) => {
   const { user, deliveryDetails } = useSelector(state => state.user);
+  const { newEvent } = useSelector(state => state.event);
   const toast = useToast();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState(''); 
-  const [address, setAddress] = useState('');
-  const [info, setInfo] = useState('');
-  const [lga, setLga] = useState('');
-  const [state, setState] = useState('');
-  const [phoneNumber1, setPhoneNumber1] = useState('');
-  const [phoneNumber2, setPhoneNumber2] = useState('');
+  const [firstName, setFirstName] = useState(
+    deliveryDetails.firstName ? deliveryDetails.firstname : ''
+  );
+  const [lastName, setLastName] = useState(
+    deliveryDetails.lastName ? deliveryDetails.lastname : ''
+  );
+  const [address, setAddress] = useState(
+    deliveryDetails.address ? deliveryDetails.address : ''
+  );
+  const [info, setInfo] = useState(
+    deliveryDetails.info ? deliveryDetails.info : ''
+  );
+  const [lga, setLga] = useState(
+    deliveryDetails.lga ? deliveryDetails.lga : ''
+  );
+  const [state, setState] = useState(
+    deliveryDetails.state ? deliveryDetails.state : ''
+  );
+  const [phoneNumber, setPhoneNumber] = useState(
+    deliveryDetails.tel ? deliveryDetails.tel : ''
+  );
+  const [phoneNumber2, setPhoneNumber2] = useState(
+    deliveryDetails.tel2 ? deliveryDetails.tel2 : ''
+  );
+  const [selectedLGAs, setSelectedLGAs] = useState([]);
 
   useEffect(() => {
-    const Delivery = JSON.parse(localStorage.getItem('delivery'));
-    if (Delivery) {
-      dispatch(setDeliveryDetails(Delivery));
-    } else {
-      dispatch(GetDeliveryDetails(user.id));
-    }
-  }, []);
+    setSelectedLGAs(LGAs[state]);
+  }, [state]);
 
   const handleSubmit = async () => {
-    const formBody = {
-      firstname: firstName,
-      lastname: lastName,
-      address: address,
-      info: info,
-      lga: lga,
-      state: state,
-      tel: phoneNumber1,
-      tel2: phoneNumber2,
-      userId: user.id,
-    };
-
-    if (address && lga && state && firstName && lastName && phoneNumber1) {
+    if (address && lga && state && firstName && lastName && phoneNumber) {
       try {
-        if (deliveryDetails.length > 0) {
+        if (deliveryDetails?.length > 0) {
+          const formBody = {
+            firstname: firstName,
+            lastname: lastName,
+            address: address,
+            info: info,
+            lga: lga,
+            state: state,
+            tel: phoneNumber,
+            tel2: phoneNumber2,
+          };
+
           const res = await UpdateDeliveryDetailsApi(
             formBody,
-            deliveryDetails[0].id
+            deliveryDetails.id
           );
           localStorage.setItem('delivery', JSON.stringify(res.data));
           setStep(step + 1);
         } else {
+          const formBody = {
+            firstname: firstName,
+            lastname: lastName,
+            address: address,
+            info: info,
+            lga: lga,
+            state: state,
+            tel: phoneNumber,
+            tel2: phoneNumber2,
+            userId: user.id,
+            eventId: newEvent.id,
+          };
+
           const res = await DeliveryDetailsApi(formBody);
           localStorage.setItem('delivery', JSON.stringify(res.data));
           setStep(step + 1);
@@ -91,14 +117,14 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
 
   return (
     <>
-      <Box h="100%" overflow="auto" mb="16" mt="10" w="750px" mx="auto">
+      <Box h="100%" overflow="auto" mb="16" mt="10" w="80%" mx="auto">
         <Flex alignItems="start" justifyContent="space-between">
           <Box>
             <BackButton action={backAction} />
           </Box>
 
-          <Box w="500px" mx="auto">
-            <Box mb="10">
+          <Box width="70%" mx="auto">
+            <Box mb="10" w="500px">
               <Heading mb="2" fontWeight="semibold" fontSize="30px">
                 Delivery Details
               </Heading>
@@ -108,90 +134,127 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
             </Box>
 
             <Box>
-              <FormControl isRequired>
-                <Box mb="6">
-                  <FormLabel fontWeight="semibold" fontSize={15}>
-                    First Name
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    value={firstName}
-                    onChange={e => setFirstName(e.target.value)}
-                  />
-                </Box>
-                <Box mb="6">
-                  <FormLabel fontWeight="semibold" fontSize={15}>
-                    Last Name
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    value={lastName}
-                    onChange={e => setLastName(e.target.value)}
-                  />
-                </Box>
-                <Box mb="6">
-                  <FormLabel fontWeight="semibold" fontSize={15}>
-                    Address
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    value={address}
-                    onChange={e => setAddress(e.target.value)}
-                  />
-                </Box>
-                <Box mb="6">
-                  <FormLabel fontWeight="semibold" fontSize={15}>
-                    Additional Information
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    value={info}
-                    onChange={e => setInfo(e.target.value)}
-                  />
-                </Box>
-                <Box mb="6">
-                  <FormLabel fontWeight="semibold" fontSize={15}>
-                    State
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    value={state}
-                    onChange={e => setState(e.target.value)}
-                  />
-                </Box>
+              <FormControl>
+                <Stack
+                  direction={{ base: 'column', md: 'column', lg: 'row' }}
+                  spacing={7}
+                  justifyContent="space-between"
+                  mb="7"
+                  alignItems="center"
+                >
+                  <Box w={{ base: '100%', lg: '50%' }}>
+                    <FormLabel fontSize={14}>First Name</FormLabel>
+                    <Input
+                      type="text"
+                      w="100%"
+                      value={firstName}
+                      onChange={e => setFirstName(e.target.value)}
+                    />
+                  </Box>
+                  <Box w={{ base: '100%', lg: '50%' }}>
+                    <FormLabel fontSize={14}>Last Name</FormLabel>
+                    <Input
+                      type="text"
+                      w="100%"
+                      value={lastName}
+                      onChange={e => setLastName(e.target.value)}
+                    />
+                  </Box>
+                </Stack>
 
-                <Box mb="6">
-                  <FormLabel fontWeight="semibold" fontSize={15}>
-                    LGA
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    value={lga}
-                    onChange={e => setLga(e.target.value)}
-                  />
-                </Box>
+                <Stack
+                  direction={{ base: 'column', md: 'column', lg: 'row' }}
+                  spacing={7}
+                  justifyContent="space-between"
+                  mb="7"
+                  alignItems="center"
+                >
+                  <Box w={{ base: '100%', lg: '50%' }}>
+                    <FormLabel fontSize={14}>Phone Number</FormLabel>
+                    <Input
+                      type="text"
+                      w="100%"
+                      maxLength={11}
+                      value={phoneNumber}
+                      onChange={e => setPhoneNumber(e.target.value)}
+                    />
+                  </Box>
+                  <Box w={{ base: '100%', lg: '50%' }}>
+                    <FormLabel fontSize={14}>Additional Phone Number</FormLabel>
+                    <Input
+                      type="text"
+                      maxLength={11}
+                      w="100%"
+                      value={phoneNumber2}
+                      onChange={e => setPhoneNumber2(e.target.value)}
+                    />
+                  </Box>
+                </Stack>
 
-                <Box mb="6">
-                  <FormLabel fontWeight="semibold" fontSize={15}>
-                    Phone Number 1
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    value={phoneNumber1}
-                    onChange={e => setPhoneNumber1(e.target.value)}
-                  />
-                </Box>
+                <Stack
+                  direction="column"
+                  spacing={7}
+                  justifyContent="space-between"
+                  mb="7"
+                  alignItems="center"
+                >
+                  <Box w="100%">
+                    <FormLabel fontSize={14}>Delivery Address</FormLabel>
+                    <Input
+                      type="text"
+                      w="100%"
+                      value={address}
+                      onChange={e => setAddress(e.target.value)}
+                    />
+                  </Box>
+                  <Box w="100%">
+                    <FormLabel fontSize={14}>Additional Information</FormLabel>
+                    <Input
+                      type="text"
+                      w="100%"
+                      value={info}
+                      onChange={e => setInfo(e.target.value)}
+                    />
+                  </Box>
+                </Stack>
+
+                <Stack
+                  direction={{ base: 'column', md: 'column', lg: 'row' }}
+                  spacing={7}
+                  justifyContent="space-between"
+                  alignItems="center"
+                  mb="3"
+                >
+                  <Box w={{ base: '100%', lg: '50%' }}>
+                    <FormLabel fontSize={14}>Region</FormLabel>
+                    <Select
+                      value={state}
+                      onChange={e => setState(e.target.value)}
+                      placeholder="Select State"
+                    >
+                      {Object.keys(LGAs).map(state => (
+                        <option key={state} value={state}>
+                          {state}
+                        </option>
+                      ))}
+                    </Select>
+                  </Box>
+                  <Box w={{ base: '100%', lg: '50%' }}>
+                    <FormLabel fontSize={14}>City</FormLabel>
+                    <Select
+                      value={lga}
+                      onChange={e => setLga(e.target.value)}
+                      placeholder="Select LGA"
+                    >
+                      {selectedLGAs?.map(lga => (
+                        <option key={lga} value={lga}>
+                          {lga}
+                        </option>
+                      ))}
+                    </Select>
+                  </Box>
+                </Stack>
               </FormControl>
-              <Box mb="6">
-                <FormLabel fontWeight="semibold" fontSize={15}>
-                  Phone Number 2
-                </FormLabel>
-                <Input
-                  type="text"
-                  value={phoneNumber2}
-                  onChange={e => setPhoneNumber2(e.target.value)}
-                />
-              </Box>
             </Box>
           </Box>
         </Flex>

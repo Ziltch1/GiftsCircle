@@ -613,6 +613,33 @@
         }
       }
     },
+    "/event//{id}": {
+      "delete": {
+        "description": "",
+        "tags": ["Event"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
 
     "/giftItem/{id}": {
       "get": {

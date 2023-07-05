@@ -53,17 +53,19 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen }) => {
       complimentaryAmount = complimentaryAmount + newData.amount;
     });
     setComplimentaryGiftAmount(complimentaryAmount);
-
+    let deliveryAmount = 0;
     GiftItems.forEach(ele => {
       const newData = giftItems?.find(x => x.id === ele?.giftItemId);
       let amount = ele.contributionAmount
         ? ele.contributionAmount
         : newData.amount;
       giftAmount = giftAmount + amount;
+      deliveryAmount = deliveryAmount + giftAmount * (deliveryPercent / 100);
     });
+
     setGiftAmount(giftAmount);
 
-    setAmount(complimentaryAmount + giftAmount);
+    setAmount(complimentaryAmount + giftAmount + deliveryAmount);
   }, [
     ComplimentaryItems,
     setAmount,
