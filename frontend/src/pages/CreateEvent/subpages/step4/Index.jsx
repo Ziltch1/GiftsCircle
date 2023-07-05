@@ -25,14 +25,14 @@ import { GetDeliveryDetails } from '../../../../redux/features/user/service';
 const DeliveryDetailsForm = ({ step, setStep }) => {
   const { user, deliveryDetails } = useSelector(state => state.user);
   const toast = useToast();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState(''); 
-  const [address, setAddress] = useState('');
-  const [info, setInfo] = useState('');
-  const [lga, setLga] = useState('');
-  const [state, setState] = useState('');
-  const [phoneNumber1, setPhoneNumber1] = useState('');
-  const [phoneNumber2, setPhoneNumber2] = useState('');
+  const [firstName, setFirstName] = useState(deliveryDetails ? deliveryDetails.firstname : '');
+  const [lastName, setLastName] = useState(deliveryDetails ? deliveryDetails.lastname : ''); 
+  const [address, setAddress] = useState(deliveryDetails ? deliveryDetails.address : '');
+  const [info, setInfo] = useState(deliveryDetails ? deliveryDetails.info : '');
+  const [lga, setLga] = useState(deliveryDetails ? deliveryDetails.lga : '');
+  const [state, setState] = useState(deliveryDetails ? deliveryDetails.state : '');
+  const [phoneNumber1, setPhoneNumber1] = useState(deliveryDetails ? deliveryDetails.tel : '');
+  const [phoneNumber2, setPhoneNumber2] = useState(deliveryDetails ? deliveryDetails.tel2 : '');
 
   useEffect(() => {
     const Delivery = JSON.parse(localStorage.getItem('delivery'));

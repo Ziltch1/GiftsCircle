@@ -13,7 +13,7 @@ const Card = ({ item, images, setImages }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [displayOptions, setDisplayOptions] = useState(false);
   const options = ['Private', 'Public']
-  const [checkedOption, setCheckedOption] = useState(0);
+  const [checkedOption, setCheckedOption] = useState(item.visibility === 'PRIVATE' ? 0 : 1);
   const publicMedia = { visibility: 'PUBLIC' }
   const privateMedia = { visibility: 'PRIVATE' }
 
@@ -22,6 +22,12 @@ const Card = ({ item, images, setImages }) => {
     event.stopPropagation();
     downloadImage(item);
   };
+
+  useEffect(() => {
+
+  }, [])
+
+  console.log(item);
 
   const downloadImage = async item => {
     try {

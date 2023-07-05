@@ -1,18 +1,25 @@
-import React from 'react'
-import {Modal, ModalOverlay, ModalContent, Box, ModalBody, ModalCloseButton, Button, Text, Heading, useDisclosure, Image} from '@chakra-ui/react';
+import React, {useState} from 'react'
+import {Spinner, Modal, ModalOverlay, ModalContent, Box, ModalBody, ModalCloseButton, Button, Text, Heading, useDisclosure, Image} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import errorImg from '../../../assets/errorImg.svg';
-
+import { DeleteEventApi } from '../../../../redux/axios/apis/events';
+import {useSelector} from 'react-redux'
 
 const DeleteModal = ({setShowModal}) => {
   const {isOpen, onClose} = useDisclosure({defaultIsOpen: true})
   const navigate = useNavigate();
+  const {newEvent} = useSelector(state => state.event);
+  const [loading, setLoading] = useState(false);
 
   const HandleSubmit = async () => {
+    setLoading(true)
     try {
+        await DeleteEventApi(newEvent?.id)
         navigate('/dashboard')
+        setLoading(false)
     } catch (error) {
         console.log(error)
+        setLoading(false)
     }
   }
 
@@ -48,7 +55,7 @@ const DeleteModal = ({setShowModal}) => {
                                     //   bg="#00BFB2"
                                       onClick={() => HandleSubmit()}
                                   >
-                                      Yes delete event
+                                      {loading ? <Spinner /> : 'Yes delete event'}
                                   </Button>
                           </Box>
                       </ModalBody>

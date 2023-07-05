@@ -13,7 +13,7 @@ const Card = ({ item, images, setImages }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [displayOptions, setDisplayOptions] = useState(false);
   const options = ['Private', 'Public', 'Host Only']
-  const [checkedOption, setCheckedOption] = useState(-1)
+  const [checkedOption, setCheckedOption] = useState(item.visibility === 'PRIVATE' ? 0 : item.visibility === 'PUBLIC' ? 1 : 2)
   const publicMedia = {visibility: 'PUBLIC'}
   const privateMedia = {visibility: 'PRIVATE'}
   const hostOnlyMedia = {visibility: 'HOST'}

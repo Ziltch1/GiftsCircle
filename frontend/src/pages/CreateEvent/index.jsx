@@ -18,8 +18,8 @@ const Index = () => {
     dispatch(GetGiftItems());
   }, []);
   return (
-    <Box py={step !== 5 ? '4' : '0'}>
-      {step !== 5 && (
+    <Box py={step !== 6  ? '5' : '0'}>
+      {step !== 6 && (
         <>
           <FormHeader step={step} setStep={setStep} />
           <Stepper step={step} />
@@ -30,7 +30,7 @@ const Index = () => {
         {step === 2 && <EventImageForm step={step} setStep={setStep} />}
         {step === 3 && <AddGiftForm step={step} setStep={setStep} />}
         {step === 4 && <DeliveryDetailsForm step={step} setStep={setStep} />}
-        {step === 5 && <SummaryForm setStep={setStep} />}
+        {step === 5 && <SummaryForm setStep={setStep} step={step} />}
         {step === 6 && <EventPreview setStep={setStep} />}
       </Box>
     </Box>

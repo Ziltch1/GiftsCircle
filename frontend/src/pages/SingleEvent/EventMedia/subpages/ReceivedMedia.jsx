@@ -23,7 +23,8 @@ const ReceivedMedia = () => {
   const [itemUrl, setItemUrl] = useState('');
   const { newEvent } = useSelector(state => state.event);
   const [fileType, setFileType] = useState('');
-  const [type, setType] = useState('')
+  const [type, setType] = useState('');
+  const [newFiles, setNewFiles] = useState([])
 
   const getEventMessages = async () => {
     try {
@@ -41,6 +42,12 @@ const ReceivedMedia = () => {
       return setFileType(file.url)
     });
   }, []);
+
+  useEffect(() => {
+    const filteredImages = hostRecievedFiles.filter((item) => item.visibility === 'PUBLIC' || item.visibility === 'HOST')
+    setNewFiles(filteredImages);
+  }, [])
+
 
 
   useEffect(() => {
@@ -77,7 +84,7 @@ const ReceivedMedia = () => {
             <>
             <Tbody>
               <>
-              {hostRecievedFiles?.map((file, index) => {
+              {newFiles?.map((file, index) => {
                 return (
                   <>
                     <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>

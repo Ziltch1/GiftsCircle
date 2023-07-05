@@ -96,7 +96,7 @@ const SummaryForm = ({ setStep }) => {
         </Box>
 
         <Box>
-          <Button color="#00BFB2" bg="none" onClick={() => setStep(5)}>
+          <Button color="#00BFB2" bg="none" onClick={() => setStep(6)}>
             <Flex alignItems="center" gap={2}>
               <Text>Preview your event</Text>
               <ExternalLinkIcon />

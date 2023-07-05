@@ -18,6 +18,7 @@ const ReceivedMedia = () => {
   const { user } = useSelector(state => state.user);
   const {newEvent} = useSelector(state => state.event);
   const [media, setMedia] = useState([]);
+  const [newFiles, setNewFiles] = useState([])
 
   const getGuestMedia = async () => {
     try {
@@ -32,13 +33,18 @@ const ReceivedMedia = () => {
     getGuestMedia();
   }, []);
 
+  useEffect(() => {
+    const filteredImages = media?.filter((item) => item.visibility === 'PUBLIC')
+    setNewFiles(filteredImages)
+  }, [media])
+
   const HandleClick = url => {
     window.open(url);
   };
 
   return (
     <Box>
-     {media?.length > 0 ? 
+     {newFiles?.length > 0 ? 
         <TableContainer bg='white'>
           <Table variant='simple'>
             <Thead bg='#EEEEEE' px='17px' py='40px'>
@@ -50,7 +56,7 @@ const ReceivedMedia = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {media?.map((file, index) => {
+              {newFiles?.map((file, index) => {
                 return (
                   <>
                     <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
@@ -70,7 +76,7 @@ const ReceivedMedia = () => {
           </Table>
         </TableContainer>
         : 
-        <Box mt='16'>
+        <Box mt='16' minH='400px'>
           <Heading textAlign='center' fontWeight='semibold' fontSize={25}>Sorry! You haven't been sent any media</Heading>
         </Box> 
     }
