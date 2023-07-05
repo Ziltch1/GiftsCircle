@@ -8,7 +8,7 @@ import { UploadVideoApi } from '../../../../../redux/axios/apis/media';
 import { GetGuestSentFiles } from '../../../../../redux/features/events/service';
 
 const useUpload = (data, setShowModal, setImage, recorded = false) => {
-  const { newEvent, guestSentFiles } = useSelector(state => state.event);
+  const { newEvent, userUploadedFiles } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
   const [Data, setData] = useState([]);
 
@@ -45,12 +45,12 @@ const useUpload = (data, setShowModal, setImage, recorded = false) => {
   }, [data]);
 
   useEffect(() => {
-    if (guestSentFiles) {
-      if (guestSentFiles.length > 0) {
-        setData(guestSentFiles);
+    if (userUploadedFiles) {
+      if (userUploadedFiles.length > 0) {
+        setData(userUploadedFiles);
       }
     }
-  }, [guestSentFiles]);
+  }, [userUploadedFiles]);
 
   return Data;
 };
@@ -125,7 +125,7 @@ const UploadImagesReq = async (data, eventId, userId) => {
   });
   formData.append('userId', userId);
   formData.append('eventId', eventId);
-  formData.append('uploadedBy', 'HOST');
+  formData.append('uploadedBy', 'GUEST');
 
   const result = await axiosInstance.post('/media/UploadImages', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },

@@ -6,7 +6,6 @@ const GetEventMediaFiles = async (id) => {
   const mediaFiles = await prisma.media.findMany({
     where: {
       eventId: id,
-      uploadedBy: "HOST",
     },
     orderBy: [
       {
@@ -53,7 +52,7 @@ const GetEventGuestMedia = async (id) => {
   return list;
 };
 
-const GetGuestSentMedia = async (eventId, userId) => {
+const GetUserUploadedMedia = async (eventId, userId) => {
   const mediaFiles = await prisma.media.findMany({
     where: {
       eventId: eventId,
@@ -107,7 +106,6 @@ const Create = async (data, url) => {
       eventId: data.eventId,
       url: url,
       uploadedBy: data.uploadedBy,
-      
     },
   });
 
@@ -142,7 +140,7 @@ const UpdateVisibility = async (id, data) => {
     },
     data: {
       visibility: data.visibility,
-      updated_at: new Date(Date.now())
+      updated_at: new Date(Date.now()),
     },
   });
 
@@ -196,7 +194,7 @@ const Delete = async (id) => {
 };
 
 module.exports = {
-  GetGuestSentMedia,
+  GetUserUploadedMedia,
   GetEventMediaFiles,
   GetEventGuestMedia,
   GetComplimentaryMessage,

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Table,
@@ -9,7 +9,8 @@ import {
   Td,
   TableContainer,
   Flex,
-  Text, Heading
+  Text,
+  Heading,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import ImageModal from '../../components/ImageModal';
@@ -17,13 +18,13 @@ import { GetEventMessagesApi } from '../../../../redux/axios/apis/media';
 import MessageModal from '../../components/MessageModal';
 
 const ReceivedMedia = () => {
-  const { hostRecievedFiles } = useSelector(state => state.event);
+  const { guestSentFiles } = useSelector(state => state.event);
   const [showImageModal, setShowImageModal] = useState(false);
   const [eventMessages, setEventMessages] = useState([]);
   const [itemUrl, setItemUrl] = useState('');
   const { newEvent } = useSelector(state => state.event);
   const [fileType, setFileType] = useState('');
-  const [type, setType] = useState('')
+  const [type, setType] = useState('');
 
   const getEventMessages = async () => {
     try {
@@ -33,15 +34,7 @@ const ReceivedMedia = () => {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  useEffect(() => {
-    getEventMessages();
-    const file = hostRecievedFiles.map((file) => {
-      return setFileType(file.url)
-    });
-  }, []);
-
+  };
 
   useEffect(() => {
     if (fileType.includes('.mp4') || fileType.includes('.mkv')) {
@@ -58,80 +51,96 @@ const ReceivedMedia = () => {
     setItemUrl(url);
   };
 
+  console.log(guestSentFiles);
+
   return (
     <Box>
-      {showImageModal && <ImageModal item={itemUrl} setShowImageModal={setShowImageModal} />}
-      {hostRecievedFiles?.length > 0 ?
+      {showImageModal && (
+        <ImageModal item={itemUrl} setShowImageModal={setShowImageModal} />
+      )}
+      {guestSentFiles?.length > 0 ? (
         <>
-        <TableContainer bg='white' mb='8'>
-          <Table variant='simple'>
-            <Thead bg='#EEEEEE' px='17px' py='40px'>
-              <Tr fontSize={14} color='black'>
-                <Th>S/N</Th>
-                <Th>Media Type</Th>
-                <Th>Sent by</Th>
-                <Th>Visibility</Th>
-                <Th>Action</Th>
-              </Tr>
-            </Thead>
-            <>
-            <Tbody>
+          <TableContainer bg="white" mb="8">
+            <Table variant="simple">
+              <Thead bg="#EEEEEE" px="17px" py="40px">
+                <Tr fontSize={14} color="black">
+                  <Th>S/N</Th>
+                  <Th>Media Type</Th>
+                  <Th>Sent by</Th>
+                  <Th>Visibility</Th>
+                  <Th>Action</Th>
+                </Tr>
+              </Thead>
               <>
-              {hostRecievedFiles?.map((file, index) => {
-                return (
+                <Tbody>
                   <>
-                    <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
-                      <Td>{index + 1}</Td>
-                      <Td>Media {index + 1}</Td>
-                      <Td>{file.user}</Td>
-                      <Td>{file.visibility}</Td>
-                      <Td color="#009F94">
-                        <Flex gap={8} cursor='pointer'>
-                          <Text onClick={() => HandleClick(file?.url)}>View</Text>
-                        </Flex>
-                      </Td>
-                    </Tr>
+                    {guestSentFiles?.map((file, index) => {
+                      return (
+                        <>
+                          {(file.visibility === 'HOST' ||
+                            file.visibility === 'PUBLIC') && (
+                            <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
+                              <Td>{index + 1}</Td>
+                              <Td>Media {index + 1}</Td>
+                              <Td>{file.user}</Td>
+                              <Td>{file.visibility}</Td>
+                              <Td color="#009F94">
+                                <Flex gap={8} cursor="pointer">
+                                  <Text onClick={() => HandleClick(file?.url)}>
+                                    View
+                                  </Text>
+                                </Flex>
+                              </Td>
+                            </Tr>
+                          )}
+                        </>
+                      );
+                    })}
                   </>
-                );
-              })}
+                </Tbody>
               </>
-            </Tbody>
-            </>
-          </Table>
-        </TableContainer>
-         <EventMessages eventMessages={eventMessages}  />
+            </Table>
+          </TableContainer>
+          <EventMessages eventMessages={eventMessages} />
         </>
-        :
-        <Box mt='16' minH='400px' display='flex' alignItems='center' justifyContent='center'>
-          <Heading textAlign='center' fontWeight='semibold' fontSize={25}>Sorry! You haven't been sent any media</Heading>
+      ) : (
+        <Box
+          mt="16"
+          minH="400px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Heading textAlign="center" fontWeight="semibold" fontSize={25}>
+            Sorry! You haven't been sent any media
+          </Heading>
         </Box>
-      }
+      )}
     </Box>
   );
 };
 
 export default ReceivedMedia;
 
-
-export const EventMessages = ({eventMessages}) => {
+export const EventMessages = ({ eventMessages }) => {
   const [showModal, setShowModal] = useState(false);
   const [eventMessage, setEventMessage] = useState({});
 
-  console.log(eventMessages, eventMessage);
-
-  const handleClick = (message) => {
+  const handleClick = message => {
     setShowModal(true);
     setEventMessage(message);
-  }
+  };
 
   return (
     <Box>
-      {showModal && <MessageModal message={eventMessage} setShowModal={setShowModal} />}
-      {eventMessages?.length > 0 ?
-        <TableContainer bg='white'>
-          <Table variant='simple'>
-            <Thead bg='#EEEEEE' px='17px' py='40px'>
-              <Tr fontSize={14} color='black'>
+      {showModal && (
+        <MessageModal message={eventMessage} setShowModal={setShowModal} />
+      )}
+      {eventMessages?.length > 0 ? (
+        <TableContainer bg="white">
+          <Table variant="simple">
+            <Thead bg="#EEEEEE" px="17px" py="40px">
+              <Tr fontSize={14} color="black">
                 <Th>S/N</Th>
                 <Th>Media Type</Th>
                 <Th>Sent by</Th>
@@ -151,8 +160,10 @@ export const EventMessages = ({eventMessages}) => {
                           <Td>{`${message.user.firstname} ${message.user.lastname}`}</Td>
                           <Td>{new Date(message.date).toDateString()}</Td>
                           <Td color="#009F94">
-                            <Flex gap={8} cursor='pointer'>
-                              <Text onClick={() => handleClick(message)}>View</Text>
+                            <Flex gap={8} cursor="pointer">
+                              <Text onClick={() => handleClick(message)}>
+                                View
+                              </Text>
                             </Flex>
                           </Td>
                         </Tr>
@@ -164,11 +175,13 @@ export const EventMessages = ({eventMessages}) => {
             </>
           </Table>
         </TableContainer>
-        :
-        <Box mt='16' >
-          <Heading textAlign='center' fontWeight='semibold' fontSize={25}>Sorry! You haven't been sent any media</Heading>
+      ) : (
+        <Box mt="16">
+          <Heading textAlign="center" fontWeight="semibold" fontSize={25}>
+            Sorry! You haven't been sent any media
+          </Heading>
         </Box>
-      }
+      )}
     </Box>
-  )
-}
+  );
+};

@@ -5,7 +5,6 @@ import {
   GetUserEventsApi,
 } from '../../axios/apis/events';
 import { dispatch } from '../../store';
-import { createResponse } from '../../utils/UtilSlice';
 import {
   setAsoebisItems,
   setEventAsoebiBuyers,
@@ -18,9 +17,9 @@ import {
   setFundRaising,
   setFundRaisingDonors,
   setGuestSentFiles,
-  setHostRecievedFiles,
   setLoading,
   setNewEvent,
+  setUserUploadedFiles,
 } from './eventSlice';
 import ErrorHandler from '../../axios/Utils/ErrorHandler';
 import {
@@ -39,7 +38,7 @@ import {
 import {
   GetEventMediaFilesApi,
   GetGuestSentFilesApi,
-  GetHostRecievedFilesApi,
+  GetUserUploadedMediaApi,
 } from '../../axios/apis/media';
 import { GetEventDeliveryDetailsApi } from '../../axios/apis/delivery';
 
@@ -146,10 +145,10 @@ const GetEventMediaFiles = id => async () => {
   }
 };
 
-const GetHostRecievedFiles = id => async () => {
+const GetUserUploadedFiles = (eventId, userId) => async () => {
   try {
-    const res = await GetHostRecievedFilesApi(id);
-    dispatch(setHostRecievedFiles(res.data));
+    const res = await GetUserUploadedMediaApi(eventId, userId);
+    dispatch(setUserUploadedFiles(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
     // dispatch(createResponse(ErrorHandler(error)));
@@ -231,7 +230,7 @@ export {
   DonateFundRaising,
   GetEventFundRaisingDonors,
   GetEventMediaFiles,
-  GetHostRecievedFiles,
+  GetUserUploadedFiles,
   GetGuestSentFiles,
   GetAsoebiItems,
   DeleteAsoebi,
