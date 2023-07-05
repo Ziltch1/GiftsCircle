@@ -13,9 +13,9 @@ import {
   GetEventFundRaising,
   GetEventFundRaisingDonors,
   GetEventGuests,
-  GetEventMediaFiles,
-  GetHostRecievedFiles,
+  GetGuestSentFiles,
   GetUserEvents,
+  GetUserUploadedFiles,
 } from '../../redux/features/events/service';
 import { dispatch } from '../../redux/store';
 import BackButton from '../../components/Buttons/BackButton';
@@ -61,8 +61,8 @@ const Index = () => {
         dispatch(GetComplimentaryGiftItems());
         dispatch(GetEventGuests(newEvent.id));
         dispatch(GetEventFundRaising(newEvent.id));
-        dispatch(GetEventMediaFiles(newEvent.id));
-        dispatch(GetHostRecievedFiles(newEvent.id));
+        dispatch(GetUserUploadedFiles(newEvent.id, user.id));
+        dispatch(GetGuestSentFiles(newEvent.id));
         // dispatch(GetEventAsoebiBuyers(newEvent.id));
         dispatch(GetEventGiftsTransactions(newEvent.id));
         setLoading(false);
@@ -83,6 +83,13 @@ const Index = () => {
       dispatch(GetEventFundRaisingDonors(fundRaising.id));
     }
   }, [fundRaising, newEvent]);
+
+  useEffect(() => {
+    if (user && newEvent) {
+      console.log(user)
+      dispatch(GetUserUploadedFiles(newEvent.id, user.id));
+    }
+  }, [user, newEvent]);
 
   return (
     <Box bg="#F5F5F5">
