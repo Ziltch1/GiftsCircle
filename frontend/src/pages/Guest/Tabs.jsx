@@ -17,7 +17,6 @@ const Tabs = ({ navPosition, setNavPosition }) => {
       if (eventAsoebis.length > 0) {
         let initLinks = ['About event', 'Gift List', 'Media'];
         let updatedLinks = [...initLinks, 'Asoebi', 'FundRaising'];
-
         setLinks(updatedLinks);
       } else {
         let updatedLinks = [...links, 'Fundraising'];
