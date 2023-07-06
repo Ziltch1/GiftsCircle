@@ -36,7 +36,7 @@ const DeliveryDetails = ({
         );
       })}
 
-      <Button
+      {/* <Button
         bg="#00BFB2"
         fontSize={13}
         mb="4"
@@ -45,8 +45,8 @@ const DeliveryDetails = ({
         onClick={() => setShowDeliveryForm(true)}
       >
         <AddIcon mr="2" /> ADD ADDRESS
-      </Button>
-      <Divider />
+      </Button> */}
+      {/* <Divider /> */}
     </Box>
   );
 };
@@ -116,7 +116,7 @@ const DeliveryItem = ({
               )}
             </Box>
           </Stack>
-          <Box display="flex" alignItems="center" gap={2}>
+          {/* <Box display="flex" alignItems="center" gap={2}>
             <EditIcon
               color="#00BFB2"
               onClick={() => {
@@ -130,7 +130,7 @@ const DeliveryItem = ({
                 DeleteDelivery(data.id);
               }}
             />
-          </Box>
+          </Box> */}
         </Stack>
       </Box>
     </Box>

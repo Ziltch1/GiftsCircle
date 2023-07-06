@@ -30,6 +30,7 @@ const ContributionModal = ({ setOpenModal, isOpen }) => {
     GiftItems,
     setAddedGiftItems,
     setCurrentItem,
+    setCheckContribution
   } = useContext(CartContext);
   const { onClose } = useDisclosure();
   const [contribution, setContribution] = useState(false);
@@ -38,19 +39,23 @@ const ContributionModal = ({ setOpenModal, isOpen }) => {
     if (!addedGiftItems.includes(currentItem.id)) {
       setGiftItems([...GiftItems, currentItem]);
       setAddedGiftItems([...addedGiftItems, currentItem.id]);
+      setCheckContribution(false)
     }
     setOpenModal(false);
   };
+
+  
 
   const HandleContributeSubmit = () => {
     let updatedItem = { ...currentItem };
     updatedItem.contributionAmount = contributionAmount;
     setCurrentItem(updatedItem);
-
+    if (contributionAmount > 0) {
+      setCheckContribution(true)
+    }
     if (!addedGiftItems.includes(currentItem.id)) {
       setGiftItems([...GiftItems, updatedItem]);
       setAddedGiftItems([...addedGiftItems, currentItem.id]);
-
       setOpenModal(false);
       setContribution(false);
       setCurrentItem(null);

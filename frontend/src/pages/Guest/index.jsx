@@ -41,6 +41,7 @@ const Index = () => {
   const [checkoutAmount, setCheckoutAmount] = useState(0);
   const [cartLength, setCartLength] = useState('');
   const [deliveryFee, setDeliveryFee] = useState(0);
+  const [checkContribution, setCheckContribution] = useState(false)
 
   useEffect(() => {
     let check = localStorage.getItem('Cart');
@@ -89,10 +90,10 @@ const Index = () => {
           </Stack>
         ) : (
           <CheckoutContext.Provider
-            value={{checkoutAmount, setCheckoutAmount, cartLength, setCartLength, deliveryFee, setDeliveryFee}}
+            value={{checkoutAmount, setCheckoutAmount, cartLength, setCartLength, deliveryFee, setDeliveryFee,}}
           >
             {showCheckout ? 
-              <Checkout setShowCheckout={setShowCheckout} /> 
+              <Checkout setShowCheckout={setShowCheckout} checkContribution={checkContribution} /> 
               :
               <>
                   <Box>
@@ -106,7 +107,7 @@ const Index = () => {
                   />
                   <Box>
                     {navPosition === 0 && <EventDetails newEvent={event} />}
-                    {navPosition === 1 && <EventGifts event={event} setShowCheckout={setShowCheckout} />}
+                    {navPosition === 1 && <EventGifts event={event} setShowCheckout={setShowCheckout} setCheckContribution={setCheckContribution} />}
                     {navPosition === 2 && <EventMedia />}
                     {navPosition === 3 && <Asoebi event={event} />}
                     {navPosition === 4 && <Fundraising event={event} />}
