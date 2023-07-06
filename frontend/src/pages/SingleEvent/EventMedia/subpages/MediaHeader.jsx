@@ -19,7 +19,7 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
   const [recorded, setRecorded] = useState(null);
   useUpload(image, setShowModal, setImage, recorded);
 
-  const actionBtns = ['Uploaded by me', 'Sent to me'];
+  const actionBtns = ['Uploaded by me', 'Sent to me', 'Messages'];
   const handleClick = index => {
     setNavPosition(index);
   };
