@@ -7,16 +7,33 @@ import DeliveryDetailsCard from './subpages/DeliveryDetailsCard';
 import { useSelector } from 'react-redux';
 import BackButton from '../../../../../components/Buttons/BackButton';
 import { Zones } from '../../../../../Utils/data/ZONES';
+import { DeliveryDetailsApi, GetDeliveryDetailsApi } from '../../../../../redux/axios/apis/delivery';
 
-const Index = ({ setShowCheckout, giftDetails }) => {
+
+const Index = ({ setShowCheckout, giftDetails, checkContribution }) => {
   const [showDeliveryForm, setShowDeliveryForm] = useState(true);
   const [selectedDeliveryDetails, setSelectedDeliveryDetails] = useState(null);
   const [deliveryAmount, setDeliveryAmount] = useState(0);
   const [deliveryPercent, setDeliveryPercent] = useState(0);
-  const { deliveryDetails } = useSelector(state => state.user);
+  const [deliveryDetails, setDeliveryDetails] = useState([])
   const { checkoutData } = useSelector(state => state.market);
+  const {newEvent} = useSelector(state => state.event)
+
+  console.log(checkContribution);
 
   const { amount, data } = checkoutData;
+
+  const getDeliveryDetails = async() => {
+    try {
+      const res = await GetDeliveryDetailsApi(newEvent?.user_id);
+      const data = await res.data;
+      setDeliveryDetails(data)
+    } catch (error) {
+      
+    }
+  }
+
+  console.log(deliveryDetails);
 
   const handleClick = () => {
     setShowCheckout(false)
@@ -29,14 +46,8 @@ const Index = ({ setShowCheckout, giftDetails }) => {
   };
 
   useEffect(() => {
-    if (deliveryDetails) {
-      if (deliveryDetails.length > 0) {
-        setShowDeliveryForm(false);
-      } else {
-        setShowDeliveryForm(true);
-      }
-    }
-  }, [deliveryDetails]);
+    getDeliveryDetails();
+  }, []);
 
   useEffect(() => {
     if (selectedDeliveryDetails) {
@@ -65,25 +76,19 @@ const Index = ({ setShowCheckout, giftDetails }) => {
         justifyContent="space-between"
         mt="5"
       >
-        <Box bg="white" w={{ base: '100%', lg: '65%' }} borderRadius={5} p="4">
+        {!checkContribution === true ? 
+        <>
+          <Box bg="white" w={{ base: '100%', lg: '65%' }} borderRadius={5} p="4">
           <DeliveryDetailsHeader />
           <Divider />
-          {showDeliveryForm ? (
-            <DeliveryDetailsForm
-              setShowDeliveryForm={setShowDeliveryForm}
-              selectedDeliveryDetails={selectedDeliveryDetails}
-              setSelectedDeliveryDetails={setSelectedDeliveryDetails}
-            />
-          ) : (
             <DeliveryDetailsCard
               data={deliveryDetails}
               setShowDeliveryForm={setShowDeliveryForm}
               setSelectedDeliveryDetails={setSelectedDeliveryDetails}
             />
-          )}
-        </Box>
+          </Box>
 
-        <Box w={{ base: '100%', lg: '30%' }}>
+          <Box w={{ base: '100%', lg: '30%' }}>
           <CartSummary
             amount={amount}
             data={data}
@@ -91,7 +96,18 @@ const Index = ({ setShowCheckout, giftDetails }) => {
             setShowCheckout={setShowCheckout}
             giftDetails={giftDetails}
           />
-        </Box>
+          </Box>
+        </>  : 
+          <Box w={{ base: '100%', lg: '100%' }}>
+            <CartSummary
+              amount={amount}
+              data={data}
+              deliveryAmount={deliveryAmount}
+              setShowCheckout={setShowCheckout}
+              giftDetails={giftDetails}
+            />
+          </Box>
+        }
       </Stack>
     </Box>
   );

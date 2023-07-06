@@ -11,7 +11,7 @@ import Checkout from './Checkout';
 
 export const CartContext = createContext(null);
 
-const Index = ({setShowCheckout, setGiftDetails}) => {
+const Index = ({setShowCheckout, setGiftDetails, setCheckContribution}) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
@@ -106,7 +106,8 @@ const Index = ({setShowCheckout, setGiftDetails}) => {
           setContributionAmount,
           setComplimentaryGiftAmount,
           setCurrentItem,
-          setShowCheckout
+          setShowCheckout,
+          setCheckContribution,
         }}
       >
         <>
