@@ -21,21 +21,10 @@ const ReceivedMedia = () => {
   const { guestSentFiles } = useSelector(state => state.event);
   const [data, setData] = useState(null);
   const [showImageModal, setShowImageModal] = useState(false);
-  const [eventMessages, setEventMessages] = useState([]);
   const [itemUrl, setItemUrl] = useState('');
   const { newEvent } = useSelector(state => state.event);
   const [fileType, setFileType] = useState('');
   const [type, setType] = useState('');
-
-  const getEventMessages = async () => {
-    try {
-      const response = await GetEventMessagesApi(newEvent.id);
-      const data = response.data;
-      setEventMessages(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     if (fileType.includes('.mp4') || fileType.includes('.mkv')) {
@@ -116,7 +105,6 @@ const ReceivedMedia = () => {
               </>
             </Table>
           </TableContainer>
-          {/* <EventMessages eventMessages={eventMessages} /> */}
         </>
       )}
     </Box>
@@ -124,67 +112,3 @@ const ReceivedMedia = () => {
 };
 
 export default ReceivedMedia;
-
-export const EventMessages = ({ eventMessages }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [eventMessage, setEventMessage] = useState({});
-
-  const handleClick = message => {
-    setShowModal(true);
-    setEventMessage(message);
-  };
-
-  return (
-    <Box>
-      {showModal && (
-        <MessageModal message={eventMessage} setShowModal={setShowModal} />
-      )}
-      {eventMessages?.length > 0 ? (
-        <TableContainer bg="white">
-          <Table variant="simple">
-            <Thead bg="#EEEEEE" px="17px" py="40px">
-              <Tr fontSize={14} color="black">
-                <Th>S/N</Th>
-                <Th>Media Type</Th>
-                <Th>Sent by</Th>
-                <Th>Date sent</Th>
-                <Th>Action</Th>
-              </Tr>
-            </Thead>
-            <>
-              <Tbody>
-                <>
-                  {eventMessages?.map((message, index) => {
-                    return (
-                      <>
-                        <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
-                          <Td>{index + 1}</Td>
-                          <Td>Message {index + 1}</Td>
-                          <Td>{`${message.user.firstname} ${message.user.lastname}`}</Td>
-                          <Td>{new Date(message.date).toDateString()}</Td>
-                          <Td color="#009F94">
-                            <Flex gap={8} cursor="pointer">
-                              <Text onClick={() => handleClick(message)}>
-                                View
-                              </Text>
-                            </Flex>
-                          </Td>
-                        </Tr>
-                      </>
-                    );
-                  })}
-                </>
-              </Tbody>
-            </>
-          </Table>
-        </TableContainer>
-      ) : (
-        <Box mt="16">
-          <Heading textAlign="center" fontWeight="semibold" fontSize={25}>
-            Sorry! You haven't been sent any media
-          </Heading>
-        </Box>
-      )}
-    </Box>
-  );
-};

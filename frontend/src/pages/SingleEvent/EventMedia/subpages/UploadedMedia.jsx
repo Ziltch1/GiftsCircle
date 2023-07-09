@@ -16,8 +16,6 @@ const UploadedMedia = () => {
     }
   }, [Data]);
 
-  console.log(images)
-
   return (
     <Box
       w="100%"

@@ -1,7 +1,11 @@
 import { Box, Text, Image, Heading, Button, Flex } from '@chakra-ui/react';
-import React from 'react';
+import React, {useState} from 'react';
+import WithdrawalDrawer from './WithdrawalDrawer';
 
 const FundraisingCard = ({ openModal, setOpenModal, fundRaising }) => {
+
+  const [openDrawer, setOpenDrawer] = useState(false)
+
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'NGN',
@@ -14,8 +18,10 @@ const FundraisingCard = ({ openModal, setOpenModal, fundRaising }) => {
     }
     setOpenModal(true);
   };
+
   return (
     <Box bg="white" borderRadius={5} p="5" w="100%" mb="8">
+      {openDrawer && <WithdrawalDrawer setOpenDrawer={setOpenDrawer} amount={fundRaising?.amountPaid} />}
       <Flex gap={4}>
         <Box w="180px" h="140px">
           <Image
@@ -71,17 +77,33 @@ const FundraisingCard = ({ openModal, setOpenModal, fundRaising }) => {
                 </Text>
               </Box>
               <Box>
-                <Button
-                  bg="#00BFB2"
-                  color="white"
-                  fontWeight="normal"
-                  fontSize={13}
-                  onClick={() => StopFundraising()}
-                >
-                  {fundRaising?.active
-                    ? 'Stop Fundraising'
-                    : 'FundRaising Ended'}
-                </Button>
+                {fundRaising?.active ?
+                  <Button
+                    bg="#00BFB2"
+                    color="white"
+                    fontWeight="normal"
+                    fontSize={13}
+                    onClick={() => StopFundraising()}
+                  >
+                    {/* {fundRaising?.active
+                      ? 'Stop Fundraising'
+                      : 'FundRaising Ended'} */}
+                      Stop Fundraising
+                  </Button>
+                  :
+                  <Button
+                    bg="#00BFB2"
+                    color="white"
+                    fontWeight="normal"
+                    fontSize={13}
+                    onClick={() => setOpenDrawer(true)}
+                  >
+                    {/* {fundRaising?.active
+                      ? 'Stop Fundraising'
+                      : 'FundRaising Ended'} */}
+                      Make withdrawal
+                  </Button>
+                }
               </Box>
             </Flex>
           </Box>

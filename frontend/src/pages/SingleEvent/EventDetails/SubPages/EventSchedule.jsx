@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { dispatch } from '../../../../redux/store';
 import { setEditEvent } from '../../../../redux/features/events/eventSlice';
+import DeleteModal from './DeleteModal';
 
 const EventSchedule = ({ newEvent }) => {
   const navigate = useNavigate();
@@ -15,12 +16,19 @@ const EventSchedule = ({ newEvent }) => {
   const newDate = new Date(dateString).toDateString();
   const { fundRaising } = useSelector(state => state.event);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const showDrawer = () => {
     setOpenDrawer(true);
   };
 
+  const showDeleteModal = () => {
+    setShowModal(true);
+  };
+
   return (
+    <>
+       {showModal && <DeleteModal setShowModal={setShowModal} />}
     <Box mb="6">
       {openDrawer && (
         <Fundraising setOpenDrawer={setOpenDrawer} id={newEvent.id} />
@@ -83,9 +91,11 @@ const EventSchedule = ({ newEvent }) => {
               {newEvent.venue}
             </Text>
           </Box>
+            <Button w='100%' bg='red.500' h='50px' color='white' onClick={showDeleteModal}>Delete Event</Button>
         </Box>
       </Flex>
     </Box>
+    </>
   );
 };
 

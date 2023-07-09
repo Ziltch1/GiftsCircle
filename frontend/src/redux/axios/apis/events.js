@@ -36,8 +36,6 @@ const AddGiftApi = data => {
   return api.post(`/gift/create`, data);
 };
 
-
-
 const EventSummaryApi = data => {
   return api.post(`/event/create3`, data);
 };

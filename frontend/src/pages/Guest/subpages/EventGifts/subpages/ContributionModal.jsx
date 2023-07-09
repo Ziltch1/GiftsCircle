@@ -17,6 +17,8 @@ import {
 } from '@chakra-ui/react';
 import errorImg from '../../../../assets/errorImg.svg';
 import { CartContext } from '..';
+import PaymentButton from '../../../../../components/Buttons/PaymentButton';
+
 
 const ContributionModal = ({ setOpenModal, isOpen }) => {
   const {
@@ -28,6 +30,7 @@ const ContributionModal = ({ setOpenModal, isOpen }) => {
     GiftItems,
     setAddedGiftItems,
     setCurrentItem,
+    setCheckContribution
   } = useContext(CartContext);
   const { onClose } = useDisclosure();
   const [contribution, setContribution] = useState(false);
@@ -36,19 +39,23 @@ const ContributionModal = ({ setOpenModal, isOpen }) => {
     if (!addedGiftItems.includes(currentItem.id)) {
       setGiftItems([...GiftItems, currentItem]);
       setAddedGiftItems([...addedGiftItems, currentItem.id]);
+      setCheckContribution(false)
     }
     setOpenModal(false);
   };
+
+  
 
   const HandleContributeSubmit = () => {
     let updatedItem = { ...currentItem };
     updatedItem.contributionAmount = contributionAmount;
     setCurrentItem(updatedItem);
-
+    if (contributionAmount > 0) {
+      setCheckContribution(true)
+    }
     if (!addedGiftItems.includes(currentItem.id)) {
       setGiftItems([...GiftItems, updatedItem]);
       setAddedGiftItems([...addedGiftItems, currentItem.id]);
-
       setOpenModal(false);
       setContribution(false);
       setCurrentItem(null);
@@ -121,6 +128,13 @@ export const ContributionAmount = ({
     setOpenModal(false);
     setAmount(0);
   };
+
+  // const HandleSubmit = () => {
+  //   submitHandler();
+  // }
+
+
+
   return (
     <Box>
       <Modal
@@ -184,6 +198,7 @@ export const ContributionAmount = ({
               />
             </Box>
             <Box textAlign="center">
+              {/* <PaymentButton amount={amount} action={HandleSubmit} /> */}
               <Button
                 mb="3"
                 w="100%"

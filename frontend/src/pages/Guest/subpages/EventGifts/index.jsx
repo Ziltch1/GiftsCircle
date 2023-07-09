@@ -7,10 +7,11 @@ import GiftListDrawer from './subpages/GiftListDrawer';
 import DisplayCard from '../../../../components/Card';
 import ContributionModal from './subpages/ContributionModal';
 import { Zones } from '../../../../Utils/data/ZONES';
+import Checkout from './Checkout';
 
 export const CartContext = createContext(null);
 
-const Index = () => {
+const Index = ({setShowCheckout, setGiftDetails, setCheckContribution}) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
@@ -105,44 +106,48 @@ const Index = () => {
           setContributionAmount,
           setComplimentaryGiftAmount,
           setCurrentItem,
+          setShowCheckout,
+          setCheckContribution,
         }}
       >
-        <ContributionModal
-          setOpenModal={setContributionModal}
-          isOpen={contributionModal}
-        />
-        <ComplimentaryModal setOpenDrawer={setOpenDrawer} isOpen={openDrawer} />
-        <GiftListDrawer
-          setShowListDrawer={setShowListDrawer}
-          isOpen={showListDrawer}
-        />
+        <>
+          <ContributionModal
+            setOpenModal={setContributionModal}
+            isOpen={contributionModal}
+          />
+          <ComplimentaryModal setOpenDrawer={setOpenDrawer} isOpen={openDrawer} />
+          <GiftListDrawer
+            setShowListDrawer={setShowListDrawer}
+            isOpen={showListDrawer}
+          />
 
-        <GiftHeader
-          setOpenDrawer={setOpenDrawer}
-          setShowListDrawer={setShowListDrawer}
-        />
-        <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          flexWrap="wrap"
-        >
-          {eventGifts.map(item => {
-            const giftItem = giftItems.find(x => x.id === item?.giftItemId);
-            return (
-              <DisplayCard
-                id={item.id}
-                data={giftItem}
-                action={addGift}
-                disabled={
-                  addedGiftItems.includes(item.id) ||
-                  item.amountPaid >= giftItem.amount * item.quantity
-                }
-                purchased={item.amountPaid >= giftItem.amount * item.quantity}
-                text={'Purchase'}
-              />
-            );
-          })}
-        </Flex>
+          <GiftHeader
+            setOpenDrawer={setOpenDrawer}
+            setShowListDrawer={setShowListDrawer}
+          />
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            flexWrap="wrap"
+          >
+            {eventGifts.map(item => {
+              const giftItem = giftItems.find(x => x.id === item?.giftItemId);
+              return (
+                <DisplayCard
+                  id={item.id}
+                  data={giftItem}
+                  action={addGift}
+                  disabled={
+                    addedGiftItems.includes(item.id) ||
+                    item.amountPaid >= giftItem.amount * item.quantity
+                  }
+                  purchased={item.amountPaid >= giftItem.amount * item.quantity}
+                  text={'Purchase'}
+                />
+              );
+            })}
+          </Flex>
+        </>
       </CartContext.Provider>
     </Box>
   );
