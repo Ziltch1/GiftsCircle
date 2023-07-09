@@ -135,7 +135,7 @@ router.post("/create3", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Update3(req.body);
     if (data) {
-      req.io.emit(data.notification.userId, data.notification);
+      req?.io?.emit(data.notification.userId, data.notification);
       return res.status(200).send(data.Data);
     }
     return res.status(400).send(ResponseDTO("Failed", "Event not found"));
