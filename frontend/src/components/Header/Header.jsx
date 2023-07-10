@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import {
   Box,
   Image,
@@ -8,7 +8,8 @@ import {
   MenuButton,
   MenuList,
   MenuDivider,
-  MenuItem, Text
+  MenuItem,
+  Text,
 } from '@chakra-ui/react';
 import logo from '../assets/event-circle.svg';
 import notification from '../assets/notification.svg';
@@ -17,13 +18,24 @@ import { Link, useNavigate } from 'react-router-dom';
 import Notification from '../Notification';
 import { dispatch } from '../../redux/store';
 import { setToken } from '../../redux/features/auth/authSlice';
+import { SocketContext } from '../../Layouts/DashBoardLayout';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, notifications } = useSelector(state => state.user);
-  const unreadNotifications = notifications.filter(item => item.read === false);
+  const { user } = useSelector(state => state.user);
   const [openModal, setOpenModal] = useState(false);
   const dropdownRef = useRef(true);
+  const { Notifications } = useContext(SocketContext);
+  const [unreadNotifications, setUnReadNotifications] = useState([]);
+
+  useEffect(() => {
+    if (Notifications) {
+      const data = Notifications.filter(
+        item => item.read === false
+      );
+      setUnReadNotifications(data)
+    }
+  }, [Notifications]);
 
   // useEffect(() => {
   //   const handleClickOutside = (event) => {
@@ -40,7 +52,7 @@ const Header = () => {
   // }, []);
 
   const showNotification = () => {
-    setOpenModal((prevState) => !prevState);
+    setOpenModal(prevState => !prevState);
   };
 
   const LogoutHandler = () => {
@@ -63,9 +75,30 @@ const Header = () => {
 
             <Box>
               <Flex gap={4} alignItems="center">
-                <Box onClick={showNotification} position='relative' cursor='pointer'>
-                  <Image src={notification} w='25px' h='25px' />
-                  <Box bg='red.400' color='white' textAlign='center' position='absolute' top='-5px' right='-5px' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'><Text>{unreadNotifications.length}</Text></Box>
+                <Box
+                  onClick={showNotification}
+                  position="relative"
+                  cursor="pointer"
+                >
+                  <Image src={notification} w="25px" h="25px" />
+                  <Box
+                    bg="red.400"
+                    color="white"
+                    textAlign="center"
+                    position="absolute"
+                    top="-5px"
+                    right="-5px"
+                    fontSize={11}
+                    w="20px"
+                    h="20px"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    fontWeight="semibold"
+                    borderRadius="50%"
+                  >
+                    <Text>{unreadNotifications.length}</Text>
+                  </Box>
                 </Box>
 
                 <Menu>
@@ -87,10 +120,10 @@ const Header = () => {
                     />
                   </MenuButton>
                   <MenuList zIndex={'overlay'}>
-                    <Link to='/dashboard/settings'>
-                    <MenuItem fontSize={16} fontWeight={500}>
-                      Account
-                    </MenuItem>
+                    <Link to="/dashboard/settings">
+                      <MenuItem fontSize={16} fontWeight={500}>
+                        Account
+                      </MenuItem>
                     </Link>
                     <MenuDivider />
                     <MenuItem

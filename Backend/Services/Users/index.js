@@ -19,7 +19,7 @@ const GetUserNotifications = async (id) => {
         created_at: "desc",
       },
     ],
-    take: 10,
+    take: 20,
   });
   await prisma.$disconnect();
   return notifications;

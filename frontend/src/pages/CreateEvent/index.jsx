@@ -11,13 +11,23 @@ import Stepper from './components/Stepper';
 import EventPreview from './subpages/EventPreview';
 import DeliveryDetailsForm from './subpages/step4/Index';
 import Response from '../../components/ResponseToast';
+import { useSelector } from 'react-redux';
+import { GetEventDeliveryDetails } from '../../redux/features/events/service';
 
 const Index = () => {
   const [step, setStep] = useState(1);
+  const { newEvent, editEvent } = useSelector(state => state.event);
 
   useEffect(() => {
     dispatch(GetGiftItems());
   }, []);
+
+  useEffect(() => {
+    if (newEvent !== null && editEvent) {
+      dispatch(GetEventDeliveryDetails(newEvent.id));
+    }
+  }, [newEvent, editEvent]);
+  
   return (
     <Box py={step !== 6 ? '5' : '1'}>
       <Response />
