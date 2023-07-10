@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -24,10 +24,11 @@ import {
 } from '../../../../../redux/features/gift/service';
 import { CheckoutContext } from '../../..';
 
-const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
+const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContribution }) => {
   const { giftItems } = useSelector(state => state.gift);
   const { user } = useSelector(state => state.user);
   const { newEvent } = useSelector(state => state.event);
+  const [quantity, setQuantity] = useState(1);
 
   const {
     complimentaryGifts,
@@ -43,10 +44,28 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
     amount,
     setGiftAmount,
     setComplimentaryGiftAmount,
-    deliveryPercent, setShowCheckout
+    deliveryPercent, setShowCheckout, addedGiftItems
   } = useContext(CartContext);
 
   const {setCheckoutAmount, setCartLength, setDeliveryFee} = useContext(CheckoutContext);
+
+  const handleIncrement = (id) => {
+    setGiftItems((prevItems) =>
+      prevItems.map((item) =>
+        item.giftItemId === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const handleDecrement = (id) => {
+    setGiftItems((prevItems) =>
+      prevItems.map((item) =>
+        item.giftItemId === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
 
   useEffect(() => {
     let complimentaryAmount = 0;
@@ -71,18 +90,13 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
     setAmount(complimentaryAmount + giftAmount + deliveryAmount);
     setCheckoutAmount(complimentaryAmount + giftAmount);
     setCartLength(GiftItems.length + ComplimentaryItems.length);
-    setDeliveryFee(deliveryAmount);
-  }, [
-    ComplimentaryItems,
-    setAmount,
-    setComplimentaryGiftAmount,
-    setGiftAmount,
-    GiftItems,
-  ]);
+    setDeliveryFee(deliveryPercent);
+  }, [ComplimentaryItems,setAmount,setComplimentaryGiftAmount,setGiftAmount,GiftItems]);
 
 
   const { onClose } = useDisclosure();
   const btnRef = React.useRef();
+
 
   const HandleSubmit = () => {
     const giftFormBody = [];
@@ -91,6 +105,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
       let amount = item.contributionAmount
         ? item.contributionAmount
         : newData.amount;
+      setQuantity(newData?.quantity)
 
       const formData = {
         status:
@@ -99,7 +114,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
         userId: user.id,
         eventId: item.eventId,
         amountPaid: item.amountPaid,
-        quantity: item.quantity,
+        quantity: quantity ? quantity : 1,
         giftItemAmount: newData.amount,
         deliveryAmount: newData.amount * (deliveryPercent / 100),
         complimentaryGift:
@@ -108,6 +123,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
       };
       giftFormBody.push(formData);
     });
+
     if (giftFormBody.length > 0) {
       dispatch(BuyGifts(giftFormBody, giftFormBody[0].eventId));
       setGiftItems([]);
@@ -130,9 +146,9 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
       setComplimentaryItems([]);
       setAddedComplimentaryGiftItems([]);
     }
-
     setShowListDrawer(false);
   };
+
 
   const proceedCheckout = () => {
     setShowCheckout(true)
@@ -166,7 +182,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
                   ? ele.contributionAmount
                   : newData.amount;
                 return (
-                  <GiftListItem id={ele.id} item={newData} amount={amount} />
+                  <GiftListItem id={ele.id} item={newData} data={ele} amount={amount} handleIncrement={handleIncrement} handleDecrement={handleDecrement} />
                 );
               })}
             </Flex>
@@ -193,20 +209,25 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails }) => {
             </Box>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
-            <Button
-                mb="3"
-                bg="#00BFB2"
-                fontSize={14}
-                fontWeight="medium"
-                color="white"
-                onClick={proceedCheckout}
+            {checkContribution === true ? (
+              <PaymentButton amount={amount} action={HandleSubmit} />) 
+            : 
+            (<Button
+                mb = "3"
+                bg = "#00BFB2"
+                fontSize = { 14 }
+                fontWeight = "medium"
+                color = "white"
+                onClick = { proceedCheckout }
                 // onClick={() => submitHandler()}
-                w='auto'
-                h='50px'
+                w = 'auto'
+                h = '50px'
               >
                 Proceed to Checkout {giftAmount + complimentaryGiftAmount}
-            </Button>
-            {/* <PaymentButton amount={amount} action={HandleSubmit} /> */}
+              </Button>)
+            }
+            
+            
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

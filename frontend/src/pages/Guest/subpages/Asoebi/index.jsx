@@ -4,6 +4,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import AsoebiListDrawer from './subpages/AsoebiListDrawer';
 import DisplayCard from '../../../../components/Card';
 import { useSelector } from 'react-redux';
+import AsoebiCheckoutDrawer from './subpages/AsoebiCheckoutDrawer';
 export const CartContext = createContext(null);
 
 const Index = () => {
@@ -13,6 +14,8 @@ const Index = () => {
   const [AsoebiItems, setAsoebiItems] = useState([]);
   const [addedAsoebiItems, setAddedAsoebiItems] = useState([]);
   const [amount, setAmount] = useState(0);
+  const [showAsoebiCheckout, setShowAsoebiCheckout] = useState(false);
+  const [buyItems, setBuyItems] = useState('');
 
   console.log(eventAsoebis);
 
@@ -44,10 +47,12 @@ const Index = () => {
           setAsoebiItems,
           setData,
           setAmount,
+          setBuyItems,
+          setShowAsoebiCheckout, showAsoebiCheckout, setShowListDrawer,
         }}
       >
         {showListDrawer && (
-          <AsoebiListDrawer setShowListDrawer={setShowListDrawer} />
+          <AsoebiListDrawer setShowListDrawer={setShowListDrawer} setShowAsoebiCheckout={setShowAsoebiCheckout} setBuyItems={setBuyItems}  />
         )}
         <AsoebiHeader setShowListDrawer={setShowListDrawer} />
 

@@ -25,7 +25,7 @@ const DisplayCard = ({ id, data, disabled, action, text, purchased, increment })
           key={id}
         >
           <Image
-            src={data.image}
+            src={data?.image}
             w="100%"
             h="142px"
             borderRadius={10}
@@ -37,11 +37,11 @@ const DisplayCard = ({ id, data, disabled, action, text, purchased, increment })
             onClick={() => setModalOpen(true)}
           />
           <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
-            {data.title}
+            {data?.title}
           </Text>
           <Flex alignItems="center" justifyContent="space-between">
             <Text color="#27272E" fontWeight={600} fontSize={18}>
-              ₦ {increment ? data.amount + increment : data.amount}
+              ₦ {increment ? data?.amount + increment : data?.amount}
             </Text>
             <Button
               fontSize={13}
@@ -51,7 +51,7 @@ const DisplayCard = ({ id, data, disabled, action, text, purchased, increment })
               color="white"
               w="129px"
               h="40px"
-              onClick={() => (disabled | purchased ? null : action(data.id))}
+              onClick={() => (disabled | purchased ? null : action(data?.id))}
               id={id}
             >
               {disabled

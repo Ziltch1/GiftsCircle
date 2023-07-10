@@ -34,7 +34,7 @@ const WithdrawalDrawer = ({setOpenDrawer, amount}) => {
 
   console.log(newEvent);
 
-  const withdrawalAmount = amount - ((newEvent?.percentDonation * amount)/100)
+  const withdrawalAmount = amount - (((2.5 + newEvent?.percentDonation) * amount)/100)
 
   const closeModal = () => {
     setOpenDrawer(false);
@@ -79,15 +79,16 @@ const WithdrawalDrawer = ({setOpenDrawer, amount}) => {
               <DrawerContent>
                   <DrawerCloseButton fontSize={20} m='2' onClick={closeModal} />
 
-                  <DrawerHeader mt='3'>
+                  <DrawerHeader mt='1'>
                       <Heading fontWeight="medium" fontSize="25px" textAlign='center' mb='3'>
                           Withdraw Your Fundraising
                       </Heading>
-                      <Text textAlign='center' fontSize={14.5}>Note: {newEvent?.percentDonation}% has been removed from the fundraising for charity</Text>
+                      <Text textAlign='center' fontSize={14} mb='2'>Note: {newEvent?.percentDonation}% has been removed from the fundraising for charity as indicated by you.</Text>
+                      <Text textAlign='center' fontSize={14}>Note: 2.5% has been removed from the fundraising for service charge.</Text>
                   </DrawerHeader>
 
                   <FormControl isRequired>
-                      <DrawerBody mt="5" maxW='500px' mx='auto' overflow='auto'>
+                      <DrawerBody mt="3" maxW='500px' mx='auto' overflow='auto'>
                           <Box fontSize={'12px'} mb="5">
                               <FormLabel fontSize={'13px'} fontWeight="semibold">
                                   Full Name
@@ -136,11 +137,16 @@ const WithdrawalDrawer = ({setOpenDrawer, amount}) => {
                                   Enter Account number
                               </FormLabel>
                               <Input
-                                  type="number"
+                                  type='text'
+                                  pattern="[0-9]*"
                                   color="#000"
                                   fontSize="14px"
                                   placeholder="e.g 78774748828"
                                   bg="#F4F4F4"
+                                  maxLength='10'
+                                  onInput={(e) => {
+                                      e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                  }}
                                   value={accountNumber}
                                   onChange={e => setAccountNumber(e.target.value)}
                               />
@@ -148,7 +154,7 @@ const WithdrawalDrawer = ({setOpenDrawer, amount}) => {
 
                           <Box fontSize={'13px'} mb="5">
                               <FormLabel fontSize={'13px'} fontWeight="semibold">
-                                 Amount to be withdrawn
+                                 Amount to be withdrawn (₦)
                               </FormLabel>
                               <Input
                                   type="number"

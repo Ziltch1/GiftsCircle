@@ -36,7 +36,7 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout,}) => {
             ₦ {checkoutAmount}
           </Heading>
         </Flex>
-
+        <Divider />
         <Flex alignItems="center" justifyContent="space-between">
           <Text>Delivery Fee</Text>
           <Heading fontWeight="medium" fontSize={18}>

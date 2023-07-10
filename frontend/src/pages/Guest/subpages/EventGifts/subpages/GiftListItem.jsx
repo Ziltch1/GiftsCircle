@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { CartContext } from '..';
+import Counter from '../../../../../components/Counter/Counter';
 
-const GiftListItem = ({ id, item, amount }) => {
+
+const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data}) => {
   const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems } =
     useContext(CartContext);
 
@@ -56,9 +58,10 @@ const GiftListItem = ({ id, item, amount }) => {
           </Button>
         </Box>
         <Box>
-          <Text fontWeight="bold" fontSize={15}>
-            ₦ {amount}
+          <Text fontWeight="bold" fontSize={15} mb='2'>
+            ₦ {amount * data?.quantity}
           </Text>
+          <Counter quantity={data?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={data.giftItemId}  />
         </Box>
       </Flex>
     </Box>

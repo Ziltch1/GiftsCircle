@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Box,
   Image,
@@ -8,7 +8,7 @@ import {
   MenuButton,
   MenuList,
   MenuDivider,
-  MenuItem,
+  MenuItem, Text
 } from '@chakra-ui/react';
 import logo from '../assets/event-circle.svg';
 import notification from '../assets/notification.svg';
@@ -20,10 +20,27 @@ import { setToken } from '../../redux/features/auth/authSlice';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user } = useSelector(state => state.user);
+  const { user, notifications } = useSelector(state => state.user);
+  const unreadNotifications = notifications.filter(item => item.read === false);
   const [openModal, setOpenModal] = useState(false);
+  const dropdownRef = useRef(true);
+
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //       setOpenModal(false);
+  //     }
+  //   };
+
+  //   window.addEventListener('click', handleClickOutside);
+
+  //   return () => {
+  //     window.removeEventListener('click', handleClickOutside);
+  //   };
+  // }, []);
+
   const showNotification = () => {
-    setOpenModal(!openModal);
+    setOpenModal((prevState) => !prevState);
   };
 
   const LogoutHandler = () => {
@@ -46,8 +63,9 @@ const Header = () => {
 
             <Box>
               <Flex gap={4} alignItems="center">
-                <Box onClick={showNotification}>
-                  <Image src={notification} />
+                <Box onClick={showNotification} position='relative' cursor='pointer'>
+                  <Image src={notification} w='25px' h='25px' />
+                  <Box bg='red.400' color='white' textAlign='center' position='absolute' top='-5px' right='-5px' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'><Text>{unreadNotifications.length}</Text></Box>
                 </Box>
 
                 <Menu>
@@ -90,7 +108,7 @@ const Header = () => {
           </Flex>
         </Box>
       </Box>
-      {openModal && <Notification />}
+      {openModal && <Notification dropdownRef={dropdownRef} />}
     </>
   );
 };

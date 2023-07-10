@@ -16,4 +16,8 @@ const GetUserNotificationApi = id => {
   return api.get(`/user/notifications/${id}`);
 };
 
-export { CreateUserApi, GetUserApi, GetUserNotificationApi, UpdateUserApi };
+const UpdateUserNotificationApi = (id, data) => {
+  return api.put(`/user/notifications/${id}`, data);
+};
+
+export { CreateUserApi, GetUserApi, GetUserNotificationApi, UpdateUserApi, UpdateUserNotificationApi };

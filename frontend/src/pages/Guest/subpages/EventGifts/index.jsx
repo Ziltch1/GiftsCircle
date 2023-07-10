@@ -11,7 +11,7 @@ import Checkout from './Checkout';
 
 export const CartContext = createContext(null);
 
-const Index = ({setShowCheckout, setGiftDetails, setCheckContribution}) => {
+const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkContribution}) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
@@ -31,6 +31,11 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution}) => {
   const [contributionAmount, setContributionAmount] = useState(0);
   const [deliveryPercent, setDeliveryPercent] = useState(0);
   const [currentItem, setCurrentItem] = useState(null);
+  const [position, setPosition] = useState(0);
+  const [contributionGifts, setContributionGifts] = useState([]);
+  const [fullPaymentGifts, setFullPaymentGifts] = useState([]);
+  const [fullPaymentGift, setFullPaymentGift] = useState([]);
+  const [contributionGift, setContributionGift] = useState([])
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftItemId === id);
@@ -45,6 +50,17 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution}) => {
       }
     }
   };
+
+
+  useEffect(() => {
+    const newGift = giftItems.filter(x => x?.amount < 20000);
+    setFullPaymentGifts(newGift);
+  }, [eventGifts]);
+
+  useEffect(() => {
+    const newGift = giftItems.filter(x => x?.amount > 20000);
+    setContributionGifts(newGift);
+  }, [eventGifts]);
 
   const contextValue = useMemo(
     () => ({
@@ -91,6 +107,16 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution}) => {
     }
   }, [eventDeliveryDetails]);
 
+  useEffect(() => {
+    const filterGift = fullPaymentGifts?.filter(x => eventGifts.map((item) => item.giftItemId).includes(x.id))
+    setFullPaymentGift(filterGift)
+  }, [fullPaymentGifts])
+
+  useEffect(() => {
+    const filterGift = contributionGifts?.filter(x => eventGifts.map((item) => item.giftItemId).includes(x.id))
+    setContributionGift(filterGift)
+  }, [contributionGifts])
+
   return (
     <Box>
       <CartContext.Provider
@@ -119,34 +145,68 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution}) => {
           <GiftListDrawer
             setShowListDrawer={setShowListDrawer}
             isOpen={showListDrawer}
+            checkContribution={checkContribution}
           />
 
           <GiftHeader
             setOpenDrawer={setOpenDrawer}
             setShowListDrawer={setShowListDrawer}
+            position={position} 
+            setPosition={setPosition}
           />
-          <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            flexWrap="wrap"
-          >
-            {eventGifts.map(item => {
-              const giftItem = giftItems.find(x => x.id === item?.giftItemId);
-              return (
-                <DisplayCard
-                  id={item.id}
-                  data={giftItem}
-                  action={addGift}
-                  disabled={
-                    addedGiftItems.includes(item.id) ||
-                    item.amountPaid >= giftItem.amount * item.quantity
-                  }
-                  purchased={item.amountPaid >= giftItem.amount * item.quantity}
-                  text={'Purchase'}
-                />
-              );
-            })}
-          </Flex>
+
+          <Box>
+            {position === 0 && (
+              <Flex
+                alignItems="center"
+                justifyContent="space-between"
+                flexWrap="wrap"
+              >
+                {fullPaymentGift.map(item => {
+                  const giftItem = eventGifts.find(x => x.giftItemId === item.id);
+                  return (
+                    <DisplayCard
+                      id={item?.id}
+                      data={item}
+                      action={addGift}
+                      disabled={
+                        addedGiftItems.includes(giftItem?.id) ||
+                        giftItem.amountPaid >= item?.amount * giftItem?.quantity
+                      }
+                      purchased={giftItem?.amountPaid >= item?.amount * giftItem?.quantity}
+                      text={'Purchase'}
+                    />
+                  );
+                })}
+              </Flex>
+            )}
+           
+            {position === 1 && (
+              <Flex
+                alignItems="center"
+                justifyContent="space-between"
+                flexWrap="wrap"
+              >
+                {contributionGift.map(item => {
+                  const giftItem = eventGifts.find(x => x.giftItemId === item.id);
+                  return (
+                    <DisplayCard
+                      id={item?.id}
+                      data={item}
+                      action={addGift}
+                      disabled={
+                        addedGiftItems.includes(giftItem?.id) ||
+                        giftItem.amountPaid >= item?.amount * giftItem?.quantity
+                      }
+                      purchased={giftItem?.amountPaid >= item?.amount * giftItem?.quantity}
+                      text={'Purchase'}
+                    />
+                  );
+                })}
+              </Flex>
+            )}
+          </Box>
+          
         </>
       </CartContext.Provider>
     </Box>
