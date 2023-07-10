@@ -22,35 +22,37 @@ import {
   UpdateDeliveryDetailsApi,
 } from '../../../../redux/axios/apis/delivery';
 import { LGAs } from '../../../../Utils/data/LGA';
+import { setEventDeliveryDetails } from '../../../../redux/features/events/eventSlice';
 
 const DeliveryDetailsForm = ({ step, setStep }) => {
-  const { user, deliveryDetails } = useSelector(state => state.user);
+  const { user } = useSelector(state => state.user);
+  const { eventDeliveryDetails } = useSelector(state => state.event);
   const { newEvent } = useSelector(state => state.event);
   const toast = useToast();
-  
+
   const [firstName, setFirstName] = useState(
-    deliveryDetails.firstName ? deliveryDetails.firstname : ''
+    eventDeliveryDetails.firstname ? eventDeliveryDetails.firstname : ''
   );
   const [lastName, setLastName] = useState(
-    deliveryDetails.lastName ? deliveryDetails.lastname : ''
+    eventDeliveryDetails.lastname ? eventDeliveryDetails.lastname : ''
   );
   const [address, setAddress] = useState(
-    deliveryDetails.address ? deliveryDetails.address : ''
+    eventDeliveryDetails.address ? eventDeliveryDetails.address : ''
   );
   const [info, setInfo] = useState(
-    deliveryDetails.info ? deliveryDetails.info : ''
+    eventDeliveryDetails.info ? eventDeliveryDetails.info : ''
   );
   const [lga, setLga] = useState(
-    deliveryDetails.lga ? deliveryDetails.lga : ''
+    eventDeliveryDetails.lga ? eventDeliveryDetails.lga : ''
   );
   const [state, setState] = useState(
-    deliveryDetails.state ? deliveryDetails.state : ''
+    eventDeliveryDetails.state ? eventDeliveryDetails.state : ''
   );
   const [phoneNumber, setPhoneNumber] = useState(
-    deliveryDetails.tel ? deliveryDetails.tel : ''
+    eventDeliveryDetails.tel ? eventDeliveryDetails.tel : ''
   );
   const [phoneNumber2, setPhoneNumber2] = useState(
-    deliveryDetails.tel2 ? deliveryDetails.tel2 : ''
+    eventDeliveryDetails.tel2 ? eventDeliveryDetails.tel2 : ''
   );
   const [selectedLGAs, setSelectedLGAs] = useState([]);
 
@@ -61,7 +63,7 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
   const handleSubmit = async () => {
     if (address && lga && state && firstName && lastName && phoneNumber) {
       try {
-        if (deliveryDetails?.length > 0) {
+        if (eventDeliveryDetails) {
           const formBody = {
             firstname: firstName,
             lastname: lastName,
@@ -75,9 +77,9 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
 
           const res = await UpdateDeliveryDetailsApi(
             formBody,
-            deliveryDetails.id
+            eventDeliveryDetails.id
           );
-          localStorage.setItem('delivery', JSON.stringify(res.data));
+          dispatch(setEventDeliveryDetails(res.data));
           setStep(step + 1);
         } else {
           const formBody = {

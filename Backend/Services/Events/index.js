@@ -123,7 +123,7 @@ const Update1 = async (data) => {
   });
 
   if (event) {
-    let event = await prisma.event.update({
+    let updatedEvent = await prisma.event.update({
       where: {
         id: data.id,
       },
@@ -142,7 +142,7 @@ const Update1 = async (data) => {
     });
 
     await prisma.$disconnect();
-    return event;
+    return updatedEvent;
   }
   return null;
 };

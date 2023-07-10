@@ -1,34 +1,41 @@
-import { Box, Heading, Text, Image, HStack, VStack } from '@chakra-ui/react';
-import React, {useEffect, useState} from 'react';
-import avatar from '../../../components/assets/user-notification.svg';
+import { Box, Heading, Text, HStack, VStack } from '@chakra-ui/react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { UpdateUserNotificationApi } from '../../../redux/axios/apis/user';
+import { dispatch } from '../../../redux/store';
+import { GetUserNotifications } from '../../../redux/features/user/service';
 
 const Notifications = () => {
-  const { notifications } = useSelector(state => state.user);
+  const { notifications, user } = useSelector(state => state.user);
 
-  const updateNotification = async (id, data) => {
+  const updateNotification = async id => {
     try {
       const res = await UpdateUserNotificationApi(id);
-      const data = await res.data;
+      if (res.data) {
+        dispatch(GetUserNotifications(user.id));
+      }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
-    <Box fontSize={14} >
+    <Box fontSize={14}>
       <Box>
         <VStack>
           {notifications.map(item => (
-            <Box key={item.id} width="100%" onClick={() => updateNotification(item.id)} cursor='pointer'>
+            <Box
+              key={item.id}
+              width="100%"
+              onClick={() => updateNotification(item.id)}
+              cursor="pointer"
+            >
               <HStack
                 justifyContent="space-between"
                 alignItems="flex-start"
                 spacing={3}
               >
-                {/* <Image src={avatar} /> */}
                 <Box>
                   <Heading
                     fontWeight={item.read === true ? 'normal' : 'semibold'}
@@ -41,7 +48,9 @@ const Notifications = () => {
                     {moment(item.created_at).fromNow()}
                   </Text>
                 </Box>
-                {item.read === true ? null : <Box w="10px" h="10px" borderRadius="50%" bg="#009F94"></Box>}
+                {item.read === true ? null : (
+                  <Box w="10px" h="10px" borderRadius="50%" bg="#009F94"></Box>
+                )}
               </HStack>
             </Box>
           ))}
@@ -70,7 +79,6 @@ export const ReadNotifications = () => {
                 alignItems="flex-start"
                 spacing={3}
               >
-                <Image src={avatar} />
                 <Box>
                   <Heading
                     fontWeight={'medium'}
