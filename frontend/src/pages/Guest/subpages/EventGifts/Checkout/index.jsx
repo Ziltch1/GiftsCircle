@@ -69,36 +69,14 @@ const Index = ({ setShowCheckout, giftDetails, checkContribution }) => {
   }, [deliveryPercent]);
 
   return (
-    <Box w="80%" mx="auto" my="8">
+    <Box w="80%" mx="auto" my="8" h='100vh'>
       <BackButton action={handleClick} />
       <Stack
         direction={{ base: 'column', md: 'row', lg: 'row' }}
         justifyContent="space-between"
         mt="5"
       >
-        {!checkContribution === true ? 
-        <>
-          <Box bg="white" w={{ base: '100%', lg: '65%' }} borderRadius={5} p="4">
-          <DeliveryDetailsHeader />
-          <Divider />
-            <DeliveryDetailsCard
-              data={deliveryDetails}
-              setShowDeliveryForm={setShowDeliveryForm}
-              setSelectedDeliveryDetails={setSelectedDeliveryDetails}
-            />
-          </Box>
-
-          <Box w={{ base: '100%', lg: '30%' }}>
-          <CartSummary
-            amount={amount}
-            data={data}
-            deliveryAmount={deliveryAmount}
-            setShowCheckout={setShowCheckout}
-            giftDetails={giftDetails}
-          />
-          </Box>
-        </>  : 
-          <Box w={{ base: '100%', lg: '100%' }}>
+          <Box w={{ base: '100%', lg: '80%' }} mx='auto'>
             <CartSummary
               amount={amount}
               data={data}
@@ -107,7 +85,6 @@ const Index = ({ setShowCheckout, giftDetails, checkContribution }) => {
               giftDetails={giftDetails}
             />
           </Box>
-        }
       </Stack>
     </Box>
   );

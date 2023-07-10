@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -19,8 +19,10 @@ import { AddManyEventAsoebiApi } from '../../../../../redux/axios/apis/asoebi';
 import { dispatch } from '../../../../../redux/store';
 import { GetEventAsoebis } from '../../../../../redux/features/events/service';
 import { setCheckoutData } from '../../../../../redux/features/marketplace/marketSlice';
+import ConfirmationModal from './ConfirmationModal';
 
 const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) => {
+  const [showModal, setShowModal] = useState(false)
   const { onClose } = useDisclosure({ defaultIsOpen: true });
 
   const {
@@ -36,7 +38,7 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) =
     setOpenDrawer(false);
   };
 
-  const HandleSubmit = async () => {
+  const buyAsoebi = async() => {
     try {
       let res = await AddManyEventAsoebiApi(AsoebiItems);
       if (res.data) {
@@ -47,6 +49,10 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) =
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const HandleSubmit = async () => {
+    setShowModal(true)
   };
 
   const Proceed = () => {
@@ -58,6 +64,7 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) =
 
   return (
     <Box>
+      {showModal && <ConfirmationModal setShowModal={setShowModal} buyAsoebi={buyAsoebi} setOpenDrawer={setOpenDrawer} />}
       <Drawer
         isOpen={openDrawer}
         placement="right"

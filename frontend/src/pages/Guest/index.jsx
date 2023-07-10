@@ -107,7 +107,7 @@ const Index = () => {
                   />
                   <Box>
                     {navPosition === 0 && <EventDetails newEvent={event} />}
-                    {navPosition === 1 && <EventGifts event={event} setShowCheckout={setShowCheckout} setCheckContribution={setCheckContribution} />}
+                    {navPosition === 1 && <EventGifts event={event} setShowCheckout={setShowCheckout} checkContribution={checkContribution} setCheckContribution={setCheckContribution} />}
                     {navPosition === 2 && <EventMedia />}
                     {navPosition === 3 && <Asoebi event={event} />}
                     {navPosition === 4 && <Fundraising event={event} />}

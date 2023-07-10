@@ -10,7 +10,7 @@ import {
   useDisclosure,
   Box,
   Heading,
-  Flex,
+  Flex, Button
 } from '@chakra-ui/react';
 import GiftListItem from './AsoebiListItem';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
@@ -18,15 +18,16 @@ import { CartContext } from '..';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../../redux/store';
 import { BuyEventAsoebi } from '../../../../../redux/features/events/service';
+import AsoebiCheckoutDrawer from './AsoebiCheckoutDrawer';
 
-const AsoebiListDrawer = ({ setShowListDrawer }) => {
+const AsoebiListDrawer = ({ setShowListDrawer,}) => {
   const {
     AsoebiItems,
     amount,
     setAmount,
     asoebiItems,
     setAddedAsoebiItems,
-    setAsoebiItems,
+    setAsoebiItems, setShowAsoebiCheckout, showAsoebiCheckout
   } = useContext(CartContext);
   const { user } = useSelector(state => state.user);
   const { newEvent } = useSelector(state => state.event);
@@ -59,13 +60,15 @@ const AsoebiListDrawer = ({ setShowListDrawer }) => {
       };
       dispatch(BuyEventAsoebi(formData));
     });
-    setShowListDrawer(false);
     setAddedAsoebiItems([]);
     setAsoebiItems([]);
   };
 
+
+
   return (
     <Box>
+      {showAsoebiCheckout && ( <AsoebiCheckoutDrawer setShowAsoebiCheckout={setShowAsoebiCheckout} setShowListDrawer={setShowListDrawer} handleSubmit={HandleSubmit} />)}
       <Drawer
         isOpen={isOpen}
         placement="right"
@@ -97,7 +100,16 @@ const AsoebiListDrawer = ({ setShowListDrawer }) => {
             </Box>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
-            <PaymentButton amount={amount} action={HandleSubmit} />
+            <Button w='auto' 
+              color="white"
+              bg="#00BFB2"
+              fontWeight="medium"
+              fontSize="13px"
+              onClick={() => setShowAsoebiCheckout(true)}
+            >
+              Checkout {amount} 
+            </Button>
+            {/* <PaymentButton amount={amount} action={HandleSubmit} /> */}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

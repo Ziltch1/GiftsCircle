@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import GiftIcon from '../../../../assets/giftIcon.svg';
 import GiftDrawer from './Drawer';
 import { GiftContext } from '..';
+import RequestModal from './RequestModal';
 
 const GiftHeader = ({ setOpenDrawer, openDrawer }) => {
   const { GiftItems } = useContext(GiftContext);
@@ -11,6 +12,8 @@ const GiftHeader = ({ setOpenDrawer, openDrawer }) => {
   const { giftItems } = useSelector(state => state.gift);
   const [data, setData] = useState([]);
   const [totalAddedAmount, setTotalAddedAmount] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+
   const showDrawer = () => {
     setOpenDrawer(true);
   };
@@ -40,6 +43,7 @@ const GiftHeader = ({ setOpenDrawer, openDrawer }) => {
           totalAmount={totalAddedAmount}
         />
       )}
+      {showModal && <RequestModal setShowModal={setShowModal} />}
       <Flex mb="5" alignItems="center" justifyContent="space-between">
         <Box>
           <Heading mb="2" fontWeight="medium" fontSize={30}>
@@ -79,6 +83,7 @@ const GiftHeader = ({ setOpenDrawer, openDrawer }) => {
                 {data.length}
               </Text>
             </Button>
+            <Button bg='#00BFB2' color='white' h='44px' w='auto' fontSize={14} fontWeight='normal' onClick={() => setShowModal(true)}>Request for an item</Button>
           </Flex>
         </Box>
       </Flex>

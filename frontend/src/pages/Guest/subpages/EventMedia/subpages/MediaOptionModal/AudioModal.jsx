@@ -80,33 +80,55 @@ const AudioModal = ({ setShowModal, open, setData }) => {
 
             <Box textAlign="center">
               <Stack spacing={3} direction="row" justifyContent="center">
-                <Button
-                  fontWeight="medium"
-                  fontSize={14}
-                  color="white"
-                  bg="#00BFB2"
-                  onClick={cancelRecording}
-                >
-                  <FaTrash />
-                </Button>
-                <Button
-                  fontWeight="medium"
-                  fontSize={16}
-                  color="white"
-                  bg="#00BFB2"
-                  onClick={startRecording}
-                >
-                  <FaMicrophone />
-                </Button>
-                <Button
-                  fontWeight="medium"
-                  fontSize={16}
-                  color="white"
-                  bg="#00BFB2"
-                  onClick={() => SendFile()}
-                >
-                  <BiSend />
-                </Button>
+                <Box>
+                  <Button
+                    fontWeight="medium"
+                    color="white"
+                    bg="#00BFB2"
+                    onClick={cancelRecording}
+                    mb='2.5'
+                    borderRadius='50%'
+                    w='40px'
+                    h='40px'
+                    p='3.5'
+                  >
+                    <FaTrash style={{fontSize: '30px'}} />
+                  </Button>
+                  <Text>Delete</Text>
+                </Box>
+               <Box>
+                  <Button
+                    fontWeight="medium"
+                    fontSize={16}
+                    color="white"
+                    bg="#00BFB2"
+                    onClick={startRecording}
+                    mb='2.5'
+                    borderRadius='50%'
+                    w='40px'
+                    h='40px'
+                    p='3.5'
+                  >
+                    <FaMicrophone style={{ fontSize: '30px' }} />
+                  </Button>
+                  <Text>Record</Text>
+               </Box>
+               <Box>
+                  <Button
+                    fontWeight="medium"
+                    color="white"
+                    bg="#00BFB2"
+                    onClick={() => SendFile()}
+                    mb='2.5'
+                    borderRadius='50%'
+                    w='40px'
+                    h='40px'
+                    p='3.5'
+                  >
+                    <BiSend style={{ fontSize: '35px' }} />
+                  </Button>
+                  <Text>Stop/Send</Text>
+               </Box>
               </Stack>
             </Box>
           </ModalBody>

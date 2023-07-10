@@ -32,13 +32,13 @@ const DetailsDrawer = ({ data, setModalOpen, modalOpen }) => {
           <DrawerBody mt="16" mb="8">
             <Box w="600px">
               <Box border="1px solid lightgray" p="5" borderRadius={5} mb="5">
-                <Image src={data.image} display="block" mx="auto" />
+                <Image src={data?.image} display="block" mx="auto" />
               </Box>
               <Box mb="8">
                 <Flex justifyContent="space-between">
                   <Box w="140px" h="129px" borderRadius={10} bg="#F5F5F5">
                     <Image
-                      src={data.image}
+                      src={data?.image}
                       w="140px"
                       h="129px"
                       borderRadius={10}
@@ -59,7 +59,7 @@ const DetailsDrawer = ({ data, setModalOpen, modalOpen }) => {
               <Box mb="14">
                 <Flex justifyContent="space-between" alignItems="center">
                   <Heading fontSize={24} fontWeight={600}>
-                    ₦ {data.amount.toLocaleString()}
+                    ₦ {data?.amount.toLocaleString()}
                   </Heading>
                   {/* <Button
                     fontSize={13}
