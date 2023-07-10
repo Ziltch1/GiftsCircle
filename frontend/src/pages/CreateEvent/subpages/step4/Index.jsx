@@ -31,28 +31,28 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
   const toast = useToast();
 
   const [firstName, setFirstName] = useState(
-    eventDeliveryDetails.firstname ? eventDeliveryDetails.firstname : ''
+    eventDeliveryDetails?.firstname ? eventDeliveryDetails?.firstname : ''
   );
   const [lastName, setLastName] = useState(
-    eventDeliveryDetails.lastname ? eventDeliveryDetails.lastname : ''
+    eventDeliveryDetails?.lastname ? eventDeliveryDetails?.lastname : ''
   );
   const [address, setAddress] = useState(
-    eventDeliveryDetails.address ? eventDeliveryDetails.address : ''
+    eventDeliveryDetails?.address ? eventDeliveryDetails?.address : ''
   );
   const [info, setInfo] = useState(
-    eventDeliveryDetails.info ? eventDeliveryDetails.info : ''
+    eventDeliveryDetails?.info ? eventDeliveryDetails?.info : ''
   );
   const [lga, setLga] = useState(
-    eventDeliveryDetails.lga ? eventDeliveryDetails.lga : ''
+    eventDeliveryDetails?.lga ? eventDeliveryDetails?.lga : ''
   );
   const [state, setState] = useState(
-    eventDeliveryDetails.state ? eventDeliveryDetails.state : ''
+    eventDeliveryDetails?.state ? eventDeliveryDetails?.state : ''
   );
   const [phoneNumber, setPhoneNumber] = useState(
-    eventDeliveryDetails.tel ? eventDeliveryDetails.tel : ''
+    eventDeliveryDetails?.tel ? eventDeliveryDetails?.tel : ''
   );
   const [phoneNumber2, setPhoneNumber2] = useState(
-    eventDeliveryDetails.tel2 ? eventDeliveryDetails.tel2 : ''
+    eventDeliveryDetails?.tel2 ? eventDeliveryDetails?.tel2 : ''
   );
   const [selectedLGAs, setSelectedLGAs] = useState([]);
 
@@ -77,7 +77,7 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
 
           const res = await UpdateDeliveryDetailsApi(
             formBody,
-            eventDeliveryDetails.id
+            eventDeliveryDetails?.id
           );
           dispatch(setEventDeliveryDetails(res.data));
           setStep(step + 1);

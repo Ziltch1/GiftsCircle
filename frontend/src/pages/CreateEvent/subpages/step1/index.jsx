@@ -80,7 +80,7 @@ const BasicForm = ({ step, setStep }) => {
             end_time: endTime,
             timezone: '(GMT + 1:00) West Central Africa',
             userId: user.id,
-            coHost: coHost,
+            coHost: coHost === 'Yes' ? true : false,
           };
           const res = await CreateEventApi1(formBody);
           localStorage.setItem('newEvent', JSON.stringify(res.data));
@@ -173,8 +173,8 @@ const BasicForm = ({ step, setStep }) => {
                   _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setCoHost(e.target.value)}
                 >
-                  <option value={true}>Yes</option>
-                  <option value={false}>No</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                 </Select>
               </Box>
 
