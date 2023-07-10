@@ -117,6 +117,7 @@ const Create = async (data, url) => {
       userId: event.user_id,
       type: "MEDIA",
       message: message,
+      referenceEvent: event.id,
     },
   });
 
@@ -126,6 +127,7 @@ const Create = async (data, url) => {
       userId: data.userId,
       type: "MEDIA",
       message: guestMessage,
+      referenceEvent: event.id,
     },
   });
 
@@ -166,6 +168,7 @@ const CreateComplimentaryMessage = async (data) => {
       userId: event.user_id,
       type: "MEDIA",
       message: message,
+      referenceEvent: event.id,
     },
   });
 
@@ -175,6 +178,7 @@ const CreateComplimentaryMessage = async (data) => {
       userId: data.userId,
       type: "MEDIA",
       message: guestMessage,
+      referenceEvent: event.id,
     },
   });
 
