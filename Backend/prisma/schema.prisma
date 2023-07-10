@@ -366,19 +366,20 @@ model ComplimentaryMessage {
 }
 
 model Notifications {
-  id         String       @id @default(uuid())
-  type       NOTIFICATION
-  author     user         @relation(fields: [userId], references: [id])
-  userId     String       @db.VarChar(255)
-  eventId    String?      @db.VarChar
-  created_at DateTime     @default(now())
-  read       Boolean      @default(false)
-  message    String       @db.VarChar
-  updated_at DateTime?    @updatedAt
-  deleted_at DateTime?
-  created_by String?      @db.VarChar(255)
-  updated_by String?      @db.VarChar(255)
-  deleted_by String?      @db.VarChar(255)
+  id             String       @id @default(uuid())
+  type           NOTIFICATION
+  author         user         @relation(fields: [userId], references: [id])
+  userId         String       @db.VarChar(255)
+  eventId        String?      @db.VarChar
+  created_at     DateTime     @default(now())
+  referenceEvent String?
+  read           Boolean      @default(false)
+  message        String       @db.VarChar
+  updated_at     DateTime?    @updatedAt
+  deleted_at     DateTime?
+  created_by     String?      @db.VarChar(255)
+  updated_by     String?      @db.VarChar(255)
+  deleted_by     String?      @db.VarChar(255)
 }
 
 enum Status {

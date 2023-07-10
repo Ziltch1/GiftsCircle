@@ -164,7 +164,6 @@ const Update2 = async (data, image) => {
         descSummary: data.desc_summary,
         summary: data.summary,
         updated_at: new Date(Date.now()),
-
       },
     });
 
@@ -195,7 +194,7 @@ const Update3 = async (data) => {
         published: data.published,
         percentDonation: data.percentDonation,
         applyDonation: data.applyDonation,
-        updated_at: new Date(Date.now())
+        updated_at: new Date(Date.now()),
       },
     });
     if (data.published) {
@@ -205,6 +204,7 @@ const Update3 = async (data) => {
           userId: event.user_id,
           type: "EVENTCREATION",
           message: message,
+          referenceEvent: event.id,
         },
       });
       SendEventPublishEmail(user.email, user.firstname, event);
@@ -216,6 +216,7 @@ const Update3 = async (data) => {
         userId: event.user_id,
         type: "EVENTEDIT",
         message: message,
+        referenceEvent: event.id,
       },
     });
     await prisma.$disconnect();
@@ -239,8 +240,9 @@ const DeleteEvent = async (id) => {
   const notification = await prisma.notifications.create({
     data: {
       userId: event.user_id,
-      type: "EVENTCREATION",
+      type: "EVENTDELETION",
       message: message,
+      referenceEvent: event.id,
     },
   });
 
@@ -292,6 +294,7 @@ const AddGuest = async (data) => {
             userId: event.user_id,
             type: "GUESTJOIN",
             message: message,
+            referenceEvent: event.id,
           },
         });
 

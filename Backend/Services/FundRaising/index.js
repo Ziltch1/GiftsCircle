@@ -47,6 +47,7 @@ const Create = async (data, image) => {
         userId: event.user_id,
         type: "FUNDRAISING",
         message: message,
+        referenceEvent: event.id,
       },
     });
 
@@ -142,6 +143,7 @@ const Donate = async (data) => {
         userId: event.user_id,
         type: "FUNDRAISING",
         message: message,
+        referenceEvent: event.id,
       },
     });
 
@@ -151,6 +153,7 @@ const Donate = async (data) => {
         userId: data.userId,
         type: "FUNDRAISING",
         message: guestMessage,
+        referenceEvent: event.id,
       },
     });
     await prisma.$disconnect();

@@ -30,16 +30,6 @@ const GetEventAsoebi = async (id) => {
   return asoebis;
 };
 
-// const GetUserPurchasedGifts = async (id) => {
-//   const gifts = await prisma.gift.findMany({
-//     where: {
-//       purchasedBy: id,
-//     },
-//   });
-//   await prisma.$disconnect();
-//   return gifts;
-// };
-
 const Create = async (data) => {
   let id = uuidv4();
   let Data = await prisma.asoebi.create({
@@ -77,6 +67,7 @@ const CreateMany = async (data) => {
       userId: data.userId,
       type: "ASOEBI_ADDITION",
       message: message,
+      referenceEvent: data.eventId,
     },
   });
   await prisma.$disconnect();
@@ -138,6 +129,7 @@ const Buy = async (data) => {
         userId: event.user_id,
         type: "PURCHASE",
         message: message,
+        referenceEvent: event.id,
       },
     });
 

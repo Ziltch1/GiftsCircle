@@ -166,7 +166,7 @@ const EnableContribution = async (data, id) => {
       },
       data: {
         enableContribution: true,
-        updated_at: new Date(Date.now())
+        updated_at: new Date(Date.now()),
       },
     });
 
@@ -191,7 +191,7 @@ const Buy = async (data) => {
         status: ele.status,
         complimentaryGift: ele.complimentaryGift,
         amountPaid: ele.amountPaid + ele.amount,
-        updated_at: new Date(Date.now())
+        updated_at: new Date(Date.now()),
       },
     });
   });
@@ -222,6 +222,7 @@ const Buy = async (data) => {
       userId: event.user_id,
       type: "PURCHASE",
       message: message,
+      referenceEvent: event.id,
     },
   });
 
@@ -231,6 +232,7 @@ const Buy = async (data) => {
       userId: data[0].userId,
       type: "PURCHASE",
       message: guestMessage,
+      referenceEvent: event.id,
     },
   });
   await prisma.$disconnect();
