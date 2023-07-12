@@ -12,11 +12,13 @@ const PurchasedBy = ({ events }) => {
       let data = events.filter(x => x.user_id !== user.id);
       setData(data);
     }
-  }, [, user]);
+  }, [user]);
+
+  console.log(events, data);
 
   return (
     <Box>
-      {events?.length < 1 ? (
+      {data?.length < 1 ? (
         <Box
           textAlign="center"
           w="100%"
@@ -30,7 +32,7 @@ const PurchasedBy = ({ events }) => {
               Gift list is empty
             </Heading>
             <Text color="#8C8C8C" fontSize={16}>
-              This is where you will see if any gift has been purchased for you
+              This is where you will see if any gift has been purchased by you
             </Text>
           </Box>
         </Box>

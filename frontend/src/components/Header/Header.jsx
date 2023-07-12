@@ -17,27 +17,56 @@ import { Link, useNavigate } from 'react-router-dom';
 import Notification from '../Notification';
 import { dispatch } from '../../redux/store';
 import { setToken } from '../../redux/features/auth/authSlice';
+import { GetUserNotificationApi } from '../../redux/axios/apis/user';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, notifications } = useSelector(state => state.user);
-  const unreadNotifications = notifications.filter(item => item.read === false);
+  const { user } = useSelector(state => state.user);
   const [openModal, setOpenModal] = useState(false);
-  const dropdownRef = useRef(true);
+  const [notifications, setNotifications] = useState([]);
+  const [notificationLength, setNotificationLength] = useState(0);
+  const dropdownRef = useRef(null);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       setOpenModal(false);
-  //     }
-  //   };
+  const getUserNotifications = async () => {
+    try {
+      const res = await GetUserNotificationApi(user.id);
+      const data = await res.data;
+      setNotifications(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  //   window.addEventListener('click', handleClickOutside);
+  useEffect(() => {
+    getUserNotifications();
+  }, [])
 
-  //   return () => {
-  //     window.removeEventListener('click', handleClickOutside);
-  //   };
-  // }, []);
+
+  const useOutsideClick = (ref, callback) => {
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+          callback();
+        }
+      };
+
+      document.addEventListener('click', handleClickOutside);
+
+      return () => {
+        document.removeEventListener('click', handleClickOutside);
+      };
+    }, [ref, callback]);
+  };
+
+
+  useOutsideClick(dropdownRef, () => {
+    setOpenModal(false);
+  });
+
+  useEffect(() => {
+    const unreadNotifications = notifications?.filter(item => item.read === false).length;
+    setNotificationLength(unreadNotifications);
+  }, [])
 
   const showNotification = () => {
     setOpenModal((prevState) => !prevState);
@@ -52,6 +81,13 @@ const Header = () => {
 
   return (
     <>
+      {openModal && 
+      <Notification 
+        notifications={notifications} 
+        setNotifications={setNotifications} 
+        setNotificationLength={setNotificationLength} 
+      />}
+
       <Box bg="#CEDBE6" p="3" w="100%">
         <Box w="90%" mx="auto">
           <Flex justifyContent={'space-between'}>
@@ -63,9 +99,11 @@ const Header = () => {
 
             <Box>
               <Flex gap={4} alignItems="center">
-                <Box onClick={showNotification} position='relative' cursor='pointer'>
+                <Box ref={dropdownRef} onClick={showNotification} position='relative' cursor='pointer'>
                   <Image src={notification} w='25px' h='25px' />
-                  <Box bg='red.400' color='white' textAlign='center' position='absolute' top='-5px' right='-5px' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'><Text>{unreadNotifications.length}</Text></Box>
+                  <Box bg='red.400' color='white' textAlign='center' position='absolute' top='-5px' right='-5px' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'>
+                    <Text>{notificationLength}</Text>
+                  </Box>
                 </Box>
 
                 <Menu>
@@ -108,7 +146,6 @@ const Header = () => {
           </Flex>
         </Box>
       </Box>
-      {openModal && <Notification dropdownRef={dropdownRef} />}
     </>
   );
 };

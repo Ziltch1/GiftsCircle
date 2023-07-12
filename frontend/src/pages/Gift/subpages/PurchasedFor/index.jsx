@@ -16,7 +16,7 @@ const PurchasedFor = ({ events }) => {
 
   return (
     <Box>
-      {events?.length < 1 ? (
+      {data?.length < 1 ? (
         <Box
           textAlign="center"
           w="100%"
