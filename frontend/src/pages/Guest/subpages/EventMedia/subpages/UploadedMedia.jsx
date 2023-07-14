@@ -34,9 +34,8 @@ const UploadedMedia = () => {
       py="5"
       px="8"
       overflowY="auto"
-      // display="flex"
-      // justifyContent={Data.length > 0 ? 'space-between' : 'center'}
-      // alignItems="center"
+      overflowX='visible'
+      // zIndex='-2'
     >
       <LoadingModal setShowModal={setShowModal} open={modalOpen} />
       {images.length > 0 ? (
@@ -65,6 +64,7 @@ const UploadedMedia = () => {
           <Flex
             alignItems="center"
             gap="28px"
+            overflowX='visible'
             justifyContent="center"
             flexWrap="wrap"
           >

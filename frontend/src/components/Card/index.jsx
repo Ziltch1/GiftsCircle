@@ -1,10 +1,12 @@
- import { Box, Flex, Button, Text, Image } from '@chakra-ui/react';
+ import { Box, Flex, Button, Text, Image, Progress } from '@chakra-ui/react';
 import DetailsDrawer from './component/Details';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-const DisplayCard = ({ id, data, disabled, action, text, purchased, increment }) => {
+const DisplayCard = ({ id, data, disabled, action, text, purchased, increment, contribute, amountPaid }) => {
   const [modalOpen, setModalOpen] = useState(false);
-
+  const percentagePaid = ((amountPaid / data?.amount) * 100);
+  
   return (
     <>
       <Flex>
@@ -39,7 +41,7 @@ const DisplayCard = ({ id, data, disabled, action, text, purchased, increment })
           <Text fontSize={14} fontWeight={400} mb="2" color="#383838">
             {data?.title}
           </Text>
-          <Flex alignItems="center" justifyContent="space-between">
+          <Flex alignItems="center" justifyContent="space-between" mb='3'>
             <Text color="#27272E" fontWeight={600} fontSize={18}>
               ₦ {increment ? data?.amount + increment : data?.amount}
             </Text>
@@ -63,6 +65,16 @@ const DisplayCard = ({ id, data, disabled, action, text, purchased, increment })
                 : text}
             </Button>
           </Flex>
+
+          {contribute && 
+            <>
+              <Progress colorScheme='teal' borderRadius={12} hasStripe value={percentagePaid} mb='2' />
+              <Flex justifyContent='space-between'>
+                <Text fontSize={14}>₦{amountPaid}</Text>
+                <Text fontSize={14}>₦{data?.amount}</Text>
+              </Flex>
+            </>
+          }
         </Box>
       </Flex>
     </>

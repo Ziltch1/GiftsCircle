@@ -1,19 +1,20 @@
 import { Box, Heading, Text, Divider, Stack, Flex } from '@chakra-ui/react';
-import React, { useContext } from 'react';
-// import { dispatch } from '../../../../redux/store';
-// import { GetUserMarketItems } from '../../../../redux/features/marketplace/service';
-// import { setCheckoutData } from '../../../../redux/features/marketplace/marketSlice';
-// import { BuyItemsApi } from '../../../../redux/axios/apis/marketPlace';
+import React from 'react';
 import PaymentButton from '../../../../../../components/Buttons/PaymentButton';
-import { CheckoutContext } from '../../../..';
+import { dispatch } from '../../../../../../redux/store';
+import { GetUserMarketItems } from '../../../../../../redux/features/marketplace/service';
+import { setCheckoutData } from '../../../../../../redux/features/marketplace/marketSlice';
+import { BuyItemsApi } from '../../../../../../redux/axios/apis/marketPlace';
 
-const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout,}) => {
+const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout, handleSubmit, cartLength }) => {
   
-  const {checkoutAmount, cartLength, deliveryFee} = useContext(CheckoutContext);
-
   const HandleSubmit = async () => {
-    await setShowCheckout(false);
-    // if (cartLength?.length > 0) {
+    try {
+      await handleSubmit();
+    } catch (error) {
+      console.log(error);
+    }
+    // if (data?.length > 0) {
     //   const res = await BuyItemsApi(data);
     //   if (res.data) {
     //     dispatch(GetUserMarketItems(data[0].userId));
@@ -33,29 +34,28 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout,}) => {
         <Flex alignItems="center" justifyContent="space-between">
           <Text>{`Item's total (${cartLength})`}</Text>
           <Heading fontWeight="medium" fontSize={18}>
-            ₦ {checkoutAmount}
+            ₦ {amount}
           </Heading>
         </Flex>
-        <Divider />
+
         <Flex alignItems="center" justifyContent="space-between">
           <Text>Delivery Fee</Text>
           <Heading fontWeight="medium" fontSize={18}>
-            ₦ {deliveryFee}
+            ₦ {deliveryAmount}
           </Heading>
         </Flex>
         <Divider />
         <Flex alignItems="center" justifyContent="space-between">
           <Text>Total</Text>
           <Heading fontWeight="medium" fontSize={18}>
-            ₦ {checkoutAmount + deliveryFee}
+            ₦ {amount + deliveryAmount}
           </Heading>
         </Flex>
         <Divider />
 
         {/* {deliveryAmount !== 0 && ( */}
           <PaymentButton
-            amount={checkoutAmount + deliveryFee}
-            // amount={amount + deliveryAmount}
+            amount={amount + deliveryAmount}
             action={HandleSubmit}
           />
         {/* )} */}

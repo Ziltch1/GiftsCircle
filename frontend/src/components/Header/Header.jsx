@@ -8,52 +8,62 @@ import {
   MenuButton,
   MenuList,
   MenuDivider,
-  MenuItem,
-  Text,
+  MenuItem, Button, Heading,
+  Text, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, PopoverCloseButton, PopoverHeader, HStack, VStack
 } from '@chakra-ui/react';
 import logo from '../assets/event-circle.svg';
 import notification from '../assets/notification.svg';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import Notification from '../Notification';
 import { dispatch } from '../../redux/store';
 import { setToken } from '../../redux/features/auth/authSlice';
+import { GetUserNotificationApi, UpdateUserNotificationApi } from '../../redux/axios/apis/user';
 import { SocketContext } from '../../Layouts/DashBoardLayout';
+import { FiMoreHorizontal } from 'react-icons/fi'
+import moment from 'moment';
 
 const Header = () => {
   const navigate = useNavigate();
   const { user } = useSelector(state => state.user);
   const [openModal, setOpenModal] = useState(false);
-  const dropdownRef = useRef(true);
+  const [notifications, setNotifications] = useState([]);
+  const [notificationLength, setNotificationLength] = useState(0);
+  const dropdownRef = useRef(null);
   const { Notifications } = useContext(SocketContext);
   const [unreadNotifications, setUnReadNotifications] = useState([]);
-
-  useEffect(() => {
-    if (Notifications) {
-      const data = Notifications.filter(
-        item => item.read === false
-      );
-      setUnReadNotifications(data)
-    }
-  }, [Notifications]);
+  const options = ['All', 'Unread'];
+  const [position, setPosition] = useState(0);
 
   // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       setOpenModal(false);
-  //     }
-  //   };
+  //   if (Notifications) {
+  //     const data = Notifications.filter(
+  //       item => item.read === false
+  //     );
+  //     setUnReadNotifications(data)
+  //   }
+  // }, [Notifications]);
 
-  //   window.addEventListener('click', handleClickOutside);
+  const getUserNotifications = async () => {
+    try {
+      const res = await GetUserNotificationApi(user.id);
+      const data = await res.data;
+      setNotifications(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  //   return () => {
-  //     window.removeEventListener('click', handleClickOutside);
-  //   };
-  // }, []);
+  useEffect(() => {
+    getUserNotifications();
+  }, [])
 
-  const showNotification = () => {
-    setOpenModal(prevState => !prevState);
-  };
+  console.log(notifications);
+
+  useEffect(() => {
+    const unreadNotifications = notifications?.filter(item => item.read === false).length;
+    setNotificationLength(unreadNotifications);
+  }, [])
+
 
   const LogoutHandler = () => {
     localStorage.clear();
@@ -61,6 +71,10 @@ const Header = () => {
     dispatch(setToken(null));
     navigate('/signin');
   };
+
+  const handleClick = (index) => {
+    setPosition(index)
+  }
 
   return (
     <>
@@ -75,30 +89,34 @@ const Header = () => {
 
             <Box>
               <Flex gap={4} alignItems="center">
-                <Box
-                  onClick={showNotification}
-                  position="relative"
-                  cursor="pointer"
-                >
-                  <Image src={notification} w="25px" h="25px" />
-                  <Box
-                    bg="red.400"
-                    color="white"
-                    textAlign="center"
-                    position="absolute"
-                    top="-5px"
-                    right="-5px"
-                    fontSize={11}
-                    w="20px"
-                    h="20px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    fontWeight="semibold"
-                    borderRadius="50%"
-                  >
-                    <Text>{unreadNotifications.length}</Text>
+                <Box>
+                  <Box bg='red.400' color='white' textAlign='center' position='absolute' top='5px' right='120px' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'>
+                    <Text>{notificationLength}</Text>
                   </Box>
+                  <Popover>
+                    <PopoverTrigger>
+                      <Image src={notification} w='25px' h='25px' />
+                    </PopoverTrigger>
+                    <PopoverContent border='none' outline='none' h='400px' overflow='auto'>
+                      <PopoverArrow />
+                      <PopoverHeader>
+                        <Box>
+                          <Box>
+                            <Flex justifyContent={'space-between'} mb='3'>
+                              <Heading fontWeight={'semibold'} fontSize='20px'>Notifications</Heading>
+                              <FiMoreHorizontal style={{ fontSize: '25px' }} />
+                            </Flex>
+                          </Box>
+                          <Box fontSize={14}>
+                            {options.map((link, index) => <Button onClick={() => handleClick(index)} bg='none' style={index === position ? { backgroundColor: '#CCF2F0', color: '#009F94' } : {}} borderRadius='50px' _hover={{ bg: '#CCF2F0', color: '#009F94' }} fontSize={14} fontWeight='medium' mr='4'>{link}</Button>)}
+                          </Box>
+                        </Box>
+                      </PopoverHeader>
+                      <PopoverBody>
+                        <NotificationList notifications={notifications} setNotifications={setNotifications} setNotificationLength={setNotificationLength} />
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
                 </Box>
 
                 <Menu>
@@ -141,9 +159,107 @@ const Header = () => {
           </Flex>
         </Box>
       </Box>
-      {openModal && <Notification dropdownRef={dropdownRef} />}
     </>
   );
 };
 
 export default Header;
+
+
+
+
+
+export const NotificationList = ({position, notifications, setNotifications, setNotificationLength}) => {
+
+  const unreadNotifications = notifications?.filter(item => item.read === false);
+
+  const updateNotification = async (id) => {
+    try {
+      const res = await UpdateUserNotificationApi(id);
+      const data = await res.data;
+      setNotificationLength((prevCount) => prevCount - 1);
+      setNotifications((prevItems) =>
+        prevItems.map((item) =>
+          item.id === id ? { ...item, read: true } : item
+        )
+      )
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <>
+    {position === 0 ? 
+          <Box fontSize={14}>
+            <Box>
+              <VStack>
+                {notifications?.map((item) => {
+                  return (
+                  <VStack>
+                  <Box key={item.id} width="100%" onClick={() => updateNotification(item.id)} cursor='pointer'>
+                    <HStack
+                      justifyContent="space-between"
+                      alignItems="flex-start"
+                      spacing={3}
+                    >
+                      <Box>
+                        <Heading
+                          fontWeight={item.read === true ? 'normal' : 'semibold'}
+                          fontSize="13px"
+                          _hover={{ textDecoration: 'underline' }}
+                        >
+                          {item.message}
+                        </Heading>
+                        <Text color="#009F94" fontWeight={'semibold'} fontSize={11}>
+                          {moment(item.created_at).fromNow()}
+                        </Text>
+                      </Box>
+                      {item.read === true ? null : (
+                        <Box w="10px" h="10px" borderRadius="50%" bg="#009F94"></Box>
+                      )}
+                    </HStack>
+                  </Box>
+                  </VStack>)
+                })}
+              </VStack>
+            </Box>
+          </Box>
+      : 
+        <Box fontSize={14}>
+          <Heading fontWeight={'semibold'} fontSize="17px" mb="4">
+            New
+          </Heading>
+          <Box>
+            <VStack spacing={3}>
+              {unreadNotifications.map(item => (
+                <Box key={item.id} width="100%" cursor='pointer' onClick={() => updateNotification(item.id)}>
+                  <HStack
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                    spacing={3}
+                  >
+                    <Box>
+                      <Heading
+                        fontWeight={item.read === true ? 'normal' : 'semibold'}
+                        fontSize="13px"
+                        mb="1"
+                        _hover={{ textDecoration: 'underline' }}
+                      >
+                        {item.message}
+                      </Heading>
+                      <Text color="#009F94" fontWeight={'semibold'} fontSize={11}>
+                        {moment(item.created_at).fromNow()}
+                      </Text>
+                    </Box>
+                    {item.read === true ? null : <Box w="10px" h="10px" borderRadius="50%" bg="#009F94"></Box>}
+                  </HStack>
+                </Box>
+              ))}
+            </VStack>
+          </Box>
+        </Box>
+      }
+    </>
+  )
+}

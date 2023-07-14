@@ -6,31 +6,44 @@ import { UpdateUserNotificationApi } from '../../../redux/axios/apis/user';
 import { dispatch } from '../../../redux/store';
 import { GetUserNotifications } from '../../../redux/features/user/service';
 
-const Notifications = () => {
-  const { notifications, user } = useSelector(state => state.user);
+const Notifications = ({notifications, setNotifications, setNotificationLength}) => {
 
-  const updateNotification = async id => {
+  const { user } = useSelector(state => state.user);
+
+  const updateNotification = async (id) => {
     try {
       const res = await UpdateUserNotificationApi(id);
-      if (res.data) {
-        dispatch(GetUserNotifications(user.id));
-      }
+      const data = await res.data;
+      setNotificationLength((prevCount) => prevCount - 1);
+      setNotifications((prevItems) =>
+        prevItems.map((item) =>
+          item.id === id ? { ...item, read: true } : item
+        )
+      )
     } catch (error) {
       console.log(error);
     }
   };
 
+  console.log(notifications);
+
+  // const updateNotification = async id => {
+  //   try {
+  //     const res = await UpdateUserNotificationApi(id);
+  //     if (res.data) {
+  //       dispatch(GetUserNotifications(user.id));
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   return (
     <Box fontSize={14}>
       <Box>
         <VStack>
-          {notifications.map(item => (
-            <Box
-              key={item.id}
-              width="100%"
-              onClick={() => updateNotification(item.id)}
-              cursor="pointer"
-            >
+          {notifications?.map(item => (
+            <Box key={item.id} width="100%" onClick={() => updateNotification(item.id)} cursor='pointer'>
               <HStack
                 justifyContent="space-between"
                 alignItems="flex-start"
@@ -62,9 +75,37 @@ const Notifications = () => {
 
 export default Notifications;
 
-export const ReadNotifications = () => {
-  const { notifications } = useSelector(state => state.user);
+
+
+export const ReadNotifications = ({ notifications, setNotifications, setNotificationLength }) => {
   const unreadNotifications = notifications.filter(item => item.read === false);
+  const { user } = useSelector(state => state.user);
+  // const updateNotification = async (id) => {
+  //   try {
+  //     const res = await UpdateUserNotificationApi(id);
+  //     const data = await res.data;
+  //     setNotificationLength((prevCount) => prevCount - 1);
+  //     setNotifications((prevItems) =>
+  //       prevItems.map((item) =>
+  //         item.id === id ? { ...item, read: true } : item
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const updateNotification = async id => {
+    try {
+      const res = await UpdateUserNotificationApi(id);
+      if (res.data) {
+        dispatch(GetUserNotifications(user.id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box fontSize={14}>
       <Heading fontWeight={'semibold'} fontSize="17px" mb="4">
@@ -73,7 +114,7 @@ export const ReadNotifications = () => {
       <Box>
         <VStack spacing={3}>
           {unreadNotifications.map(item => (
-            <Box key={item.id} width="100%">
+            <Box key={item.id} width="100%" cursor='pointer' onClick={() => updateNotification(item.id)}>
               <HStack
                 justifyContent="space-between"
                 alignItems="flex-start"
@@ -81,7 +122,7 @@ export const ReadNotifications = () => {
               >
                 <Box>
                   <Heading
-                    fontWeight={'medium'}
+                    fontWeight={item.read === true ? 'normal' : 'semibold'}
                     fontSize="13px"
                     mb="1"
                     _hover={{ textDecoration: 'underline' }}
@@ -92,7 +133,7 @@ export const ReadNotifications = () => {
                     {moment(item.created_at).fromNow()}
                   </Text>
                 </Box>
-                <Box w="10px" h="10px" borderRadius="50%" bg="#009F94"></Box>
+                {item.read === true ? null : <Box w="10px" h="10px" borderRadius="50%" bg="#009F94"></Box>}
               </HStack>
             </Box>
           ))}

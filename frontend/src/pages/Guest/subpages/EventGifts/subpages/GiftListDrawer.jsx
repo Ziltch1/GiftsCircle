@@ -78,10 +78,11 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
     let deliveryAmount = 0;
     GiftItems.forEach(ele => {
       const newData = giftItems?.find(x => x.id === ele?.giftItemId);
+
       let amount = ele.contributionAmount
         ? ele.contributionAmount
         : newData.amount;
-      giftAmount = giftAmount + amount;
+      giftAmount = giftAmount + (amount * ele.quantity);
       deliveryAmount = deliveryAmount + giftAmount * (deliveryPercent / 100);
     });
 
@@ -223,7 +224,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
                 w = 'auto'
                 h = '50px'
               >
-                Proceed to Checkout {giftAmount + complimentaryGiftAmount}
+                Proceed to Checkout {giftAmount}
               </Button>)
             }
             
