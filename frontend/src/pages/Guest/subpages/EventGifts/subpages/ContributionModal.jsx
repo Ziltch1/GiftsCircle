@@ -20,7 +20,7 @@ import { CartContext } from '..';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
 
 
-const ContributionModal = ({ setOpenModal, isOpen }) => {
+const ContributionModal = ({ setOpenModal, isOpen, }) => {
   const {
     setContributionAmount,
     contributionAmount,
@@ -30,12 +30,15 @@ const ContributionModal = ({ setOpenModal, isOpen }) => {
     GiftItems,
     setAddedGiftItems,
     setCurrentItem,
-    setCheckContribution
+    setCheckContribution, setShowPrompt, showPrompt
   } = useContext(CartContext);
   const { onClose } = useDisclosure();
   const [contribution, setContribution] = useState(false);
 
+  console.log(showPrompt);
+
   const HandleSubmit = () => {
+    setShowPrompt(true)
     if (!addedGiftItems.includes(currentItem.id)) {
       setGiftItems([...GiftItems, currentItem]);
       setAddedGiftItems([...addedGiftItems, currentItem.id]);
@@ -71,6 +74,7 @@ const ContributionModal = ({ setOpenModal, isOpen }) => {
         setAmount={setContributionAmount}
         amount={contributionAmount}
         submitHandler={HandleContributeSubmit}
+        setShowPrompt={setShowPrompt}
       />
 
       <Modal
@@ -122,16 +126,20 @@ export const ContributionAmount = ({
   isOpen,
   setOpenModal,
   submitHandler,
+  setShowPrompt
 }) => {
   const { onClose } = useDisclosure();
+
   const closeModal = () => {
     setOpenModal(false);
     setAmount(0);
   };
 
-  // const HandleSubmit = () => {
-  //   submitHandler();
-  // }
+  const openPrompt = async () => {
+    await submitHandler();
+    setShowPrompt(true)
+    // setOpenModal(false);
+  };
 
 
 
@@ -206,7 +214,7 @@ export const ContributionAmount = ({
                 fontSize={14}
                 fontWeight="medium"
                 color="white"
-                onClick={() => submitHandler()}
+                onClick={openPrompt}
               >
                 Proceed
               </Button>

@@ -130,7 +130,7 @@ const CartItem = ({ item, id }) => {
 
           {addForGuest && !eventAsoebis.includes(item) && (
             <Box mb="2">
-              <Button fontSize={14} onClick={() => setModalOpen(true)}>
+              <Button fontSize={14} bg='gray.400' onClick={() => setModalOpen(true)}>
                 Markup Asoebi?
               </Button>
             </Box>

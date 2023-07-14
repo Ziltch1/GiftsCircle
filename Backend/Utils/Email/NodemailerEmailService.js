@@ -36,7 +36,7 @@ const SendEventPublishEmail = (reciever, name, event) => {
       id: event.id,
       eventVenue: event.venue,
       guestCode: event.guestCode,
-      guestLink: `https://giftscircle.netlify.app/event/join/${event.guestCode}`,
+      guestLink: `https://giftscircle.netlify.app/event/join/${event.id}`,
       eventDate: moment(event.date).format("dddd, MMMM Do YYYY"),
       eventTime: `${event.start_time} ${
         event.start_time.split(":")[0] > 12 ? "PM" : "AM"

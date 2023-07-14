@@ -85,7 +85,8 @@ const Create = async (data) => {
   });
 
   if (user) {
-    const coHostId = data.coHost ? "" : CreateCoHostId();
+    const coHostId = data.coHost ? CreateCoHostId() : "";
+    console.log(coHostId);
     let event = await prisma.event.create({
       data: {
         id: CreateEventId(),
@@ -123,7 +124,7 @@ const Update1 = async (data) => {
   });
 
   if (event) {
-    let event = await prisma.event.update({
+    let updatedEvent = await prisma.event.update({
       where: {
         id: data.id,
       },
@@ -142,7 +143,7 @@ const Update1 = async (data) => {
     });
 
     await prisma.$disconnect();
-    return event;
+    return updatedEvent;
   }
   return null;
 };
@@ -164,7 +165,6 @@ const Update2 = async (data, image) => {
         descSummary: data.desc_summary,
         summary: data.summary,
         updated_at: new Date(Date.now()),
-
       },
     });
 
@@ -195,7 +195,7 @@ const Update3 = async (data) => {
         published: data.published,
         percentDonation: data.percentDonation,
         applyDonation: data.applyDonation,
-        updated_at: new Date(Date.now())
+        updated_at: new Date(Date.now()),
       },
     });
     if (data.published) {
@@ -205,6 +205,7 @@ const Update3 = async (data) => {
           userId: event.user_id,
           type: "EVENTCREATION",
           message: message,
+          referenceEvent: event.id,
         },
       });
       SendEventPublishEmail(user.email, user.firstname, event);
@@ -216,6 +217,7 @@ const Update3 = async (data) => {
         userId: event.user_id,
         type: "EVENTEDIT",
         message: message,
+        referenceEvent: event.id,
       },
     });
     await prisma.$disconnect();
@@ -239,8 +241,9 @@ const DeleteEvent = async (id) => {
   const notification = await prisma.notifications.create({
     data: {
       userId: event.user_id,
-      type: "EVENTCREATION",
+      type: "EVENTDELETION",
       message: message,
+      referenceEvent: event.id,
     },
   });
 
@@ -292,6 +295,7 @@ const AddGuest = async (data) => {
             userId: event.user_id,
             type: "GUESTJOIN",
             message: message,
+            referenceEvent: event.id,
           },
         });
 

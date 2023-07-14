@@ -6,7 +6,7 @@ import Counter from '../../../../../components/Counter/Counter';
 
 
 const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data}) => {
-  const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems } =
+  const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems, setAmount, setComplimentaryGiftAmount } =
     useContext(CartContext);
 
   const handleDelete = id => {
@@ -17,6 +17,10 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
     const filteredGifts = GiftItems.filter(obj => obj.id !== id);
     setGiftItems(filteredGifts);
   };
+
+  const newAmount = amount * data?.quantity;
+  setComplimentaryGiftAmount(newAmount);
+
 
   return (
     <Box

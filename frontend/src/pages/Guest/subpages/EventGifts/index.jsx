@@ -8,6 +8,8 @@ import DisplayCard from '../../../../components/Card';
 import ContributionModal from './subpages/ContributionModal';
 import { Zones } from '../../../../Utils/data/ZONES';
 import Checkout from './Checkout';
+import Prompt from './subpages/Prompt';
+
 
 export const CartContext = createContext(null);
 
@@ -36,6 +38,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [fullPaymentGifts, setFullPaymentGifts] = useState([]);
   const [fullPaymentGift, setFullPaymentGift] = useState([]);
   const [contributionGift, setContributionGift] = useState([])
+  const [showPrompt, setShowPrompt] = useState(false);
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftItemId === id);
@@ -132,14 +135,17 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
           setContributionAmount,
           setComplimentaryGiftAmount,
           setCurrentItem,
+          setShowPrompt,
           setShowCheckout,
-          setCheckContribution,
+          setCheckContribution, showPrompt
         }}
       >
         <>
+          {showPrompt && <Prompt setShowPrompt={setShowPrompt} setShowListDrawer={setShowListDrawer} setOpenDrawer={setOpenDrawer} />}
           <ContributionModal
             setOpenModal={setContributionModal}
             isOpen={contributionModal}
+            // setShowPrompt={setShowPrompt}
           />
           <ComplimentaryModal setOpenDrawer={setOpenDrawer} isOpen={openDrawer} />
           <GiftListDrawer
@@ -200,6 +206,8 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                       }
                       purchased={giftItem?.amountPaid >= item?.amount * giftItem?.quantity}
                       text={'Purchase'}
+                      contribute={giftItem.enableContribution}
+                      amountPaid={giftItem.amountPaid}
                     />
                   );
                 })}

@@ -81,9 +81,10 @@ const AsoebiDrawer = ({ openDrawer, setOpenDrawer, eventId, setShowCheckout }) =
             <Heading fontWeight="medium" fontSize="25px" mb="2">
               Asoebi List ({data.length})
             </Heading>
-            <Text fontWeight="medium" fontSize="14px">
+            <Text fontWeight="medium" fontSize="14px" mb='2'>
               Find all the asoebis you have added here...
             </Text>
+            <Text fontWeight="medium" fontSize="14px">Note: Markup price is the amount your guest will pay</Text>
           </DrawerHeader>
 
           <DrawerBody>

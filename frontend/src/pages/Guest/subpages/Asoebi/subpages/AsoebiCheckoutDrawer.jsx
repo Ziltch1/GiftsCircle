@@ -15,18 +15,17 @@ import {
 } from '@chakra-ui/react';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
 import { CartContext } from '..';
+import Checkout from '../Checkout'
+import Header from '../../../../../components/Header/Header';
+
 
 const AsoebiCheckoutDrawer = ({setShowAsoebiCheckout, setShowListDrawer, handleSubmit}) => {
     const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
     const {amount, addedAsoebiItems} = useContext(CartContext);
 
-    const closeModal = () => {
-        setShowAsoebiCheckout(false);
-    }
+    console.log(amount);
 
-    const HandleSubmit = async () => {
-        await handleSubmit();
-        setShowListDrawer(false);
+    const closeModal = () => {
         setShowAsoebiCheckout(false);
     }
   return (
@@ -36,20 +35,29 @@ const AsoebiCheckoutDrawer = ({setShowAsoebiCheckout, setShowListDrawer, handleS
           onClose={onClose}
           size="full"
           closeOnOverlayClick={false}
+          blockScrollOnMount={false}
       >
           <DrawerOverlay />
           <DrawerContent>
-              <DrawerCloseButton fontSize={20} m='2' onClick={closeModal} />
+              <Header />
+              {/* <DrawerCloseButton fontSize={20} m='2' onClick={closeModal} /> */}
 
-              <DrawerHeader mt='1'>
+              {/* <DrawerHeader mt='1'>
                   <Heading fontWeight="medium" fontSize="25px" textAlign='center' mb='3'>
                       Checkout 
                   </Heading>
-              </DrawerHeader>
+              </DrawerHeader> */}
               
-                  <DrawerBody mt="3" w='600px' mx='auto' overflow='auto'>
+                  <DrawerBody w='100%' mx='auto' overflow='auto'>
 
-                  <Box bg="white" p="4" w="100%" borderRadius={5}>
+                  <Checkout 
+                    setShowAsoebiCheckout={setShowAsoebiCheckout} 
+                    amount={amount} 
+                    buyAsoebi={handleSubmit} 
+                    showAsoebiDrawer={setShowListDrawer} 
+                    cartLength={addedAsoebiItems.length}
+                />
+                  {/* <Box bg="white" p="4" w="100%" borderRadius={5}>
                       <Stack direction="column" spacing={4}>
                           <Heading fontWeight="bold" textAlign="center" fontSize={18}>
                               Order Summary
@@ -65,7 +73,7 @@ const AsoebiCheckoutDrawer = ({setShowAsoebiCheckout, setShowListDrawer, handleS
                           <Flex alignItems="center" justifyContent="space-between">
                               <Text>Delivery Fee</Text>
                               <Heading fontWeight="medium" fontSize={18}>
-                                  {/* ₦ {deliveryAmount} */}
+                                  {deliveryAmount}
                                   0
                               </Heading>
                           </Flex>
@@ -78,14 +86,14 @@ const AsoebiCheckoutDrawer = ({setShowAsoebiCheckout, setShowListDrawer, handleS
                           </Flex>
                           <Divider />
 
-                          {/* {deliveryAmount !== 0 && ( */}
+                          {deliveryAmount !== 0 && (
                           <PaymentButton
                               amount={amount}
                               action={HandleSubmit}
                           />
-                          {/* )} */}
+                          )}
                       </Stack>
-                  </Box>
+                  </Box> */}
                       
                   </DrawerBody>
 

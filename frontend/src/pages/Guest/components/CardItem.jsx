@@ -109,6 +109,7 @@ const Card = ({ item, images, setImages }) => {
         position="relative"
         onMouseOver={() => setShowOptions(true)}
         onMouseLeave={resetOptions}
+        overflow='visible'
       >
         {type === 'IMAGE' ? (
           <Image
@@ -147,15 +148,15 @@ const Card = ({ item, images, setImages }) => {
           </>
         )}
 
-        <Box w='auto' textAlign='center' position='absolute' margin='45% auto' inset='0' opacity={showOptions ? '1' : '0'} transition='ease 0.1s'>
+        <Box w='auto' textAlign='center' position='absolute' margin='45% auto' inset='0' opacity={showOptions ? '1' : '0'} transition='ease 0.1s' zIndex='2'>
           <Stack direction='row' alignItems='flex-start' justifyContent='center'>
             <Button bg='none' _hover={{bg: 'none', cursor: 'pointer'}} onClick={(event) => deleteMedia(event,item)}><Image src={deleteIcon} w='100%' /></Button>
             <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={(event) => handleClick(event,item.url)}><Image src={downloadIcon} /></Button>
             <Button bg='none' _hover={{ bg: 'none', cursor: 'pointer' }} onClick={handleDisplay}>
-              <Stack direction='column' spacing={3} position='relative'>
+              <Stack direction='column' spacing={3} position='relative' zIndex='1' overflow='visible'>
                 <Box><Image src={optionsIcon} /></Box>
                 {displayOptions && 
-                  <Box w='300px' fontSize={15} bg='white' borderRadius={5} p='3' textAlign='left' position='absolute' top='36px' right='0' boxShadow='sm' border='1.5px solid lightgray'>
+                  <Box w='300px' fontSize={15} bg='white' borderRadius={5} p='3' textAlign='left' position='absolute' top='36px' right='0' boxShadow='sm' zIndex='4' border='1.5px solid lightgray' overflow='visible'>
                     {options.map((option, index) => {
                       return (
                         <>

@@ -41,11 +41,12 @@ const BasicForm = ({ step, setStep }) => {
   const [endTime, setEndTime] = useState(newEvent ? newEvent.endTime : '');
 
   useEffect(() => {
-    const event = JSON.parse(localStorage.getItem('newEvent'));
-    if (event) {
+    if (!newEvent) {
+      const event = JSON.parse(localStorage.getItem('newEvent'));
       dispatch(setNewEvent(event));
     }
   }, []);
+
   const toast = useToast();
   const HandleSubmit = async e => {
     if (title && hosts && category && venue && date && startTime && endTime) {
@@ -79,7 +80,7 @@ const BasicForm = ({ step, setStep }) => {
             end_time: endTime,
             timezone: '(GMT + 1:00) West Central Africa',
             userId: user.id,
-            coHost: coHost,
+            coHost: coHost === 'Yes' ? true : false,
           };
           const res = await CreateEventApi1(formBody);
           localStorage.setItem('newEvent', JSON.stringify(res.data));
@@ -106,6 +107,7 @@ const BasicForm = ({ step, setStep }) => {
   const BackAction = () => {
     setOpenModal(true);
   };
+
   return (
     <Box mt="10">
       <Box h="100%" overflow="auto" mb="12" w="750px" mx="auto">
@@ -171,8 +173,8 @@ const BasicForm = ({ step, setStep }) => {
                   _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setCoHost(e.target.value)}
                 >
-                  <option value={true}>Yes</option>
-                  <option value={false}>No</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                 </Select>
               </Box>
 

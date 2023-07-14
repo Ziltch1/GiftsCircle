@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, useToast } from '@chakra-ui/react';
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import GiftDetails from '../components/GiftDetails';
@@ -20,6 +20,7 @@ const GiftCard = ({ step, setStep }) => {
   const { newEvent } = useSelector(state => state.event);
   const [data, setData] = useState([]);
   const [currentGift, setCurrentGift] = useState(null);
+  const toast = useToast();
 
   const AddGift = id => {
     if (!addedGiftItems.includes(id)) {
@@ -36,6 +37,13 @@ const GiftCard = ({ step, setStep }) => {
       };
       setGiftItems(prev => [...prev, formBody]);
       setAddedGiftItems(prev => [...prev, id]);
+      toast({
+        description: 'Gift has been added to cart successfully',
+        status: 'success',
+        duration: 1000,
+        position: 'top-right',
+        isClosable: true,
+      });
     }
   };
 

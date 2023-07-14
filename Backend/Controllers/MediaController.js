@@ -7,7 +7,6 @@ const { upload, dataUri, dataUriMultiple } = require("../config/multer");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const {
   Create,
-  GetGuestSentMedia,
   GetEventGuestMedia,
   GetEventMediaFiles,
   Delete,
@@ -49,7 +48,10 @@ router.get(
   EnsureAuthenticated,
   async (req, res) => {
     try {
-      let data = await GetUserUploadedMedia(req.params.eventId, req.params.userId);
+      let data = await GetUserUploadedMedia(
+        req.params.eventId,
+        req.params.userId
+      );
       return res.status(200).send(data);
     } catch (err) {
       console.log(err);
@@ -134,6 +136,7 @@ router.post(
             userId: event.user_id,
             type: "MEDIA",
             message: message,
+            referenceEvent: event.id,
           },
         });
 
@@ -147,6 +150,7 @@ router.post(
             eventId: event.id,
             type: "MEDIA",
             message: message,
+            referenceEvent: event.id,
           },
         });
 
