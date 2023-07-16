@@ -32,7 +32,7 @@ const UpdateNotifications = async (id) => {
     },
     data: {
       read: true,
-      updated_at: new Date(Date.now())
+      updated_at: new Date(Date.now()),
     },
   });
   await prisma.$disconnect();
@@ -101,7 +101,7 @@ const SetPassword = async (data, type) => {
       },
       data: {
         password: hashedPassword,
-        updated_at: new Date(Date.now())
+        updated_at: new Date(Date.now()),
       },
     });
 
@@ -129,7 +129,7 @@ const ChangePassword = async (data) => {
         },
         data: {
           password: hashedPassword,
-          updated_at: new Date(Date.now())
+          updated_at: new Date(Date.now()),
         },
       });
     }
@@ -189,7 +189,7 @@ const UpdateUser = async (data, id) => {
         placeOfResidence: data.residence
           ? data.residence
           : user.placeOfResidence,
-          updated_at: new Date(Date.now())
+        updated_at: new Date(Date.now()),
       },
     });
     const message = `Your profile has been updated`;
