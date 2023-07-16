@@ -475,6 +475,33 @@
         }
       }
     },
+    "/event/{id}/cohosts": {
+      "get": {
+        "description": "",
+        "tags": ["Event"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/event/": {
       "post": {
         "description": "",
@@ -569,6 +596,34 @@
             "required": true,
             "type": "array",
             "schema": { "$ref": "#/definitions/schema/AddGuest" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/event/addCoHost": {
+      "post": {
+        "description": "",
+        "tags": ["Event"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/AddCoHost" }
           }
         ],
         "security": [
@@ -2428,9 +2483,22 @@
           "guestCode": {
             "type": "string",
             "required": true
+          }
+        }
+      },
+      "AddCoHost": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "required": true
           },
-          "coHost": {
-            "type": "boolean",
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+          "coHostCode": {
+            "type": "string",
             "required": true
           }
         }

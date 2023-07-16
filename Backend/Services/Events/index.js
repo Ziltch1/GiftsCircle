@@ -268,6 +268,7 @@ const AddGuest = async (data) => {
       id: data.eventId,
     },
   });
+
   if (event) {
     if (event.guestCode === data.guestCode) {
       if (data.userId !== event.user_id) {
@@ -285,7 +286,7 @@ const AddGuest = async (data) => {
                 id: data.userId,
               },
             },
-            coHost: data.coHost,
+            coHost: false,
           },
         });
 
@@ -307,9 +308,72 @@ const AddGuest = async (data) => {
     } else {
       return ResponseDTO("Failed", "Incorrect Guest Code");
     }
+  } else {
+    return ResponseDTO("Failed", "Event not found");
+  }
+};
+
+const AddCoHost = async (data) => {
+  const cohost = await prisma.guests.findFirst({
+    where: {
+      eventId: data.eventId,
+      userId: data.userId,
+      coHost: true,
+    },
+  });
+
+  if (cohost) {
+    return ResponseDTO("Success", cohost);
   }
 
-  return null;
+  const event = await prisma.event.findUnique({
+    where: {
+      id: data.eventId,
+    },
+  });
+
+  if (event) {
+    if (event.coHostCode === data.coHostCode) {
+      if (data.userId !== event.user_id) {
+        const id = uuidv4();
+        let Data = await prisma.guests.create({
+          data: {
+            id: id,
+            event: {
+              connect: {
+                id: data.eventId,
+              },
+            },
+            user: {
+              connect: {
+                id: data.userId,
+              },
+            },
+            coHost: true,
+          },
+        });
+
+        const message = `Event: Your Co Host joined ${event.title} event`;
+        const notification = await prisma.notifications.create({
+          data: {
+            userId: event.user_id,
+            type: "COHOSTJOIN",
+            message: message,
+            referenceEvent: event.id,
+          },
+        });
+
+        await prisma.$disconnect();
+        return ResponseDTO("Success", { Data, notification });
+      } else {
+        return ResponseDTO("Failed", "Event Owner can't join as CoHost");
+      }
+    } else {
+      return ResponseDTO("Failed", "Incorrect CoHost Code");
+    }
+  } else {
+    return ResponseDTO("Failed", "Event not found");
+  }
 };
 
 const GetEventGuests = async (id) => {
@@ -339,6 +403,34 @@ const GetEventGuests = async (id) => {
   }
 };
 
+const GetEventCoHosts = async (id) => {
+  const event = await prisma.event.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  if (event) {
+    const data = await prisma.guests.findMany({
+      where: {
+        eventId: id,
+        coHost: true,
+      },
+      include: {
+        user: {
+          select: {
+            firstname: true,
+            lastname: true,
+          },
+        },
+      },
+    });
+    return data;
+  } else {
+    return null;
+  }
+};
+
 module.exports = {
   Create,
   Update1,
@@ -350,4 +442,6 @@ module.exports = {
   DeleteEvent,
   AddGuest,
   GetEventGuests,
+  AddCoHost,
+  GetEventCoHosts,
 };
