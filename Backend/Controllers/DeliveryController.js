@@ -8,6 +8,9 @@ const {
   Delete,
   Update,
   GetEventDeliveryDetails,
+  GetDeliveryTrans,
+  GetUserDeliveryTrans,
+  CreateDeliveryTrans,
 } = require("../Services/Delivery");
 const EnsureAuthenticated = require("../Utils/EnsureAuthenticated");
 const prisma = new PrismaClient();
@@ -34,6 +37,28 @@ router.get("/EventDetails/:id", async (req, res) => {
   }
 });
 
+router.get("/deliveryTrans/:id", async (req, res) => {
+  try {
+    let data = await GetDeliveryTrans(req.params.id);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.get("/:userId/deliveryTrans", async (req, res) => {
+  try {
+    let data = await GetUserDeliveryTrans(req.params.userId);
+    return res.status(200).send(data);
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
 router.post("/create", EnsureAuthenticated, async (req, res) => {
   try {
     let data = await Create(req.body);
@@ -43,6 +68,20 @@ router.post("/create", EnsureAuthenticated, async (req, res) => {
     return res
       .status(400)
       .send(ResponseDTO("Failed", "Delivery Details already Exists"));
+  } catch (err) {
+    console.log(err);
+    await prisma.$disconnect();
+    return res.status(400).send(ResponseDTO("Failed", "Request Failed"));
+  }
+});
+
+router.post("/deliveryTrans", EnsureAuthenticated, async (req, res) => {
+  try {
+    let data = await CreateDeliveryTrans(req.body);
+    if (data) {
+      req.io.emit(data.notification.userId, data.notification);
+      return res.status(200).send(data.Data);
+    }
   } catch (err) {
     console.log(err);
     await prisma.$disconnect();
