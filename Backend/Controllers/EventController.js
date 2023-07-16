@@ -201,7 +201,6 @@ router.post("/addGuest", EnsureAuthenticated, async (req, res) => {
 router.post("/addCoHost", EnsureAuthenticated, async (req, res) => {
   try {
     const data = await AddCoHost(req.body);
-    console.log(data);
     if (data.status === "Failed") {
       return res.status(400).send(ResponseDTO("Failed", data.message));
     }

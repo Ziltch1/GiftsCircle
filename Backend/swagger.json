@@ -1095,6 +1095,61 @@
         }
       }
     },
+    "/delivery/deliveryTrans/{id}": {
+      "get": {
+        "description": "",
+        "tags": ["Delivery"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/delivery/{userId}/deliveryTrans": {
+      "get": {
+        "description": "",
+        "tags": ["Delivery"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+
     "/delivery/create": {
       "post": {
         "description": "",
@@ -1106,6 +1161,34 @@
             "required": true,
             "type": "array",
             "schema": { "$ref": "#/definitions/schema/Delivery" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/delivery/deliveryTrans": {
+      "post": {
+        "description": "",
+        "tags": ["Delivery"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/DeliveryTrans" }
           }
         ],
         "security": [
@@ -2599,6 +2682,23 @@
           },
           "userId": {
             "type": "string",
+            "required": true
+          }
+        }
+      },
+      "DeliveryTrans": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "type": "string",
+            "required": true
+          },
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+          "deliveryFee": {
+            "type": "number",
             "required": true
           }
         }
