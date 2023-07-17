@@ -34,7 +34,7 @@ const Index = () => {
               <Search />
               <Box>
                 {navPosition === 0 && <OpenDeliveries deliveries={deliveries} />}
-                {navPosition === 1 && <ClosedDeliveries />}
+                {navPosition === 1 && <ClosedDeliveries deliveries={deliveries} />}
               </Box>
         </Box>
     </Box>

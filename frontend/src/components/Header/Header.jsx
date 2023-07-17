@@ -34,14 +34,6 @@ const Header = () => {
   const options = ['All', 'Unread'];
   const [position, setPosition] = useState(0);
 
-  // useEffect(() => {
-  //   if (Notifications) {
-  //     const data = Notifications.filter(
-  //       item => item.read === false
-  //     );
-  //     setUnReadNotifications(data)
-  //   }
-  // }, [Notifications]);
 
   const getUserNotifications = async () => {
     try {
@@ -60,8 +52,9 @@ const Header = () => {
   useEffect(() => {
     const unreadNotifications = notifications?.filter(item => item.read !== true);
     setNotificationLength(unreadNotifications);
-  }, [])
+  }, [notifications])
 
+  console.log(notificationLength)
 
   const LogoutHandler = () => {
     localStorage.clear();
@@ -174,23 +167,24 @@ export const NotificationList = ({position, notifications, setNotifications, set
   const unreadNotifications = notifications?.filter(item => item.read === false);
   const navigate = useNavigate();
 
-  const updateNotification = async (item) => {
+  const updateNotification = async (k) => {
+     if (k.referenceEvent !== null) {
+        navigate(`/dashboard/event_details/${k?.referenceEvent}`)
+      }
     try {
-      const res = await UpdateUserNotificationApi(item.id);
+      const res = await UpdateUserNotificationApi(k.id);
       const data = await res.data;
       setNotificationLength((prevCount) => prevCount - 1);
       setNotifications((prevItems) =>
-        prevItems.map((key) =>
-          key.id === item.id ? { ...item, read: true } : item
+        prevItems.map((item) =>
+          item.id === k.id ? { ...item, read: true } : item
         )
       )
-      if(item.referenceEvent){
-        navigate(`/dashboard/event_details/${item?.referenceEvent}`)
-      }
     } catch (error) {
       console.log(error);
     }
   };
+
 
   return (
     <>
@@ -200,7 +194,7 @@ export const NotificationList = ({position, notifications, setNotifications, set
               <VStack>
                 {notifications?.map((item) => {
                   return (
-                  <Box key={item.id} width="100%" onClick={() => updateNotification(item)} cursor='pointer'>
+                  <Box key={item.id} width="100%" onClick={() => updateNotification(item)} cursor='pointer' >
                     <HStack
                       justifyContent="space-between"
                       alignItems="flex-start"
