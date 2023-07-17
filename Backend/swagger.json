@@ -475,6 +475,33 @@
         }
       }
     },
+    "/event/{id}/cohosts": {
+      "get": {
+        "description": "",
+        "tags": ["Event"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/event/": {
       "post": {
         "description": "",
@@ -569,6 +596,34 @@
             "required": true,
             "type": "array",
             "schema": { "$ref": "#/definitions/schema/AddGuest" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/event/addCoHost": {
+      "post": {
+        "description": "",
+        "tags": ["Event"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/AddCoHost" }
           }
         ],
         "security": [
@@ -1040,6 +1095,61 @@
         }
       }
     },
+    "/delivery/deliveryTrans/{id}": {
+      "get": {
+        "description": "",
+        "tags": ["Delivery"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/delivery/{userId}/deliveryTrans": {
+      "get": {
+        "description": "",
+        "tags": ["Delivery"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+
     "/delivery/create": {
       "post": {
         "description": "",
@@ -1051,6 +1161,34 @@
             "required": true,
             "type": "array",
             "schema": { "$ref": "#/definitions/schema/Delivery" }
+          }
+        ],
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/delivery/deliveryTrans": {
+      "post": {
+        "description": "",
+        "tags": ["Delivery"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "type": "array",
+            "schema": { "$ref": "#/definitions/schema/DeliveryTrans" }
           }
         ],
         "security": [
@@ -2428,9 +2566,22 @@
           "guestCode": {
             "type": "string",
             "required": true
+          }
+        }
+      },
+      "AddCoHost": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "required": true
           },
-          "coHost": {
-            "type": "boolean",
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+          "coHostCode": {
+            "type": "string",
             "required": true
           }
         }
@@ -2531,6 +2682,23 @@
           },
           "userId": {
             "type": "string",
+            "required": true
+          }
+        }
+      },
+      "DeliveryTrans": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "type": "string",
+            "required": true
+          },
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+          "deliveryFee": {
+            "type": "number",
             "required": true
           }
         }

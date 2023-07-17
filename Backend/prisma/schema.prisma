@@ -29,6 +29,24 @@ model delivery {
   @@index([userId], map: "Delivery_userId_fkey")
 }
 
+model deliveryTransactions {
+  id           String         @id @db.VarChar(255)
+  item         String         @db.VarChar
+  userId       String         @db.VarChar(255)
+  user         user           @relation(fields: [userId], references: [id])
+  status       DeliveryStatus
+  deliveryFee  Int
+  expectedDate DateTime
+  created_at   DateTime       @default(now())
+  updated_at   DateTime?      @updatedAt
+  deleted_at   DateTime?
+  created_by   String?        @db.VarChar(255)
+  updated_by   String?        @db.VarChar(255)
+  deleted_by   String?        @db.VarChar(255)
+
+  @@index([userId], map: "DeliveryTransaction_userId_fkey")
+}
+
 model event {
   id              String        @id @db.VarChar(255)
   title           String?       @db.VarChar(255)
@@ -185,6 +203,7 @@ model user {
   Notifications         Notifications[]
   event                 event?                  @relation(fields: [eventId], references: [id], onDelete: SetNull)
   eventId               String?                 @db.VarChar(255)
+  deliveryTransacations deliveryTransactions[]
 }
 
 model otp {
@@ -390,6 +409,12 @@ enum Status {
   UNPAID
 }
 
+enum DeliveryStatus {
+  DELIVERED
+  FAILED
+  PENDING
+}
+
 enum MarketCategory {
   ASOEBI
   GIFT
@@ -418,8 +443,10 @@ enum NOTIFICATION {
   EVENTEDIT
   EVENTDELETION
   GUESTJOIN
+  COHOSTJOIN
   FUNDRAISING
   PURCHASE
   USER_EDIT
   MEDIA
+  DELIVERY
 }
