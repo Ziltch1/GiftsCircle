@@ -92,8 +92,8 @@ const Events = () => {
                   <SkeletonLoader />
                 ) : (
                   <>
-                    {navPosition === 0 && <PurchasedFor events={data} />}
-                    {navPosition === 1 && <PurchasedBy events={data} />}
+                    {navPosition === 0 && <PurchasedBy events={data} />}
+                    {navPosition === 1 && <PurchasedFor events={data} />}
                     {navPosition === 2 && (
                       <GiftAndSourvenir
                         sourvenir={sourvenirItems}

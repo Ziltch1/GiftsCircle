@@ -57,10 +57,8 @@ const Header = () => {
     getUserNotifications();
   }, [])
 
-  console.log(notifications);
-
   useEffect(() => {
-    const unreadNotifications = notifications?.filter(item => item.read === false).length;
+    const unreadNotifications = notifications?.filter(item => item.read === false);
     setNotificationLength(unreadNotifications);
   }, [])
 
@@ -80,7 +78,7 @@ const Header = () => {
     <>
       <Box bg="#CEDBE6" p="3" w="100%">
         <Box w="90%" mx="auto">
-          <Flex justifyContent={'space-between'}>
+          <Flex justifyContent={'space-between'} alignItems='center'>
             <Box>
               <Link to="/">
                 <Image src={logo} w="100%" />
@@ -88,12 +86,12 @@ const Header = () => {
             </Box>
 
             <Box>
-              <Flex gap={4} alignItems="center">
+              <Flex gap={4} alignItems='center'>
                 <Box>
-                  <Box bg='red.400' color='white' textAlign='center' position='absolute' top='5px' right='120px' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'>
-                    <Text>{notificationLength}</Text>
-                  </Box>
                   <Popover>
+                    <Box bg='red.400' color='white' textAlign='center' position='relative' top='10px' left='10px' zIndex='2' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'>
+                      <Text>{notificationLength.length}</Text>
+                    </Box>
                     <PopoverTrigger>
                       <Image src={notification} w='25px' h='25px' />
                     </PopoverTrigger>
@@ -113,7 +111,7 @@ const Header = () => {
                         </Box>
                       </PopoverHeader>
                       <PopoverBody>
-                        <NotificationList notifications={notifications} setNotifications={setNotifications} setNotificationLength={setNotificationLength} />
+                        <NotificationList position={position} notifications={notifications} setNotifications={setNotifications} setNotificationLength={setNotificationLength} />
                       </PopoverBody>
                     </PopoverContent>
                   </Popover>
@@ -172,17 +170,21 @@ export default Header;
 export const NotificationList = ({position, notifications, setNotifications, setNotificationLength}) => {
 
   const unreadNotifications = notifications?.filter(item => item.read === false);
+  const navigate = useNavigate();
 
-  const updateNotification = async (id) => {
+  const updateNotification = async (item) => {
     try {
-      const res = await UpdateUserNotificationApi(id);
+      const res = await UpdateUserNotificationApi(item.id);
       const data = await res.data;
       setNotificationLength((prevCount) => prevCount - 1);
       setNotifications((prevItems) =>
-        prevItems.map((item) =>
-          item.id === id ? { ...item, read: true } : item
+        prevItems.map((key) =>
+          key.id === item.id ? { ...item, read: true } : item
         )
       )
+      if(item.referenceEvent){
+        navigate(`/dashboard/event_details/${item?.referenceEvent}`)
+      }
     } catch (error) {
       console.log(error);
     }
@@ -196,12 +198,12 @@ export const NotificationList = ({position, notifications, setNotifications, set
               <VStack>
                 {notifications?.map((item) => {
                   return (
-                  <VStack>
-                  <Box key={item.id} width="100%" onClick={() => updateNotification(item.id)} cursor='pointer'>
+                  <Box key={item.id} width="100%" onClick={() => updateNotification(item)} cursor='pointer'>
                     <HStack
                       justifyContent="space-between"
                       alignItems="flex-start"
                       spacing={3}
+                      mb='2'
                     >
                       <Box>
                         <Heading
@@ -220,16 +222,13 @@ export const NotificationList = ({position, notifications, setNotifications, set
                       )}
                     </HStack>
                   </Box>
-                  </VStack>)
+                  )
                 })}
               </VStack>
             </Box>
           </Box>
       : 
         <Box fontSize={14}>
-          <Heading fontWeight={'semibold'} fontSize="17px" mb="4">
-            New
-          </Heading>
           <Box>
             <VStack spacing={3}>
               {unreadNotifications.map(item => (
@@ -238,6 +237,7 @@ export const NotificationList = ({position, notifications, setNotifications, set
                     justifyContent="space-between"
                     alignItems="flex-start"
                     spacing={3}
+                    mb='2'
                   >
                     <Box>
                       <Heading

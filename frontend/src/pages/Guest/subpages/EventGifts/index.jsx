@@ -47,6 +47,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
       setContributionModal(true);
       setCurrentItem(newItem);
     } else {
+      setShowPrompt(true)
       if (!addedGiftItems.includes(newItem.id)) {
         setGiftItems([...GiftItems, newItem]);
         setAddedGiftItems([...addedGiftItems, newItem.id]);
@@ -181,6 +182,8 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                       }
                       purchased={giftItem?.amountPaid >= item?.amount * giftItem?.quantity}
                       text={'Purchase'}
+                      showPrompt={showPrompt}
+                      setShowPrompt={setShowPrompt}
                     />
                   );
                 })}
