@@ -142,7 +142,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
         }}
       >
         <>
-          {showPrompt && <Prompt setShowPrompt={setShowPrompt} setShowListDrawer={setShowListDrawer} setOpenDrawer={setOpenDrawer} />}
+          {showPrompt && <Prompt setShowPrompt={setShowPrompt} setShowListDrawer={setShowListDrawer} setOpenDrawer={setOpenDrawer} openDrawer={openDrawer} />}
           <ContributionModal
             setOpenModal={setContributionModal}
             isOpen={contributionModal}

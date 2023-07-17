@@ -27,7 +27,7 @@ const Header = () => {
   const { user } = useSelector(state => state.user);
   const [openModal, setOpenModal] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [notificationLength, setNotificationLength] = useState(0);
+  const [notificationLength, setNotificationLength] = useState([]);
   const dropdownRef = useRef(null);
   const { Notifications } = useContext(SocketContext);
   const [unreadNotifications, setUnReadNotifications] = useState([]);
@@ -58,7 +58,7 @@ const Header = () => {
   }, [])
 
   useEffect(() => {
-    const unreadNotifications = notifications?.filter(item => item.read === false);
+    const unreadNotifications = notifications?.filter(item => item.read !== true);
     setNotificationLength(unreadNotifications);
   }, [])
 
@@ -89,9 +89,11 @@ const Header = () => {
               <Flex gap={4} alignItems='center'>
                 <Box>
                   <Popover>
-                    <Box bg='red.400' color='white' textAlign='center' position='relative' top='10px' left='10px' zIndex='2' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'>
-                      <Text>{notificationLength.length}</Text>
-                    </Box>
+                   {notificationLength.length > 0 &&
+                      (<Box bg='red.400' color='white' textAlign='center' position='relative' top='10px' left='10px' zIndex='2' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'>
+                        <Text>{notificationLength.length}</Text>
+                      </Box>)
+                   }
                     <PopoverTrigger>
                       <Image src={notification} w='25px' h='25px' />
                     </PopoverTrigger>
