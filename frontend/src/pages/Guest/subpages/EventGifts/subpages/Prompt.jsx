@@ -17,12 +17,15 @@ import {
 } from '@chakra-ui/react';
 import errorImg from '../../../../assets/errorImg.svg';
 
-const Prompt = ({setShowPrompt, setShowListDrawer, setOpenDrawer}) => {
+const Prompt = ({setShowPrompt, setShowListDrawer, setOpenDrawer, complimentaryGift, openDrawer}) => {
   const { onClose, isOpen } = useDisclosure({defaultIsOpen: true});
 
   const showCart = () => {
     setShowPrompt(false)
-    setShowListDrawer(true)
+    setShowListDrawer(true);
+    if(openDrawer === true){
+      setOpenDrawer(false)
+    }
   }
 
   const showComplimentary = () => {
@@ -68,14 +71,16 @@ const Prompt = ({setShowPrompt, setShowListDrawer, setOpenDrawer}) => {
                           >
                               Add another gift
                           </Button>
-                          <Button
-                              mb="3"
-                              fontSize={14}
-                              fontWeight="medium"
-                              onClick={showComplimentary}
-                          >
-                              Add a complimentary gift
-                          </Button>
+                          {!complimentaryGift === false && (
+                              <Button
+                                  mb="3"
+                                  fontSize={14}
+                                  fontWeight="medium"
+                                  onClick={showComplimentary}
+                              >
+                                  Add a complimentary gift
+                              </Button>
+                            )}
                       </Flex>
                   </ModalBody>
               </ModalContent>

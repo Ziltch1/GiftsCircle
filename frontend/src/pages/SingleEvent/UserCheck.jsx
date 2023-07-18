@@ -7,6 +7,8 @@ import { Box } from '@chakra-ui/react';
 import { dispatch } from '../../redux/store';
 import { GetUserEvents } from '../../redux/features/events/service';
 import Response from '../../components/ResponseToast';
+import { GetEventCohostsApi } from '../../redux/axios/apis/events';
+
 
 const UserCheck = () => {
   const navigate = useNavigate()
@@ -14,7 +16,8 @@ const UserCheck = () => {
   const { events } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
   const [newEvent, setNewEvent] = useState(null);
-  const [activeUser, setActiveUser] = useState(false)
+  const [activeUser, setActiveUser] = useState(false);
+  const [coHost, setCoHost] = useState('');
 
   let userId = user?.id;
 
@@ -25,16 +28,29 @@ const UserCheck = () => {
       setActiveUser(false)
       navigate('/signin')
     }
-  }, [user])
+  }, [user]);
+
+  const getEventCohosts = async () => {
+    try {
+      const res = await GetEventCohostsApi(id);
+      const data = await res.data;
+      setCoHost(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (events?.length > 0) {
       const specificEvent = events.filter(event => event.id === id)[0];
       setNewEvent(specificEvent);
+      getEventCohosts();
     } else {
       dispatch(GetUserEvents(userId));
     }
   }, [events, id, userId]);
+
+  console.log(coHost);
 
 
   return (

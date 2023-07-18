@@ -1,13 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Box } from '@chakra-ui/react';
 import EventSchedule from './SubPages/EventSchedule';
 import EventHosts from './SubPages/EventHosts';
+import { GetEventDeliveryDetailsApi } from '../../../redux/axios/apis/delivery';
 
 const Index = ({ newEvent }) => {
+  const [deliveryAddress, setDeliveryAddress] = useState([]);
+
+  const getDeliveryAddress = async () => {
+    try {
+      const res = await GetEventDeliveryDetailsApi(newEvent.id);
+      const data = await res.data;
+      setDeliveryAddress(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDeliveryAddress();
+  }, [newEvent.id]);
+
   return (
     <Box>
       <Box>
-        <EventSchedule newEvent={newEvent} />
+        <EventSchedule newEvent={newEvent} deliveryAddress={deliveryAddress} />
         <EventHosts newEvent={newEvent} />
       </Box>
     </Box>

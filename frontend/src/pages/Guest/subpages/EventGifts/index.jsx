@@ -47,6 +47,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
       setContributionModal(true);
       setCurrentItem(newItem);
     } else {
+      setShowPrompt(true)
       if (!addedGiftItems.includes(newItem.id)) {
         setGiftItems([...GiftItems, newItem]);
         setAddedGiftItems([...addedGiftItems, newItem.id]);
@@ -141,7 +142,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
         }}
       >
         <>
-          {showPrompt && <Prompt setShowPrompt={setShowPrompt} setShowListDrawer={setShowListDrawer} setOpenDrawer={setOpenDrawer} />}
+          {showPrompt && <Prompt setShowPrompt={setShowPrompt} setShowListDrawer={setShowListDrawer} setOpenDrawer={setOpenDrawer} openDrawer={openDrawer} />}
           <ContributionModal
             setOpenModal={setContributionModal}
             isOpen={contributionModal}
@@ -181,6 +182,8 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                       }
                       purchased={giftItem?.amountPaid >= item?.amount * giftItem?.quantity}
                       text={'Purchase'}
+                      showPrompt={showPrompt}
+                      setShowPrompt={setShowPrompt}
                     />
                   );
                 })}

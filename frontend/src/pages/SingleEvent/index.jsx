@@ -40,6 +40,7 @@ const Index = () => {
   const { events, fundRaising, eventGuests } = useSelector(
     state => state.event
   );
+
   const { user } = useSelector(state => state.user);
 
   let userId = user?.id;

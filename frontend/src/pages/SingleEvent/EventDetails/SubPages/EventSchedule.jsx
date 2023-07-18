@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Text, Heading, Button, Flex, Image } from '@chakra-ui/react';
+import { Box, Text, Heading, Button, Flex, Image, Stack, Icon } from '@chakra-ui/react';
 import clock from '../../../../components/assets/clock.svg';
 import location from '../../../../components/assets/map-pin.svg';
 import Fundraising from './Fundraising';
@@ -8,8 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import { dispatch } from '../../../../redux/store';
 import { setEditEvent } from '../../../../redux/features/events/eventSlice';
 import DeleteModal from './DeleteModal';
+import {FaCheck} from 'react-icons/fa'
 
-const EventSchedule = ({ newEvent }) => {
+const EventSchedule = ({ newEvent, deliveryAddress }) => {
   const navigate = useNavigate();
   const date = newEvent.date;
   const dateString = date;
@@ -47,6 +48,16 @@ const EventSchedule = ({ newEvent }) => {
         </Box>
 
         <Box w="295px" h="auto">
+          <Box py='5' px='5' borderRadius={5} bg='#EEEEEE' mb='4' boxShadow='sm'>
+            <Heading fontSize={18} fontWeight='medium' mb='2.5'>Delivery Address</Heading>
+            <Text fontSize={14} mb='2.5'>{deliveryAddress.address}</Text>
+            <Text fontSize={14} mb='2.5'>{deliveryAddress.info}</Text>
+              <Text fontSize={14} mb='2.5'>{deliveryAddress.lga}, {deliveryAddress.state}.</Text>
+            <Stack direction='row' justifyContent='space-between'>
+              <Button fontWeight='medium' fontSize={14} color='#009F94' bg='none' p='0'><Icon as={FaCheck} fontWeight='medium' mr='2' /> Confirm</Button>
+              <Button fontWeight='medium' fontSize={14} bg='none' p='0'>Change Address</Button>
+            </Stack>
+          </Box>
           {!newEvent.published && (
             <Button
               width="100%"
