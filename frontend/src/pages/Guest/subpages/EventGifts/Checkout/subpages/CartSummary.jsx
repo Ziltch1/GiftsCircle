@@ -3,17 +3,20 @@ import React, { useContext } from 'react';
 // import { dispatch } from '../../../../redux/store';
 // import { GetUserMarketItems } from '../../../../redux/features/marketplace/service';
 // import { setCheckoutData } from '../../../../redux/features/marketplace/marketSlice';
-// import { BuyItemsApi } from '../../../../redux/axios/apis/marketPlace';
 import PaymentButton from '../../../../../../components/Buttons/PaymentButton';
 import { CheckoutContext } from '../../../..';
+import { BuyItemsApi } from '../../../../../../redux/axios/apis/marketPlace';
 
 const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout,}) => {
+  console.log(data);
   
   const {checkoutAmount, cartLength, deliveryFee} = useContext(CheckoutContext);
 
+  const newDeliveryFee = Math.round(((deliveryFee * checkoutAmount)/100));
+
   const HandleSubmit = async () => {
     await setShowCheckout(false);
-    // if (cartLength?.length > 0) {
+    // if (cartLength > 0) {
     //   const res = await BuyItemsApi(data);
     //   if (res.data) {
     //     dispatch(GetUserMarketItems(data[0].userId));
@@ -40,25 +43,24 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout,}) => {
         <Flex alignItems="center" justifyContent="space-between">
           <Text>Delivery Fee</Text>
           <Heading fontWeight="medium" fontSize={18}>
-            ₦ {deliveryFee}
+            ₦ {newDeliveryFee}
           </Heading>
         </Flex>
         <Divider />
         <Flex alignItems="center" justifyContent="space-between">
           <Text>Total</Text>
           <Heading fontWeight="medium" fontSize={18}>
-            ₦ {checkoutAmount + deliveryFee}
+            ₦ {checkoutAmount + newDeliveryFee}
           </Heading>
         </Flex>
         <Divider />
 
-        {/* {deliveryAmount !== 0 && ( */}
+        {newDeliveryFee !== 0 && (
           <PaymentButton
-            amount={checkoutAmount + deliveryFee}
-            // amount={amount + deliveryAmount}
+            amount={checkoutAmount + newDeliveryFee}
             action={HandleSubmit}
           />
-        {/* )} */}
+        )}
       </Stack>
     </Box>
   );

@@ -82,13 +82,18 @@ const Header = () => {
               <Flex gap={4} alignItems='center'>
                 <Box>
                   <Popover>
-                   {notificationLength.length > 0 &&
-                      (<Box bg='red.400' color='white' textAlign='center' position='relative' top='10px' left='10px' zIndex='2' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'>
-                        <Text>{notificationLength.length}</Text>
-                      </Box>)
-                   }
+                   
                     <PopoverTrigger>
-                      <Image src={notification} w='25px' h='25px' />
+                      <Box position='relative' cursor='pointer'>
+                        {notificationLength.length > 0 &&
+                        <Box bg='red.400' color='white' textAlign='center' position='absolute' top='-10px' left='10px' zIndex='2' fontSize={11} w='20px' h='20px' display='flex' justifyContent='center' alignItems='center' fontWeight='semibold' borderRadius='50%'>
+                          <Text>{notificationLength.length}</Text>
+                        </Box>
+                        }
+                        <Box>
+                          <Image src={notification} w='25px' h='25px' />
+                        </Box>
+                      </Box>
                     </PopoverTrigger>
                     <PopoverContent border='none' outline='none' h='400px' overflow='auto'>
                       <PopoverArrow />
@@ -159,9 +164,6 @@ const Header = () => {
 export default Header;
 
 
-
-
-
 export const NotificationList = ({position, notifications, setNotifications, setNotificationLength}) => {
 
   const unreadNotifications = notifications?.filter(item => item.read === false);
@@ -201,7 +203,7 @@ export const NotificationList = ({position, notifications, setNotifications, set
                       spacing={3}
                       mb='2'
                     >
-                      <Box>
+                      <Box w='250px'>
                         <Heading
                           fontWeight={item.read === true ? 'normal' : 'semibold'}
                           fontSize="13px"
@@ -235,7 +237,7 @@ export const NotificationList = ({position, notifications, setNotifications, set
                     spacing={3}
                     mb='2'
                   >
-                    <Box>
+                    <Box w='250px'>
                       <Heading
                         fontWeight={item.read === true ? 'normal' : 'semibold'}
                         fontSize="13px"

@@ -41,7 +41,7 @@ const Index = () => {
   const [checkoutAmount, setCheckoutAmount] = useState(0);
   const [cartLength, setCartLength] = useState('');
   const [deliveryFee, setDeliveryFee] = useState(0);
-  const [checkContribution, setCheckContribution] = useState(false)
+  const [checkContribution, setCheckContribution] = useState(false);
 
   useEffect(() => {
     let check = localStorage.getItem('Cart');
