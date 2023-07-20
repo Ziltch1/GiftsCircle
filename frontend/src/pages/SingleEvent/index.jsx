@@ -30,7 +30,7 @@ import {
   GetGiftItems,
 } from '../../redux/features/gift/service';
 
-const Index = () => {
+const Index = ({isCoHost}) => {
   const navigate = useNavigate();
   const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
@@ -110,7 +110,7 @@ const Index = () => {
 
             {newEvent.published ? (
               <Box>
-                {navPosition === 0 && <EventDetails newEvent={newEvent} />}
+                {navPosition === 0 && <EventDetails newEvent={newEvent} isCoHost={isCoHost} />}
                 {navPosition === 1 && <EventGifts newEvent={newEvent} />}
                 {navPosition === 2 && <EventMedia />}
                 {navPosition === 3 && <EventGuests />}
@@ -119,7 +119,7 @@ const Index = () => {
               </Box>
             ) : (
               <Box>
-                {navPosition === 0 && <EventDetails newEvent={newEvent} />}
+                {navPosition === 0 && <EventDetails newEvent={newEvent} isCoHost={isCoHost} />}
                 {navPosition === 1 && <EventGifts newEvent={newEvent} />}
                 {navPosition === 2 && <Asoebi newEvent={newEvent} />}
                 {navPosition === 3 && <Fundraising />}

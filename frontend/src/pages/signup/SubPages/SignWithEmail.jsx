@@ -56,6 +56,13 @@ const SignWithEmail = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      HandleSubmit();
+    }
+  }
+
   return (
     <Flex
       bgColor="#fff"
@@ -135,6 +142,7 @@ const SignWithEmail = () => {
                 color="#A8A8A8"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
+                onKeyDown={handleKeyPress}
                 placeholder="e.g dayo.abdullahi@gmail.com"
                 _placeholder={{
                   color: '#A8A8A8',
@@ -182,6 +190,7 @@ const SignWithEmail = () => {
                 }}
                 value={firstname}
                 onChange={e => setFirstName(e.target.value)}
+                onKeyDown={handleKeyPress}
               />
             </FormControl>
 
@@ -213,6 +222,7 @@ const SignWithEmail = () => {
                 }}
                 value={lastname}
                 onChange={e => setLastName(e.target.value)}
+                onKeyDown={handleKeyPress}
               />
             </FormControl>
           </Flex>
@@ -242,9 +252,9 @@ const SignWithEmail = () => {
                 lineHeight="22px"
                 fontWeight="500"
               >
-                Don’t have an account?{' '}
-                <Link to="/signup" style={{ color: '#0C4C84' }}>
-                  Sign up here
+                Already have an account?{' '}
+                <Link to="/signin" style={{ color: '#0C4C84' }}>
+                  Sign in here
                 </Link>
               </Text>
               <HiOutlineArrowNarrowRight />

@@ -16,8 +16,6 @@ const Index = ({ setShowCheckout, setShowAsoebiCheckout, amount, showAsoebiDrawe
   const { deliveryDetails } = useSelector(state => state.user);
   const { checkoutData } = useSelector(state => state.market);
 
-  console.log(deliveryDetails);
-
   const handleClick = () => {
     setShowAsoebiCheckout(false);
   };

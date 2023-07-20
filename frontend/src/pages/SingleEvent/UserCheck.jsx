@@ -18,6 +18,7 @@ const UserCheck = () => {
   const [newEvent, setNewEvent] = useState(null);
   const [activeUser, setActiveUser] = useState(false);
   const [coHost, setCoHost] = useState('');
+  const [isCoHost, setIsCoHost] = useState(false);
 
   let userId = user?.id;
 
@@ -50,6 +51,17 @@ const UserCheck = () => {
     }
   }, [events, id, userId]);
 
+  useEffect(() => {
+    if (coHost?.length > 0) {
+      coHost.map((item) => {
+        if (item?.userId === user.id) {
+          setIsCoHost(true)
+          console.log(item?.userId === userId);
+        }
+      })
+    }
+  }, [coHost, userId])
+
   console.log(coHost);
 
 
@@ -59,7 +71,14 @@ const UserCheck = () => {
       <Box>
         {activeUser && 
           <>
-            <Box>{newEvent?.user_id === userId ? <Host /> : <Guest />}</Box>
+            <Box>
+              {newEvent?.user_id === userId || isCoHost
+              ? 
+              <Host isCoHost={isCoHost} /> 
+              : 
+              <Guest />
+              }
+            </Box>
           </>
         }
       </Box>

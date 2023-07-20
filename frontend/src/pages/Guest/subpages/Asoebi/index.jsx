@@ -5,6 +5,7 @@ import AsoebiListDrawer from './subpages/AsoebiListDrawer';
 import DisplayCard from '../../../../components/Card';
 import { useSelector } from 'react-redux';
 import AsoebiCheckoutDrawer from './subpages/AsoebiCheckoutDrawer';
+import { Zones } from '../../../../Utils/data/ZONES';
 export const CartContext = createContext(null);
 
 const Index = () => {
@@ -16,6 +17,8 @@ const Index = () => {
   const [amount, setAmount] = useState(0);
   const [showAsoebiCheckout, setShowAsoebiCheckout] = useState(false);
   const [buyItems, setBuyItems] = useState('');
+  const { deliveryDetails } = useSelector(state => state.user);
+  const [deliveryPercent, setDeliveryPercent] = useState(0);
 
   console.log(eventAsoebis);
 

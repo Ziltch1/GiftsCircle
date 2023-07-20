@@ -26,13 +26,14 @@ const ComplimentaryModal = ({ setOpenDrawer, isOpen }) => {
     setAddedComplimentaryGiftItems,
     setComplimentaryItems,
     addedComplimentaryGiftItems,
-    ComplimentaryItems, setShowPrompt
+    ComplimentaryItems, setShowPrompt, setIsComplimentary
   } = useContext(CartContext);
   const closeModal = () => {
     setOpenDrawer(false);
   };
 
   const addGift = id => {
+    setIsComplimentary(true)
     setShowPrompt(true);
     let newItem = complimentaryGifts.find(x => x.id === id);
     if (!addedComplimentaryGiftItems.includes(newItem.id)) {
