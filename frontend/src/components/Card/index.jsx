@@ -3,7 +3,7 @@ import DetailsDrawer from './component/Details';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-const DisplayCard = ({ id, data, disabled, action, text, purchased, increment, contribute, amountPaid }) => {
+const DisplayCard = ({ id, data, disabled, action, text, purchased, increment, contribute, amountPaid,}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const percentagePaid = ((amountPaid / data?.amount) * 100);
   
@@ -68,7 +68,7 @@ const DisplayCard = ({ id, data, disabled, action, text, purchased, increment, c
 
           {contribute && 
             <>
-              <Progress colorScheme='teal' borderRadius={12} hasStripe value={percentagePaid} mb='2' />
+              <Progress colorScheme='teal' borderRadius={12} value={percentagePaid} mb='2' />
               <Flex justifyContent='space-between'>
                 <Text fontSize={14}>₦{amountPaid}</Text>
                 <Text fontSize={14}>₦{data?.amount}</Text>

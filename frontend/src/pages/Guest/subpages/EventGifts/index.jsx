@@ -39,14 +39,17 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [fullPaymentGift, setFullPaymentGift] = useState([]);
   const [contributionGift, setContributionGift] = useState([])
   const [showPrompt, setShowPrompt] = useState(false);
+  const [isComplimentary, setIsComplimentary] = useState(false)
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftItemId === id);
     let itemData = giftItems.find(x => x.id === id);
+    setIsComplimentary(false)
     if (itemData.amount > 20000) {
       setContributionModal(true);
       setCurrentItem(newItem);
     } else {
+      setShowPrompt(true)
       if (!addedGiftItems.includes(newItem.id)) {
         setGiftItems([...GiftItems, newItem]);
         setAddedGiftItems([...addedGiftItems, newItem.id]);
@@ -118,7 +121,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   useEffect(() => {
     const filterGift = contributionGifts?.filter(x => eventGifts.map((item) => item.giftItemId).includes(x.id))
     setContributionGift(filterGift)
-  }, [contributionGifts])
+  }, [contributionGifts]);
 
   return (
     <Box>
@@ -137,11 +140,19 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
           setCurrentItem,
           setShowPrompt,
           setShowCheckout,
-          setCheckContribution, showPrompt
+          setCheckContribution, showPrompt, isComplimentary, setIsComplimentary
         }}
       >
         <>
-          {showPrompt && <Prompt setShowPrompt={setShowPrompt} setShowListDrawer={setShowListDrawer} setOpenDrawer={setOpenDrawer} />}
+          {showPrompt && 
+            <Prompt 
+              setShowPrompt={setShowPrompt} 
+              setShowListDrawer={setShowListDrawer} 
+              setOpenDrawer={setOpenDrawer} 
+              openDrawer={openDrawer} 
+              isComplimentary={isComplimentary}
+              contributionModal={contributionModal}
+            />}
           <ContributionModal
             setOpenModal={setContributionModal}
             isOpen={contributionModal}
@@ -181,6 +192,9 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                       }
                       purchased={giftItem?.amountPaid >= item?.amount * giftItem?.quantity}
                       text={'Purchase'}
+                      showPrompt={showPrompt}
+                      setShowPrompt={setShowPrompt}
+                      
                     />
                   );
                 })}
@@ -195,6 +209,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
               >
                 {contributionGift.map(item => {
                   const giftItem = eventGifts.find(x => x.giftItemId === item.id);
+                  console.log(giftItem);
                   return (
                     <DisplayCard
                       id={item?.id}
@@ -206,8 +221,8 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                       }
                       purchased={giftItem?.amountPaid >= item?.amount * giftItem?.quantity}
                       text={'Purchase'}
-                      contribute={giftItem.enableContribution}
-                      amountPaid={giftItem.amountPaid}
+                      contribute={giftItem?.enableContribution}
+                      amountPaid={giftItem?.amountPaid}
                     />
                   );
                 })}

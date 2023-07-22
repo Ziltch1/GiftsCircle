@@ -26,13 +26,15 @@ const ComplimentaryModal = ({ setOpenDrawer, isOpen }) => {
     setAddedComplimentaryGiftItems,
     setComplimentaryItems,
     addedComplimentaryGiftItems,
-    ComplimentaryItems,
+    ComplimentaryItems, setShowPrompt, setIsComplimentary
   } = useContext(CartContext);
   const closeModal = () => {
     setOpenDrawer(false);
   };
 
   const addGift = id => {
+    setIsComplimentary(true)
+    setShowPrompt(true);
     let newItem = complimentaryGifts.find(x => x.id === id);
     if (!addedComplimentaryGiftItems.includes(newItem.id)) {
       setComplimentaryItems([...ComplimentaryItems, newItem]);
@@ -79,6 +81,7 @@ const ComplimentaryModal = ({ setOpenDrawer, isOpen }) => {
                     action={addGift}
                     disabled={addedComplimentaryGiftItems.includes(item?.id)}
                     text="Purchase"
+                    complimentaryGift={true}
                   />
                 </>
               ))}

@@ -17,12 +17,15 @@ import {
 } from '@chakra-ui/react';
 import errorImg from '../../../../assets/errorImg.svg';
 
-const Prompt = ({setShowPrompt, setShowListDrawer, setOpenDrawer}) => {
+const Prompt = ({setShowPrompt, setShowListDrawer, setOpenDrawer, isComplimentary, openDrawer, contributionModal}) => {
   const { onClose, isOpen } = useDisclosure({defaultIsOpen: true});
 
   const showCart = () => {
     setShowPrompt(false)
-    setShowListDrawer(true)
+    setShowListDrawer(true);
+    if(openDrawer === true){
+      setOpenDrawer(false)
+    }
   }
 
   const showComplimentary = () => {
@@ -43,10 +46,12 @@ const Prompt = ({setShowPrompt, setShowListDrawer, setOpenDrawer}) => {
                   <ModalCloseButton onClick={() => setShowPrompt(false)} />
                   <ModalBody>
                       <Image src={errorImg} mb="3" display="block" mx="auto" />
-                      <Text mb="3" textAlign="center">
-                          Contribution is enabled for this product, you can pay in full or
-                          contribute to pay part of the total cost
-                      </Text>
+                      
+                          <Text mb="2" textAlign="center">
+                             Please choose an action
+                          </Text>
+                      
+
                       <Flex direction="column" w="85%" mx="auto">
                           <Button
                               mb="3"
@@ -62,20 +67,22 @@ const Prompt = ({setShowPrompt, setShowListDrawer, setOpenDrawer}) => {
                               fontSize={14}
                               fontWeight="medium"
                               mb='3'
-                              bg="#00BFB2"
-                              color='white'
+                              bg={!isComplimentary ? '#00BFB2' : null}
+                              color={!isComplimentary ? 'white' : 'black'}
                               onClick={() => setShowPrompt(false)}
                           >
                               Add another gift
                           </Button>
-                          <Button
-                              mb="3"
-                              fontSize={14}
-                              fontWeight="medium"
-                              onClick={showComplimentary}
-                          >
-                              Add a complimentary gift
-                          </Button>
+                          {!isComplimentary && 
+                              <Button
+                                  mb="3"
+                                  fontSize={14}
+                                  fontWeight="medium"
+                                  onClick={showComplimentary}
+                              >
+                                  Add a complimentary gift
+                              </Button>
+                          }
                       </Flex>
                   </ModalBody>
               </ModalContent>

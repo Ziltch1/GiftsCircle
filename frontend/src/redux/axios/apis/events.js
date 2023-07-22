@@ -44,6 +44,14 @@ const JoinEventGuestApi = data => {
   return api.post(`/event/addGuest`, data);
 };
 
+const JoinEventCoHostApi = data => {
+  return api.post(`/event/addCoHost`, data);
+};
+
+const GetEventCohostsApi = id => {
+  return api.get(`/event/${id}/cohosts`);
+};
+
 export {
   GetUserEventsApi,
   GetEventGiftsApi,
@@ -56,4 +64,6 @@ export {
   EventSummaryApi,
   GetEventApi,
   JoinEventGuestApi,
+  GetEventCohostsApi,
+  JoinEventCoHostApi,
 };

@@ -77,7 +77,7 @@ export default function GiftDetails() {
           <SkeletonLoader />
         ) : (
           <>
-            {data.length === 0 ? (
+            {data.length < 1 ? (
               <Box h="100vh">
                 <Heading
                   textAlign="center"

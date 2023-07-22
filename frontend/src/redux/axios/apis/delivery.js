@@ -20,10 +20,25 @@ const DeleteDeliveryDetailsApi = id => {
   return api.delete(`/delivery/${id}`);
 };
 
+const GetDeliveryTransApi = ( id) => {
+  return api.get(`/delivery/deliveryTrans/${id}`);
+}
+
+const GetUserDeliveryTransApi = ( id) => {
+  return api.get(`/delivery/${id}/deliveryTrans`);
+}
+
+const DeliveryTransApi = (data) => {
+  return api.post(`/delivery/deliveryTrans`, data);
+}
+
 export {
   DeliveryDetailsApi,
   GetDeliveryDetailsApi,
   UpdateDeliveryDetailsApi,
   DeleteDeliveryDetailsApi,
   GetEventDeliveryDetailsApi,
+  GetDeliveryTransApi,
+  GetUserDeliveryTransApi,
+  DeliveryTransApi,
 };

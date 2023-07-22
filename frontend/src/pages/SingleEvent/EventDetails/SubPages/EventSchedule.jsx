@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Text, Heading, Button, Flex, Image } from '@chakra-ui/react';
+import { Box, Text, Heading, Button, Flex, Image, Stack, Icon } from '@chakra-ui/react';
 import clock from '../../../../components/assets/clock.svg';
 import location from '../../../../components/assets/map-pin.svg';
 import Fundraising from './Fundraising';
@@ -8,8 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { dispatch } from '../../../../redux/store';
 import { setEditEvent } from '../../../../redux/features/events/eventSlice';
 import DeleteModal from './DeleteModal';
+import {FaCheck} from 'react-icons/fa'
+import DeliveryAddressModal from './DeliveryAddressModal';
+import EditAddressModal from './EditAddressModal';
 
-const EventSchedule = ({ newEvent }) => {
+const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress }) => {
   const navigate = useNavigate();
   const date = newEvent.date;
   const dateString = date;
@@ -17,6 +20,8 @@ const EventSchedule = ({ newEvent }) => {
   const { fundRaising } = useSelector(state => state.event);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [editAddress, setEditAddress] = useState(false);
+  const [confirmEditAddress, setConfirmEditAddress] = useState(false);
 
   const showDrawer = () => {
     setOpenDrawer(true);
@@ -26,6 +31,10 @@ const EventSchedule = ({ newEvent }) => {
     setShowModal(true);
   };
 
+  const handleClick = () => {
+    setEditAddress(true)
+  }
+
   return (
     <>
        {showModal && <DeleteModal setShowModal={setShowModal} />}
@@ -33,6 +42,8 @@ const EventSchedule = ({ newEvent }) => {
       {openDrawer && (
         <Fundraising setOpenDrawer={setOpenDrawer} id={newEvent.id} />
       )}
+      {editAddress && <DeliveryAddressModal setEditAddress={setEditAddress} setConfirmEditAddress={setConfirmEditAddress}  />}
+      {confirmEditAddress && <EditAddressModal setEditAddress={setEditAddress} setConfirmEditAddress={setConfirmEditAddress} deliveryAddress={deliveryAddress} getDeliveryAddress={getDeliveryAddress} />}
       <Flex justifyContent="space-between" alignItems="flex-start">
         <Box w="610px">
           <Heading fontWeight={500} fontSize="24px" mb="4">
@@ -47,6 +58,18 @@ const EventSchedule = ({ newEvent }) => {
         </Box>
 
         <Box w="295px" h="auto">
+          {isCoHost && 
+              <Box py='5' px='5' borderRadius={5} bg='#EEEEEE' mb='4' boxShadow='sm'>
+                <Heading fontSize={18} fontWeight='medium' mb='2.5'>Delivery Address</Heading>
+                <Text fontSize={14} mb='2.5'>{deliveryAddress.address}</Text>
+                <Text fontSize={14} mb='2.5'>{deliveryAddress.info}</Text>
+                <Text fontSize={14} mb='2.5'>{deliveryAddress.lga}, {deliveryAddress.state}.</Text>
+                <Stack direction='row' justifyContent='space-between'>
+                  <Button fontWeight='medium' fontSize={14} color='#009F94' bg='gray.300' onClick={handleClick}><Icon as={FaCheck} fontWeight='medium' mr='2' /> Confirm</Button>
+                  <Button fontWeight='medium' fontSize={14} bg='gray.300' onClick={() => setConfirmEditAddress(true)}>Change Address</Button>
+                </Stack>
+              </Box>
+          }
           {!newEvent.published && (
             <Button
               width="100%"

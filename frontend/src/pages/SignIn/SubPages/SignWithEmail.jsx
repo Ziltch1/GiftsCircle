@@ -63,6 +63,13 @@ const SignInWithEmail = () => {
     }
   }, [token, navigate]);
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      HandleSubmit();
+    }
+  }
+
   return (
     <Flex
       bgColor="#fff"
@@ -104,101 +111,105 @@ const SignInWithEmail = () => {
               event page.
             </Text>
           </Flex>
-          <Flex direction="column" gap="20px">
-            {error && <AlertBox message={error.message} setError={setError} />}
-            <FormControl gap="6px">
-              <FormLabel
-                fontSize="14px"
-                color="#12141D"
-                lineHeight="22px"
-                fontWeight="500"
-              >
-                Enter email address
-              </FormLabel>
-              <Input
-                borderRadius="10px"
-                bgColor={
-                  email === ''
-                    ? '#F4F4F4'
-                    : emailTest
-                    ? '#F4F4F4'
-                    : 'rgba(255, 77, 79, 0.1)'
-                }
-                border={
-                  email === ''
-                    ? 'none'
-                    : emailTest
-                    ? '1px solid #389E0D'
-                    : '1px solid #FF4D4F'
-                }
-                h="46px"
-                p="12px"
-                gap="10px"
-                type="email"
-                name="email"
-                fontSize="14px"
-                lineHeight="22px"
-                fontWeight="400"
-                color="#A8A8A8"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="e.g dayo.abdullahi@gmail.com"
-                _placeholder={{
-                  color: '#A8A8A8',
-                  opacity: 0.4,
-                  fontSize: '14px',
-                }}
-              />
-              {email !== '' && !emailTest && (
-                <FormHelperText
+  
+            <Flex direction="column" gap="20px">
+              {error && <AlertBox message={error.message} setError={setError} />}
+              <FormControl gap="6px">
+                <FormLabel
                   fontSize="14px"
+                  color="#12141D"
                   lineHeight="22px"
                   fontWeight="500"
-                  color="#FF4D4F"
                 >
-                  Not a valid Email
-                </FormHelperText>
-              )}
-            </FormControl>
-
-            <FormControl gap="6px">
-              <FormLabel
-                fontSize="14px"
-                color="#12141D"
-                lineHeight="22px"
-                fontWeight="500"
-              >
-                Enter your password
-              </FormLabel>
-              <InputGroup h="46px" bgColor="#F4F4F4" borderRadius="10px">
+                  Enter email address
+                </FormLabel>
                 <Input
                   borderRadius="10px"
+                  bgColor={
+                    email === ''
+                      ? '#F4F4F4'
+                      : emailTest
+                        ? '#F4F4F4'
+                        : 'rgba(255, 77, 79, 0.1)'
+                  }
+                  border={
+                    email === ''
+                      ? 'none'
+                      : emailTest
+                        ? '1px solid #389E0D'
+                        : '1px solid #FF4D4F'
+                  }
                   h="46px"
-                  gap="10px"
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  fontSize="14px"
                   p="12px"
+                  gap="10px"
+                  type="email"
+                  name="email"
+                  fontSize="14px"
                   lineHeight="22px"
                   fontWeight="400"
-                  placeholder="****************"
+                  color="#A8A8A8"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                  placeholder="e.g dayo.abdullahi@gmail.com"
                   _placeholder={{
                     color: '#A8A8A8',
                     opacity: 0.4,
                     fontSize: '14px',
                   }}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
                 />
-                <InputRightElement
-                  cursor="pointer"
-                  onClick={() => setShowPassword(!showPassword)}
+                {email !== '' && !emailTest && (
+                  <FormHelperText
+                    fontSize="14px"
+                    lineHeight="22px"
+                    fontWeight="500"
+                    color="#FF4D4F"
+                  >
+                    Not a valid Email
+                  </FormHelperText>
+                )}
+              </FormControl>
+
+              <FormControl gap="6px">
+                <FormLabel
+                  fontSize="14px"
+                  color="#12141D"
+                  lineHeight="22px"
+                  fontWeight="500"
                 >
-                  {!showPassword ? <FiEyeOff /> : <FiEye />}
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-          </Flex>
+                  Enter your password
+                </FormLabel>
+                <InputGroup h="46px" bgColor="#F4F4F4" borderRadius="10px">
+                  <Input
+                    borderRadius="10px"
+                    h="46px"
+                    gap="10px"
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    fontSize="14px"
+                    p="12px"
+                    lineHeight="22px"
+                    fontWeight="400"
+                    placeholder="****************"
+                    _placeholder={{
+                      color: '#A8A8A8',
+                      opacity: 0.4,
+                      fontSize: '14px',
+                    }}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                  />
+                  <InputRightElement
+                    cursor="pointer"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {!showPassword ? <FiEyeOff /> : <FiEye />}
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+            </Flex>
+
           <Flex justifyContent="right">
             <Text
               fontSize="14px"

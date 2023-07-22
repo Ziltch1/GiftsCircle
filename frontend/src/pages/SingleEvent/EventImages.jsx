@@ -237,41 +237,42 @@ const EventImages = ({ newEvent, eventGuests }) => {
                   </Text>
 
                   <Flex>
-                    <ShareButton
-                      title={newEvent.title}
-                      img={facebook}
-                      platform="Facebook"
-                      url="https://facebook.com"
-                      text="I am inviting you to joing my event"
+
+                    <ShareOnTwitter 
+                      title={newEvent.title} 
+                      icon={twitter} 
+                      link={`https://giftscircle.netlify.app/dashboard/event_details/${newEvent.id}`} 
+                      details='Follow this link to jon my event'
                     />
-                    <ShareButton
-                      title={newEvent.title}
-                      img={twitter}
-                      platform="Twitter"
-                      url="https://twitter.com"
-                      text="I am inviting you to joing my event"
+
+                    <ShareOnWhatsApp 
+                      title={newEvent.title} 
+                      icon={whatsapp}
+                      link={`https://giftscircle.netlify.app/dashboard/event_details/${newEvent.id}`}
+                      details='Follow this link to jon my event'
                     />
-                    <ShareButton
+
+                    <ShareOnInstagram 
                       title={newEvent.title}
-                      img={whatsapp}
-                      platform="WhatsApp"
-                      url="https://whatsapp.com"
-                      text="I am inviting you to joing my event"
+                      icon={instagram}
+                      link={`https://giftscircle.netlify.app/dashboard/event_details/${newEvent.id}`}
+                      details='Follow this link to jon my event'
                     />
-                    <ShareButton
+
+                    <ShareOnFacebook
                       title={newEvent.title}
-                      img={instagram}
-                      platform="Instagram"
-                      url="https://instagram.com"
-                      text="I am inviting you to joing my event"
+                      icon={facebook}
+                      link={`https://giftscircle.netlify.app/dashboard/event_details/${newEvent.id}`}
+                      details='Follow this link to jon my event'
                     />
-                    <ShareButton
+
+                    <ShareOnLinkedIn
                       title={newEvent.title}
-                      img={linkedin}
-                      platform="Linkedin"
-                      url="https://linkedin.com"
-                      text="I am inviting you to joing my event"
+                      icon={linkedin}
+                      link={`https://giftscircle.netlify.app/dashboard/event_details/${newEvent.id}`}
+                      details='Follow this link to jon my event'
                     />
+                    
                   </Flex>
                 </Flex>
               </Box>
@@ -304,31 +305,77 @@ const EventImages = ({ newEvent, eventGuests }) => {
 
 export default EventImages;
 
-export const ShareButton = ({ platform, url, text, img, title }) => {
-  const handleClick = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: title,
-          text,
-          url,
-        })
-        .then(() => console.log(`Shared on ${platform}`))
-        .catch(error => console.error(`Error sharing on ${platform}`, error));
-    } else {
-      console.log(`Sharing on ${platform} not supported.`);
-    }
-  };
 
+export const ShareOnTwitter = ({ title, link, details, icon }) => {
+  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+    `
+      ${title} 
+      ${details}\n${link}
+    `
+  )}`;
   return (
-    <Button
-      onClick={handleClick}
-      bg="none"
-      p="0"
-      m="0"
-      _hover={{ bg: 'none', p: 0 }}
-    >
-      <Image src={img} />
+    <Button onClick={() => window.open(shareUrl, '_blank')} bg='none' p='0'>
+      <Image src={icon} />
     </Button>
   );
 };
+
+
+export const ShareOnWhatsApp = ({ title, link, details, icon }) => {
+  const shareUrl = `https://api.whatsapp.com/send?text=${title}: ${details}\n${link}`;
+
+  return (
+    <Button onClick={() => window.open(shareUrl, '_blank')} bg='none' p='0'>
+      <Image src={icon} />
+    </Button>
+  );
+};
+
+export const ShareOnInstagram = ({ title, link, details, icon }) => {
+  const shareUrl = `https://www.instagram.com/?url=${encodeURIComponent(
+    `
+      ${link}\n\n${title}\n\n${details}
+    `
+  )}`;
+  return (
+    <Button onClick={() => window.open(shareUrl, '_blank')} bg='none' p='0'>
+      <Image src={icon} />
+    </Button>
+  );
+};
+
+
+export const ShareOnFacebook = ({ title, link, details, icon }) => {
+  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+    link
+  )}&quote=${encodeURIComponent(`${title}: ${details}`)}`;
+
+  return (
+    <Button onClick={() => window.open(shareUrl, '_blank')} bg='none' p='0'>
+      <Image src={icon} />
+    </Button>
+  );
+};
+
+
+export const ShareOnLinkedIn = ({ title, link, details, icon }) => {
+  const shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+    link
+  )}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(
+    details
+  )}&source=${encodeURIComponent(window.location.href)}`;
+
+  return (
+    <Button onClick={() => window.open(shareUrl, '_blank')} bg='none' p='0'>
+      <Image src={icon} />
+    </Button>
+  );
+};
+
+
+
+
+
+
+
+
