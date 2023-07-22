@@ -75,12 +75,12 @@ router.post("/create", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.post("/deliveryTrans", EnsureAuthenticated, async (req, res) => {
+router.post("/deliveryTrans/:userId", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await CreateDeliveryTrans(req.body);
+    let data = await CreateDeliveryTrans(req.body, req.params.userId);
     if (data) {
       req.io.emit(data.notification.userId, data.notification);
-      return res.status(200).send(data.Data);
+      return res.status(200).send(data.deliveries);
     }
   } catch (err) {
     console.log(err);
