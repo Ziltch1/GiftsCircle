@@ -111,25 +111,24 @@ const Update = async (id, data) => {
   return null;
 };
 
-const CreateDeliveryTrans = async (data) => {
-  let id = uuidv4();
-  const Data = await prisma.deliveryTransactions.create({
-    data: {
-      id: id,
-      item: data.item,
-      deliveryFee: data.deliveryFee,
-      status: "PENDING",
-      user: {
-        connect: {
-          id: data.userId,
-        },
-      },
-      expectedDate: moment(new Date(Date.now())).add(14, "days").toDate(),
-      created_by: data.userId,
-    },
+const CreateDeliveryTrans = async (data, id) => {
+  data.forEach((element) => {
+    element.id = uuidv4();
+    element.expectedDate = moment(new Date(Date.now()))
+      .add(14, "days")
+      .toDate();
+    element.status = "PENDING";
+    element.userId = id;
+    element.created_by = id;
+    return element;
   });
 
-  const message = `Delivery: Your delivery for item ${data.item} has been created`;
+  let deliveries = await prisma.giftTransaction.createMany({
+    data: [...data],
+    skipDuplicates: true,
+  });
+
+  const message = `Delivery: Your deliveries has been created`;
   const notification = await prisma.notifications.create({
     data: {
       userId: data.userId,
@@ -139,7 +138,7 @@ const CreateDeliveryTrans = async (data) => {
   });
 
   await prisma.$disconnect();
-  return { Data, notification };
+  return { deliveries, notification };
 };
 
 const Delete = async (id) => {
