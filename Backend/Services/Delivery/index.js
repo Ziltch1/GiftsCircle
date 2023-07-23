@@ -123,7 +123,7 @@ const CreateDeliveryTrans = async (data, id) => {
     return element;
   });
 
-  let deliveries = await prisma.giftTransaction.createMany({
+  let deliveries = await prisma.deliveryTransactions.createMany({
     data: [...data],
     skipDuplicates: true,
   });
