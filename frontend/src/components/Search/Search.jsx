@@ -15,7 +15,7 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
     <Box>
       <FormControl>
         <Flex justifyContent={'space-between'}>
-          <InputGroup w="78%">
+          <InputGroup w="82%">
             <InputLeftElement
               pointerEvents="none"
               children={<SearchIcon color="#8C8C8C" />}

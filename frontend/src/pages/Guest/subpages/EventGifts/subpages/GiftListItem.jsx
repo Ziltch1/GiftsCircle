@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { CartContext } from '..';
 import Counter from '../../../../../components/Counter/Counter';
-
+import { DeliveryContext } from '../../..';
+import { useSelector } from 'react-redux';
 
 const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data}) => {
+  const {giftItems} = useSelector(state => state.gift)
   const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems, setAmount, setComplimentaryGiftAmount } =
     useContext(CartContext);
+  const { setNewDeliveryData, newDeliveryData } = useContext(DeliveryContext);
 
   const handleDelete = id => {
     const filteredArray = addedGiftItems.filter(obj => obj !== id);
@@ -21,6 +24,10 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
   const newAmount = amount * data?.quantity;
   setComplimentaryGiftAmount(newAmount);
 
+  useEffect(() => {
+    const filteredItemsArray = giftItems.filter(item => GiftItems.some(k => k.giftItemId === item.id));
+    setNewDeliveryData(filteredItemsArray);
+  }, [GiftItems]);
 
   return (
     <Box

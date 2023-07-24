@@ -1,5 +1,5 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import MarketplaceOptions from './MarketplaceOptions';
 import SourvenirMarket from './subpages/Market/Sourvenir';
 import GiftMarket from './subpages/Market/Gifts';
@@ -9,11 +9,15 @@ import { dispatch } from '../../redux/store';
 import { GetDeliveryDetails } from '../../redux/features/user/service';
 import { useSelector } from 'react-redux';
 
+export const DeliveryContext = createContext(null);
+
 const Index = () => {
   const {user} = useSelector(state => state.user)
   const [position, setPosition] = useState(-1);
   const [showProducts, setShowProducts] = useState(false);
-  const [showCheckout, setShowCheckout] = useState(false)
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [deliveryData, setDeliveryData] = useState([]);
+  const [newDeliveryData, setNewDeliveryData] = useState([]);
   
   useEffect(() => {
     dispatch(GetDeliveryDetails(user.id));
@@ -28,6 +32,7 @@ const Index = () => {
         alignItems={showCheckout ? null : 'center'}
         justifyContent={showCheckout ? null : 'center'}
       >
+      <DeliveryContext.Provider value={{deliveryData, setDeliveryData, newDeliveryData, setNewDeliveryData}}>
       {showCheckout ? <Checkout setShowCheckout={setShowCheckout} /> : 
         <Box w="90%" mx="auto">
           {!showProducts ? (
@@ -61,6 +66,7 @@ const Index = () => {
             </>
           )}
         </Box>}
+        </DeliveryContext.Provider>
       </Box>
     </Box>
   );

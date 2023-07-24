@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
-import { CartContext } from '..';
+import { CartContext, DeliveryContext } from '..';
 
 const AsoebiListItem = ({ item }) => {
   const {
@@ -11,6 +11,7 @@ const AsoebiListItem = ({ item }) => {
     AsoebiItems,
     asoebiItems,
   } = useContext(CartContext);
+  const { setNewDeliveryData, newDeliveryData } = useContext(DeliveryContext);
 
   const handleDelete = id => {
     const filteredArray = addedAsoebiItems.filter(obj => obj !== id);
@@ -21,6 +22,11 @@ const AsoebiListItem = ({ item }) => {
   };
 
   const newData = asoebiItems?.find(x => x.id === item?.asoebiItem);
+
+  useEffect(() => {
+    const filteredItemsArray = asoebiItems.filter(item => AsoebiItems.some(k => k.asoebiItem === item.id));
+    setNewDeliveryData(filteredItemsArray);
+  }, [AsoebiItems]);
 
   return (
     <Box

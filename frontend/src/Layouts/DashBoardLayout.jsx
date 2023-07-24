@@ -9,13 +9,16 @@ import { socket } from '../socket';
 import { dispatch } from '../redux/store';
 import { GetUserNotifications } from '../redux/features/user/service';
 import { setUserNotifications } from '../redux/features/user/userSlice';
+
 export const SocketContext = createContext(null);
+export const PositionContext = createContext(null);
 
 const DashboardLayout = () => {
   const token = sessionStorage.getItem('token');
   const navigate = useNavigate();
   const { user, notifications } = useSelector(state => state.user);
   const [isConnected, setIsConnected] = useState(socket.connected);
+  const [navPosition, setNavPosition] = useState(0);
 
   const contextValue = useMemo(
     () => ({
@@ -26,6 +29,12 @@ const DashboardLayout = () => {
   );
 
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname === '/dashboard') {
+      setNavPosition(0);
+    }
+  }, [])
 
   useEffect(() => {
     if (!token) {
@@ -62,11 +71,12 @@ const DashboardLayout = () => {
       {token && (
         <Box>
           <SocketContext.Provider value={{ ...contextValue }}>
+            <PositionContext.Provider value={{ navPosition, setNavPosition }}>
             <Response />
             <Header />
             {!pathname.includes('/event_details/') && <Navbar />}
-
             <Outlet />
+            </PositionContext.Provider>
           </SocketContext.Provider>
         </Box>
       )}

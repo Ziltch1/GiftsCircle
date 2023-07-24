@@ -83,6 +83,7 @@ const Index = ({ setShowCheckout, giftDetails, checkContribution }) => {
               deliveryAmount={deliveryAmount}
               setShowCheckout={setShowCheckout}
               giftDetails={giftDetails}
+              deliveryPercent={deliveryPercent}
             />
           </Box>
       </Stack>

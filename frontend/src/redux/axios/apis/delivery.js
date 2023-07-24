@@ -28,8 +28,8 @@ const GetUserDeliveryTransApi = ( id) => {
   return api.get(`/delivery/${id}/deliveryTrans`);
 }
 
-const DeliveryTransApi = (data) => {
-  return api.post(`/delivery/deliveryTrans`, data);
+const DeliveryTransApi = (id, data) => {
+  return api.post(`/delivery/deliveryTrans/${id}`, data);
 }
 
 export {

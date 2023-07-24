@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import AsoebiCheckoutDrawer from './subpages/AsoebiCheckoutDrawer';
 import { Zones } from '../../../../Utils/data/ZONES';
 export const CartContext = createContext(null);
+export const DeliveryContext = createContext(null);
 
 const Index = () => {
   const [showListDrawer, setShowListDrawer] = useState(false);
@@ -19,6 +20,8 @@ const Index = () => {
   const [buyItems, setBuyItems] = useState('');
   const { deliveryDetails } = useSelector(state => state.user);
   const [deliveryPercent, setDeliveryPercent] = useState(0);
+  const [newDeliveryData, setNewDeliveryData] = useState([]);
+  const [deliveryData, setDeliveryData] = useState([]);
 
   console.log(eventAsoebis);
 
@@ -43,6 +46,7 @@ const Index = () => {
 
   return (
     <Box>
+      <DeliveryContext.Provider value={{ newDeliveryData, setNewDeliveryData, deliveryData, setDeliveryData }}>
       <CartContext.Provider
         value={{
           ...contextValue,
@@ -80,6 +84,7 @@ const Index = () => {
           })}
         </Flex>
       </CartContext.Provider>
+      </DeliveryContext.Provider>
     </Box>
   );
 };

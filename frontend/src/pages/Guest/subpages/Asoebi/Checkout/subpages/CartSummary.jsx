@@ -1,16 +1,32 @@
 import { Box, Heading, Text, Divider, Stack, Flex } from '@chakra-ui/react';
-import React from 'react';
+import React, {useContext} from 'react';
 import PaymentButton from '../../../../../../components/Buttons/PaymentButton';
 import { dispatch } from '../../../../../../redux/store';
 import { GetUserMarketItems } from '../../../../../../redux/features/marketplace/service';
 import { setCheckoutData } from '../../../../../../redux/features/marketplace/marketSlice';
 import { BuyItemsApi } from '../../../../../../redux/axios/apis/marketPlace';
+import { DeliveryContext } from '../..';
+import { useSelector } from 'react-redux';
+import { DeliveryTransApi } from '../../../../../../redux/axios/apis/delivery';
 
-const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout, handleSubmit, cartLength }) => {
+
+const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout, handleSubmit, cartLength, deliveryPercent }) => {
+
+  const {newDeliveryData} = useContext(DeliveryContext);
+  const {user} = useSelector(state => state.user);
+
+  const singleItem = newDeliveryData.map((item) => {
+    const newData = {
+      item: item.title,
+      deliveryFee: ((deliveryPercent * item.amount) / 100),
+    }
+    return newData
+  })
   
   const HandleSubmit = async () => {
     try {
       await handleSubmit();
+      await DeliveryTransApi(user.id, singleItem);
     } catch (error) {
       console.log(error);
     }

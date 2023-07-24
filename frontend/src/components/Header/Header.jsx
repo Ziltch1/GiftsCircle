@@ -18,7 +18,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { dispatch } from '../../redux/store';
 import { setToken } from '../../redux/features/auth/authSlice';
 import { GetUserNotificationApi, UpdateUserNotificationApi } from '../../redux/axios/apis/user';
-import { SocketContext } from '../../Layouts/DashBoardLayout';
+import { PositionContext, SocketContext } from '../../Layouts/DashBoardLayout';
 import { FiMoreHorizontal } from 'react-icons/fi'
 import moment from 'moment';
 
@@ -33,6 +33,7 @@ const Header = () => {
   const [unreadNotifications, setUnReadNotifications] = useState([]);
   const options = ['All', 'Unread'];
   const [position, setPosition] = useState(0);
+  const { navPosition, setNavPosition } = useContext(PositionContext);
 
 
   const getUserNotifications = async () => {
@@ -53,8 +54,6 @@ const Header = () => {
     const unreadNotifications = notifications?.filter(item => item.read !== true);
     setNotificationLength(unreadNotifications);
   }, [notifications])
-
-  console.log(notificationLength)
 
   const LogoutHandler = () => {
     localStorage.clear();
@@ -111,7 +110,7 @@ const Header = () => {
                         </Box>
                       </PopoverHeader>
                       <PopoverBody>
-                        <NotificationList position={position} notifications={notifications} setNotifications={setNotifications} setNotificationLength={setNotificationLength} />
+                        <NotificationList position={position} notifications={notifications} setNotifications={setNotifications} setNotificationLength={setNotificationLength} setNavPosition={setNavPosition} />
                       </PopoverBody>
                     </PopoverContent>
                   </Popover>
@@ -164,14 +163,43 @@ const Header = () => {
 export default Header;
 
 
-export const NotificationList = ({position, notifications, setNotifications, setNotificationLength}) => {
+export const NotificationList = ({position, notifications, setNotifications, setNotificationLength, setNavPosition}) => {
 
   const unreadNotifications = notifications?.filter(item => item.read === false);
   const navigate = useNavigate();
 
+  // JOIN
+  // EVENTCREATION
+  // EVENTEDIT
+  // EVENTDELETION
+  // GUESTJOIN
+  // COHOSTJOIN
+  // FUNDRAISING
+  // PURCHASE
+  // USER_EDIT
+  // MEDIA
+  // DELIVERY
+
   const updateNotification = async (k) => {
      if (k.referenceEvent !== null) {
-        navigate(`/dashboard/event_details/${k?.referenceEvent}`)
+        if(k.type === 'EVENTCREATION' || k.type === 'EVENTEDIT'){
+          navigate(`/dashboard/event_details/${k?.referenceEvent}`);
+          setNavPosition(0); 
+        }else if (k.type === 'PURCHASE') {
+          navigate(`/dashboard/event_details/${k?.referenceEvent}`);
+          setNavPosition(1); 
+        }else if (k.type === 'MEDIA') {
+          navigate(`/dashboard/event_details/${k?.referenceEvent}`);
+          setNavPosition(2); 
+        }else if (k.type === 'GUESTJOIN' || k.type === 'COHOSTJOIN') {
+          navigate(`/dashboard/event_details/${k?.referenceEvent}`);
+          setNavPosition(3);
+        }else if(k.type === 'FUNDRAISING'){
+          navigate(`/dashboard/event_details/${k?.referenceEvent}`);
+          setNavPosition(5);
+        }else if (k.type === 'DELIVERY') {
+          navigate(`/dashboard/deliveries`);
+        }
       }
     try {
       const res = await UpdateUserNotificationApi(k.id);

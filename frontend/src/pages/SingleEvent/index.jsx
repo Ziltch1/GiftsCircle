@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import EventImages from './EventImages';
 import Tabs from './Tabs';
 import EventDetails from './EventDetails';
@@ -29,10 +29,11 @@ import {
   GetEventGiftsTransactions,
   GetGiftItems,
 } from '../../redux/features/gift/service';
+import { PositionContext } from '../../Layouts/DashBoardLayout';
 
 const Index = ({isCoHost}) => {
   const navigate = useNavigate();
-  const [navPosition, setNavPosition] = useState(0);
+  // const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
   const [newEvent, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -42,6 +43,7 @@ const Index = ({isCoHost}) => {
   );
 
   const { user } = useSelector(state => state.user);
+  const { navPosition, setNavPosition } = useContext(PositionContext);
 
   let userId = user?.id;
 
@@ -91,6 +93,11 @@ const Index = ({isCoHost}) => {
     }
   }, [user, newEvent]);
 
+  const goBack = () => {
+    navigate(-1);
+    setNavPosition(0);
+  }
+
   return (
     <Box bg="#F5F5F5">
       <Box w="76%" mx="auto" pt="8" pb="7">
@@ -103,7 +110,7 @@ const Index = ({isCoHost}) => {
         ) : (
           <>
             <Box>
-              <BackButton action={() => navigate(-1)} />
+              <BackButton action={goBack} />
               <EventImages newEvent={newEvent} eventGuests={eventGuests} />
             </Box>
             <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />

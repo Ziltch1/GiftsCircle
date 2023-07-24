@@ -29,6 +29,7 @@ import { useSelector } from 'react-redux';
 import Checkout from './subpages/EventGifts/Checkout'
 
 export const CheckoutContext = createContext(null);
+export const DeliveryContext = createContext(null);
 
 const Index = () => {
   const navigate = useNavigate();
@@ -42,6 +43,8 @@ const Index = () => {
   const [cartLength, setCartLength] = useState('');
   const [deliveryFee, setDeliveryFee] = useState(0);
   const [checkContribution, setCheckContribution] = useState(false);
+  const [newDeliveryData, setNewDeliveryData] = useState([]);
+  const [deliveryData, setDeliveryData] = useState([]);
 
   useEffect(() => {
     let check = localStorage.getItem('Cart');
@@ -92,6 +95,7 @@ const Index = () => {
           <CheckoutContext.Provider
             value={{checkoutAmount, setCheckoutAmount, cartLength, setCartLength, deliveryFee, setDeliveryFee,}}
           >
+            <DeliveryContext.Provider value={{newDeliveryData, setNewDeliveryData, deliveryData, setDeliveryData}}>
             {showCheckout ? 
               <Checkout setShowCheckout={setShowCheckout} checkContribution={checkContribution} /> 
               :
@@ -114,6 +118,7 @@ const Index = () => {
                   </Box>
               </>
             }
+            </DeliveryContext.Provider>
           </CheckoutContext.Provider>
         )}
       </Box>

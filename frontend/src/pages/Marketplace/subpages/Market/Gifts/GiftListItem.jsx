@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { GiftContext } from '.';
 import Counter from '../../../../../components/Counter/Counter';
+import { DeliveryContext } from '../../..';
 
 const GiftListItem = ({ item, id}) => {
   const {
@@ -13,6 +14,8 @@ const GiftListItem = ({ item, id}) => {
     giftItems, handleIncrement, handleDecrement
   } = useContext(GiftContext);
 
+  const {setNewDeliveryData, newDeliveryData} = useContext(DeliveryContext);
+
   const handleDelete = id => {
     const filteredArray = GiftItems.filter(obj => obj.ItemId !== id);
     setGiftItems(filteredArray);
@@ -22,6 +25,11 @@ const GiftListItem = ({ item, id}) => {
   };
 
   const data = giftItems.find(x => x.id === item.ItemId);
+
+ useEffect(() => {
+   const filteredItemsArray = giftItems.filter(item => addedGiftItems.includes(item.id));
+   setNewDeliveryData(filteredItemsArray)
+ }, [addedGiftItems])
 
 
   return (
