@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import EventImages from './subpages/EventImages';
 import Tabs from './Tabs';
 import EventDetails from './subpages/EventDetails';
@@ -27,13 +27,15 @@ import Asoebi from './subpages/Asoebi';
 import { setNewEvent } from '../../redux/features/events/eventSlice';
 import { useSelector } from 'react-redux';
 import Checkout from './subpages/EventGifts/Checkout'
+import { PositionContext } from '../../Layouts/DashBoardLayout';
 
 export const CheckoutContext = createContext(null);
+export const DeliveryContext = createContext(null);
 
 const Index = () => {
   const navigate = useNavigate();
   const { user } = useSelector(state => state.user);
-  const [navPosition, setNavPosition] = useState(0);
+  // const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -42,6 +44,9 @@ const Index = () => {
   const [cartLength, setCartLength] = useState('');
   const [deliveryFee, setDeliveryFee] = useState(0);
   const [checkContribution, setCheckContribution] = useState(false);
+  const [newDeliveryData, setNewDeliveryData] = useState([]);
+  const [deliveryData, setDeliveryData] = useState([]);
+  const {navPosition, setNavPosition} = useContext(PositionContext); 
 
   useEffect(() => {
     let check = localStorage.getItem('Cart');
@@ -79,6 +84,11 @@ const Index = () => {
     }
   }, [event]);
 
+  const goBack = () => {
+    navigate('/dashboard');
+    setNavPosition(0);
+  } 
+
   return (
     <Box bg="#F5F5F5">
       <Box w="76%" mx="auto" pt="8" pb="7">
@@ -92,12 +102,13 @@ const Index = () => {
           <CheckoutContext.Provider
             value={{checkoutAmount, setCheckoutAmount, cartLength, setCartLength, deliveryFee, setDeliveryFee,}}
           >
+            <DeliveryContext.Provider value={{newDeliveryData, setNewDeliveryData, deliveryData, setDeliveryData}}>
             {showCheckout ? 
               <Checkout setShowCheckout={setShowCheckout} checkContribution={checkContribution} /> 
               :
               <>
                   <Box>
-                    <BackButton action={() => navigate('/dashboard')} />
+                    <BackButton action={goBack} />
                     <EventImages newEvent={event} />
                   </Box>
                   <Tabs
@@ -114,6 +125,7 @@ const Index = () => {
                   </Box>
               </>
             }
+            </DeliveryContext.Provider>
           </CheckoutContext.Provider>
         )}
       </Box>

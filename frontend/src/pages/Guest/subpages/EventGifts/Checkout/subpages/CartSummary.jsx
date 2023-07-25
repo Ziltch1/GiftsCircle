@@ -4,18 +4,31 @@ import React, { useContext } from 'react';
 // import { GetUserMarketItems } from '../../../../redux/features/marketplace/service';
 // import { setCheckoutData } from '../../../../redux/features/marketplace/marketSlice';
 import PaymentButton from '../../../../../../components/Buttons/PaymentButton';
-import { CheckoutContext } from '../../../..';
+import { CheckoutContext, DeliveryContext } from '../../../..';
 import { BuyItemsApi } from '../../../../../../redux/axios/apis/marketPlace';
+import { DeliveryTransApi } from '../../../../../../redux/axios/apis/delivery';
+import { useSelector } from 'react-redux';
 
 const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout,}) => {
   console.log(data);
   
   const {checkoutAmount, cartLength, deliveryFee} = useContext(CheckoutContext);
+  const { newDeliveryData, deliveryData, setDeliveryData } = useContext(DeliveryContext);
+  const {newEvent} = useSelector(state => state.event)
 
   const newDeliveryFee = Math.round(((deliveryFee * checkoutAmount)/100));
 
+  const singleItem = newDeliveryData.map((item) => {
+    const newData = {
+      item: item.title,
+      deliveryFee: ((deliveryFee * item.amount) / 100),
+    }
+    return newData
+  })
+
   const HandleSubmit = async () => {
-    await setShowCheckout(false);
+    await DeliveryTransApi(newEvent.user_id, singleItem);
+    setShowCheckout(false);
     // if (cartLength > 0) {
     //   const res = await BuyItemsApi(data);
     //   if (res.data) {

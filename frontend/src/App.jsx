@@ -49,13 +49,9 @@ function App() {
           <Route path="/dashboard/event_details" element={<EventDetails />} />
           <Route path="/dashboard/settings" element={<Settings />} />
           <Route path="/dashboard/deliveries" element={<Deliveries />} />
-          <Route
-            path="/dashboard/gift/gift_details/:id"
-            element={<GiftDetails />}
-          />
+          <Route path="/dashboard/gift/gift_details/:id" element={<GiftDetails />} />
           <Route path="/dashboard/event_details/:id" element={<UserCheck />} />
         </Route>
-
         <Route path="/event/join" element={<JoinFromDashboard />} />
         <Route path="/event/join/:id" element={<JoinEvent />} />
         <Route path="/view_event/:id" element={<ViewEvent />} />

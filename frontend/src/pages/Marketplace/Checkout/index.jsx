@@ -87,6 +87,7 @@ const Index = ({ setShowCheckout }) => {
             data={data}
             deliveryAmount={deliveryAmount}
             setShowCheckout={setShowCheckout}
+            deliveryPercent={deliveryPercent}
           />
         </Box>
       </Stack>

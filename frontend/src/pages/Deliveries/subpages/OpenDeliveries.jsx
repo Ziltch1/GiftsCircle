@@ -11,7 +11,7 @@ import React from 'react'
 const OpenDeliveries = ({deliveries}) => {
   
   return (
-    <Box mt='8' minH='400px' display='flex' alignItems='center' justifyContent='center'>
+    <Box mt='8' display='flex' alignItems='center' justifyContent='center'>
         {deliveries.length < 1 ? 
               <Box textAlign='center' maxW='400px'>
                   <Heading fontWeight="semibold" mb="2.5" fontSize={30}>
@@ -22,7 +22,7 @@ const OpenDeliveries = ({deliveries}) => {
                   </Text>
               </Box>
                 :
-              <TableContainer bg="white">
+              <TableContainer bg="white" w='100%'>
                   <Table variant="simple">
                       <Thead bg="#EEEEEE" px="17px" py="40px">
                           <Tr fontSize={14} color="black">
@@ -30,20 +30,23 @@ const OpenDeliveries = ({deliveries}) => {
                               <Th>Order Date</Th>
                               <Th>Expected delivery date</Th>
                               <Th>Status</Th>
+                              <Th>Delivery Fee</Th>
                           </Tr>
                       </Thead>
                       <Tbody>
                           {deliveries.map((gift, index) => {
-                              //   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
+                            const orderDate = new Date(gift?.created_at).toDateString();
+                            const expectedDate = new Date(gift?.expectedDate).toDateString();
                               return (
                                   <>
-                                      <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
-                                          <Td>Iphone 14 pro max, black color</Td>
-                                          <Td>June 12th, 2022, 9:00am</Td>
-                                          <Td>June 12th, 2022, 9:00am</Td>
-                                          <Td color="#009F94">
-                                              Pending
+                                      <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }} key={gift.id}>
+                                          <Td>{gift.item}</Td>
+                                          <Td>{orderDate}</Td>
+                                          <Td>{expectedDate}</Td>
+                                          <Td color="#009F94" textTransform='capitalize'>
+                                              {gift.status.toLowerCase()}
                                           </Td>
+                                          <Td>₦{gift.deliveryFee}</Td>
                                       </Tr>
                                   </>
                               );

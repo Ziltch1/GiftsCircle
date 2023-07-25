@@ -87,6 +87,7 @@ const Index = ({ setShowCheckout, setShowAsoebiCheckout, amount, showAsoebiDrawe
             cartLength={cartLength}
             deliveryAmount={deliveryAmount}
             handleSubmit={HandleSubmit}
+            deliveryPercent={deliveryPercent}
           />
         </Box>
       </Stack>

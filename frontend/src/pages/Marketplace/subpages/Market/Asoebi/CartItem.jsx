@@ -14,13 +14,14 @@ import {
   useDisclosure,
   FormLabel,
 } from '@chakra-ui/react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { AsoebiContext } from '.';
 import { useSelector } from 'react-redux';
 import { dispatch } from '../../../../../redux/store';
 import { DeleteAsoebi } from '../../../../../redux/features/events/service';
 import Counter from '../../../../../components/Counter/Counter';
+import { DeliveryContext } from '../../..';
 
 const CartItem = ({ item, id }) => {
   console.log(item, id);
@@ -34,10 +35,19 @@ const CartItem = ({ item, id }) => {
     addedAseobiItems, handleIncrement, handleDecrement
   } = useContext(AsoebiContext);
 
+  const { setNewDeliveryData, newDeliveryData } = useContext(DeliveryContext);
+
   const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
   const asoebiItem = addForGuest
     ? asoebiItems.find(x => x.id === item.asoebiItem)
     : asoebiItems.find(x => x.id === item.ItemId);
+
+  useEffect(() => {
+    if(!addForGuest){
+      const filteredItemsArray = asoebiItems.filter(item => addedAseobiItems?.includes(item.id));
+      setNewDeliveryData(filteredItemsArray);
+    }
+  }, [addedAseobiItems])
 
   const MarkUpAsoebi = () => {
     AsoebiItems.map(ele => {

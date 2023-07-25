@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { SourvenirContext } from '.';
 import Counter from '../../../../../components/Counter/Counter';
+import { DeliveryContext } from '../../..';
 
 const GiftListItem = ({ item, id }) => {
   const {
@@ -13,6 +14,8 @@ const GiftListItem = ({ item, id }) => {
     sourvernirItems, handleIncrement, handleDecrement
   } = useContext(SourvenirContext);
 
+  const { setNewDeliveryData, newDeliveryData } = useContext(DeliveryContext);
+
   const handleDelete = id => {
     const filteredArray = SourvenirItems.filter(obj => obj.ItemId !== id);
     setSourvernirItems(filteredArray);
@@ -22,6 +25,12 @@ const GiftListItem = ({ item, id }) => {
   };
 
   const data = sourvernirItems.find(x => x.id === item.ItemId);
+
+  useEffect(() => {
+    const filteredItemsArray = sourvernirItems.filter(item => addedSourvernirItems.includes(item.id));
+    setNewDeliveryData(filteredItemsArray);
+  }, [addedSourvernirItems]);
+
   return (
     <Box
       bg="#FAFAFA"
