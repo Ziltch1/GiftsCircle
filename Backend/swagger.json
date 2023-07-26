@@ -765,13 +765,19 @@
         }
       }
     },
-    "/gift/Get/EventGifts/{id}": {
+    "/gift/Get/EventGifts/{id}/{userId}": {
       "get": {
         "description": "",
         "tags": ["Gift"],
         "parameters": [
           {
             "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+{
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2612,6 +2618,9 @@
             "required": true
           },
           "complimentaryGift": {
+            "type": "string",
+            "required": true
+          },"created_by": {
             "type": "string",
             "required": true
           }
