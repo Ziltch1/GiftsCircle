@@ -20,10 +20,11 @@ const GetAll = async () => {
   return gifts;
 };
 
-const GetEventGifts = async (id) => {
+const GetEventGifts = async (id,userId) => {
   const gifts = await prisma.gift.findMany({
     where: {
       eventId: id,
+created_by: userId
     },
   });
   await prisma.$disconnect();
