@@ -33,13 +33,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(
- cors({
-   origin: [
-  "http://localhost:3000",
-   "http://localhost:3001",
-   "https://giftscircle.netlify.app",
-   ],
-  }));
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://giftscircle.netlify.app",
+    ],
+  })
+);
 
 app.get("/", async (req, res) => {
   return res.json({ msg: "hello world" });
@@ -58,6 +59,7 @@ app.use("/api/media/", require("./Controllers/MediaController"));
 app.use("/api/complimentaryGift/", require("./Controllers/ComplimentaryGift"));
 app.use("/api/gift/", require("./Controllers/GiftController"));
 app.use("/api/asoebi/", require("./Controllers/AsoebiController"));
+app.use("/api/sms/", require("./Controllers/SmsController"));
 app.use("/api/sourvenir/", require("./Controllers/SourvenirController"));
 app.use("/api/delivery/", require("./Controllers/DeliveryController"));
 app.use("/api/fundRaising/", require("./Controllers/FundRaisingController"));
