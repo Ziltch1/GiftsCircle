@@ -127,7 +127,7 @@ const Buy = async (data) => {
     const notification = await prisma.notifications.create({
       data: {
         userId: event.user_id,
-        type: "PURCHASE",
+        type: "ASOEBI",
         message: message,
         referenceEvent: event.id,
       },

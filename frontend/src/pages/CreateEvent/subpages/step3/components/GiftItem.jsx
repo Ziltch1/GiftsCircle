@@ -16,9 +16,15 @@ import { dispatch } from '../../../../../redux/store';
 import { GiftContext } from '..';
 import Counter from '../../../../../components/Counter/Counter';
 
-const GiftItem = ({ gift, setData, data, id }) => {
+const GiftItem = ({ gift, setData, id }) => {
   const toast = useToast();
-  const { setAddedGiftItems, setGiftItems, handleIncrement, handleDecrement } = useContext(GiftContext);
+  const {
+    setAddedGiftItems,
+    setGiftItems,
+    handleIncrement,
+    handleDecrement,
+    GiftItems,
+  } = useContext(GiftContext);
   const { giftItems } = useSelector(state => state.gift);
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
   const [enableContribution, setEnableContribution] = useState(gift.enableContribution);
@@ -42,12 +48,20 @@ const GiftItem = ({ gift, setData, data, id }) => {
       status: 'error',
       duration: 5000,
       isClosable: true,
-      position: 'top'
+      position: 'top',
     });
   };
 
-  console.log(data, enableContribution);
-
+  useEffect(() => {
+    GiftItems.map(ele => {
+      if (ele === gift) {
+        ele.enableContribution = enableContribution;
+        return ele;
+      }
+      return ele
+    });
+  }, [enableContribution]);
+  
   return (
     <Box
       bg="#FAFAFA"
@@ -103,8 +117,13 @@ const GiftItem = ({ gift, setData, data, id }) => {
         </Box>
 
         <Box>
-          <Text mb='3'>₦{giftItem.amount * gift.quantity}</Text>
-          <Counter quantity={gift?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={id} />
+          <Text mb="3">₦{giftItem.amount * gift.quantity}</Text>
+          <Counter
+            quantity={gift?.quantity}
+            handleIncrement={handleIncrement}
+            handleDecrement={handleDecrement}
+            id={id}
+          />
         </Box>
       </Flex>
     </Box>

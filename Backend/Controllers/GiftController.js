@@ -46,9 +46,9 @@ router.get("/Get/All", EnsureAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/Get/EventGifts/:id", EnsureAuthenticated, async (req, res) => {
+router.get("/Get/EventGifts/:id/:userId", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await GetEventGifts(req.params.id);
+    let data = await GetEventGifts(req.params.id, req.params.userId);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);

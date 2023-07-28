@@ -401,6 +401,14 @@ model Notifications {
   deleted_by     String?      @db.VarChar(255)
 }
 
+model Sms {
+  id         String   @id @default(uuid())
+  latitude   String   @db.VarChar
+  longitude  String   @db.VarChar
+  sender     String   @db.VarChar(20)
+  created_at DateTime @default(now())
+}
+
 enum Status {
   PAID
   COMPLETED
@@ -449,4 +457,5 @@ enum NOTIFICATION {
   USER_EDIT
   MEDIA
   DELIVERY
+  ASOEBI
 }
