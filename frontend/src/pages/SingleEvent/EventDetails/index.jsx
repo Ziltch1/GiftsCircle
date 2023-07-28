@@ -4,7 +4,7 @@ import EventSchedule from './SubPages/EventSchedule';
 import EventHosts from './SubPages/EventHosts';
 import { GetEventDeliveryDetailsApi } from '../../../redux/axios/apis/delivery';
 
-const Index = ({ newEvent, isCoHost }) => {
+const Index = ({ newEvent, isCoHost, setShowMarketplace }) => {
   const [deliveryAddress, setDeliveryAddress] = useState([]);
 
   const getDeliveryAddress = async () => {
@@ -24,7 +24,7 @@ const Index = ({ newEvent, isCoHost }) => {
   return (
     <Box>
       <Box>
-        <EventSchedule newEvent={newEvent} deliveryAddress={deliveryAddress} isCoHost={isCoHost} getDeliveryAddress={getDeliveryAddress} />
+        <EventSchedule newEvent={newEvent} deliveryAddress={deliveryAddress} isCoHost={isCoHost} getDeliveryAddress={getDeliveryAddress} setShowMarketplace={setShowMarketplace} />
         <EventHosts newEvent={newEvent} />
       </Box>
     </Box>
