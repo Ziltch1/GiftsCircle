@@ -775,7 +775,7 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
+          }
         ],
         "security": [
           {
