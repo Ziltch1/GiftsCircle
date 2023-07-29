@@ -8,6 +8,7 @@ const {
   Create,
   Delete,
   GetEventGifts,
+GetEventGiftsByHost,
   CreateMany,
   EnableContribution,
   GetUserPurchasedGifts,
@@ -59,7 +60,7 @@ router.get("/Get/EventGifts/:id", EnsureAuthenticated, async (req, res) => {
 
 router.get("/Get/EventGifts/:id/:userId", EnsureAuthenticated, async (req, res) => {
   try {
-    let data = await GetEventGifts(req.params.id, req.params.userId);
+    let data = await GetEventGiftsByHost(req.params.id, req.params.userId);
     return res.status(200).send(data);
   } catch (err) {
     console.log(err);
