@@ -4,6 +4,7 @@ import {
   GetEventGuestsApi,
   GetUserEventsApi,
 } from '../../axios/apis/events';
+import { GetUserEventGiftsApi } from '../../axios/apis/gift';
 import { dispatch } from '../../store';
 import {
   setAsoebisItems,
@@ -55,9 +56,9 @@ const GetUserEvents = id => async () => {
   }
 };
 
-const GetEventGifts = id => async () => {
+const GetEventGifts = (id, userId) => async () => {
   try {
-    const res = await GetEventGiftsApi(id);
+    const res = await GetUserEventGiftsApi(id, userId);
     dispatch(setEventGifts(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));

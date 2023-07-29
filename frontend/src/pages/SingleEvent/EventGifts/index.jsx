@@ -13,10 +13,11 @@ const Index = ({ newEvent }) => {
   const [data, setData] = useState([]);
 
   const { eventGifts } = useSelector(state => state.event);
+  const { user } = useSelector(state => state.user);
 
   useEffect(() => {
-    dispatch(GetEventGifts(eventId));
-  }, [eventId]);
+    dispatch(GetEventGifts(eventId, user.id));
+  }, [eventId, user.id]);
 
   useEffect(() => {
     if (eventGifts) {

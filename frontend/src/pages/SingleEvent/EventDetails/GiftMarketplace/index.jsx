@@ -9,15 +9,16 @@ import { dispatch } from '../../../../redux/store';
 import { GetEventGifts } from '../../../../redux/features/events/service';
 import { useSelector } from 'react-redux';
 import BackButton from '../../../../components/Buttons/BackButton';
+import FormFooter from './components/FormFooter';
 
 export const GiftContext = createContext(null);
 
 const Index = ({ step, setStep, setShowMarketplace }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
-
   const [GiftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
   const { newEvent } = useSelector(state => state.event);
+  const { user } = useSelector(state => state.user);
   const [quantity, setQuantity] = useState(1)
 
   const contextValue = useMemo(
@@ -31,8 +32,8 @@ const Index = ({ step, setStep, setShowMarketplace }) => {
   const HandleSubmit = async () => {
     try {
       await CreateManyGiftsApi(GiftItems);
-      dispatch(GetEventGifts(newEvent.id));
-      setStep(step + 1);
+      dispatch(GetEventGifts(newEvent.id, user.id));
+      setShowMarketplace(false);
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +76,7 @@ const Index = ({ step, setStep, setShowMarketplace }) => {
           <Search />
           <FilterButtons />
           <GiftCard />
+          <FormFooter action={HandleSubmit} />
         </GiftContext.Provider>
       </Box>
     </Box>

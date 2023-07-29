@@ -6,7 +6,9 @@ import FormFooter from '../../../components/FormFooter';
 import { GiftContext } from '..';
 import DisplayCard from '../../../../../components/Card';
 
+
 const GiftCard = ({ step, setStep }) => {
+  const { user } = useSelector(state => state.user)
   const {
     setAddedGiftItems,
     addedGiftItems,
@@ -34,6 +36,7 @@ const GiftCard = ({ step, setStep }) => {
         giftItemId: id,
         complimentaryGift: 'none',
         enableContribution: false,
+        created_by: user.id,
       };
       setGiftItems(prev => [...prev, formBody]);
       setAddedGiftItems(prev => [...prev, id]);

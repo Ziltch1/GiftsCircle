@@ -18,7 +18,7 @@ import Counter from '../../../../../components/Counter/Counter';
 
 const GiftItem = ({ gift, setData, data, id }) => {
   const toast = useToast();
-  const { setAddedGiftItems, setGiftItems, handleIncrement, handleDecrement } = useContext(GiftContext);
+  const { setAddedGiftItems, setGiftItems, handleIncrement, handleDecrement, GiftItems } = useContext(GiftContext);
   const { giftItems } = useSelector(state => state.gift);
   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
   const [enableContribution, setEnableContribution] = useState(gift.enableContribution);
@@ -46,7 +46,15 @@ const GiftItem = ({ gift, setData, data, id }) => {
     });
   };
 
-  console.log(data, enableContribution);
+  useEffect(() => {
+    GiftItems.map(ele => {
+      if (ele === gift) {
+        ele.enableContribution = enableContribution;
+        return ele;
+      }
+      return ele
+    });
+  }, [enableContribution]);
 
   return (
     <Box

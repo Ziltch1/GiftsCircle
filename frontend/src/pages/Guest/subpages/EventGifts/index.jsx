@@ -9,6 +9,7 @@ import ContributionModal from './subpages/ContributionModal';
 import { Zones } from '../../../../Utils/data/ZONES';
 import Checkout from './Checkout';
 import Prompt from './subpages/Prompt';
+import { GetEventGiftTransApi } from '../../../../redux/axios/apis/gift';
 
 
 export const CartContext = createContext(null);
@@ -18,7 +19,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
   const [data, setData] = useState([]);
-  const { eventGifts, eventDeliveryDetails } = useSelector(state => state.event);
+  const { eventGifts, eventDeliveryDetails, newEvent } = useSelector(state => state.event);
   const { giftItems, complimentaryGifts } = useSelector(state => state.gift);
   const [GiftItems, setGiftItems] = useState([]);
   const [ComplimentaryItems, setComplimentaryItems] = useState([]);
@@ -38,6 +39,8 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [showPrompt, setShowPrompt] = useState(false);
   const [isComplimentary, setIsComplimentary] = useState(false)
 
+  console.log(eventGifts, newEvent.id);
+
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftItemId === id);
     let itemData = giftItems.find(x => x.id === id);
@@ -53,6 +56,21 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
       }
     }
   };
+
+
+  const getGifts = async() => {
+    try {
+      const res = await GetEventGiftTransApi(newEvent.id)
+      const data = await res.data;
+      console.log(data);
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect(() => {
+    getGifts();
+  }, [newEvent.id])
 
 
   useEffect(() => {
@@ -180,7 +198,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                 minH='400px'
               >
                 {fullPaymentGift.map(item => {
-                  const giftItem = eventGifts.find(x => x.giftItemId === item.id);
+                  const giftItem = eventGifts?.find(x => x.giftItemId === item.id);
                   return (
                     <DisplayCard
                       id={item?.id}
@@ -209,7 +227,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                 minH='400px'
               >
                 {contributionGift.map(item => {
-                  const giftItem = eventGifts.find(x => x.giftItemId === item.id);
+                  const giftItem = eventGifts?.find(x => x.giftItemId === item.id);
                   return (
                     <DisplayCard
                       id={item?.id}

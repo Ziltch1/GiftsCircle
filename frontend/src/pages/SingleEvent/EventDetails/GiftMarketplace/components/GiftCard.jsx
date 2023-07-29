@@ -17,6 +17,7 @@ const GiftCard = ({ step, setStep }) => {
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
   const { newEvent } = useSelector(state => state.event);
+  const {user} = useSelector(state => state.user)
   const [data, setData] = useState([]);
   const [currentGift, setCurrentGift] = useState(null);
   const toast = useToast();
@@ -33,6 +34,7 @@ const GiftCard = ({ step, setStep }) => {
         giftItemId: id,
         complimentaryGift: 'none',
         enableContribution: false,
+        created_by: user.id,
       };
       setGiftItems(prev => [...prev, formBody]);
       setAddedGiftItems(prev => [...prev, id]);
