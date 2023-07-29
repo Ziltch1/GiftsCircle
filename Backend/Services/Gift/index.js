@@ -20,6 +20,16 @@ const GetAll = async () => {
   return gifts;
 };
 
+const GetEventGifts = async (id) => {
+  const gifts = await prisma.gift.findMany({
+    where: {
+      eventId: id
+    },
+  });
+  await prisma.$disconnect();
+  return gifts;
+};
+
 const GetEventGifts = async (id,userId) => {
   const gifts = await prisma.gift.findMany({
     where: {
