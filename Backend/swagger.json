@@ -2684,6 +2684,9 @@
           "giftId": {
             "type": "string",
             "required": true
+          },"amountPaid": {
+            "type": "number",
+            "required": true
           }
         }
       },
