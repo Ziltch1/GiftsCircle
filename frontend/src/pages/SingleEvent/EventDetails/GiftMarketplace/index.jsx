@@ -34,6 +34,8 @@ const Index = ({ step, setStep, setShowMarketplace }) => {
       await CreateManyGiftsApi(GiftItems);
       dispatch(GetEventGifts(newEvent.id, user.id));
       setShowMarketplace(false);
+      await setGiftItems([]);
+      await setAddedGiftItems([]);
     } catch (error) {
       console.log(error);
     }

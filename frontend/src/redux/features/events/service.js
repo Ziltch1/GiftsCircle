@@ -4,7 +4,7 @@ import {
   GetEventGuestsApi,
   GetUserEventsApi,
 } from '../../axios/apis/events';
-import { GetUserEventGiftsApi } from '../../axios/apis/gift';
+import { GetEventGiftTransApi, GetUserEventGiftsApi } from '../../axios/apis/gift';
 import { dispatch } from '../../store';
 import {
   setAsoebisItems,

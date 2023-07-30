@@ -19,7 +19,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
   const [data, setData] = useState([]);
-  const { eventGifts, eventDeliveryDetails, newEvent } = useSelector(state => state.event);
+  const { eventDeliveryDetails, newEvent } = useSelector(state => state.event);
   const { giftItems, complimentaryGifts } = useSelector(state => state.gift);
   const [GiftItems, setGiftItems] = useState([]);
   const [ComplimentaryItems, setComplimentaryItems] = useState([]);
@@ -37,13 +37,13 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [fullPaymentGift, setFullPaymentGift] = useState([]);
   const [contributionGift, setContributionGift] = useState([])
   const [showPrompt, setShowPrompt] = useState(false);
-  const [isComplimentary, setIsComplimentary] = useState(false)
-
-  console.log(eventGifts, newEvent.id);
+  const [isComplimentary, setIsComplimentary] = useState(false);
+  const [eventGifts, setEventGifts] = useState([]);
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftItemId === id);
     let itemData = giftItems.find(x => x.id === id);
+    console.log(itemData);
     setIsComplimentary(false)
     if (itemData.enableContribution === true) {
       setContributionModal(true);
@@ -58,18 +58,18 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   };
 
 
-  const getGifts = async() => {
+  const getEventGifts = async() => {
     try {
       const res = await GetEventGiftTransApi(newEvent.id)
       const data = await res.data;
-      console.log(data);
+      setEventGifts(data);
     } catch (error) {
-      
+      console.log(error);
     }
   }
 
   useEffect(() => {
-    getGifts();
+    getEventGifts();
   }, [newEvent.id])
 
 
@@ -83,7 +83,6 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
     setContributionGifts(newGift);
   }, [eventGifts]);
 
-  // console.log(eventGifts);
 
   const contextValue = useMemo(
     () => ({

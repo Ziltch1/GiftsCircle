@@ -9,14 +9,14 @@ import {
   Td,
   TableContainer,
   Image,
-  Flex,
+  Flex, Heading, Text
 } from '@chakra-ui/react';
 import eye from '../../../../components/assets/eye.svg';
 import message from '../../../../components/assets/message.svg';
 import GiftDrawer from '../../../../components/Drawer/Drawer';
 import { useSelector } from 'react-redux';
 
-const PurchaseHistory = () => {
+const PurchaseHistory = ({purchaseHistory}) => {
   const { giftItems, eventGiftTrans, complimentaryGifts } = useSelector(
     state => state.gift
   );
@@ -26,8 +26,10 @@ const PurchaseHistory = () => {
     setShowDrawer(true);
   };
 
+
   return (
     <Box minH='500px'>
+      {purchaseHistory.length > 0 ?
       <TableContainer bg="white">
         <Table variant="simple">
           <Thead bg="#EEEEEE" px="17px" py="40px">
@@ -41,17 +43,16 @@ const PurchaseHistory = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {eventGiftTrans ? (
-              eventGiftTrans.map(ele => {
-                const gift = ele.giftId
-                  ? giftItems.find(x => x.id === ele.gift.giftItemId)
+              {eventGiftTrans.map(ele => {
+                console.log(ele);
+                const gift = ele?.giftItemId ? giftItems.find(x => x.id === ele.giftItemId)
                   : complimentaryGifts.find(
                       x => x.id === ele.complimentaryGift.id
                     );
                 return (
                   <>
                     <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
-                      <Td>{gift.title}</Td>
+                      <Td>{gift?.title}</Td>
                       <Td>
                         {ele.purchasedBy.firstname +
                           '  ' +
@@ -64,7 +65,7 @@ const PurchaseHistory = () => {
                             : 'Yes'
                           : 'No'}
                       </Td>
-                      <Td isNumeric>N{ele.amount}</Td>
+                      <Td isNumeric>N{ele?.amount}</Td>
                       <Td>{ele.giftId ? ele.gift.status : 'COMPLETED'}</Td>
                       <Td>
                         <Flex gap={8}>
@@ -75,13 +76,16 @@ const PurchaseHistory = () => {
                     </Tr>
                   </>
                 );
-              })
-            ) : (
-              <>No purchase Yet</>
-            )}
+              })}
           </Tbody>
         </Table>
       </TableContainer>
+      : <Box h='200px' display='flex' alignItems='center' justifyContent='center'>
+          <Box textAlign='center'>
+            <Heading fontSize={28} mb='3'>No one has purchased your gifts yet</Heading>
+            <Text fontSize={18}>All your purchases will appear here</Text>
+          </Box>
+        </Box>}
       {showDrawer ? <GiftDrawer /> : null}
     </Box>
   );
