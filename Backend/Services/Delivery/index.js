@@ -58,10 +58,8 @@ const Create = async (data) => {
     await prisma.$disconnect();
     return delivery;
   }
-  let id = uuidv4();
   const Data = await prisma.delivery.create({
     data: {
-      id: id,
       firstname: data.firstname,
       lastname: data.lastname,
       address: data.address,
@@ -100,7 +98,6 @@ const Update = async (id, data) => {
         state: data.state ? data.state : delivery.state,
         tel: data.tel ? data.tel : delivery.tel,
         tel2: data.tel2 ? data.tel2 : delivery.tel2,
-        updated_at: new Date(Date.now()),
         updated_by: delivery.userId,
       },
     });

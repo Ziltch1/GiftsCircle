@@ -50,10 +50,7 @@ const Create = async (data) => {
 };
 
 const CreateMany = async (data) => {
-  data.forEach((element) => {
-    element.id = uuidv4();
-    return element;
-  });
+
   await prisma.sourvenir.createMany({
     data: [...data],
     skipDuplicates: true,
@@ -87,8 +84,7 @@ const Buy = async (id) => {
         id: sourvenir.id,
       },
       data: {
-        purchased: true,
-        updated_at:new Date(Date.now())
+        purchased: true
       },
     });
 

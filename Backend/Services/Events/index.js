@@ -19,7 +19,7 @@ const GetEvent = async (id) => {
 };
 
 const GetAllEvents = async () => {
-  const events = await prisma.event.findMany();
+  const events = await prisma.event.findMany({});
 
   await prisma.$disconnect();
   return events;
@@ -28,12 +28,12 @@ const GetAllEvents = async () => {
 const GetUserEvents = async (id) => {
   const events = await prisma.event.findMany({
     where: {
-      user_id: id,
+      userId: id,
     },
     include: {
-      gifts: {
+      gift: {
         select: {
-          giftItemId: true,
+          giftitemId: true,
         },
       },
     },
@@ -56,11 +56,11 @@ const GetUserEvents = async (id) => {
           start_time: true,
           end_time: true,
           image: true,
-          user_id: true,
+          userId: true,
           host: true,
-          gifts: {
+          gift: {
             select: {
-              giftItemId: true,
+              giftitemId: true,
             },
           },
         },
@@ -86,7 +86,6 @@ const Create = async (data) => {
 
   if (user) {
     const coHostId = data.coHost ? CreateCoHostId() : "";
-    console.log(coHostId);
     let event = await prisma.event.create({
       data: {
         id: CreateEventId(),
@@ -98,7 +97,7 @@ const Create = async (data) => {
         end_time: data.end_time,
         timezone: data.timezone,
         host: data.host,
-        user_id: data.userId,
+        userId: data.userId,
         co_hosts: undefined,
         published: false,
         applyDonation: false,
@@ -137,8 +136,7 @@ const Update1 = async (data) => {
         end_time: data.end_time,
         timezone: data.timezone,
         host: data.host,
-        updated_at: new Date(Date.now()),
-        updated_by: event.user_id,
+        updated_by: event.userId,
       },
     });
 
@@ -163,8 +161,7 @@ const Update2 = async (data, image) => {
       data: {
         image: image,
         descSummary: data.desc_summary,
-        summary: data.summary,
-        updated_at: new Date(Date.now()),
+        summary: data.summary
       },
     });
 
@@ -182,7 +179,7 @@ const Update3 = async (data) => {
   });
   const user = await prisma.user.findUnique({
     where: {
-      id: event.user_id,
+      id: event.userId,
     },
   });
 
@@ -195,14 +192,13 @@ const Update3 = async (data) => {
         published: data.published,
         percentDonation: data.percentDonation,
         applyDonation: data.applyDonation,
-        updated_at: new Date(Date.now()),
       },
     });
     if (data.published) {
       const message = `Event: ${event.title} is published`;
       const notification = await prisma.notifications.create({
         data: {
-          userId: event.user_id,
+          userId: event.userId,
           type: "EVENTCREATION",
           message: message,
           referenceEvent: event.id,
@@ -214,7 +210,7 @@ const Update3 = async (data) => {
     const message = `Event: ${event.title} was edited`;
     const notification = await prisma.notifications.create({
       data: {
-        userId: event.user_id,
+        userId: event.userId,
         type: "EVENTEDIT",
         message: message,
         referenceEvent: event.id,
@@ -240,7 +236,7 @@ const DeleteEvent = async (id) => {
   const message = `Event: ${event.title} deleted`;
   const notification = await prisma.notifications.create({
     data: {
-      userId: event.user_id,
+      userId: event.userId,
       type: "EVENTDELETION",
       message: message,
       referenceEvent: event.id,
@@ -271,11 +267,9 @@ const AddGuest = async (data) => {
 
   if (event) {
     if (event.guestCode === data.guestCode) {
-      if (data.userId !== event.user_id) {
-        const id = uuidv4();
+      if (data.userId !== event.userId) {
         let Data = await prisma.guests.create({
           data: {
-            id: id,
             event: {
               connect: {
                 id: data.eventId,
@@ -293,7 +287,7 @@ const AddGuest = async (data) => {
         const message = `Event: A new guest joined ${event.title} event`;
         const notification = await prisma.notifications.create({
           data: {
-            userId: event.user_id,
+            userId: event.userId,
             type: "GUESTJOIN",
             message: message,
             referenceEvent: event.id,
@@ -334,11 +328,9 @@ const AddCoHost = async (data) => {
 
   if (event) {
     if (event.coHostCode === data.coHostCode) {
-      if (data.userId !== event.user_id) {
-        const id = uuidv4();
+      if (data.userId !== event.userId) {
         let Data = await prisma.guests.create({
           data: {
-            id: id,
             event: {
               connect: {
                 id: data.eventId,
@@ -356,7 +348,7 @@ const AddCoHost = async (data) => {
         const message = `Event: Your Co Host joined ${event.title} event`;
         const notification = await prisma.notifications.create({
           data: {
-            userId: event.user_id,
+            userId: event.userId,
             type: "COHOSTJOIN",
             message: message,
             referenceEvent: event.id,

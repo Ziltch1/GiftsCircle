@@ -30,7 +30,6 @@ const Create = async (data, image) => {
     }
     let fundRaising = await prisma.fundRaising.create({
       data: {
-        id: uuidv4(),
         eventId: data.eventId,
         amount: parseInt(data.amount),
         amountPaid: 0,
@@ -44,7 +43,7 @@ const Create = async (data, image) => {
     const message = `FundRaising has been created and is active`;
     const notification = await prisma.notifications.create({
       data: {
-        userId: event.user_id,
+        userId: event.userId,
         type: "FUNDRAISING",
         message: message,
         referenceEvent: event.id,
@@ -71,7 +70,6 @@ const UpdateStatus = async (data) => {
       },
       data: {
         active: data.status,
-        updated_at: new Date(Date.now())
       },
     });
 
@@ -94,8 +92,7 @@ const UpdateAmount = async (data) => {
         id: data.id,
       },
       data: {
-        amount: data.amount,
-        updated_at: new Date(Date.now())
+        amount: data.amount
       },
     });
 
@@ -115,7 +112,6 @@ const Donate = async (data) => {
   if (fundRaising) {
     const donation = await prisma.fundRaisingDonation.create({
       data: {
-        id: uuidv4(),
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
@@ -130,8 +126,7 @@ const Donate = async (data) => {
         id: fundRaising.id,
       },
       data: {
-        amountPaid: fundRaising.amountPaid + parseInt(data.amount),
-        updated_at: new Date(Date.now()),
+        amountPaid: fundRaising.amountPaid + parseInt(data.amount)
       },
     });
     const event = await prisma.event.findUnique({
@@ -140,7 +135,7 @@ const Donate = async (data) => {
     const message = `FundRaising: ${data.firstName} donated ${data.amount} to the FundRaising`;
     const notification = await prisma.notifications.create({
       data: {
-        userId: event.user_id,
+        userId: event.userId,
         type: "FUNDRAISING",
         message: message,
         referenceEvent: event.id,

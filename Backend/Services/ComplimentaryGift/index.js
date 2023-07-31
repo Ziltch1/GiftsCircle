@@ -20,10 +20,8 @@ const GetAll = async () => {
 };
 
 const Create = async (data, image) => {
-  let id = uuidv4();
   let Data = await prisma.complimentarygift.create({
     data: {
-      id: id,
       title: data.title,
       category: data.category,
       details: data.details,
@@ -38,7 +36,6 @@ const Create = async (data, image) => {
 
 const Buy = async (data) => {
   data.forEach((element) => {
-    element.id = uuidv4();
     element.date = new Date(Date.now());
     element.quantity = 1;
     return element;
@@ -70,7 +67,6 @@ const Update = async (id, data, image) => {
         details: data.details ? data.details : complimentaryItem.details,
         category: data.category ? data.category : complimentaryItem.category,
         title: data.title ? data.title : complimentaryItem.title,
-        updated_at: new Date(Date.now()),
       },
     });
 

@@ -40,7 +40,7 @@ const UpdateNotifications = async (id) => {
 };
 
 const Create = async (data) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email: data.email,
     },
@@ -86,18 +86,17 @@ const SetPassword = async (data, type) => {
   if (type === "RESET") {
     token_data = VerifyToken(data.auth);
   }
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email: token_data ? token_data.email : data.auth,
     },
   });
-
   if (user) {
     let hashedPassword = await hashPassword(data.password);
 
     await prisma.user.update({
       where: {
-        email: user.email,
+        id: user.id,
       },
       data: {
         password: hashedPassword,
@@ -112,7 +111,7 @@ const SetPassword = async (data, type) => {
 };
 
 const ChangePassword = async (data) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email: data.email,
     },
@@ -125,7 +124,7 @@ const ChangePassword = async (data) => {
       let hashedPassword = await hashPassword(data.newPassword);
       await prisma.user.update({
         where: {
-          email: user.email,
+          id: user.id,
         },
         data: {
           password: hashedPassword,
