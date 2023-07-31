@@ -20,7 +20,17 @@ const GetAll = async () => {
   return gifts;
 };
 
-const GetEventGifts = async (id, userId) => {
+const GetEventGifts = async (id) => {
+  const gifts = await prisma.gift.findMany({
+    where: {
+      eventId: id
+    },
+  });
+  await prisma.$disconnect();
+  return gifts;
+};
+
+const GetEventGiftsByHost = async (id,userId) => {
   const gifts = await prisma.gift.findMany({
     where: {
       eventId: id,
@@ -260,6 +270,7 @@ module.exports = {
   Get,
   GetAll,
   GetEventGifts,
+GetEventGiftsByHost,
   GetEventGiftTransactions,
   GetUserEventPurchasedGifts,
   Delete,

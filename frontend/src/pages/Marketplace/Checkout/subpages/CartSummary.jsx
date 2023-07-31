@@ -20,7 +20,7 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout, deliveryPe
       deliveryFee: ((deliveryPercent * item.amount)/100),
     }
     return newData
-  })
+  });
   
   const HandleSubmit = async () => {
     if (data?.length > 0) {

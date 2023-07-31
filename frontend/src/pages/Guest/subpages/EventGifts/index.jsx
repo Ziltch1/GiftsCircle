@@ -9,6 +9,7 @@ import ContributionModal from './subpages/ContributionModal';
 import { Zones } from '../../../../Utils/data/ZONES';
 import Checkout from './Checkout';
 import Prompt from './subpages/Prompt';
+import { GetEventGiftTransApi } from '../../../../redux/axios/apis/gift';
 
 
 export const CartContext = createContext(null);
@@ -18,15 +19,12 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
   const [data, setData] = useState([]);
-  const { eventGifts, eventDeliveryDetails } = useSelector(
-    state => state.event
-  );
+  const { eventDeliveryDetails, newEvent } = useSelector(state => state.event);
   const { giftItems, complimentaryGifts } = useSelector(state => state.gift);
   const [GiftItems, setGiftItems] = useState([]);
   const [ComplimentaryItems, setComplimentaryItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
-  const [addedComplimentaryGiftItems, setAddedComplimentaryGiftItems] =
-    useState([]);
+  const [addedComplimentaryGiftItems, setAddedComplimentaryGiftItems] = useState([]);
   const [amount, setAmount] = useState(0);
   const [giftAmount, setGiftAmount] = useState(0);
   const [complimentaryGiftAmount, setComplimentaryGiftAmount] = useState(0);
@@ -39,13 +37,15 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [fullPaymentGift, setFullPaymentGift] = useState([]);
   const [contributionGift, setContributionGift] = useState([])
   const [showPrompt, setShowPrompt] = useState(false);
-  const [isComplimentary, setIsComplimentary] = useState(false)
+  const [isComplimentary, setIsComplimentary] = useState(false);
+  const [eventGifts, setEventGifts] = useState([]);
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftItemId === id);
     let itemData = giftItems.find(x => x.id === id);
+    console.log(itemData);
     setIsComplimentary(false)
-    if (itemData.amount > 20000) {
+    if (itemData.enableContribution === true) {
       setContributionModal(true);
       setCurrentItem(newItem);
     } else {
@@ -58,15 +58,31 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   };
 
 
+  const getEventGifts = async() => {
+    try {
+      const res = await GetEventGiftTransApi(newEvent.id)
+      const data = await res.data;
+      setEventGifts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
-    const newGift = giftItems.filter(x => x?.amount < 20000);
+    getEventGifts();
+  }, [newEvent.id])
+
+
+  useEffect(() => {
+    const newGift = eventGifts.filter(x => x?.enableContribution === false);
     setFullPaymentGifts(newGift);
   }, [eventGifts]);
 
   useEffect(() => {
-    const newGift = giftItems.filter(x => x?.amount > 20000);
+    const newGift = eventGifts?.filter(x => x?.enableContribution === true);
     setContributionGifts(newGift);
   }, [eventGifts]);
+
 
   const contextValue = useMemo(
     () => ({
@@ -114,12 +130,12 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   }, [eventDeliveryDetails]);
 
   useEffect(() => {
-    const filterGift = fullPaymentGifts?.filter(x => eventGifts.map((item) => item.giftItemId).includes(x.id))
+    const filterGift = giftItems?.filter(x => fullPaymentGifts.map((item) => item.giftItemId).includes(x.id))
     setFullPaymentGift(filterGift)
   }, [fullPaymentGifts])
 
   useEffect(() => {
-    const filterGift = contributionGifts?.filter(x => eventGifts.map((item) => item.giftItemId).includes(x.id))
+    const filterGift = giftItems?.filter(x => contributionGifts.map((item) => item.giftItemId).includes(x.id))
     setContributionGift(filterGift)
   }, [contributionGifts]);
 
@@ -178,9 +194,10 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                 alignItems="center"
                 justifyContent="space-between"
                 flexWrap="wrap"
+                minH='400px'
               >
                 {fullPaymentGift.map(item => {
-                  const giftItem = eventGifts.find(x => x.giftItemId === item.id);
+                  const giftItem = eventGifts?.find(x => x.giftItemId === item.id);
                   return (
                     <DisplayCard
                       id={item?.id}
@@ -188,7 +205,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                       action={addGift}
                       disabled={
                         addedGiftItems.includes(giftItem?.id) ||
-                        giftItem.amountPaid >= item?.amount * giftItem?.quantity
+                        giftItem?.amountPaid >= item?.amount * giftItem?.quantity
                       }
                       purchased={giftItem?.amountPaid >= item?.amount * giftItem?.quantity}
                       text={'Purchase'}
@@ -206,10 +223,10 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                 alignItems="center"
                 justifyContent="space-between"
                 flexWrap="wrap"
+                minH='400px'
               >
                 {contributionGift.map(item => {
-                  const giftItem = eventGifts.find(x => x.giftItemId === item.id);
-                  console.log(giftItem);
+                  const giftItem = eventGifts?.find(x => x.giftItemId === item.id);
                   return (
                     <DisplayCard
                       id={item?.id}

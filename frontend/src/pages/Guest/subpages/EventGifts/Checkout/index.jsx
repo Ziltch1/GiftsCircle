@@ -29,7 +29,7 @@ const Index = ({ setShowCheckout, giftDetails, checkContribution }) => {
       const data = await res.data;
       setDeliveryDetails(data)
     } catch (error) {
-      
+      console.log(error);
     }
   }
 

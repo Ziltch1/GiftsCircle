@@ -35,7 +35,6 @@ const ContributionModal = ({ setOpenModal, isOpen, }) => {
   const { onClose } = useDisclosure();
   const [contribution, setContribution] = useState(false);
 
-  console.log(showPrompt);
 
   const HandleSubmit = () => {
     setShowPrompt(true)

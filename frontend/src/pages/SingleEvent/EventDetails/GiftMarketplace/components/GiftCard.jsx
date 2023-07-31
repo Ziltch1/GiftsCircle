@@ -1,14 +1,11 @@
 import { Flex, useToast } from '@chakra-ui/react';
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import GiftDetails from '../components/GiftDetails';
-import FormFooter from '../../../components/FormFooter';
+import GiftDetails from './GiftDetails';
 import { GiftContext } from '..';
 import DisplayCard from '../../../../../components/Card';
 
-
 const GiftCard = ({ step, setStep }) => {
-  const { user } = useSelector(state => state.user)
   const {
     setAddedGiftItems,
     addedGiftItems,
@@ -20,6 +17,7 @@ const GiftCard = ({ step, setStep }) => {
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
   const { newEvent } = useSelector(state => state.event);
+  const {user} = useSelector(state => state.user)
   const [data, setData] = useState([]);
   const [currentGift, setCurrentGift] = useState(null);
   const toast = useToast();
@@ -85,7 +83,6 @@ const GiftCard = ({ step, setStep }) => {
           );
         })}
       </Flex>
-      <FormFooter action={handleSubmit} step={step} />
     </>
   );
 };

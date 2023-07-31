@@ -12,12 +12,12 @@ const GetUserPurchasedGiftsApi = id => {
   return api.get(`/gift/Get/PurchasedBy/${id}`);
 };
 
-const GetEventGiftTransApi = id => {
-  return api.get(`/gift/Get/EventGiftsTrans/${id}`);
+const GetEventGiftTransApi = (id) => {
+  return api.get(`/gift/Get/EventGifts/${id}`);
 };
 
-const GetUserEventGiftTransApi = (id, eventId) => {
-  return api.get(`/gift/Get/UserEventGiftsTrans/${id}/${eventId}/`);
+const GetUserEventGiftTransApi = (id, userId) => {
+  return api.get(`/gift/Get/EventGifts/${id}/${userId}/`);
 };
 
 const CreateManyGiftsApi = data => {
@@ -44,6 +44,10 @@ const GetUserGiftApi = id => {
   return api.get(`/gift/Get/MarketUserGifts/${id}`);
 };
 
+const GetUserEventGiftsApi = (id, userId) => {
+  return api.get(`/gift/Get/EventGifts/${id}/${userId}`);
+}
+
 export {
   GetGiftItemsApi,
   GetComplimentaryGiftItemsApi,
@@ -56,4 +60,5 @@ export {
   GetUserPurchasedGiftsApi,
   AddGiftApi,
   GetUserGiftApi,
+  GetUserEventGiftsApi
 };

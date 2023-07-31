@@ -46,6 +46,7 @@ const Index = () => {
   const [checkContribution, setCheckContribution] = useState(false);
   const [newDeliveryData, setNewDeliveryData] = useState([]);
   const [deliveryData, setDeliveryData] = useState([]);
+  const [itemsData, setItemsData] = useState([]);
   const {navPosition, setNavPosition} = useContext(PositionContext); 
 
   useEffect(() => {
@@ -100,7 +101,7 @@ const Index = () => {
           </Stack>
         ) : (
           <CheckoutContext.Provider
-            value={{checkoutAmount, setCheckoutAmount, cartLength, setCartLength, deliveryFee, setDeliveryFee,}}
+            value={{checkoutAmount, setCheckoutAmount, cartLength, setCartLength, deliveryFee, setDeliveryFee, itemsData, setItemsData}}
           >
             <DeliveryContext.Provider value={{newDeliveryData, setNewDeliveryData, deliveryData, setDeliveryData}}>
             {showCheckout ? 
