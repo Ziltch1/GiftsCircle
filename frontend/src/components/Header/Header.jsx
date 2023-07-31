@@ -48,7 +48,7 @@ const Header = () => {
 
   useEffect(() => {
     getUserNotifications();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const unreadNotifications = notifications?.filter(item => item.read !== true);

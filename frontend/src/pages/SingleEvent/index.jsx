@@ -30,6 +30,7 @@ import {
   GetGiftItems,
 } from '../../redux/features/gift/service';
 import { PositionContext } from '../../Layouts/DashBoardLayout';
+import Marketplace from './EventDetails/GiftMarketplace';
 
 const Index = ({isCoHost}) => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const Index = ({isCoHost}) => {
   const { id } = useParams();
   const [newEvent, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showMarketplace, setShowMarketplace] = useState(false);
 
   const { events, fundRaising, eventGuests } = useSelector(
     state => state.event
@@ -100,7 +102,7 @@ const Index = ({isCoHost}) => {
 
   return (
     <Box bg="#F5F5F5">
-      <Box w="76%" mx="auto" pt="8" pb="7">
+      <Box w={showMarketplace ? '90%' : '76%'} mx="auto" pt={showMarketplace ? '0' : 8} pb="7">
         {loading ? (
           <Stack spacing="20px">
             <Skeleton height="50px" width="100%" />
@@ -109,29 +111,38 @@ const Index = ({isCoHost}) => {
           </Stack>
         ) : (
           <>
-            <Box>
-              <BackButton action={goBack} />
-              <EventImages newEvent={newEvent} eventGuests={eventGuests} />
-            </Box>
-            <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
-
-            {newEvent.published ? (
+          {
+            showMarketplace 
+            ? 
+            <Marketplace setShowMarketplace={setShowMarketplace} />
+            :
+            <>
               <Box>
-                {navPosition === 0 && <EventDetails newEvent={newEvent} isCoHost={isCoHost} />}
-                {navPosition === 1 && <EventGifts newEvent={newEvent} />}
-                {navPosition === 2 && <EventMedia />}
-                {navPosition === 3 && <EventGuests />}
-                {navPosition === 4 && <Asoebi newEvent={newEvent} />}
-                {navPosition === 5 && <Fundraising />}
+                <BackButton action={goBack} />
+                <EventImages newEvent={newEvent} eventGuests={eventGuests} />
               </Box>
-            ) : (
+              <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
               <Box>
-                {navPosition === 0 && <EventDetails newEvent={newEvent} isCoHost={isCoHost} />}
-                {navPosition === 1 && <EventGifts newEvent={newEvent} />}
-                {navPosition === 2 && <Asoebi newEvent={newEvent} />}
-                {navPosition === 3 && <Fundraising />}
+                  {newEvent.published ? (
+                    <Box>
+                      {navPosition === 0 && <EventDetails newEvent={newEvent} isCoHost={isCoHost} setShowMarketplace={setShowMarketplace} />}
+                      {navPosition === 1 && <EventGifts newEvent={newEvent} />}
+                      {navPosition === 2 && <EventMedia />}
+                      {navPosition === 3 && <EventGuests />}
+                      {navPosition === 4 && <Asoebi newEvent={newEvent} />}
+                      {navPosition === 5 && <Fundraising />}
+                    </Box>
+                  ) : (
+                    <Box>
+                      {navPosition === 0 && <EventDetails newEvent={newEvent} isCoHost={isCoHost} setShowMarketplace={setShowMarketplace} />}
+                      {navPosition === 1 && <EventGifts newEvent={newEvent} />}
+                      {navPosition === 2 && <Asoebi newEvent={newEvent} />}
+                      {navPosition === 3 && <Fundraising />}
+                    </Box>
+                  )}
               </Box>
-            )}
+            </>
+          }  
           </>
         )}
       </Box>

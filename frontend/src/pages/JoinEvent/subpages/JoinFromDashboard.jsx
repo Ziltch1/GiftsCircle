@@ -48,7 +48,7 @@ const JoinFromDashboard = () => {
       };
       try {
         await JoinEventGuestApi(data);
-        navigate(`/view_event/${eventId}`);
+        navigate(`/dashboard/event_details/${eventId}`);
       } catch (error) {
         console.log(ErrorHandler(error));
         dispatch(createResponse(ErrorHandler(error)));
@@ -67,7 +67,7 @@ const JoinFromDashboard = () => {
       };
       try {
         await JoinEventCoHostApi(data);
-        navigate(`/view_event/${eventId}`);
+        navigate(`/dashboard/event_details/${eventId}`);
       } catch (error) {
         console.log(ErrorHandler(error));
         dispatch(createResponse(ErrorHandler(error)));

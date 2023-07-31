@@ -12,7 +12,7 @@ import {FaCheck} from 'react-icons/fa'
 import DeliveryAddressModal from './DeliveryAddressModal';
 import EditAddressModal from './EditAddressModal';
 
-const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress }) => {
+const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress, setShowMarketplace }) => {
   const navigate = useNavigate();
   const date = newEvent.date;
   const dateString = date;
@@ -33,6 +33,10 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
 
   const handleClick = () => {
     setEditAddress(true)
+  }
+
+  const showGiftMarketplace = () => {
+    setShowMarketplace(true)
   }
 
   return (
@@ -58,6 +62,12 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
         </Box>
 
         <Box w="295px" h="auto">
+
+            {isCoHost && 
+              <Box mb='4' w='100%'>
+                <Button fontWeight='medium' color='white' w='100%' h='45px' bg="#00BFB2" fontSize={14.5} onClick={showGiftMarketplace}>Add your Gifts</Button>
+              </Box>
+            }
           {isCoHost && 
               <Box py='5' px='5' borderRadius={5} bg='#EEEEEE' mb='4' boxShadow='sm'>
                 <Heading fontSize={18} fontWeight='medium' mb='2.5'>Delivery Address</Heading>

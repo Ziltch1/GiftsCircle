@@ -5,6 +5,7 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Button,
   useDisclosure,
   Box,
   Text,
@@ -13,32 +14,57 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
-const DetailsDrawer = ({ data, setModalOpen, modalOpen }) => {
-  const { onClose } = useDisclosure({ defaultIsOpen: true });
+const GiftDetails = ({
+  setOpenGiftDetails,
+  gift,
+  added,
+  setGiftItems,
+  setAddedGiftItems,
+  newEventId,
+}) => {
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const btnRef = React.useRef();
+  const closeModal = () => {
+    setOpenGiftDetails(false);
+  };
+
+  const AddGift = (id) => {
+    if (!added) {
+      const formBody = {
+        eventId: newEventId,
+        quantity: 1,
+        giftItemId: id,
+        complimentaryGift: 'none',
+      };
+      setGiftItems(prev => [...prev, formBody]);
+      setAddedGiftItems(prev => [...prev, id]);
+    }
+  };
 
   return (
     <Box>
       <Drawer
-        isOpen={modalOpen}
+        isOpen={isOpen}
         placement="right"
         onClose={onClose}
+        finalFocusRef={btnRef}
         size="lg"
         closeOnOverlayClick={false}
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton onClick={() => setModalOpen(false)} />
+          <DrawerCloseButton onClick={closeModal} />
 
           <DrawerBody mt="16" mb="8">
             <Box w="600px">
               <Box border="1px solid lightgray" p="5" borderRadius={5} mb="5">
-                <Image src={data?.image} display="block" mx="auto" />
+                <Image src={gift.image} display="block" mx="auto" />
               </Box>
               <Box mb="8">
                 <Flex justifyContent="space-between">
                   <Box w="140px" h="129px" borderRadius={10} bg="#F5F5F5">
                     <Image
-                      src={data?.image}
+                      src={gift.image}
                       w="140px"
                       h="129px"
                       borderRadius={10}
@@ -59,9 +85,9 @@ const DetailsDrawer = ({ data, setModalOpen, modalOpen }) => {
               <Box mb="14">
                 <Flex justifyContent="space-between" alignItems="center">
                   <Heading fontSize={24} fontWeight={600}>
-                    ₦ {data?.amount?.toLocaleString()}
+                    ₦ {gift.amount.toLocaleString()}
                   </Heading>
-                  {/* <Button
+                  <Button
                     fontSize={13}
                     fontWeight={500}
                     color="white"
@@ -71,7 +97,7 @@ const DetailsDrawer = ({ data, setModalOpen, modalOpen }) => {
                     onClick={() => AddGift(gift.id)}
                   >
                     {added ? 'Added' : 'Add to list'}
-                  </Button> */}
+                  </Button>
                 </Flex>
               </Box>
 
@@ -118,4 +144,4 @@ const DetailsDrawer = ({ data, setModalOpen, modalOpen }) => {
   );
 };
 
-export default DetailsDrawer;
+export default GiftDetails;

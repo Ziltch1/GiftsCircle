@@ -3,14 +3,17 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { CartContext } from '..';
 import Counter from '../../../../../components/Counter/Counter';
-import { DeliveryContext } from '../../..';
+import { CheckoutContext, DeliveryContext } from '../../..';
 import { useSelector } from 'react-redux';
 
 const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data}) => {
-  const {giftItems} = useSelector(state => state.gift)
-  const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems, setAmount, setComplimentaryGiftAmount } =
+  const {giftItems} = useSelector(state => state.gift);
+  const {user} = useSelector(state => state.user);
+  const {newEvent} = useSelector(state => state.event);
+  const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems, setAmount, setComplimentaryGiftAmount} =
     useContext(CartContext);
   const { setNewDeliveryData, newDeliveryData } = useContext(DeliveryContext);
+  const {setItemsData} = useContext(CheckoutContext);
 
   const handleDelete = id => {
     const filteredArray = addedGiftItems.filter(obj => obj !== id);
@@ -28,6 +31,24 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
     const filteredItemsArray = giftItems.filter(item => GiftItems.some(k => k.giftItemId === item.id));
     setNewDeliveryData(filteredItemsArray);
   }, [GiftItems]);
+
+  const singleItem = newDeliveryData?.map((item) => {
+    const newData = {
+      status: 'PAID',
+      userId: user.id,
+      eventId: newEvent.id,
+      complimentaryGift: data.complimentaryGift,
+      amount: item.amount,
+      quantity: data.quantity,
+      giftId: item.id,
+      amountPaid: data.amountPaid,
+    }
+    return newData
+  });
+
+  useEffect(() => {
+    setItemsData(singleItem);
+  }, [newDeliveryData]);
 
   return (
     <Box
