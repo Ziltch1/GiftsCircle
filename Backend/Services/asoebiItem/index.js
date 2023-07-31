@@ -20,10 +20,8 @@ const GetAll = async () => {
 };
 
 const Create = async (data, image) => {
-  let id = uuidv4();
   let Data = await prisma.asoebiitem.create({
     data: {
-      id: id,
       title: data.title,
       category: data.category,
       details: data.details,
@@ -54,7 +52,6 @@ const Update = async (id, data, image) => {
         details: data.details ? data.details : asoebiItem.details,
         category: data.category ? data.category : asoebiItem.category,
         title: data.title ? data.title : asoebiItem.title,
-        updated_at: new Date(Date.now()),
       },
     });
 

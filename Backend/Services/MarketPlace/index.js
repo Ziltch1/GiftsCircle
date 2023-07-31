@@ -14,10 +14,6 @@ const GetMarketTransactions = async (id) => {
 };
 
 const BuyMarketItems = async (data) => {
-  data.forEach((element) => {
-    element.id = uuidv4();
-    return element;
-  });
   let Data = await prisma.marketGiftTransaction.createMany({
     data: [...data],
     skipDuplicates: true,
@@ -42,8 +38,7 @@ const UpdateTransaction = async (id, data) => {
       id: id,
     },
     data: {
-      status: data.status,
-      updated_at: new Date(Date.now())
+      status: data.status
     },
   });
 

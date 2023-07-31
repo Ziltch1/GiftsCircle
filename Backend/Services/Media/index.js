@@ -9,12 +9,12 @@ const GetEventMediaFiles = async (id) => {
     },
     orderBy: [
       {
-        date: "desc",
+        created_at: "desc",
       },
     ],
     select: {
       url: true,
-      date: true,
+      created_at: true,
       id: true,
       visibility: true,
     },
@@ -31,7 +31,7 @@ const GetEventGuestMedia = async (id) => {
     },
     orderBy: [
       {
-        date: "desc",
+        created_at: "desc",
       },
     ],
     include: {
@@ -60,12 +60,12 @@ const GetUserUploadedMedia = async (eventId, userId) => {
     },
     orderBy: [
       {
-        date: "desc",
+        created_at: "desc",
       },
     ],
     select: {
       url: true,
-      date: true,
+      created_at: true,
       id: true,
       visibility: true,
     },
@@ -114,7 +114,7 @@ const Create = async (data, url) => {
   const message = `Media : ${user.firstname} sent you a media file`;
   const notification = await prisma.notifications.create({
     data: {
-      userId: event.user_id,
+      userId: event.userId,
       type: "MEDIA",
       message: message,
       referenceEvent: event.id,
@@ -165,7 +165,7 @@ const CreateComplimentaryMessage = async (data) => {
   const message = `Media : ${user.firstname} sent you a complimentary message`;
   const notification = await prisma.notifications.create({
     data: {
-      userId: event.user_id,
+      userId: event.userId,
       type: "MEDIA",
       message: message,
       referenceEvent: event.id,

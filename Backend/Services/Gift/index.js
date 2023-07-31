@@ -34,7 +34,7 @@ const GetEventGiftsByHost = async (id,userId) => {
   const gifts = await prisma.gift.findMany({
     where: {
       eventId: id,
-created_by: userId
+      created_by: userId,
     },
   });
   await prisma.$disconnect();
@@ -49,7 +49,7 @@ const GetUserPurchasedGifts = async (id) => {
     include: {
       gift: {
         select: {
-          giftItemId: true,
+          giftitemId: true,
           status: true,
         },
       },
@@ -68,7 +68,7 @@ const GetUserEventPurchasedGifts = async (id, eventId) => {
     include: {
       gift: {
         select: {
-          giftItemId: true,
+          giftitemId: true,
           status: true,
           complimentaryGift: true,
         },
@@ -98,7 +98,7 @@ const GetEventGiftTransactions = async (id) => {
       },
       gift: {
         select: {
-          giftItemId: true,
+          giftitemId: true,
           status: true,
           complimentaryGift: true,
         },
@@ -126,7 +126,7 @@ const Create = async (data) => {
       quantity: data.quantity ? data.quantity : 1,
       status: "UnPaid",
       amountPaid: 0,
-      giftItemId: data.giftItemId,
+      giftitemId: data.giftItemId,
       complimentaryGift: data.complimentaryGift,
     },
   });
@@ -142,6 +142,9 @@ const CreateMany = async (data) => {
       (element.status = "UnPaid"),
       (element.amountPaid = 0);
     element.purchasedBy = "";
+    element.giftitemId = element.giftItemId;
+
+    delete element.giftItemId;
     return element;
   });
   await prisma.gift.createMany({
@@ -164,7 +167,7 @@ const EnableContribution = async (data, id) => {
   } else {
     gift = await prisma.gift.findFirst({
       where: {
-        giftItemId: data.giftItemId,
+        giftitemId: data.giftItemId,
         eventId: data.eventId,
       },
     });
@@ -230,7 +233,7 @@ const Buy = async (data) => {
   const message = `${user.firstname} paid for some gifts for ${event.title} event`;
   const notification = await prisma.notifications.create({
     data: {
-      userId: event.user_id,
+      userId: event.userId,
       type: "PURCHASE",
       message: message,
       referenceEvent: event.id,

@@ -31,10 +31,8 @@ const GetEventAsoebi = async (id) => {
 };
 
 const Create = async (data) => {
-  let id = uuidv4();
   let Data = await prisma.asoebi.create({
     data: {
-      id: id,
       quantity: 0,
       amountPaid: 0,
       asoebiItem: data.asoebiItem,
@@ -51,7 +49,6 @@ const Create = async (data) => {
 
 const CreateMany = async (data) => {
   data.forEach((element) => {
-    element.id = uuidv4();
     element.amountPaid = 0;
     element.quantity = 0;
     return element;
@@ -95,7 +92,6 @@ const Buy = async (data) => {
   if (asoebi) {
     const buy = await prisma.asoebiTransaction.create({
       data: {
-        id: uuidv4(),
         amount: data.amount,
         asoebiId: data.asoebiId,
         userId: data.userId,
@@ -113,7 +109,6 @@ const Buy = async (data) => {
       data: {
         amountPaid: asoebi.amountPaid + data.amount,
         quantity: asoebi.quantity + data.quantity,
-        updated_at: new Date(Date.now()),
         updated_by: data.userId,
       },
     });
@@ -126,7 +121,7 @@ const Buy = async (data) => {
     const guestMessage = `You have bought ${data.quantity} quantity of asoebi`;
     const notification = await prisma.notifications.create({
       data: {
-        userId: event.user_id,
+        userId: event.userId,
         type: "ASOEBI",
         message: message,
         referenceEvent: event.id,
