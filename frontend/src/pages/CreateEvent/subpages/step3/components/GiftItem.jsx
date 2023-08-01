@@ -73,7 +73,7 @@ const GiftItem = ({ gift, setData, id }) => {
     >
       <Flex gap={3}>
         <Image
-          src={giftItem.image}
+          src={giftItem?.image}
           w="90px"
           h="90px"
           borderRadius={5}
