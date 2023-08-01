@@ -89,12 +89,7 @@ const Index = ({isCoHost}) => {
     }
   }, [fundRaising, newEvent]);
 
-  useEffect(() => {
-    if (user && newEvent) {
-      dispatch(GetUserUploadedFiles(newEvent.id, user.id));
-    }
-  }, [user, newEvent]);
-
+ 
   const goBack = () => {
     navigate(-1);
     setNavPosition(0);

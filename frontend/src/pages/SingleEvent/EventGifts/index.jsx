@@ -8,7 +8,6 @@ import { dispatch } from '../../../redux/store';
 import { GetEventGifts } from '../../../redux/features/events/service';
 import { GetUserPurchasedGiftsApi } from '../../../redux/axios/apis/gift';
 
-
 const Index = ({ newEvent }) => {
   const eventId = newEvent.id;
   const [navPosition, setNavPosition] = useState(0);
@@ -18,7 +17,7 @@ const Index = ({ newEvent }) => {
   const { eventGifts } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
 
-  const getUserPurchasedGifts = async() => {
+  const getUserPurchasedGifts = async () => {
     try {
       const res = await GetUserPurchasedGiftsApi(eventId);
       const data = res.data;
@@ -26,12 +25,14 @@ const Index = ({ newEvent }) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    dispatch(GetEventGifts(eventId, user.id));
-    getUserPurchasedGifts();
-  }, [eventId, user.id]);
+    if (user) {
+      dispatch(GetEventGifts(eventId, user.id));
+      getUserPurchasedGifts();
+    }
+  }, [eventId, user]);
 
   useEffect(() => {
     if (eventGifts) {
@@ -48,7 +49,9 @@ const Index = ({ newEvent }) => {
       />
       {newEvent.published ? (
         <Box>
-          {navPosition === 0 && <PurchaseHistory purchaseHistory={purchaseHistory} />}
+          {navPosition === 0 && (
+            <PurchaseHistory purchaseHistory={purchaseHistory} />
+          )}
           {navPosition === 1 && <GiftLists data={data} />}
         </Box>
       ) : (

@@ -29,7 +29,7 @@ const Events = ({events}) => {
         ) : (
           <Box>
             {events?.map(event => {
-              const guest = event.user_id !== user.id
+              const guest = event.userId !== user.id
               return (
                 <EventItem
                   key={event.id}
