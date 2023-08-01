@@ -85,7 +85,7 @@ model event {
 
 model gift {
   id                 String            @id @db.VarChar(255)
-  giftItemId         String            @db.VarChar(255)
+  giftitemId         String            @db.VarChar(255)
   enableContribution Boolean
   purchased          Boolean
   quantity           Int
@@ -104,7 +104,7 @@ model gift {
   giftTransaction    giftTransaction[]
 
   @@index([eventId], map: "Gift_eventId_fkey")
-  @@index([giftItemId], map: "Gift_giftItemId_fkey")
+  @@index([giftitemId], map: "Gift_giftitemId_fkey")
   @@index([purchasedBy], map: "Gift_purchasedBy_fkey")
 }
 

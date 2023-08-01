@@ -44,7 +44,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
     amount,
     setGiftAmount,
     setComplimentaryGiftAmount,
-    deliveryPercent, setShowCheckout, addedGiftItems
+    deliveryPercent, setShowCheckout,
   } = useContext(CartContext);
 
   const {setCheckoutAmount, setCartLength, setDeliveryFee} = useContext(CheckoutContext);
@@ -52,7 +52,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
   const handleIncrement = (id) => {
     setGiftItems((prevItems) =>
       prevItems.map((item) =>
-        item.giftItemId === id ? { ...item, quantity: item.quantity + 1 } : item
+        item.giftitemId === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
@@ -60,7 +60,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
   const handleDecrement = (id) => {
     setGiftItems((prevItems) =>
       prevItems.map((item) =>
-        item.giftItemId === id && item.quantity > 1
+        item.giftitemId === id && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
       )
@@ -77,7 +77,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
     setComplimentaryGiftAmount(complimentaryAmount);
     let deliveryAmount = 0;
     GiftItems.forEach(ele => {
-      const newData = giftItems?.find(x => x.id === ele?.giftItemId);
+      const newData = giftItems?.find(x => x.id === ele?.giftitemId);
 
       let amount = ele.contributionAmount
         ? ele.contributionAmount
@@ -102,7 +102,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
   const HandleSubmit = () => {
     const giftFormBody = [];
     GiftItems.forEach(item => {
-      const newData = giftItems?.find(x => x.id === item?.giftItemId);
+      const newData = giftItems?.find(x => x.id === item?.giftitemId);
       let amount = item.contributionAmount
         ? item.contributionAmount
         : newData.amount;
@@ -178,7 +178,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
           <DrawerBody>
             <Flex justifyContent="space-between" flexWrap="wrap" mb="5">
               {GiftItems.map(ele => {
-                const newData = giftItems?.find(x => x.id === ele?.giftItemId);
+                const newData = giftItems?.find(x => x.id === ele?.giftitemId);
                 let amount = ele.contributionAmount
                   ? ele.contributionAmount
                   : newData.amount;

@@ -108,7 +108,7 @@ export default function GiftDetails() {
                   <Tbody bg="white">
                     {data.map(ele => {
                       const gift = ele.giftId
-                        ? giftItems.find(x => x.id === ele.gift.giftItemId)
+                        ? giftItems.find(x => x.id === ele.gift.giftitemId)
                         : complimentaryGifts.find(
                           x => x.id === ele.complimentaryGift.id
                         );

@@ -33,7 +33,7 @@ const GiftDetails = ({
       const formBody = {
         eventId: newEventId,
         quantity: 1,
-        giftItemId: id,
+        giftItemid: id,
         complimentaryGift: 'none',
       };
       setGiftItems(prev => [...prev, formBody]);

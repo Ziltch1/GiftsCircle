@@ -28,7 +28,7 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
   setComplimentaryGiftAmount(newAmount);
 
   useEffect(() => {
-    const filteredItemsArray = giftItems.filter(item => GiftItems.some(k => k.giftItemId === item.id));
+    const filteredItemsArray = giftItems.filter(item => GiftItems.some(k => k.giftitemId === item.id));
     setNewDeliveryData(filteredItemsArray);
   }, [GiftItems]);
 
@@ -93,7 +93,7 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
           <Text fontWeight="bold" fontSize={15} mb='2'>
             ₦ {amount * data?.quantity}
           </Text>
-          <Counter quantity={data?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={data.giftItemId}  />
+          <Counter quantity={data?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={data.giftitemId}  />
         </Box>
       </Flex>
     </Box>

@@ -49,7 +49,7 @@ const Index = ({ step, setStep, setShowMarketplace }) => {
   const handleIncrement = (id) => {
     setGiftItems((prevItems) =>
       prevItems.map((item) =>
-        item.giftItemId === id ? { ...item, quantity: item.quantity + 1 } : item
+        item.giftitemId === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
@@ -58,7 +58,7 @@ const Index = ({ step, setStep, setShowMarketplace }) => {
   const handleDecrement = (id) => {
     setGiftItems((prevItems) =>
       prevItems.map((item) =>
-        item.giftItemId === id && item.quantity > 1
+        item.giftitemId === id && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
       )
