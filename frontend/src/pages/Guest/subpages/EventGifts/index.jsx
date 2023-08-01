@@ -41,7 +41,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [eventGifts, setEventGifts] = useState([]);
 
   const addGift = id => {
-    let newItem = eventGifts.find(x => x.giftItemId === id);
+    let newItem = eventGifts.find(x => x.giftitemId === id);
     let itemData = giftItems.find(x => x.id === id);
     console.log(itemData);
     setIsComplimentary(false)
@@ -130,12 +130,12 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   }, [eventDeliveryDetails]);
 
   useEffect(() => {
-    const filterGift = giftItems?.filter(x => fullPaymentGifts.map((item) => item.giftItemId).includes(x.id))
+    const filterGift = giftItems?.filter(x => fullPaymentGifts.map((item) => item.giftitemId).includes(x.id))
     setFullPaymentGift(filterGift)
   }, [fullPaymentGifts])
 
   useEffect(() => {
-    const filterGift = giftItems?.filter(x => contributionGifts.map((item) => item.giftItemId).includes(x.id))
+    const filterGift = giftItems?.filter(x => contributionGifts.map((item) => item.giftitemId).includes(x.id))
     setContributionGift(filterGift)
   }, [contributionGifts]);
 
@@ -197,7 +197,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                 minH='400px'
               >
                 {fullPaymentGift.map(item => {
-                  const giftItem = eventGifts?.find(x => x.giftItemId === item.id);
+                  const giftItem = eventGifts?.find(x => x.giftitemId === item.id);
                   return (
                     <DisplayCard
                       id={item?.id}
@@ -226,7 +226,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
                 minH='400px'
               >
                 {contributionGift.map(item => {
-                  const giftItem = eventGifts?.find(x => x.giftItemId === item.id);
+                  const giftItem = eventGifts?.find(x => x.giftitemId === item.id);
                   return (
                     <DisplayCard
                       id={item?.id}

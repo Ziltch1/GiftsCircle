@@ -33,7 +33,7 @@ const GiftCard = ({ step, setStep }) => {
       const formBody = {
         eventId: newEvent.id,
         quantity: quantity ? quantity : 1,
-        giftItemId: id,
+        giftItemid: id,
         complimentaryGift: 'none',
         enableContribution: false,
         created_by: user.id,

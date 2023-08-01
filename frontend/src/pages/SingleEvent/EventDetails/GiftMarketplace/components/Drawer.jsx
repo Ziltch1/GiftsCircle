@@ -52,7 +52,7 @@ const GiftDrawer = ({ setOpenDrawer, data, setData, totalAmount }) => {
                 key={data.indexOf(ele)}
                 setData={setData}
                 data={data}
-                id={ele.giftItemId}
+                id={ele.giftitemId}
               />
             ))}
           </DrawerBody>

@@ -23,14 +23,14 @@ const GetAll = async () => {
 const GetEventGifts = async (id) => {
   const gifts = await prisma.gift.findMany({
     where: {
-      eventId: id
+      eventId: id,
     },
   });
   await prisma.$disconnect();
   return gifts;
 };
 
-const GetEventGiftsByHost = async (id,userId) => {
+const GetEventGiftsByHost = async (id, userId) => {
   const gifts = await prisma.gift.findMany({
     where: {
       eventId: id,
@@ -126,7 +126,7 @@ const Create = async (data) => {
       quantity: data.quantity ? data.quantity : 1,
       status: "UnPaid",
       amountPaid: 0,
-      giftitemId: data.giftItemId,
+      giftitemId: data.giftitemId,
       complimentaryGift: data.complimentaryGift,
     },
   });
@@ -142,9 +142,7 @@ const CreateMany = async (data) => {
       (element.status = "UnPaid"),
       (element.amountPaid = 0);
     element.purchasedBy = "";
-    element.giftitemId = element.giftItemId;
-
-    delete element.giftItemId;
+    element.giftitemId = element.giftitemId;
     return element;
   });
   await prisma.gift.createMany({
@@ -167,7 +165,7 @@ const EnableContribution = async (data, id) => {
   } else {
     gift = await prisma.gift.findFirst({
       where: {
-        giftitemId: data.giftItemId,
+        giftitemId: data.giftitemId,
         eventId: data.eventId,
       },
     });
@@ -270,7 +268,7 @@ module.exports = {
   Get,
   GetAll,
   GetEventGifts,
-GetEventGiftsByHost,
+  GetEventGiftsByHost,
   GetEventGiftTransactions,
   GetUserEventPurchasedGifts,
   Delete,
