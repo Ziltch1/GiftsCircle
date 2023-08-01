@@ -27,8 +27,9 @@ const GiftHeader = ({ setOpenDrawer, openDrawer }) => {
 
   useEffect(() => {
     let amount = 0;
+
     data.forEach(ele => {
-      amount += giftItems.find(x => x.id === ele.giftitemId).amount;
+      amount += giftItems.find(x => x.id === ele.giftitemId)?.amount;
     });
     setTotalAddedAmount(amount);
   }, [data]);
@@ -83,7 +84,17 @@ const GiftHeader = ({ setOpenDrawer, openDrawer }) => {
                 {data.length}
               </Text>
             </Button>
-            <Button bg='#00BFB2' color='white' h='44px' w='auto' fontSize={14} fontWeight='normal' onClick={() => setShowModal(true)}>Request for an item</Button>
+            <Button
+              bg="#00BFB2"
+              color="white"
+              h="44px"
+              w="auto"
+              fontSize={14}
+              fontWeight="normal"
+              onClick={() => setShowModal(true)}
+            >
+              Request for an item
+            </Button>
           </Flex>
         </Box>
       </Flex>
