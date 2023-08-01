@@ -4,7 +4,10 @@ import {
   GetEventGuestsApi,
   GetUserEventsApi,
 } from '../../axios/apis/events';
-import { GetEventGiftTransApi, GetUserEventGiftsApi } from '../../axios/apis/gift';
+import {
+  GetEventGiftTransApi,
+  GetUserEventGiftsApi,
+} from '../../axios/apis/gift';
 import { dispatch } from '../../store';
 import {
   setAsoebisItems,
@@ -59,6 +62,7 @@ const GetUserEvents = id => async () => {
 const GetEventGifts = (id, userId) => async () => {
   try {
     const res = await GetUserEventGiftsApi(id, userId);
+    console.log(res);
     dispatch(setEventGifts(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));

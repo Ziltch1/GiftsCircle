@@ -9,9 +9,8 @@ import { GetUserEvents } from '../../redux/features/events/service';
 import Response from '../../components/ResponseToast';
 import { GetEventCohostsApi } from '../../redux/axios/apis/events';
 
-
 const UserCheck = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams();
   const { events } = useSelector(state => state.event);
   const { user } = useSelector(state => state.user);
@@ -24,10 +23,10 @@ const UserCheck = () => {
 
   useEffect(() => {
     if (user?.id) {
-      setActiveUser(true)
+      setActiveUser(true);
     } else {
-      setActiveUser(false)
-      navigate('/signin')
+      setActiveUser(false);
+      navigate('/signin');
     }
   }, [user]);
 
@@ -53,34 +52,31 @@ const UserCheck = () => {
 
   useEffect(() => {
     if (coHost?.length > 0) {
-      coHost.map((item) => {
+      coHost.map(item => {
         if (item?.userId === user.id) {
-          setIsCoHost(true)
-          console.log(item?.userId === userId);
+          setIsCoHost(true);
+          return item;
         }
-      })
+        return item
+      });
     }
-  }, [coHost, userId])
-
-  console.log(coHost);
-
+  }, [coHost, userId]);
 
   return (
     <>
       <Response />
       <Box>
-        {activeUser && 
+        {activeUser && (
           <>
             <Box>
-              {newEvent?.user_id === userId || isCoHost
-              ? 
-              <Host isCoHost={isCoHost} /> 
-              : 
-              <Guest />
-              }
+              {newEvent?.userId === userId || isCoHost ? (
+                <Host isCoHost={isCoHost} />
+              ) : (
+                <Guest />
+              )}
             </Box>
           </>
-        }
+        )}
       </Box>
     </>
   );
