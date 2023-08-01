@@ -20,7 +20,7 @@ import { CartContext } from '..';
 import PaymentButton from '../../../../../components/Buttons/PaymentButton';
 
 
-const ContributionModal = ({ setOpenModal, isOpen, }) => {
+const ContributionModal = ({ setOpenModal, isOpen,}) => {
   const {
     setContributionAmount,
     contributionAmount,

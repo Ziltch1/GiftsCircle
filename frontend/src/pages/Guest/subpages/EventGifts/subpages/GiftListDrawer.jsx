@@ -77,7 +77,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
     setComplimentaryGiftAmount(complimentaryAmount);
     let deliveryAmount = 0;
     GiftItems.forEach(ele => {
-      const newData = giftItems?.find(x => x.id === ele?.giftItemId);
+      const newData = giftItems?.find(x => x.id === ele?.giftitemId);
 
       let amount = ele.contributionAmount
         ? ele.contributionAmount
@@ -178,7 +178,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
           <DrawerBody>
             <Flex justifyContent="space-between" flexWrap="wrap" mb="5">
               {GiftItems.map(ele => {
-                const newData = giftItems?.find(x => x.id === ele?.giftItemId);
+                const newData = giftItems?.find(x => x.id === ele?.giftitemId);
                 let amount = ele.contributionAmount
                   ? ele.contributionAmount
                   : newData.amount;
@@ -216,11 +216,10 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
             (<Button
                 mb = "3"
                 bg = "#00BFB2"
-                fontSize = { 14 }
+                fontSize = {14}
                 fontWeight = "medium"
                 color = "white"
                 onClick = { proceedCheckout }
-                // onClick={() => submitHandler()}
                 w = 'auto'
                 h = '50px'
               >

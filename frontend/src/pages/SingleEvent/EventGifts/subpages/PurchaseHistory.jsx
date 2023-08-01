@@ -26,6 +26,8 @@ const PurchaseHistory = ({purchaseHistory}) => {
     setShowDrawer(true);
   };
 
+  console.log(purchaseHistory);
+
 
   return (
     <Box minH='500px'>

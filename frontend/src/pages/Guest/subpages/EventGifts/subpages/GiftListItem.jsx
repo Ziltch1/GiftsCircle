@@ -13,7 +13,7 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
   const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems, setAmount, setComplimentaryGiftAmount} =
     useContext(CartContext);
   const { setNewDeliveryData, newDeliveryData } = useContext(DeliveryContext);
-  const {setItemsData} = useContext(CheckoutContext);
+  const {setItemsData, itemsData} = useContext(CheckoutContext);
 
   const handleDelete = id => {
     const filteredArray = addedGiftItems.filter(obj => obj !== id);
@@ -28,7 +28,7 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
   setComplimentaryGiftAmount(newAmount);
 
   useEffect(() => {
-    const filteredItemsArray = giftItems.filter(item => GiftItems.some(k => k.giftItemId === item.id));
+    const filteredItemsArray = giftItems.filter(item => GiftItems.some(k => k.giftitemId === item.id));
     setNewDeliveryData(filteredItemsArray);
   }, [GiftItems]);
 
