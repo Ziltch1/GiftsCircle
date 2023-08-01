@@ -47,7 +47,7 @@ const PurchaseHistory = ({purchaseHistory}) => {
           <Tbody>
               {eventGiftTrans.map(ele => {
                 console.log(ele);
-                const gift = ele?.giftItemId ? giftItems.find(x => x.id === ele.giftItemId)
+                const gift = ele?.giftitemId ? giftItems.find(x => x.id === ele.giftitemId)
                   : complimentaryGifts.find(
                       x => x.id === ele.complimentaryGift.id
                     );

@@ -20,7 +20,7 @@ const GiftItem = ({ gift, setData, data, id }) => {
   const toast = useToast();
   const { setAddedGiftItems, setGiftItems, handleIncrement, handleDecrement, GiftItems } = useContext(GiftContext);
   const { giftItems } = useSelector(state => state.gift);
-  const giftItem = giftItems.find(x => x.id === gift.giftItemId);
+  const giftItem = giftItems.find(x => x.id === gift.giftitemId);
   const [enableContribution, setEnableContribution] = useState(gift.enableContribution);
 
   const HandleDelete = () => {
@@ -29,9 +29,9 @@ const GiftItem = ({ gift, setData, data, id }) => {
       setData(prev => prev.filter(x => x.id !== gift.id));
       setAddedGiftItems(prev => prev.filter(x => x !== giftItem.id));
     } else {
-      setData(prev => prev.filter(x => x.giftItemId !== giftItem.id));
+      setData(prev => prev.filter(x => x.giftitemId !== giftItem.id));
       setAddedGiftItems(prev => prev.filter(x => x !== giftItem.id));
-      setGiftItems(prev => prev.filter(x => x.giftItemId !== giftItem.id));
+      setGiftItems(prev => prev.filter(x => x.giftitemId !== giftItem.id));
     }
   };
 

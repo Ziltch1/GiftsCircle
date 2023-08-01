@@ -35,7 +35,7 @@ const ClosedDeliveries = ({deliveries}) => {
                       </Thead>
                       <Tbody>
                           {closedDeliveries.map((gift, index) => {
-                              //   const giftItem = giftItems.find(x => x.id === gift.giftItemId);
+                              //   const giftItem = giftItems.find(x => x.id === gift.giftitemId);
                               return (
                                   <>
                                       <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }} key={gift.id}>

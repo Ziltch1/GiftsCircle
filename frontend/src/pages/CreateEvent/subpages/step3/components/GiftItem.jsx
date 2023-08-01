@@ -26,7 +26,7 @@ const GiftItem = ({ gift, setData, id }) => {
     GiftItems,
   } = useContext(GiftContext);
   const { giftItems } = useSelector(state => state.gift);
-  const giftItem = giftItems.find(x => x.id === gift.giftItemId);
+  const giftItem = giftItems.find(x => x.id === gift.giftitemId);
   const [enableContribution, setEnableContribution] = useState(gift.enableContribution);
 
   const HandleDelete = () => {
@@ -35,9 +35,9 @@ const GiftItem = ({ gift, setData, id }) => {
       setData(prev => prev.filter(x => x.id !== gift.id));
       setAddedGiftItems(prev => prev.filter(x => x !== giftItem.id));
     } else {
-      setData(prev => prev.filter(x => x.giftItemId !== giftItem.id));
+      setData(prev => prev.filter(x => x.giftitemId !== giftItem.id));
       setAddedGiftItems(prev => prev.filter(x => x !== giftItem.id));
-      setGiftItems(prev => prev.filter(x => x.giftItemId !== giftItem.id));
+      setGiftItems(prev => prev.filter(x => x.giftitemId !== giftItem.id));
     }
   };
 
@@ -73,7 +73,7 @@ const GiftItem = ({ gift, setData, id }) => {
     >
       <Flex gap={3}>
         <Image
-          src={giftItem.image}
+          src={giftItem?.image}
           w="90px"
           h="90px"
           borderRadius={5}
