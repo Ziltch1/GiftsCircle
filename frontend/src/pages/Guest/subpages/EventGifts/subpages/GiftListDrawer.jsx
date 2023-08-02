@@ -216,11 +216,10 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
             (<Button
                 mb = "3"
                 bg = "#00BFB2"
-                fontSize = { 14 }
+                fontSize = {14}
                 fontWeight = "medium"
                 color = "white"
                 onClick = { proceedCheckout }
-                // onClick={() => submitHandler()}
                 w = 'auto'
                 h = '50px'
               >

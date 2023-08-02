@@ -19,8 +19,6 @@ const Index = ({ setShowCheckout, giftDetails, checkContribution }) => {
   const { checkoutData } = useSelector(state => state.market);
   const {newEvent} = useSelector(state => state.event)
 
-  console.log(checkContribution);
-
   const { amount, data } = checkoutData;
 
   const getDeliveryDetails = async() => {

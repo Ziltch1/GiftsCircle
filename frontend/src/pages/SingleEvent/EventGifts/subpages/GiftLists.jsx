@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux';
 
 const GiftLists = ({ data }) => {
   const { giftItems } = useSelector(state => state.gift);
-  
   return (
     <Box minH='500px'>
       <TableContainer bg="white">
@@ -27,12 +26,12 @@ const GiftLists = ({ data }) => {
           </Thead>
           <Tbody>
             {data.map((gift, index) => {
-              const giftItem = giftItems.find(x => x.id === gift.giftitemId);
+              const giftItem = giftItems?.find(x => x.id === gift?.giftitemId);
               return (
                 <>
                   <Tr fontSize={14} _hover={{ bg: '#FAFAFA' }}>
                     <Td>{index + 1}</Td>
-                    <Td>{giftItem.title}</Td>
+                    <Td>{giftItem?.title}</Td>
                     <Td color="#009F94">
                       {gift.purchased ? 'Purchased' : 'Available'}
                     </Td>

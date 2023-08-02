@@ -43,11 +43,11 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftitemId === id);
     let itemData = giftItems.find(x => x.id === id);
-    console.log(itemData);
     setIsComplimentary(false)
-    if (itemData.enableContribution === true) {
+    if (newItem.enableContribution === true) {
       setContributionModal(true);
       setCurrentItem(newItem);
+      // setCheckContribution(true)
     } else {
       setShowPrompt(true)
       if (!addedGiftItems.includes(newItem.id)) {
@@ -172,6 +172,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
           <ContributionModal
             setOpenModal={setContributionModal}
             isOpen={contributionModal}
+            setCheckContribution={setCheckContribution}
             // setShowPrompt={setShowPrompt}
           />
           <ComplimentaryModal setOpenDrawer={setOpenDrawer} isOpen={openDrawer} />
