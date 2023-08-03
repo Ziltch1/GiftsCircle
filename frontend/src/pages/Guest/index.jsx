@@ -28,6 +28,7 @@ import { setNewEvent } from '../../redux/features/events/eventSlice';
 import { useSelector } from 'react-redux';
 import Checkout from './subpages/EventGifts/Checkout';
 import { PositionContext } from '../../Layouts/DashBoardLayout';
+import { GetDeliveryDetails } from '../../redux/features/user/service';
 
 export const CheckoutContext = createContext(null);
 export const DeliveryContext = createContext(null);
@@ -35,7 +36,7 @@ export const DeliveryContext = createContext(null);
 const Index = () => {
   const navigate = useNavigate();
   const { user } = useSelector(state => state.user);
-  // const [navPosition, setNavPosition] = useState(0);
+  const [followLink, setFollowLink] = useState(true);
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -72,6 +73,7 @@ const Index = () => {
     dispatch(GetUserUploadedFiles(id, user.id));
     dispatch(GetEventMediaFiles(id));
     dispatch(GetEventDeliveryDetails(id));
+    dispatch(GetDeliveryDetails(user.id));
     dispatch(GetEventAsoebis(id));
     dispatch(GetEventFundRaising(id));
     dispatch(GetAsoebiItems());
@@ -134,7 +136,7 @@ const Index = () => {
                   <Tabs
                     navPosition={navPosition}
                     setNavPosition={setNavPosition}
-                    event={event}
+                    setFollowLink={setFollowLink}
                   />
                   <Box>
                     {navPosition === 0 && <EventDetails newEvent={event} />}
@@ -147,8 +149,18 @@ const Index = () => {
                       />
                     )}
                     {navPosition === 2 && <EventMedia />}
-                    {navPosition === 3 && <Asoebi event={event} />}
-                    {navPosition === 4 && <Fundraising event={event} />}
+                    <>
+                      {followLink ? (
+                        <>
+                          {navPosition === 3 && <Asoebi event={event} />}
+                          {navPosition === 4 && <Fundraising event={event} />}
+                        </>
+                      ) : (
+                        <>
+                          {navPosition === 3 && <Fundraising event={event} />}
+                        </>
+                      )}
+                    </>
                   </Box>
                 </>
               )}

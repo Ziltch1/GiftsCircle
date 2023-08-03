@@ -18,8 +18,10 @@ import {
 import { dispatch } from '../../../../redux/store';
 import PaymentButton from '../../../../components/Buttons/PaymentButton';
 import { DonateFundRaising } from '../../../../redux/features/events/service';
+import { useSelector } from 'react-redux';
 
 const ContributionDrawer = ({ setShowDrawer, fundRaising }) => {
+  const { user } = useSelector(state => state.user);
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   const [amount, setAmount] = useState(0);
@@ -42,6 +44,7 @@ const ContributionDrawer = ({ setShowDrawer, fundRaising }) => {
       email,
       tel,
       amount,
+      userId: user.id,
     };
 
     if (!btnDisabled) {

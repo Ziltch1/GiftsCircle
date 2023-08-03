@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import {
   GetEventFundRaising,
   GetEventFundRaisingDonors,
+  GetEventGifts,
   GetEventGuests,
   GetGuestSentFiles,
   GetUserEvents,
@@ -68,7 +69,7 @@ const Index = ({isCoHost}) => {
         dispatch(GetEventFundRaising(newEvent.id));
         dispatch(GetUserUploadedFiles(newEvent.id, user.id));
         dispatch(GetGuestSentFiles(newEvent.id));
-        // dispatch(GetEventAsoebiBuyers(newEvent.id));
+        dispatch(GetEventGifts(newEvent.id))
         dispatch(GetEventGiftsTransactions(newEvent.id));
         setLoading(false);
       } else {

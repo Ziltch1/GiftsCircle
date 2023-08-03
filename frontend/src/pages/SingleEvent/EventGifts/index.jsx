@@ -6,7 +6,6 @@ import GiftLists from './subpages/GiftLists';
 import { useSelector } from 'react-redux';
 
 const Index = ({ newEvent }) => {
-  const eventId = newEvent.id;
   const [navPosition, setNavPosition] = useState(0);
   const [data, setData] = useState([]);
 

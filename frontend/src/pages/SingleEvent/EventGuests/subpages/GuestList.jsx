@@ -63,7 +63,7 @@ const GuestList = () => {
                             </Box>
                             <Box>
                               <Td>
-                                {new Date(ele.date_joined).toDateString()}
+                                {new Date(ele.created_at).toDateString()}
                               </Td>
                             </Box>
                           </Flex>
