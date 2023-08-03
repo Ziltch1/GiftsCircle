@@ -18,8 +18,8 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const [SourvenirItems, setSourvernirItems] = useState([]);
   const [addedSourvernirItems, setAddedSourvernirItems] = useState([]);
   const [amount, setAmount] = useState(0);
-  const {checkoutData} = useSelector(state => state.market);
-  const [quantity, setQuantity] = useState(1)
+  const { checkoutData } = useSelector(state => state.market);
+  const [quantity, setQuantity] = useState(1);
 
   const showOptions = () => {
     setShowProducts(false);
@@ -30,13 +30,13 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   }, []);
 
   useEffect(() => {
-    const {data} = checkoutData;
+    const { data } = checkoutData;
     console.log(data);
     setSourvernirItems([...data]);
     const ids = [];
     data.forEach(x => ids.push(x.ItemId));
     setAddedSourvernirItems([...ids]);
-  }, [checkoutData])
+  }, [checkoutData]);
 
   const contextValue = useMemo(
     () => ({
@@ -48,14 +48,13 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
     [sourvernirItems, addedSourvernirItems, amount, SourvenirItems]
   );
 
-
   const AddSourvenir = async id => {
     if (!addedSourvernirItems.includes(id)) {
       const data = sourvernirItems.find(x => x.id === id);
       console.log(SourvenirItems);
-      if(SourvenirItems.length > 0){
+      if (SourvenirItems.length > 0) {
         const newSourvenirItem = SourvenirItems?.find(x => x?.ItemId === id);
-        setQuantity(newSourvenirItem?.quantity)
+        setQuantity(newSourvenirItem?.quantity);
       }
       const formBody = {
         ItemId: id,
@@ -70,34 +69,31 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
     }
   };
 
-
   useEffect(() => {
     let totalAmount = 0;
     SourvenirItems.forEach(ele => {
-      totalAmount = totalAmount + ele.amountPaid;
+      totalAmount = totalAmount + (ele.amountPaid * ele.quantity);
     });
     setAmount(totalAmount);
   }, [SourvenirItems]);
 
-
-  const handleIncrement = (id) => {
-    setSourvernirItems((prevItems) =>
-      prevItems.map((item) =>
+  const handleIncrement = id => {
+    setSourvernirItems(prevItems =>
+      prevItems.map(item =>
         item.ItemId === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
 
-  const handleDecrement = (id) => {
-    setSourvernirItems((prevItems) =>
-      prevItems.map((item) =>
+  const handleDecrement = id => {
+    setSourvernirItems(prevItems =>
+      prevItems.map(item =>
         item.ItemId === id && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
       )
     );
   };
-
 
   return (
     <>
@@ -109,12 +105,12 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
           setAmount,
           handleIncrement,
           handleDecrement,
-          quantity
+          quantity,
         }}
       >
-        <GiftListDrawer 
-          setShowDrawer={setShowDrawer} 
-          isOpen={showDrawer} 
+        <GiftListDrawer
+          setShowDrawer={setShowDrawer}
+          isOpen={showDrawer}
           setShowCheckout={setShowCheckout}
         />
         <Box bg="#F5F5F5">
@@ -164,7 +160,11 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
             <Box mb="7">
               <Search />
             </Box>
-            <Flex justifyContent='space-between' alignItems="center" flexWrap="wrap">
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+              flexWrap="wrap"
+            >
               {sourvernirItems.map(item => (
                 <DisplayCard
                   id={item.id}

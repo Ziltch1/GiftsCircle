@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Box, Flex, Button } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
-const Tabs = ({ navPosition, setNavPosition }) => {
+const Tabs = ({ navPosition, setNavPosition, setFollowLink }) => {
   const [links, setLinks] = useState(['About event', 'Gift List', 'Media']);
   const { eventAsoebis, fundRaising } = useSelector(state => state.event);
 
   useEffect(() => {
     if (eventAsoebis.length > 0 && !links.includes('Asoebi')) {
       let updatedLinks = [...links, 'Asoebi'];
-
       setLinks(updatedLinks);
     }
 
@@ -19,6 +18,7 @@ const Tabs = ({ navPosition, setNavPosition }) => {
         let updatedLinks = [...initLinks, 'Asoebi', 'FundRaising'];
         setLinks(updatedLinks);
       } else {
+        setFollowLink(false);
         let updatedLinks = [...links, 'Fundraising'];
         setLinks(updatedLinks);
       }

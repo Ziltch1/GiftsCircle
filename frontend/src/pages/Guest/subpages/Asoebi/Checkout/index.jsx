@@ -4,17 +4,22 @@ import DeliveryDetailsHeader from './subpages/DeliveryDetailsHeader';
 import DeliveryDetailsForm from './subpages/DeliveryDetailsForm';
 import CartSummary from './subpages/CartSummary';
 import DeliveryDetailsCard from './subpages/DeliveryDetailsCard';
-import BackButton from '../../../../../components/Buttons/BackButton'
+import BackButton from '../../../../../components/Buttons/BackButton';
 import { useSelector } from 'react-redux';
 import { Zones } from '../../../../../Utils/data/ZONES';
 
-const Index = ({ setShowCheckout, setShowAsoebiCheckout, amount, showAsoebiDrawer, buyAsoebi, cartLength }) => {
+const Index = ({
+  setShowAsoebiCheckout,
+  amount,
+  showAsoebiDrawer,
+  buyAsoebi,
+  cartLength,
+}) => {
   const [showDeliveryForm, setShowDeliveryForm] = useState(true);
   const [selectedDeliveryDetails, setSelectedDeliveryDetails] = useState(null);
   const [deliveryAmount, setDeliveryAmount] = useState(0);
   const [deliveryPercent, setDeliveryPercent] = useState(0);
   const { deliveryDetails } = useSelector(state => state.user);
-  const { checkoutData } = useSelector(state => state.market);
 
   const handleClick = () => {
     setShowAsoebiCheckout(false);
@@ -24,7 +29,7 @@ const Index = ({ setShowCheckout, setShowAsoebiCheckout, amount, showAsoebiDrawe
     await buyAsoebi();
     showAsoebiDrawer(false);
     setShowAsoebiCheckout(false);
-  }
+  };
 
   useEffect(() => {
     if (deliveryDetails) {
