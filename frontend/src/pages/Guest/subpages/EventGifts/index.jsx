@@ -204,8 +204,15 @@ const Index = ({
                       id={item?.id}
                       data={item}
                       action={addGift}
-                      disabled={addedGiftItems.includes(giftItem?.id)}
-                      purchased={false}
+                      disabled={
+                        addedGiftItems.includes(giftItem?.id) ||
+                        giftItem?.amountPaid >=
+                          item?.amount * giftItem?.quantity
+                      }
+                      purchased={
+                        giftItem?.amountPaid >=
+                        item?.amount * giftItem?.quantity
+                      }
                       text={'Purchase'}
                       showPrompt={showPrompt}
                       setShowPrompt={setShowPrompt}
