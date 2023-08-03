@@ -12,14 +12,6 @@ const GetUserPurchasedGiftsApi = id => {
   return api.get(`/gift/Get/PurchasedBy/${id}`);
 };
 
-const GetEventGiftTransApi = (id) => {
-  return api.get(`/gift/Get/EventGifts/${id}`);
-};
-
-const GetUserEventGiftTransApi = (id, userId) => {
-  return api.get(`/gift/Get/EventGifts/${id}/${userId}/`);
-};
-
 const CreateManyGiftsApi = data => {
   return api.post('/gift/createMany', data);
 };
@@ -44,15 +36,29 @@ const GetUserGiftApi = id => {
   return api.get(`/gift/Get/MarketUserGifts/${id}`);
 };
 
+const GetEventGiftsApi = eventId => {
+  return api.get(`gift/Get/EventGifts/${eventId}`);
+};
+
 const GetUserEventGiftsApi = (id, userId) => {
   return api.get(`/gift/Get/EventGifts/${id}/${userId}`);
-}
+};
+
+const GetEventGiftsTransApi = id => {
+  return api.get(`/gift/Get/EventGiftsTrans/${id}`);
+};
+
+const GetUserEventGiftsTransApi = (id, userId) => {
+  return api.get(`/gift/Get/UserEventGiftsTrans/${id}/${userId}`);
+};
 
 export {
   GetGiftItemsApi,
   GetComplimentaryGiftItemsApi,
-  GetEventGiftTransApi,
-  GetUserEventGiftTransApi,
+  GetEventGiftsApi,
+  GetUserEventGiftsApi,
+  GetEventGiftsTransApi,
+  GetUserEventGiftsTransApi,
   CreateManyGiftsApi,
   BuyGiftsApi,
   BuyComplimentaryGiftsApi,
@@ -60,5 +66,4 @@ export {
   GetUserPurchasedGiftsApi,
   AddGiftApi,
   GetUserGiftApi,
-  GetUserEventGiftsApi
 };

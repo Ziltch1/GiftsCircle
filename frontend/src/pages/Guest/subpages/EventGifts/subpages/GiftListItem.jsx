@@ -6,14 +6,26 @@ import Counter from '../../../../../components/Counter/Counter';
 import { CheckoutContext, DeliveryContext } from '../../..';
 import { useSelector } from 'react-redux';
 
-const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data}) => {
-  const {giftItems} = useSelector(state => state.gift);
-  const {user} = useSelector(state => state.user);
-  const {newEvent} = useSelector(state => state.event);
-  const { addedGiftItems, setAddedGiftItems, GiftItems, setGiftItems, setAmount, setComplimentaryGiftAmount} =
-    useContext(CartContext);
+const GiftListItem = ({
+  id,
+  item,
+  amount,
+  handleIncrement,
+  handleDecrement,
+  data,
+}) => {
+  const { giftItems } = useSelector(state => state.gift);
+  const { user } = useSelector(state => state.user);
+  const { newEvent } = useSelector(state => state.event);
+  const {
+    addedGiftItems,
+    setAddedGiftItems,
+    GiftItems,
+    setGiftItems,
+    setComplimentaryGiftAmount,
+  } = useContext(CartContext);
   const { setNewDeliveryData, newDeliveryData } = useContext(DeliveryContext);
-  const {setItemsData} = useContext(CheckoutContext);
+  const { setItemsData } = useContext(CheckoutContext);
 
   const handleDelete = id => {
     const filteredArray = addedGiftItems.filter(obj => obj !== id);
@@ -28,11 +40,13 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
   setComplimentaryGiftAmount(newAmount);
 
   useEffect(() => {
-    const filteredItemsArray = giftItems.filter(item => GiftItems.some(k => k.giftitemId === item.id));
+    const filteredItemsArray = giftItems.filter(item =>
+      GiftItems.some(k => k.giftitemId === item.id)
+    );
     setNewDeliveryData(filteredItemsArray);
   }, [GiftItems]);
 
-  const singleItem = newDeliveryData?.map((item) => {
+  const singleItem = newDeliveryData?.map(item => {
     const newData = {
       status: 'PAID',
       userId: user.id,
@@ -40,10 +54,10 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
       complimentaryGift: data.complimentaryGift,
       amount: item.amount,
       quantity: data.quantity,
-      giftId: item.id,
+      giftId: id,
       amountPaid: data.amountPaid,
-    }
-    return newData
+    };
+    return newData;
   });
 
   useEffect(() => {
@@ -90,10 +104,15 @@ const GiftListItem = ({ id, item, amount, handleIncrement, handleDecrement, data
           </Button>
         </Box>
         <Box>
-          <Text fontWeight="bold" fontSize={15} mb='2'>
+          <Text fontWeight="bold" fontSize={15} mb="2">
             ₦ {amount * data?.quantity}
           </Text>
-          <Counter quantity={data?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={data.giftitemId}  />
+          <Counter
+            quantity={data?.quantity}
+            handleIncrement={handleIncrement}
+            handleDecrement={handleDecrement}
+            id={data.giftitemId}
+          />
         </Box>
       </Flex>
     </Box>

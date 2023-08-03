@@ -10,7 +10,8 @@ import {
   useDisclosure,
   Box,
   Heading,
-  Flex, Button
+  Flex,
+  Button,
 } from '@chakra-ui/react';
 import GiftListItem from './GiftListItem';
 import { useSelector } from 'react-redux';
@@ -24,7 +25,7 @@ import {
 } from '../../../../../redux/features/gift/service';
 import { CheckoutContext } from '../../..';
 
-const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContribution }) => {
+const GiftListDrawer = ({ setShowListDrawer, isOpen, checkContribution }) => {
   const { giftItems } = useSelector(state => state.gift);
   const { user } = useSelector(state => state.user);
   const { newEvent } = useSelector(state => state.event);
@@ -44,22 +45,24 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
     amount,
     setGiftAmount,
     setComplimentaryGiftAmount,
-    deliveryPercent, setShowCheckout,
+    deliveryPercent,
+    setShowCheckout,
   } = useContext(CartContext);
 
-  const {setCheckoutAmount, setCartLength, setDeliveryFee} = useContext(CheckoutContext);
+  const { setCheckoutAmount, setCartLength, setDeliveryFee } =
+    useContext(CheckoutContext);
 
-  const handleIncrement = (id) => {
-    setGiftItems((prevItems) =>
-      prevItems.map((item) =>
+  const handleIncrement = id => {
+    setGiftItems(prevItems =>
+      prevItems.map(item =>
         item.giftitemId === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
 
-  const handleDecrement = (id) => {
-    setGiftItems((prevItems) =>
-      prevItems.map((item) =>
+  const handleDecrement = id => {
+    setGiftItems(prevItems =>
+      prevItems.map(item =>
         item.giftitemId === id && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
@@ -82,7 +85,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
       let amount = ele.contributionAmount
         ? ele.contributionAmount
         : newData.amount;
-      giftAmount = giftAmount + (amount * ele.quantity);
+      giftAmount = giftAmount + amount * ele.quantity;
       deliveryAmount = deliveryAmount + giftAmount * (deliveryPercent / 100);
     });
 
@@ -92,12 +95,16 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
     setCheckoutAmount(complimentaryAmount + giftAmount);
     setCartLength(GiftItems.length + ComplimentaryItems.length);
     setDeliveryFee(deliveryPercent);
-  }, [ComplimentaryItems,setAmount,setComplimentaryGiftAmount,setGiftAmount,GiftItems]);
-
+  }, [
+    ComplimentaryItems,
+    setAmount,
+    setComplimentaryGiftAmount,
+    setGiftAmount,
+    GiftItems,
+  ]);
 
   const { onClose } = useDisclosure();
   const btnRef = React.useRef();
-
 
   const HandleSubmit = () => {
     const giftFormBody = [];
@@ -106,8 +113,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
       let amount = item.contributionAmount
         ? item.contributionAmount
         : newData.amount;
-      setQuantity(newData?.quantity)
-
+      setQuantity(newData?.quantity);
       const formData = {
         status:
           amount + item.amountPaid >= newData.amount ? 'COMPLETED' : 'PARTIAL',
@@ -150,10 +156,9 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
     setShowListDrawer(false);
   };
 
-
   const proceedCheckout = () => {
-    setShowCheckout(true)
-  }
+    setShowCheckout(true);
+  };
 
   return (
     <Box>
@@ -183,7 +188,14 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
                   ? ele.contributionAmount
                   : newData.amount;
                 return (
-                  <GiftListItem id={ele.id} item={newData} data={ele} amount={amount} handleIncrement={handleIncrement} handleDecrement={handleDecrement} />
+                  <GiftListItem
+                    id={ele.id}
+                    item={newData}
+                    data={ele}
+                    amount={amount}
+                    handleIncrement={handleIncrement}
+                    handleDecrement={handleDecrement}
+                  />
                 );
               })}
             </Flex>
@@ -211,24 +223,22 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, setGiftDetails, checkContri
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
             {checkContribution === true ? (
-              <PaymentButton amount={amount} action={HandleSubmit} />) 
-            : 
-            (<Button
-                mb = "3"
-                bg = "#00BFB2"
-                fontSize = { 14 }
-                fontWeight = "medium"
-                color = "white"
-                onClick = { proceedCheckout }
+              <PaymentButton amount={amount} action={HandleSubmit} />
+            ) : (
+              <Button
+                mb="3"
+                bg="#00BFB2"
+                fontSize={14}
+                fontWeight="medium"
+                color="white"
+                onClick={proceedCheckout}
                 // onClick={() => submitHandler()}
-                w = 'auto'
-                h = '50px'
+                w="auto"
+                h="50px"
               >
                 Proceed to Checkout {giftAmount}
-              </Button>)
-            }
-            
-            
+              </Button>
+            )}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

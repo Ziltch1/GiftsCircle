@@ -19,7 +19,7 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
   const [data, setData] = useState([]);
-  const { eventDeliveryDetails, newEvent } = useSelector(state => state.event);
+  const { eventDeliveryDetails, eventGifts } = useSelector(state => state.event);
   const { giftItems, complimentaryGifts } = useSelector(state => state.gift);
   const [GiftItems, setGiftItems] = useState([]);
   const [ComplimentaryItems, setComplimentaryItems] = useState([]);
@@ -38,12 +38,10 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
   const [contributionGift, setContributionGift] = useState([])
   const [showPrompt, setShowPrompt] = useState(false);
   const [isComplimentary, setIsComplimentary] = useState(false);
-  const [eventGifts, setEventGifts] = useState([]);
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftitemId === id);
     let itemData = giftItems.find(x => x.id === id);
-    console.log(itemData);
     setIsComplimentary(false)
     if (itemData.enableContribution === true) {
       setContributionModal(true);
@@ -56,22 +54,6 @@ const Index = ({setShowCheckout, setGiftDetails, setCheckContribution, checkCont
       }
     }
   };
-
-
-  const getEventGifts = async() => {
-    try {
-      const res = await GetEventGiftTransApi(newEvent.id)
-      const data = await res.data;
-      setEventGifts(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getEventGifts();
-  }, [newEvent.id])
-
 
   useEffect(() => {
     const newGift = eventGifts.filter(x => x?.enableContribution === false);
