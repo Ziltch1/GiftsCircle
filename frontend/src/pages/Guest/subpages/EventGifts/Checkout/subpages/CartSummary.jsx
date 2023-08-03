@@ -25,9 +25,7 @@ const CartSummary = ({ setShowCheckout }) => {
     if (cartLength > 0) {
       const res = await BuyGiftsApi(itemsData);
       if (res.data) {
-        console.log('hey', newEvent);
-        const result = await DeliveryTransApi(newEvent.userId, singleItem);
-        console.log(result);
+        await DeliveryTransApi(newEvent.userId, singleItem);
         setShowCheckout(false);
         setItemsData([]);
       }
