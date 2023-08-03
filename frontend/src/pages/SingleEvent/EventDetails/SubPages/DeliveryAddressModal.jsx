@@ -17,12 +17,17 @@ import {
 } from '@chakra-ui/react';
 import errorImg from '../../../assets/errorImg.svg';
 
-const DeliveryAddressModal = ({ setConfirmEditAddress, setEditAddress }) => {
+const DeliveryAddressModal = ({ setConfirmEditAddress, setEditAddress, setIsEdited }) => {
     const { onClose, isOpen } = useDisclosure({ defaultIsOpen: true });
 
     const editAddress = () => {
         setConfirmEditAddress(true)
         setEditAddress(false)
+    }
+
+    const confirmAddress = () => {
+        setEditAddress(false)
+        setIsEdited(false)
     }
 
     return (
@@ -51,7 +56,7 @@ const DeliveryAddressModal = ({ setConfirmEditAddress, setEditAddress }) => {
                                 fontSize={14}
                                 fontWeight="medium"
                                 color="white"
-                                onClick={() => setEditAddress(false)}
+                                onClick={confirmAddress}
                             >
                                 Yes, confirm
                             </Button>

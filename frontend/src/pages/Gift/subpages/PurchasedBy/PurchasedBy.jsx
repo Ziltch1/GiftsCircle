@@ -9,7 +9,7 @@ const PurchasedBy = ({ events }) => {
 
   useEffect(() => {
     if (events.length > 0) {
-      let data = events.filter(x => x.user_id !== user.id);
+      let data = events.filter(x => x.userId !== user.id);
       setData(data);
     }
   }, [user]);

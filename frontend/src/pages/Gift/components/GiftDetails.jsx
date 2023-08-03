@@ -39,7 +39,7 @@ export default function GiftDetails() {
   useEffect(() => {
     if (events) {
       let CurrentEvent = events?.filter(x => x.id === id)[0];
-      if (CurrentEvent.user_id === user.id) {
+      if (CurrentEvent.userId === user.id) {
         dispatch(GetEventGiftsTransactions(id));
       } else {
         dispatch(GetUserEventGiftsTransactions(user.id, id));
@@ -49,11 +49,11 @@ export default function GiftDetails() {
   }, [id, events]);
 
   useEffect(() => {
-    if (eventGiftTrans && currentEvent.user_id === user.id) {
+    if (eventGiftTrans && currentEvent.userId === user.id) {
       setLoading(false);
       setData(eventGiftTrans);
     }
-    if (userEventGiftTrans && currentEvent.user_id !== user.id) {
+    if (userEventGiftTrans && currentEvent.userId !== user.id) {
       setLoading(false);
       setData(userEventGiftTrans);
     }
@@ -99,7 +99,7 @@ export default function GiftDetails() {
                     <Tr borderRadius={5} textTransform="capitalize">
                       <Th>Name</Th>
                       <Th>Date</Th>
-                      <Th isNumeric>Qty</Th>
+                      <Th>Qty</Th>
                       <Th>Payment status</Th>
                       <Th>Amount left</Th>
                       <Th>Actions</Th>
@@ -118,8 +118,8 @@ export default function GiftDetails() {
                           <Td>June 12th, 2022</Td>
                           <Td>{ele?.quantity}</Td>
                           <Td>{ele?.gift ? ele.gift.status : 'COMPLETED'}</Td>
-                          <Td isNumeric>
-                            {parseInt(gift?.amount) - ele?.amount}
+                          <Td>
+                            ₦{ele?.amount - parseInt(gift?.amount)}
                           </Td>
                           <Td>Complete payment</Td>
                         </Tr>
