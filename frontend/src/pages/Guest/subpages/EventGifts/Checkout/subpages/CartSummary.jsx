@@ -24,8 +24,8 @@ const CartSummary = ({ setShowCheckout }) => {
   const HandleSubmit = async () => {
     if (cartLength > 0) {
       const res = await BuyGiftsApi(itemsData);
+      await DeliveryTransApi(newEvent?.userId, singleItem);
       if (res.data) {
-        await DeliveryTransApi(newEvent.userId, singleItem);
         setShowCheckout(false);
         setItemsData([]);
       }

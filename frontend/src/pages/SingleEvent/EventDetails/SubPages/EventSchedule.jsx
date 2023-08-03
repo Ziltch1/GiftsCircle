@@ -22,6 +22,7 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
   const [showModal, setShowModal] = useState(false);
   const [editAddress, setEditAddress] = useState(false);
   const [confirmEditAddress, setConfirmEditAddress] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
 
   const showDrawer = () => {
     setOpenDrawer(true);
@@ -46,8 +47,8 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
       {openDrawer && (
         <Fundraising setOpenDrawer={setOpenDrawer} id={newEvent.id} />
       )}
-      {editAddress && <DeliveryAddressModal setEditAddress={setEditAddress} setConfirmEditAddress={setConfirmEditAddress}  />}
-      {confirmEditAddress && <EditAddressModal setEditAddress={setEditAddress} setConfirmEditAddress={setConfirmEditAddress} deliveryAddress={deliveryAddress} getDeliveryAddress={getDeliveryAddress} />}
+      {editAddress && <DeliveryAddressModal setEditAddress={setEditAddress} setIsEdited={setIsEdited} setConfirmEditAddress={setConfirmEditAddress}  />}
+      {confirmEditAddress && <EditAddressModal setEditAddress={setEditAddress} setConfirmEditAddress={setConfirmEditAddress} setIsEdited={setIsEdited} deliveryAddress={deliveryAddress} getDeliveryAddress={getDeliveryAddress} />}
       <Flex justifyContent="space-between" alignItems="flex-start">
         <Box w="610px">
           <Heading fontWeight={500} fontSize="24px" mb="4">
@@ -75,12 +76,18 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
                 <Text fontSize={14} mb='2.5'>{deliveryAddress.info}</Text>
                 <Text fontSize={14} mb='2.5'>{deliveryAddress.lga}, {deliveryAddress.state}.</Text>
                 <Stack direction='row' justifyContent='space-between'>
-                  <Button fontWeight='medium' fontSize={14} color='#009F94' bg='gray.300' onClick={handleClick}><Icon as={FaCheck} fontWeight='medium' mr='2' /> Confirm</Button>
-                  <Button fontWeight='medium' fontSize={14} bg='gray.300' onClick={() => setConfirmEditAddress(true)}>Change Address</Button>
+                  {isEdited ? 
+                    <Button fontWeight='medium' w='100%' color='white' fontSize={14} bg="#00BFB2" onClick={() => setConfirmEditAddress(true)}>Change Address</Button>
+                    : 
+                    <>
+                      <Button fontWeight='medium' fontSize={14} color='#009F94' bg='gray.300' onClick={handleClick}><Icon as={FaCheck} fontWeight='medium' mr='2' /> Confirm</Button>
+                      <Button fontWeight='medium' fontSize={14} bg='gray.300' onClick={() => setConfirmEditAddress(true)}>Change Address</Button>
+                    </>
+                  }
                 </Stack>
               </Box>
           }
-          {!newEvent.published && (
+          {!newEvent.published && !isCoHost && (
             <Button
               width="100%"
               fontSize={16}
@@ -92,6 +99,7 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
                 dispatch(setEditEvent(true));
                 navigate('/create_event');
               }}
+              boxShadow='md'
             >
               Edit Event
             </Button>
@@ -124,7 +132,7 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
               {newEvent.venue}
             </Text>
           </Box>
-            <Button w='100%' bg='red.500' h='50px' color='white' onClick={showDeleteModal}>Delete Event</Button>
+            {!isCoHost && <Button w='100%' bg='red.500' h='50px' color='white' onClick={showDeleteModal}>Delete Event</Button>}
         </Box>
       </Flex>
     </Box>

@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Input, Button, FormLabel, position } from '@chakra-ui/react';
+import { Box, Heading, Text, Input, Button, FormLabel, Spinner} from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import ErrorHandler from '../../../redux/axios/Utils/ErrorHandler';
 import { JoinEventCoHostApi, JoinEventGuestApi } from '../../../redux/axios/apis/events';
@@ -21,6 +21,7 @@ const JoinFromDashboard = () => {
   const [guest, setGuest] = useState(false);
   const [coHost, setCoHost] = useState(false);
   const { user } = useSelector(state => state.user);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (guestCode === '' || eventId === '') {
@@ -40,6 +41,7 @@ const JoinFromDashboard = () => {
 
   const handleClick = async () => {
     if (!disableBtn) {
+      setLoading(true)
       let data = {
         eventId: eventId,
         userId: user.id,
@@ -49,9 +51,11 @@ const JoinFromDashboard = () => {
       try {
         await JoinEventGuestApi(data);
         navigate(`/dashboard/event_details/${eventId}`);
+        setLoading(false)
       } catch (error) {
         console.log(ErrorHandler(error));
         dispatch(createResponse(ErrorHandler(error)));
+        setLoading(false)
       }
     }
   };
@@ -59,6 +63,7 @@ const JoinFromDashboard = () => {
 
   const handleCoHost = async () => {
     if (!disableBtn) {
+      setLoading(true)
       let data = {
         eventId: eventId,
         userId: user.id,
@@ -68,9 +73,11 @@ const JoinFromDashboard = () => {
       try {
         await JoinEventCoHostApi(data);
         navigate(`/dashboard/event_details/${eventId}`);
+        setLoading(false)
       } catch (error) {
         console.log(ErrorHandler(error));
         dispatch(createResponse(ErrorHandler(error)));
+        setLoading(false)
       }
     }
   };
@@ -104,8 +111,8 @@ const JoinFromDashboard = () => {
                 Join new Event
               </Heading>
               <Box>
-                {guest && <GuestView eventId={eventId} setEventId={setEventId} guestCode={guestCode} setGuestCode={setGuestCode} disableBtn={disableBtn} handleClick={handleClick} />}
-                {coHost && <CoHostView eventId={eventId} setEventId={setEventId} coHostCode={coHostCode} setCoHostCode={setCoHostCode} disableBtn={disableBtn} handleClick={handleCoHost} />}
+                {guest && <GuestView eventId={eventId} setEventId={setEventId} guestCode={guestCode} setGuestCode={setGuestCode} disableBtn={disableBtn} handleClick={handleClick} loading={loading} />}
+                {coHost && <CoHostView eventId={eventId} setEventId={setEventId} coHostCode={coHostCode} setCoHostCode={setCoHostCode} disableBtn={disableBtn} handleClick={handleCoHost} loading={loading} />}
               </Box>
             </>
           }
@@ -119,10 +126,18 @@ export default JoinFromDashboard;
 
 
 
-export const GuestView = ({eventId, setEventId, guestCode, setGuestCode, disableBtn, handleClick}) => {
+export const GuestView = ({eventId, setEventId, guestCode, setGuestCode, disableBtn, handleClick, loading}) => {
   const HandleClick = async () => {
     await handleClick();
   }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      HandleClick();
+    }
+  }
+
 
   return (
     <Box display="flex" flexDirection="column" gap="12px">
@@ -135,6 +150,7 @@ export const GuestView = ({eventId, setEventId, guestCode, setGuestCode, disable
           _placeholder={{ color: '#A8A8A8' }}
           value={eventId}
           onChange={e => setEventId(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
       </Box>
 
@@ -147,6 +163,7 @@ export const GuestView = ({eventId, setEventId, guestCode, setGuestCode, disable
           _placeholder={{ color: '#A8A8A8' }}
           value={guestCode}
           onChange={e => setGuestCode(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
       </Box>
 
@@ -166,7 +183,7 @@ export const GuestView = ({eventId, setEventId, guestCode, setGuestCode, disable
           onClick={HandleClick}
           disabled={disableBtn}
         >
-          Join now
+          {loading ? <Spinner /> : 'Join now'}
         </Button>
       </Box>
 
@@ -176,9 +193,16 @@ export const GuestView = ({eventId, setEventId, guestCode, setGuestCode, disable
 
 
 
-export const CoHostView = ({coHostCode, setCoHostCode, eventId, setEventId, handleClick, disableBtn}) => {
+export const CoHostView = ({coHostCode, setCoHostCode, eventId, setEventId, handleClick, disableBtn, loading}) => {
   const HandleClick = async () => {
     await handleClick();
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      HandleClick();
+    }
   }
 
   return (
@@ -192,6 +216,7 @@ export const CoHostView = ({coHostCode, setCoHostCode, eventId, setEventId, hand
           _placeholder={{ color: '#A8A8A8' }}
           value={eventId}
           onChange={e => setEventId(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
       </Box>
 
@@ -204,6 +229,7 @@ export const CoHostView = ({coHostCode, setCoHostCode, eventId, setEventId, hand
           _placeholder={{ color: '#A8A8A8' }}
           value={coHostCode}
           onChange={e => setCoHostCode(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
       </Box>
 
@@ -223,7 +249,7 @@ export const CoHostView = ({coHostCode, setCoHostCode, eventId, setEventId, hand
           onClick={HandleClick}
           disabled={disableBtn}
         >
-          Join now
+          {loading ? <Spinner /> : 'Join now'}
         </Button>
       </Box>
 

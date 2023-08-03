@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 import { UpdateDeliveryDetailsApi } from '../../../../redux/axios/apis/delivery';
 import { useSelector } from 'react-redux';
 
-const EditAddressModal = ({ setConfirmEditAddress, setEditAddress, deliveryAddress, getDeliveryAddress }) => {
+const EditAddressModal = ({ setConfirmEditAddress, setEditAddress, deliveryAddress, getDeliveryAddress, setIsEdited }) => {
     const { onClose, isOpen } = useDisclosure({ defaultIsOpen: true });
     const [address, setAddress] = useState('');
     const {user} = useSelector(state => state.user);
@@ -51,6 +51,7 @@ const EditAddressModal = ({ setConfirmEditAddress, setEditAddress, deliveryAddre
             setConfirmEditAddress(false);
             setEditAddress(false);
             setLoading(false);
+            setIsEdited(true)
         } catch (error) {
           console.log(error);   
           setLoading(false);
