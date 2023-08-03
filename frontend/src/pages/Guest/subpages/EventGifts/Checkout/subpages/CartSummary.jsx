@@ -10,10 +10,9 @@ const CartSummary = ({ setShowCheckout }) => {
   const { checkoutAmount, cartLength, deliveryFee, itemsData, setItemsData } =
     useContext(CheckoutContext);
   const { newDeliveryData } = useContext(DeliveryContext);
-  const { newEvent } = useSelector(state => state.user);
+  const { newEvent } = useSelector(state => state.event);
 
   const newDeliveryFee = Math.round((deliveryFee * checkoutAmount) / 100);
-
   const singleItem = newDeliveryData.map(item => {
     const newData = {
       item: item.title,
@@ -26,7 +25,9 @@ const CartSummary = ({ setShowCheckout }) => {
     if (cartLength > 0) {
       const res = await BuyGiftsApi(itemsData);
       if (res.data) {
-        await DeliveryTransApi(newEvent.userId, singleItem);
+        console.log('hey', newEvent);
+        const result = await DeliveryTransApi(newEvent.userId, singleItem);
+        console.log(result);
         setShowCheckout(false);
         setItemsData([]);
       }
