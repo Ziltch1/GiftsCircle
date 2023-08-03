@@ -51,6 +51,7 @@ const Index = ({
     if (itemData.enableContribution === true) {
       setContributionModal(true);
       setCurrentItem(newItem);
+      // setCheckContribution(true)
     } else {
       setShowPrompt(true);
       if (!addedGiftItems.includes(newItem.id)) {
@@ -166,6 +167,7 @@ const Index = ({
           <ContributionModal
             setOpenModal={setContributionModal}
             isOpen={contributionModal}
+            setCheckContribution={setCheckContribution}
             // setShowPrompt={setShowPrompt}
           />
           <ComplimentaryModal
