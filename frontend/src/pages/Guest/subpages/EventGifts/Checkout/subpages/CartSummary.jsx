@@ -1,40 +1,35 @@
 import { Box, Heading, Text, Divider, Stack, Flex } from '@chakra-ui/react';
 import React, { useContext } from 'react';
-// import { setCheckoutData } from '../../../../redux/features/marketplace/marketSlice';
 import PaymentButton from '../../../../../../components/Buttons/PaymentButton';
 import { CheckoutContext, DeliveryContext } from '../../../..';
-import { BuyItemsApi } from '../../../../../../redux/axios/apis/marketPlace';
 import { DeliveryTransApi } from '../../../../../../redux/axios/apis/delivery';
 import { useSelector } from 'react-redux';
-import { CartContext } from '../..';
 import { BuyGiftsApi } from '../../../../../../redux/axios/apis/gift';
 
+const CartSummary = ({ setShowCheckout }) => {
+  const { checkoutAmount, cartLength, deliveryFee, itemsData, setItemsData } =
+    useContext(CheckoutContext);
+  const { newDeliveryData } = useContext(DeliveryContext);
+  const { newEvent } = useSelector(state => state.event);
 
-const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout,}) => {
-  
-  const {checkoutAmount, cartLength, deliveryFee, itemsData, setItemsData} = useContext(CheckoutContext);
-  const { newDeliveryData, deliveryData, setDeliveryData } = useContext(DeliveryContext);
-  const {newEvent} = useSelector(state => state.event)
-
-  const newDeliveryFee = Math.round(((deliveryFee * checkoutAmount)/100));
-
-  const singleItem = newDeliveryData.map((item) => {
+  const newDeliveryFee = Math.round((deliveryFee * checkoutAmount) / 100);
+  const singleItem = newDeliveryData.map(item => {
     const newData = {
       item: item.title,
-      deliveryFee: ((deliveryFee * item.amount) / 100),
-    }
-    return newData
+      deliveryFee: (deliveryFee * item.amount) / 100,
+    };
+    return newData;
   });
 
   const HandleSubmit = async () => {
     if (cartLength > 0) {
       const res = await BuyGiftsApi(itemsData);
-      await DeliveryTransApi(newEvent.user_id, singleItem);
       if (res.data) {
+        await DeliveryTransApi(newEvent.userId, singleItem);
         setShowCheckout(false);
         setItemsData([]);
       }
-    } 
+    }
   };
 
   return (
@@ -67,10 +62,10 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout,}) => {
         <Divider />
 
         {/* {newDeliveryFee !== 0 && ( */}
-          <PaymentButton
-            amount={checkoutAmount + newDeliveryFee}
-            action={HandleSubmit}
-          />
+        <PaymentButton
+          amount={checkoutAmount + newDeliveryFee}
+          action={HandleSubmit}
+        />
         {/* )} */}
       </Stack>
     </Box>

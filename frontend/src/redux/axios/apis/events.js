@@ -8,10 +8,6 @@ const GetEventApi = id => {
   return api.get(`/event/${id}`);
 };
 
-const GetEventGiftsApi = eventId => {
-  return api.get(`gift/Get/EventGifts/${eventId}`);
-};
-
 const GetEventGuestsApi = eventId => {
   return api.get(`/event/${eventId}/guests`);
 };
@@ -54,7 +50,6 @@ const GetEventCohostsApi = id => {
 
 export {
   GetUserEventsApi,
-  GetEventGiftsApi,
   GetEventGuestsApi,
   CreateEventApi1,
   UpdateEventApi1,

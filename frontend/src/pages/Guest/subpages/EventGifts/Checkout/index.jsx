@@ -1,44 +1,37 @@
-import { Box, Stack, Divider } from '@chakra-ui/react';
+import { Box, Stack } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
-import DeliveryDetailsHeader from './subpages/DeliveryDetailsHeader';
-import DeliveryDetailsForm from './subpages/DeliveryDetailsForm';
 import CartSummary from './subpages/CartSummary';
-import DeliveryDetailsCard from './subpages/DeliveryDetailsCard';
 import { useSelector } from 'react-redux';
 import BackButton from '../../../../../components/Buttons/BackButton';
 import { Zones } from '../../../../../Utils/data/ZONES';
-import { DeliveryDetailsApi, GetDeliveryDetailsApi } from '../../../../../redux/axios/apis/delivery';
+import { GetDeliveryDetailsApi } from '../../../../../redux/axios/apis/delivery';
 
-
-const Index = ({ setShowCheckout, giftDetails, checkContribution }) => {
+const Index = ({ setShowCheckout, giftDetails }) => {
   const [showDeliveryForm, setShowDeliveryForm] = useState(true);
   const [selectedDeliveryDetails, setSelectedDeliveryDetails] = useState(null);
   const [deliveryAmount, setDeliveryAmount] = useState(0);
   const [deliveryPercent, setDeliveryPercent] = useState(0);
-  const [deliveryDetails, setDeliveryDetails] = useState([])
+  const [deliveryDetails, setDeliveryDetails] = useState([]);
   const { checkoutData } = useSelector(state => state.market);
-  const {newEvent} = useSelector(state => state.event)
+  const { newEvent } = useSelector(state => state.event);
 
   const { amount, data } = checkoutData;
 
-  const getDeliveryDetails = async() => {
+  const getDeliveryDetails = async () => {
     try {
-      const res = await GetDeliveryDetailsApi(newEvent?.user_id);
+      const res = await GetDeliveryDetailsApi(newEvent?.userId);
       const data = await res.data;
-      setDeliveryDetails(data)
+      setDeliveryDetails(data);
     } catch (error) {
       console.log(error);
     }
-  }
-
-  console.log(deliveryDetails);
+  };
 
   const handleClick = () => {
-    setShowCheckout(false)
+    setShowCheckout(false);
     if (showDeliveryForm) {
       setShowDeliveryForm(false);
-    }
-     else {
+    } else {
       setShowCheckout(false);
     }
   };
@@ -67,23 +60,23 @@ const Index = ({ setShowCheckout, giftDetails, checkContribution }) => {
   }, [deliveryPercent]);
 
   return (
-    <Box w="80%" mx="auto" my="8" h='100vh'>
+    <Box w="80%" mx="auto" my="8" h="100vh">
       <BackButton action={handleClick} />
       <Stack
         direction={{ base: 'column', md: 'row', lg: 'row' }}
         justifyContent="space-between"
         mt="5"
       >
-          <Box w={{ base: '100%', lg: '80%' }} mx='auto'>
-            <CartSummary
-              amount={amount}
-              data={data}
-              deliveryAmount={deliveryAmount}
-              setShowCheckout={setShowCheckout}
-              giftDetails={giftDetails}
-              deliveryPercent={deliveryPercent}
-            />
-          </Box>
+        <Box w={{ base: '100%', lg: '80%' }} mx="auto">
+          <CartSummary
+            amount={amount}
+            data={data}
+            deliveryAmount={deliveryAmount}
+            setShowCheckout={setShowCheckout}
+            giftDetails={giftDetails}
+            deliveryPercent={deliveryPercent}
+          />
+        </Box>
       </Stack>
     </Box>
   );

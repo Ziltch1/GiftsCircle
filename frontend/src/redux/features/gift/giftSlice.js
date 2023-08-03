@@ -5,7 +5,7 @@ const initialState = {
   userPurchasedGiftItems: [],
   complimentaryGifts: [],
   eventGiftTrans: null,
-  userEventGiftTrans: null,
+  userEventGiftTrans: [],
   sourvernirItems: [],
 };
 

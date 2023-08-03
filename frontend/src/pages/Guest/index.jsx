@@ -26,7 +26,7 @@ import Fundraising from './subpages/Fundraising';
 import Asoebi from './subpages/Asoebi';
 import { setNewEvent } from '../../redux/features/events/eventSlice';
 import { useSelector } from 'react-redux';
-import Checkout from './subpages/EventGifts/Checkout'
+import Checkout from './subpages/EventGifts/Checkout';
 import { PositionContext } from '../../Layouts/DashBoardLayout';
 
 export const CheckoutContext = createContext(null);
@@ -47,7 +47,7 @@ const Index = () => {
   const [newDeliveryData, setNewDeliveryData] = useState([]);
   const [deliveryData, setDeliveryData] = useState([]);
   const [itemsData, setItemsData] = useState([]);
-  const {navPosition, setNavPosition} = useContext(PositionContext); 
+  const { navPosition, setNavPosition } = useContext(PositionContext);
 
   useEffect(() => {
     let check = localStorage.getItem('Cart');
@@ -88,7 +88,7 @@ const Index = () => {
   const goBack = () => {
     navigate('/dashboard');
     setNavPosition(0);
-  } 
+  };
 
   return (
     <Box bg="#F5F5F5">
@@ -101,13 +101,32 @@ const Index = () => {
           </Stack>
         ) : (
           <CheckoutContext.Provider
-            value={{checkoutAmount, setCheckoutAmount, cartLength, setCartLength, deliveryFee, setDeliveryFee, itemsData, setItemsData}}
+            value={{
+              checkoutAmount,
+              setCheckoutAmount,
+              cartLength,
+              setCartLength,
+              deliveryFee,
+              setDeliveryFee,
+              itemsData,
+              setItemsData,
+            }}
           >
-            <DeliveryContext.Provider value={{newDeliveryData, setNewDeliveryData, deliveryData, setDeliveryData}}>
-            {showCheckout ? 
-              <Checkout setShowCheckout={setShowCheckout} checkContribution={checkContribution} /> 
-              :
-              <>
+            <DeliveryContext.Provider
+              value={{
+                newDeliveryData,
+                setNewDeliveryData,
+                deliveryData,
+                setDeliveryData,
+              }}
+            >
+              {showCheckout ? (
+                <Checkout
+                  setShowCheckout={setShowCheckout}
+                  checkContribution={checkContribution}
+                />
+              ) : (
+                <>
                   <Box>
                     <BackButton action={goBack} />
                     <EventImages newEvent={event} />
@@ -119,13 +138,20 @@ const Index = () => {
                   />
                   <Box>
                     {navPosition === 0 && <EventDetails newEvent={event} />}
-                    {navPosition === 1 && <EventGifts event={event} setShowCheckout={setShowCheckout} checkContribution={checkContribution} setCheckContribution={setCheckContribution} />}
+                    {navPosition === 1 && (
+                      <EventGifts
+                        event={event}
+                        setShowCheckout={setShowCheckout}
+                        checkContribution={checkContribution}
+                        setCheckContribution={setCheckContribution}
+                      />
+                    )}
                     {navPosition === 2 && <EventMedia />}
                     {navPosition === 3 && <Asoebi event={event} />}
                     {navPosition === 4 && <Fundraising event={event} />}
                   </Box>
-              </>
-            }
+                </>
+              )}
             </DeliveryContext.Provider>
           </CheckoutContext.Provider>
         )}

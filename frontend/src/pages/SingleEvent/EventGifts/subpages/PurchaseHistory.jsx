@@ -9,14 +9,16 @@ import {
   Td,
   TableContainer,
   Image,
-  Flex, Heading, Text
+  Flex,
+  Heading,
+  Text,
 } from '@chakra-ui/react';
 import eye from '../../../../components/assets/eye.svg';
 import message from '../../../../components/assets/message.svg';
 import GiftDrawer from '../../../../components/Drawer/Drawer';
 import { useSelector } from 'react-redux';
 
-const PurchaseHistory = ({purchaseHistory}) => {
+const PurchaseHistory = () => {
   const { giftItems, eventGiftTrans, complimentaryGifts } = useSelector(
     state => state.gift
   );
@@ -26,28 +28,25 @@ const PurchaseHistory = ({purchaseHistory}) => {
     setShowDrawer(true);
   };
 
-  console.log(purchaseHistory);
-
-
   return (
-    <Box minH='500px'>
-      {purchaseHistory.length > 0 ?
-      <TableContainer bg="white">
-        <Table variant="simple">
-          <Thead bg="#EEEEEE" px="17px" py="40px">
-            <Tr fontSize={14} color="black">
-              <Th>Gift name</Th>
-              <Th>Purchased by</Th>
-              <Th>Complementary Gift</Th>
-              <Th isNumeric>Amount</Th>
-              <Th>Payment status</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
+    <Box minH="500px">
+      {eventGiftTrans.length > 0 ? (
+        <TableContainer bg="white">
+          <Table variant="simple">
+            <Thead bg="#EEEEEE" px="17px" py="40px">
+              <Tr fontSize={14} color="black">
+                <Th>Gift name</Th>
+                <Th>Purchased by</Th>
+                <Th>Complementary Gift</Th>
+                <Th isNumeric>Amount</Th>
+                <Th>Payment status</Th>
+                <Th>Actions</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
               {eventGiftTrans.map(ele => {
-                console.log(ele);
-                const gift = ele?.giftitemId ? giftItems.find(x => x.id === ele.giftitemId)
+                const gift = ele?.gift?.giftitemId
+                  ? giftItems.find(x => x.id === ele.gift.giftitemId)
                   : complimentaryGifts.find(
                       x => x.id === ele.complimentaryGift.id
                     );
@@ -62,7 +61,7 @@ const PurchaseHistory = ({purchaseHistory}) => {
                       </Td>
                       <Td>
                         {ele.giftId
-                          ? ele.gift.complimentaryGift === ''
+                          ? ele.gift.complimentaryGift === 'none'
                             ? 'No'
                             : 'Yes'
                           : 'No'}
@@ -79,15 +78,24 @@ const PurchaseHistory = ({purchaseHistory}) => {
                   </>
                 );
               })}
-          </Tbody>
-        </Table>
-      </TableContainer>
-      : <Box h='200px' display='flex' alignItems='center' justifyContent='center'>
-          <Box textAlign='center'>
-            <Heading fontSize={28} mb='3'>No one has purchased your gifts yet</Heading>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Box
+          h="200px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Box textAlign="center">
+            <Heading fontSize={28} mb="3">
+              No one has purchased your gifts yet
+            </Heading>
             <Text fontSize={18}>All your purchases will appear here</Text>
           </Box>
-        </Box>}
+        </Box>
+      )}
       {showDrawer ? <GiftDrawer /> : null}
     </Box>
   );

@@ -13,9 +13,9 @@ import {
   BuyGiftsApi,
   DeleteEventGiftApi,
   GetComplimentaryGiftItemsApi,
-  GetEventGiftTransApi,
+  GetEventGiftsTransApi,
   GetGiftItemsApi,
-  GetUserEventGiftTransApi,
+  GetUserEventGiftsTransApi,
   GetUserPurchasedGiftsApi,
 } from '../../axios/apis/gift';
 import { GetEventGifts } from '../events/service';
@@ -63,7 +63,7 @@ const GetUserPurchasedGifts = id => async () => {
 
 const GetEventGiftsTransactions = id => async () => {
   try {
-    const res = await GetEventGiftTransApi(id);
+    const res = await GetEventGiftsTransApi(id);
     dispatch(setEventGiftsTrans(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
@@ -73,7 +73,7 @@ const GetEventGiftsTransactions = id => async () => {
 
 const GetUserEventGiftsTransactions = (id, eventId) => async () => {
   try {
-    const res = await GetUserEventGiftTransApi(id, eventId);
+    const res = await GetUserEventGiftsTransApi(id, eventId);
     dispatch(setUserEventGiftTrans(res.data));
   } catch (error) {
     console.log(ErrorHandler(error));
