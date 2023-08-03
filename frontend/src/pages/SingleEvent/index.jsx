@@ -10,6 +10,7 @@ import EventMedia from './EventMedia';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
+  GetEventAsoebiBuyers,
   GetEventFundRaising,
   GetEventFundRaisingDonors,
   GetEventGifts,
@@ -33,7 +34,7 @@ import {
 import { PositionContext } from '../../Layouts/DashBoardLayout';
 import Marketplace from './EventDetails/GiftMarketplace';
 
-const Index = ({isCoHost}) => {
+const Index = ({ isCoHost }) => {
   const navigate = useNavigate();
   // const [navPosition, setNavPosition] = useState(0);
   const { id } = useParams();
@@ -69,7 +70,8 @@ const Index = ({isCoHost}) => {
         dispatch(GetEventFundRaising(newEvent.id));
         dispatch(GetUserUploadedFiles(newEvent.id, user.id));
         dispatch(GetGuestSentFiles(newEvent.id));
-        dispatch(GetEventGifts(newEvent.id))
+        dispatch(GetEventGifts(newEvent.id));
+        dispatch(GetEventAsoebiBuyers(newEvent.id));
         dispatch(GetEventGiftsTransactions(newEvent.id));
         setLoading(false);
       } else {
@@ -90,15 +92,19 @@ const Index = ({isCoHost}) => {
     }
   }, [fundRaising, newEvent]);
 
- 
   const goBack = () => {
     navigate(-1);
     setNavPosition(0);
-  }
+  };
 
   return (
     <Box bg="#F5F5F5">
-      <Box w={showMarketplace ? '90%' : '76%'} mx="auto" pt={showMarketplace ? '0' : 8} pb="7">
+      <Box
+        w={showMarketplace ? '90%' : '76%'}
+        mx="auto"
+        pt={showMarketplace ? '0' : 8}
+        pb="7"
+      >
         {loading ? (
           <Stack spacing="20px">
             <Skeleton height="50px" width="100%" />
@@ -107,21 +113,28 @@ const Index = ({isCoHost}) => {
           </Stack>
         ) : (
           <>
-          {
-            showMarketplace 
-            ? 
-            <Marketplace setShowMarketplace={setShowMarketplace} />
-            :
-            <>
-              <Box>
-                <BackButton action={goBack} />
-                <EventImages newEvent={newEvent} eventGuests={eventGuests} />
-              </Box>
-              <Tabs navPosition={navPosition} setNavPosition={setNavPosition} />
-              <Box>
+            {showMarketplace ? (
+              <Marketplace setShowMarketplace={setShowMarketplace} />
+            ) : (
+              <>
+                <Box>
+                  <BackButton action={goBack} />
+                  <EventImages newEvent={newEvent} eventGuests={eventGuests} />
+                </Box>
+                <Tabs
+                  navPosition={navPosition}
+                  setNavPosition={setNavPosition}
+                />
+                <Box>
                   {newEvent.published ? (
                     <Box>
-                      {navPosition === 0 && <EventDetails newEvent={newEvent} isCoHost={isCoHost} setShowMarketplace={setShowMarketplace} />}
+                      {navPosition === 0 && (
+                        <EventDetails
+                          newEvent={newEvent}
+                          isCoHost={isCoHost}
+                          setShowMarketplace={setShowMarketplace}
+                        />
+                      )}
                       {navPosition === 1 && <EventGifts newEvent={newEvent} />}
                       {navPosition === 2 && <EventMedia />}
                       {navPosition === 3 && <EventGuests />}
@@ -130,15 +143,21 @@ const Index = ({isCoHost}) => {
                     </Box>
                   ) : (
                     <Box>
-                      {navPosition === 0 && <EventDetails newEvent={newEvent} isCoHost={isCoHost} setShowMarketplace={setShowMarketplace} />}
+                      {navPosition === 0 && (
+                        <EventDetails
+                          newEvent={newEvent}
+                          isCoHost={isCoHost}
+                          setShowMarketplace={setShowMarketplace}
+                        />
+                      )}
                       {navPosition === 1 && <EventGifts newEvent={newEvent} />}
                       {navPosition === 2 && <Asoebi newEvent={newEvent} />}
                       {navPosition === 3 && <Fundraising />}
                     </Box>
                   )}
-              </Box>
-            </>
-          }  
+                </Box>
+              </>
+            )}
           </>
         )}
       </Box>

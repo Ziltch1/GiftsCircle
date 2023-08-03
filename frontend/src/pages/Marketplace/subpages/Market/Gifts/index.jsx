@@ -19,7 +19,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const [GiftItems, setGiftItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
   const [amount, setAmount] = useState(0);
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(1);
 
   const showOptions = () => {
     setShowProducts(false);
@@ -49,9 +49,9 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   const AddGift = async id => {
     if (!addedGiftItems.includes(id)) {
       const data = giftItems.find(x => x.id === id);
-      if(GiftItems.length > 0){
+      if (GiftItems.length > 0) {
         const newGiftItem = GiftItems?.find(x => x?.ItemId === id);
-        setQuantity(newGiftItem?.quantity)
+        setQuantity(newGiftItem?.quantity);
       }
       const formBody = {
         ItemId: id,
@@ -69,23 +69,22 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
   useEffect(() => {
     let totalAmount = 0;
     GiftItems.forEach(ele => {
-      totalAmount = totalAmount + ele.amountPaid;
+      totalAmount = totalAmount + ele.amountPaid * ele.quantity;
     });
     setAmount(totalAmount);
   }, [GiftItems]);
 
-
-  const handleIncrement = (id) => {
-    setGiftItems((prevItems) =>
-      prevItems.map((item) =>
+  const handleIncrement = id => {
+    setGiftItems(prevItems =>
+      prevItems.map(item =>
         item.ItemId === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
 
-  const handleDecrement = (id) => {
-    setGiftItems((prevItems) =>
-      prevItems.map((item) =>
+  const handleDecrement = id => {
+    setGiftItems(prevItems =>
+      prevItems.map(item =>
         item.ItemId === id && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
@@ -93,6 +92,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
     );
   };
 
+  console.log(GiftItems);
 
   return (
     <>
@@ -105,7 +105,7 @@ const Index = ({ setShowProducts, setShowCheckout }) => {
           quantity,
           setQuantity,
           handleIncrement,
-          handleDecrement
+          handleDecrement,
         }}
       >
         <GiftListDrawer

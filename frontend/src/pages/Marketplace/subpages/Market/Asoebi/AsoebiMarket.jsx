@@ -8,7 +8,7 @@ import AsoebiDrawer from './AsoebiDrawer';
 import { useSelector } from 'react-redux';
 import DisplayCard from '../../../../../components/Card';
 
-const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
+const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout }) => {
   const { asoebiItems } = useSelector(state => state.event);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { checkoutData } = useSelector(state => state.market);
@@ -19,7 +19,10 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
     setAmount,
     addedAsoebiItems,
     setAsoebiItems,
-    addForGuest, quantity, setQuantity, AsoebiItems
+    addForGuest,
+    quantity,
+    setQuantity,
+    AsoebiItems,
   } = useContext(AsoebiContext);
   const { user } = useSelector(state => state.user);
 
@@ -39,8 +42,9 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
     let amount = 0;
 
     data.forEach(ele => {
-      amount += addForGuest ? asoebiItems.find(x => x.id === ele.asoebiItem)?.amount
-        : asoebiItems.find(x => x.id === ele.ItemId)?.amount;
+      amount += addForGuest
+        ? asoebiItems.find(x => x.id === ele.asoebiItem)?.amount
+        : asoebiItems.find(x => x.id === ele.ItemId)?.amount * ele.quantity;
     });
     setAmount(amount);
   }, [data, setAddedAsoebiItems, asoebiItems, setAmount, addForGuest]);
@@ -51,7 +55,7 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
     const ids = [];
     data.forEach(x => ids.push(x.ItemId));
     setAddedAsoebiItems([...ids]);
-  },[checkoutData])
+  }, [checkoutData]);
 
   const AddAsoebi = id => {
     if (!addedAsoebiItems.includes(id)) {
@@ -69,7 +73,7 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
         const data = asoebiItems.find(x => x.id === id);
         if (AsoebiItems.length > 0) {
           const newGiftItem = AsoebiItems?.find(x => x?.ItemId === id);
-          setQuantity(newGiftItem?.quantity)
+          setQuantity(newGiftItem?.quantity);
         }
         const formBody = {
           ItemId: id,
@@ -84,7 +88,6 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
       }
     }
   };
-
 
   return (
     <Box bg="#F5F5F5">
@@ -145,7 +148,11 @@ const AsoebiMarket = ({ setShowProducts, eventId, setShowCheckout,}) => {
           <Search />
         </Box>
 
-        <Flex justifyContent='space-between' alignItems="center" flexWrap="wrap">
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+        >
           {asoebiItems?.map(item => (
             <DisplayCard
               id={item.id}

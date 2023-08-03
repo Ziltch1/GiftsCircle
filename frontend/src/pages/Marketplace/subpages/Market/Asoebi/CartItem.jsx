@@ -24,7 +24,6 @@ import Counter from '../../../../../components/Counter/Counter';
 import { DeliveryContext } from '../../..';
 
 const CartItem = ({ item, id }) => {
-  console.log(item, id);
   const [modalOpen, setModalOpen] = useState(false);
   const [increment, setIncrement] = useState(0);
   const {
@@ -35,7 +34,7 @@ const CartItem = ({ item, id }) => {
     addedAseobiItems, handleIncrement, handleDecrement
   } = useContext(AsoebiContext);
 
-  const { setNewDeliveryData, newDeliveryData } = useContext(DeliveryContext);
+  const { setNewDeliveryData } = useContext(DeliveryContext);
 
   const { asoebiItems, eventAsoebis } = useSelector(state => state.event);
   const asoebiItem = addForGuest
