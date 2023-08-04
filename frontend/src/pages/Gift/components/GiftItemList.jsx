@@ -49,7 +49,7 @@ const GiftItemList = ({ event }) => {
                     </Flex>
                     <Flex alignItems={'center'} gap={1}>
                       <Image src={giftIcon} />
-                      <Text>{gift?.length} gift items attached</Text>
+                      <Text>{gift?.length} gift items attached.</Text>
                     </Flex>
                   </Flex>
                 </Box>
