@@ -61,12 +61,12 @@ const CartSummary = ({ setShowCheckout }) => {
         </Flex>
         <Divider />
 
-        {/* {newDeliveryFee !== 0 && ( */}
-        <PaymentButton
-          amount={checkoutAmount + newDeliveryFee}
-          action={HandleSubmit}
-        />
-        {/* )} */}
+        {newDeliveryFee !== 0 && (
+          <PaymentButton
+            amount={checkoutAmount + newDeliveryFee}
+            action={HandleSubmit}
+          />
+        )}
       </Stack>
     </Box>
   );

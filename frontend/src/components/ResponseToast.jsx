@@ -10,9 +10,10 @@ const Response = () => {
 
   useEffect(() => {
     if (response.message !== null) {
-      let id = response.message;
+      let id = "toast";
       if (!toast.isActive(id)) {
         toast({
+          id: id,
           title: response.title,
           description: response.message,
           status: response.type === 'Error' ? 'error' : 'success',
@@ -30,7 +31,7 @@ const Response = () => {
         );
       }
     }
-  }, [response]);
+  }, [response, toast]);
 
   return <></>;
 };

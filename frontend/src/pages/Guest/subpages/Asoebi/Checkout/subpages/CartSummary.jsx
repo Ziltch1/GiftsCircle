@@ -14,7 +14,6 @@ const CartSummary = ({
 }) => {
   const { newDeliveryData } = useContext(DeliveryContext);
   const { user } = useSelector(state => state.user);
-  const { deliveryDetails } = useSelector(state => state.user);
 
   const singleItem = newDeliveryData.map(item => {
     const newData = {
@@ -32,8 +31,6 @@ const CartSummary = ({
       console.log(error);
     }
   };
-
-  console.log(deliveryDetails);
 
   return (
     <Box bg="white" p="4" w="100%" borderRadius={5}>
@@ -62,7 +59,7 @@ const CartSummary = ({
           </Heading>
         </Flex>
         <Divider />
-        {deliveryDetails && (
+        {deliveryAmount !== 0 && (
           <PaymentButton
             amount={amount + deliveryAmount}
             action={HandleSubmit}
