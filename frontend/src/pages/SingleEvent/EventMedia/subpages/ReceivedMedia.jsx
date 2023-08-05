@@ -14,15 +14,12 @@ import {
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import ImageModal from '../../components/ImageModal';
-import { GetEventMessagesApi } from '../../../../redux/axios/apis/media';
-import MessageModal from '../../components/MessageModal';
 
 const ReceivedMedia = () => {
   const { guestSentFiles } = useSelector(state => state.event);
   const [data, setData] = useState(null);
   const [showImageModal, setShowImageModal] = useState(false);
   const [itemUrl, setItemUrl] = useState('');
-  const { newEvent } = useSelector(state => state.event);
   const [fileType, setFileType] = useState('');
   const [type, setType] = useState('');
 
