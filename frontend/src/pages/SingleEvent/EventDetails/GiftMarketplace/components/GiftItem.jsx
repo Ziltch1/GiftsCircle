@@ -67,7 +67,7 @@ const GiftItem = ({ gift, setData, data, id }) => {
     >
       <Flex gap={3}>
         <Image
-          src={giftItem.image}
+          src={giftItem?.image}
           w="90px"
           h="90px"
           borderRadius={5}
@@ -76,7 +76,7 @@ const GiftItem = ({ gift, setData, data, id }) => {
         />
         <Box w="390px">
           <Heading fontWeight="medium" fontSize="15px" lineHeight={6} mb="2">
-            {giftItem.title}
+            {giftItem?.title}
           </Heading>
           <Box w="100%">
             <Flex gap={12}>
@@ -84,9 +84,9 @@ const GiftItem = ({ gift, setData, data, id }) => {
               <Switch
                 size="sm"
                 colorScheme="teal"
-                isChecked={giftItem.amount > 20000 ? enableContribution : false}
+                isChecked={giftItem?.amount > 20000 ? enableContribution : false}
                 onChange={e =>
-                  giftItem.amount > 20000
+                  giftItem?.amount > 20000
                     ? setEnableContribution(e.target.checked)
                     : ShowToast()
                 }
@@ -111,7 +111,7 @@ const GiftItem = ({ gift, setData, data, id }) => {
         </Box>
 
         <Box>
-          <Text mb='3'>₦{giftItem.amount * gift.quantity}</Text>
+          <Text mb='3'>₦{giftItem?.amount * gift?.quantity}</Text>
           <Counter quantity={gift?.quantity} handleIncrement={handleIncrement} handleDecrement={handleDecrement} id={id} />
         </Box>
       </Flex>
