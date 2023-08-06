@@ -45,9 +45,9 @@ const DonationHistory = () => {
                         </Td>
                         <Td>{ele.amount}</Td>
                         <Td>
-                          {new Date(ele.date).toLocaleDateString() +
+                          {new Date(ele.created_at).toLocaleDateString() +
                             '  ' +
-                            new Date(ele.date).toLocaleTimeString()}{' '}
+                            new Date(ele.created_at).toLocaleTimeString()}{' '}
                         </Td>
                       </Tr>
                     );

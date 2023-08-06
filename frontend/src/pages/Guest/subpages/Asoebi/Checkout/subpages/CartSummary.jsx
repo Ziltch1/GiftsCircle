@@ -1,28 +1,28 @@
 import { Box, Heading, Text, Divider, Stack, Flex } from '@chakra-ui/react';
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import PaymentButton from '../../../../../../components/Buttons/PaymentButton';
-import { dispatch } from '../../../../../../redux/store';
-import { GetUserMarketItems } from '../../../../../../redux/features/marketplace/service';
-import { setCheckoutData } from '../../../../../../redux/features/marketplace/marketSlice';
-import { BuyItemsApi } from '../../../../../../redux/axios/apis/marketPlace';
 import { DeliveryContext } from '../..';
 import { useSelector } from 'react-redux';
 import { DeliveryTransApi } from '../../../../../../redux/axios/apis/delivery';
 
+const CartSummary = ({
+  amount,
+  deliveryAmount,
+  handleSubmit,
+  cartLength,
+  deliveryPercent,
+}) => {
+  const { newDeliveryData } = useContext(DeliveryContext);
+  const { user } = useSelector(state => state.user);
 
-const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout, handleSubmit, cartLength, deliveryPercent }) => {
-
-  const {newDeliveryData} = useContext(DeliveryContext);
-  const {user} = useSelector(state => state.user);
-
-  const singleItem = newDeliveryData.map((item) => {
+  const singleItem = newDeliveryData.map(item => {
     const newData = {
       item: item.title,
-      deliveryFee: ((deliveryPercent * item.amount) / 100),
-    }
-    return newData
-  })
-  
+      deliveryFee: (deliveryPercent * item.amount) / 100,
+    };
+    return newData;
+  });
+
   const HandleSubmit = async () => {
     try {
       await handleSubmit();
@@ -30,14 +30,6 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout, handleSubm
     } catch (error) {
       console.log(error);
     }
-    // if (data?.length > 0) {
-    //   const res = await BuyItemsApi(data);
-    //   if (res.data) {
-    //     dispatch(GetUserMarketItems(data[0].userId));
-    //     setCheckoutData({ type: '', data: [], amount: 0 });
-    //     setShowCheckout(false);
-    //   }
-    // }
   };
 
   return (
@@ -53,7 +45,6 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout, handleSubm
             ₦ {amount}
           </Heading>
         </Flex>
-
         <Flex alignItems="center" justifyContent="space-between">
           <Text>Delivery Fee</Text>
           <Heading fontWeight="medium" fontSize={18}>
@@ -68,13 +59,12 @@ const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout, handleSubm
           </Heading>
         </Flex>
         <Divider />
-
-        {/* {deliveryAmount !== 0 && ( */}
+        {deliveryAmount !== 0 && (
           <PaymentButton
             amount={amount + deliveryAmount}
             action={HandleSubmit}
           />
-        {/* )} */}
+        )}
       </Stack>
     </Box>
   );

@@ -9,19 +9,24 @@ import { DeliveryTransApi } from '../../../../redux/axios/apis/delivery';
 import { useSelector } from 'react-redux';
 import { DeliveryContext } from '../..';
 
+const CartSummary = ({
+  data,
+  amount,
+  deliveryAmount,
+  setShowCheckout,
+  deliveryPercent,
+}) => {
+  const { user } = useSelector(state => state.user);
+  const { newDeliveryData, setDeliveryData } = useContext(DeliveryContext);
 
-const CartSummary = ({ data, amount, deliveryAmount, setShowCheckout, deliveryPercent }) => {
-  const {user} = useSelector(state => state.user);
-  const {newDeliveryData, deliveryData, setDeliveryData} = useContext(DeliveryContext);
-
-  const singleItem = newDeliveryData.map((item) => {
+  const singleItem = newDeliveryData.map(item => {
     const newData = {
       item: item.title,
-      deliveryFee: ((deliveryPercent * item.amount)/100),
-    }
-    return newData
+      deliveryFee: (deliveryPercent * item.amount) / 100,
+    };
+    return newData;
   });
-  
+
   const HandleSubmit = async () => {
     if (data?.length > 0) {
       const delivery = await DeliveryTransApi(user.id, singleItem);
