@@ -28,7 +28,7 @@ const GiftHeader = ({ setOpenDrawer, openDrawer }) => {
   useEffect(() => {
     let amount = 0;
     data.forEach(ele => {
-      amount += giftItems.find(x => x.id === ele.giftitemId)?.amount;
+      amount += giftItems.find(x => x.id === ele.giftItemid)?.amount;
     });
     setTotalAddedAmount(amount);
   }, [data]);
