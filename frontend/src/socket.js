@@ -4,6 +4,6 @@ import { io } from 'socket.io-client';
 const URL =
   process.env.NODE_ENV === 'production'
     ? 'https://gifts-circle.herokuapp.com'
-    : 'http://localhost:4000';
+    : 'https://gifts-circle.herokuapp.com';
 
 export const socket = io(URL, { reconnectionDelay: 5000 }).connect();
