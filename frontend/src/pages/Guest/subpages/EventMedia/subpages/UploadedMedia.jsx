@@ -40,7 +40,7 @@ const UploadedMedia = () => {
       <LoadingModal setShowModal={setShowModal} open={modalOpen} />
       {images.length > 0 ? (
         <>
-          <Box
+          {/* <Box
             w="100%"
             h="1px"
             bgColor="#C6C6C6"
@@ -60,7 +60,7 @@ const UploadedMedia = () => {
             >
               January 12th, 2022
             </Box>
-          </Box>
+          </Box> */}
           <Flex
             alignItems="center"
             gap="28px"

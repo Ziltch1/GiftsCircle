@@ -112,6 +112,7 @@ const Index = () => {
               setDeliveryFee,
               itemsData,
               setItemsData,
+              setShowCheckout,
             }}
           >
             <DeliveryContext.Provider

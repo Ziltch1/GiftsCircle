@@ -84,7 +84,7 @@ const EditAddressModal = ({ setConfirmEditAddress, setEditAddress, deliveryAddre
                                 mb="3"
                                 bg='#F4F4F4'
                                 fontSize={14}
-                                color='#A8A8A8'
+                                color='black'
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                                 placeholder='e.g 123, Ikorodu Road, Lagos, Nigeria'
