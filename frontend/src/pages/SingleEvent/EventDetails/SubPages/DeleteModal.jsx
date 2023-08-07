@@ -14,9 +14,12 @@ const DeleteModal = ({setShowModal}) => {
   const HandleSubmit = async () => {
     setLoading(true)
     try {
-        await DeleteEventApi(newEvent?.id)
-        navigate('/dashboard')
-        setLoading(false)
+        const res = await DeleteEventApi(newEvent?.id);
+        // if(res.response.status === 200){
+            setShowModal(false);
+            setLoading(false);
+            navigate('/dashboard');
+        // }
     } catch (error) {
         console.log(error)
         setLoading(false)

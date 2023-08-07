@@ -6,8 +6,8 @@ import { DeliveryTransApi } from '../../../../../../redux/axios/apis/delivery';
 import { useSelector } from 'react-redux';
 import { BuyGiftsApi } from '../../../../../../redux/axios/apis/gift';
 
-const CartSummary = ({ setShowCheckout }) => {
-  const { checkoutAmount, cartLength, deliveryFee, itemsData, setItemsData } =
+const CartSummary = () => {
+  const { checkoutAmount, cartLength, deliveryFee, itemsData, setItemsData, setShowCheckout } =
     useContext(CheckoutContext);
   const { newDeliveryData } = useContext(DeliveryContext);
   const { newEvent } = useSelector(state => state.event);
@@ -23,6 +23,7 @@ const CartSummary = ({ setShowCheckout }) => {
 
   const HandleSubmit = async () => {
     if (cartLength > 0) {
+      setShowCheckout(false);
       const res = await BuyGiftsApi(itemsData);
       await DeliveryTransApi(newEvent?.userId, singleItem);
       if (res.data) {

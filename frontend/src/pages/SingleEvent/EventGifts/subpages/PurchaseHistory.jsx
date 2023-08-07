@@ -44,11 +44,11 @@ const PurchaseHistory = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {eventGiftTrans.map(ele => {
+              {eventGiftTrans?.map(ele => {
                 const gift = ele?.gift?.giftitemId
-                  ? giftItems.find(x => x.id === ele.gift.giftitemId)
+                  ? giftItems.find(x => x?.id === ele?.gift?.giftitemId)
                   : complimentaryGifts.find(
-                      x => x.id === ele.complimentaryGift.id
+                      x => x?.id === ele?.complimentaryGift?.id
                     );
                 return (
                   <>

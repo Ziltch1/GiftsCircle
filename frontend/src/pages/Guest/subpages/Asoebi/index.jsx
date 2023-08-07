@@ -40,7 +40,7 @@ const Index = () => {
 
   return (
     <Box>
-      <DeliveryContext.Provider value={{ newDeliveryData, setNewDeliveryData, deliveryData, setDeliveryData }}>
+      <DeliveryContext.Provider value={{ newDeliveryData, setNewDeliveryData, deliveryData, setDeliveryData, setShowAsoebiCheckout }}>
       <CartContext.Provider
         value={{
           ...contextValue,

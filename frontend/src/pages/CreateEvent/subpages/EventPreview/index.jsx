@@ -7,7 +7,7 @@ import SingleEvent from './SingleEvent'
 const index = ({setStep}) => {
   return (
     <Box>
-        <Header />
+        {/* <Header /> */}
         <PreviewHeader setStep={setStep} />
         <SingleEvent />
     </Box>

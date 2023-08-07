@@ -10,7 +10,7 @@ const CartSummary = ({
   deliveryAmount,
   handleSubmit,
   cartLength,
-  deliveryPercent,
+  deliveryPercent, setShowAsoebiCheckout
 }) => {
   const { newDeliveryData } = useContext(DeliveryContext);
   const { user } = useSelector(state => state.user);
@@ -25,6 +25,7 @@ const CartSummary = ({
 
   const HandleSubmit = async () => {
     try {
+      setShowAsoebiCheckout(false);
       await handleSubmit();
       await DeliveryTransApi(user.id, singleItem);
     } catch (error) {
