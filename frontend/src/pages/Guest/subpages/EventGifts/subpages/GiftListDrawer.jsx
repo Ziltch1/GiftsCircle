@@ -237,7 +237,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, checkContribution }) => {
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
             {checkContribution === true ? (
-              <PaymentButton amount={amount} action={HandleSubmit} />
+              <PaymentButton amount={giftAmount} action={HandleSubmit} />
             ) : (
               <Button
                 mb="3"
