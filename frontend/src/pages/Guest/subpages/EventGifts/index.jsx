@@ -48,10 +48,9 @@ const Index = ({
     let newItem = eventGifts.find(x => x.giftitemId === id);
     let itemData = giftItems.find(x => x.id === id);
     setIsComplimentary(false);
-    if (itemData.enableContribution === true) {
+    if (newItem.enableContribution === true) {
       setContributionModal(true);
       setCurrentItem(newItem);
-      // setCheckContribution(true)
     } else {
       setShowPrompt(true);
       if (!addedGiftItems.includes(newItem.id)) {
