@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Box, Text } from '@chakra-ui/react';
 import EventItem from './EventItem';
 import { useSelector } from 'react-redux';
@@ -6,6 +6,14 @@ import { useSelector } from 'react-redux';
 
 const Events = ({events}) => {
   const { user } = useSelector(state => state.user);
+  const [sortedEvents, setSortedEvents] = useState([]);
+  useEffect(() => {
+    const sortedEvent = [...events]?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    setSortedEvents(sortedEvent);
+  }, [events])
+
+  console.log(events, sortedEvents);
+
   return (
     <Box textAlign={'center'} mt="20px">
       <>
@@ -28,7 +36,7 @@ const Events = ({events}) => {
           </Box>
         ) : (
           <Box>
-            {events?.map(event => {
+            {sortedEvents?.map(event => {
               const guest = event.userId !== user.id
               return (
                 <EventItem
