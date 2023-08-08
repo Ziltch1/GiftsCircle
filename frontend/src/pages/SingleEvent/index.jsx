@@ -41,7 +41,7 @@ const Index = ({ isCoHost }) => {
   const [newEvent, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showMarketplace, setShowMarketplace] = useState(false);
-
+ 
   const { events, fundRaising, eventGuests } = useSelector(
     state => state.event
   );
