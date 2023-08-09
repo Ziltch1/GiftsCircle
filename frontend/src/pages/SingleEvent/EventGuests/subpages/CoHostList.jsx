@@ -9,7 +9,7 @@ import {
     Td,
     TableContainer,
     Image,
-    Flex,
+    Flex, Heading
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import SkeletonLoader from '../../../../components/Skeleton';
@@ -21,12 +21,15 @@ const CoHostList = ({data}) => {
 
    useEffect(() => {
        if (data) {
-           setLoading(false);
+        setLoading(false);
+       }else{
+        setLoading(false);
        }
    }, [data])
 
     return (
         <Box minH='500px'>
+            {!data.lenth < 1 ? 
             <TableContainer bg="white">
                 <Table variant="simple">
                     <Thead bg="#EEEEEE" px="17px" py="40px">
@@ -77,6 +80,7 @@ const CoHostList = ({data}) => {
                     </Tbody>
                 </Table>
             </TableContainer>
+            : <Box minH='300px' display='flex' alignItems='center' justifyContent='center'><Heading fontSize={30}>No co-hosts yet</Heading></Box>}
         </Box>
     );
 };
