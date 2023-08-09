@@ -12,8 +12,6 @@ const Events = ({events}) => {
     setSortedEvents(sortedEvent);
   }, [events])
 
-  console.log(events, sortedEvents);
-
   return (
     <Box textAlign={'center'} mt="20px">
       <>

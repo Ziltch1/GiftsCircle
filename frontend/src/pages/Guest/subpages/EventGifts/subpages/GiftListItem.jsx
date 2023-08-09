@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Flex, Button, Text, Image, Heading } from '@chakra-ui/react';
 import { CartContext } from '..';
@@ -26,12 +26,12 @@ const GiftListItem = ({
   } = useContext(CartContext);
   const { setNewDeliveryData, newDeliveryData } = useContext(DeliveryContext);
   const { setItemsData } = useContext(CheckoutContext);
+  const [newCart, setNewCart] = useState([]);
+
 
   const handleDelete = id => {
     const filteredArray = addedGiftItems.filter(obj => obj !== id);
-
     setAddedGiftItems(filteredArray);
-
     const filteredGifts = GiftItems.filter(obj => obj.id !== id);
     setGiftItems(filteredGifts);
   };

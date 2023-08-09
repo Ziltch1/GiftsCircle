@@ -60,6 +60,7 @@ const Index = ({
     }
   };
 
+
   useEffect(() => {
     const newGift = eventGifts.filter(x => x?.enableContribution === false);
     setFullPaymentGifts(newGift);
