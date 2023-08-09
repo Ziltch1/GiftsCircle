@@ -172,7 +172,6 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, checkContribution }) => {
     }
   }, []);
 
-  console.log(newGiftItems);
 
   return (
     <Box>

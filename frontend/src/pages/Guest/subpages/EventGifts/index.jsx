@@ -46,7 +46,6 @@ const Index = ({
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftitemId === id);
-    let itemData = giftItems.find(x => x.id === id);
     setIsComplimentary(false);
     if (newItem.enableContribution === true) {
       setContributionModal(true);
