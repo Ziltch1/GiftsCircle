@@ -12,7 +12,7 @@ import { dispatch } from '../../redux/store';
 import { setEditEvent } from '../../redux/features/events/eventSlice';
 import { useNavigate } from 'react-router-dom';
 
-const EventImages = ({ newEvent, eventGuests }) => {
+const EventImages = ({ newEvent, eventGuests, isCoHost, coHostGuestCode }) => {
   const navigate = useNavigate();
   const image = newEvent.image;
   const imageUrl = image;
@@ -184,7 +184,7 @@ const EventImages = ({ newEvent, eventGuests }) => {
                 </Text>
                 <Flex justifyContent={'space-between'} alignItems="center">
                   <Heading fontWeight={'medium'} fontSize="14">
-                    {newEvent.guestCode}
+                    {isCoHost ? coHostGuestCode?.code : newEvent?.guestCode}
                   </Heading>
                   {copyElement === 'GUEST_CODE' ? (
                     <CheckIcon onClick={() => setCopyElement('')} />
@@ -194,7 +194,7 @@ const EventImages = ({ newEvent, eventGuests }) => {
                       w="20px"
                       h="20px"
                       onClick={() =>
-                        HandleCopy('GUEST_CODE', newEvent.guestCode)
+                        HandleCopy('GUEST_CODE', isCoHost ? coHostGuestCode?.code : newEvent.guestCode)
                       }
                     />
                   )}
