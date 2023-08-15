@@ -162,7 +162,7 @@ const Index = ({ isCoHost }) => {
                       )}
                       {navPosition === 1 && <EventGifts newEvent={newEvent} />}
                       {navPosition === 2 && <EventMedia />}
-                      {navPosition === 3 && <EventGuests />}
+                      {navPosition === 3 && <EventGuests isCoHost={isCoHost} />}
                       {navPosition === 4 && <Asoebi newEvent={newEvent} />}
                       {navPosition === 5 && <Fundraising />}
                     </Box>

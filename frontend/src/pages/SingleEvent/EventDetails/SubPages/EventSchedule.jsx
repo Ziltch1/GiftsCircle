@@ -24,6 +24,8 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
   const [confirmEditAddress, setConfirmEditAddress] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
 
+  // console.log(deliveryAddress);
+
   const showDrawer = () => {
     setOpenDrawer(true);
   };
@@ -69,7 +71,7 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
                 <Button fontWeight='medium' color='white' w='100%' h='45px' bg="#00BFB2" fontSize={14.5} onClick={showGiftMarketplace}>Add your Gifts</Button>
               </Box>
             }
-          {isCoHost && 
+          {isCoHost && deliveryAddress && 
               <Box py='5' px='5' borderRadius={5} bg='#EEEEEE' mb='4' boxShadow='sm'>
                 <Heading fontSize={18} fontWeight='medium' mb='2.5'>Delivery Address</Heading>
                 <Text fontSize={14} mb='2.5'>{deliveryAddress.address}</Text>

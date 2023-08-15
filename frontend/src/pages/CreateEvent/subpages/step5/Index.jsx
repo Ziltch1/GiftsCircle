@@ -36,7 +36,7 @@ import {
 const SummaryForm = ({ setStep }) => {
   const { newEvent } = useSelector(state => state.event);
   const [openModal, setOpenModal] = useState(false);
-  const [percentage, setPercentage] = useState('');
+  const [percentage, setPercentage] = useState(newEvent?.percentDonation ? newEvent?.percentDonation : '');
   const [publish, setPublish] = useState(false);
   const toast = useToast();
 
