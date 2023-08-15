@@ -14,15 +14,15 @@ import {
 import { useSelector } from 'react-redux';
 import SkeletonLoader from '../../../../components/Skeleton';
 
-const GuestList = () => {
-  const { eventGuests } = useSelector(state => state.event);
-  const [data, setData] = useState(null);
+const GuestList = ({eventGuests}) => {
+  // const { eventGuests } = useSelector(state => state.event);
+  // const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (eventGuests) {
       setLoading(false);
-      setData(eventGuests);
+      // setData(eventGuests);
     }
   }, [eventGuests]);
   return (
@@ -49,7 +49,7 @@ const GuestList = () => {
                 <SkeletonLoader />
               ) : (
                 <>
-                  {data.map((ele, index) => {
+                  {eventGuests?.map((ele, index) => {
                     return (
                       <>
                         <Tr fontSize={14} _hover={{ bg: '#EBFAF9' }}>

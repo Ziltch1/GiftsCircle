@@ -12,13 +12,14 @@ const GiftCard = ({ step, setStep }) => {
     setGiftItems,
     quantity,
     GiftItems,
-    setQuantity,
+    setQuantity, 
   } = useContext(GiftContext);
   const [openGiftDetails, setOpenGiftDetails] = useState(false);
   const { giftItems } = useSelector(state => state.gift);
-  const { newEvent } = useSelector(state => state.event);
+  const { newEvent, eventGifts } = useSelector(state => state.event);
   const {user} = useSelector(state => state.user)
   const [data, setData] = useState([]);
+  const [newData, setNewData] = useState([]);
   const [currentGift, setCurrentGift] = useState(null);
   const toast = useToast();
 
@@ -47,6 +48,15 @@ const GiftCard = ({ step, setStep }) => {
       });
     }
   };
+
+  useEffect(() => {
+    if (eventGifts) {
+      setNewData([...eventGifts, ...GiftItems]);
+    } else {
+      setNewData([...GiftItems]);
+    }
+  }, [eventGifts, GiftItems]);
+
 
   const handleSubmit = () => {
     setStep(step + 1);
@@ -78,7 +88,7 @@ const GiftCard = ({ step, setStep }) => {
               data={item}
               action={AddGift}
               text="Add to List"
-              disabled={addedGiftItems.includes(item.id)}
+              disabled={addedGiftItems.includes(item.id) || newData?.some(k => k.giftitemId === item.id)}
             />
           );
         })}

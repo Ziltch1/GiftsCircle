@@ -48,6 +48,10 @@ const GetEventCohostsApi = id => {
   return api.get(`/event/${id}/cohosts`);
 };
 
+const GetCoHostGuestsApi = (eventId, coHostId) => {
+  return api.get(`/event/${eventId}/${coHostId}/guests`);
+};
+
 const GetEventCoHostGuestCode = (eventId, userId) => {
   return api.get(`/event/GetCoHostGuestCode/${eventId}/${userId}`)
 }
@@ -66,4 +70,5 @@ export {
   GetEventCohostsApi,
   JoinEventCoHostApi,
   GetEventCoHostGuestCode,
+  GetCoHostGuestsApi,
 };

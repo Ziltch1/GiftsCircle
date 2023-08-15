@@ -8,6 +8,8 @@ import DisplayCard from '../../../../components/Card';
 import ContributionModal from './subpages/ContributionModal';
 import { Zones } from '../../../../Utils/data/ZONES';
 import Prompt from './subpages/Prompt';
+import { GetCoHostAddedGiftsApi } from '../../../../redux/axios/apis/gift';
+
 
 export const CartContext = createContext(null);
 
@@ -21,9 +23,10 @@ const Index = ({
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
   const [data, setData] = useState([]);
-  const { eventDeliveryDetails, eventGifts } = useSelector(
+  const { eventDeliveryDetails, newEvent } = useSelector(
     state => state.event
   );
+  const {user} = useSelector(state => state.user)
   const { giftItems, complimentaryGifts } = useSelector(state => state.gift);
   const [GiftItems, setGiftItems] = useState([]);
   const [ComplimentaryItems, setComplimentaryItems] = useState([]);
@@ -43,6 +46,7 @@ const Index = ({
   const [contributionGift, setContributionGift] = useState([]);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isComplimentary, setIsComplimentary] = useState(false);
+  const [eventGifts, setEventGifts] = useState([])
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftitemId === id);
@@ -59,6 +63,20 @@ const Index = ({
       }
     }
   };
+
+  const getCoHostGifts = async() => {
+    try {
+      const res = await GetCoHostAddedGiftsApi(newEvent?.id, newEvent?.userId);
+      const data = await res.data;
+      setEventGifts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getCoHostGifts();
+  }, [])
 
 
   useEffect(() => {

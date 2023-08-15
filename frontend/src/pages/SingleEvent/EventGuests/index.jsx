@@ -2,13 +2,16 @@ import React, {useState, useEffect} from 'react'
 import { Box, Button, Stack } from '@chakra-ui/react'
 import GuestList from './subpages/GuestList'
 import CoHostList from './subpages/CoHostList'
-import { GetEventCohostsApi } from '../../../redux/axios/apis/events'
+import { GetCoHostGuestsApi, GetEventCohostsApi } from '../../../redux/axios/apis/events'
 import { useSelector } from 'react-redux'
+
 
 const Index = () => {
   const [navPosition, setNavPosition] = useState(0);
   const [coHost, setCoHost] = useState([]);
+  const [eventGuests, setEventGuests] = useState([]);
   const {newEvent} = useSelector(state => state.event)
+  const {user} = useSelector(state => state.user)
 
   const getEventCohost = async () => {
     try {
@@ -20,13 +23,25 @@ const Index = () => {
     }
   }
 
+  const getCoHostGuests = async () => {
+    try {
+      const res = await GetCoHostGuestsApi(newEvent?.id, user?.id);
+      const data = await res.data;
+      console.log(data);
+      setEventGuests(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     getEventCohost();
+    getCoHostGuests();
   }, [newEvent]);
   return (
     <Box minH='400px'>
       <Tabs position={navPosition} setNavPosition={setNavPosition} />
-      {navPosition === 0 && <GuestList />}
+      {navPosition === 0 && <GuestList eventGuests={eventGuests} />}
       {navPosition === 1 && <CoHostList data={coHost} />}
     </Box>
   )
