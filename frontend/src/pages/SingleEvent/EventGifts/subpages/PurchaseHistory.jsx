@@ -39,7 +39,6 @@ const PurchaseHistory = () => {
     try {
       const res = await GetCoHostEventGiftsTransApi(newEvent?.id, user.id);
       if (res.data) {
-        console.log(res.data);
         setLoading(false);
         setData(res.data);
       }
