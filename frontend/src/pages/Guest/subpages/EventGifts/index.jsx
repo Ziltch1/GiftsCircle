@@ -9,7 +9,7 @@ import ContributionModal from './subpages/ContributionModal';
 import { Zones } from '../../../../Utils/data/ZONES';
 import Prompt from './subpages/Prompt';
 import { GetCoHostAddedGiftsApi } from '../../../../redux/axios/apis/gift';
-
+import { GetGuestDetailsApi } from '../../../../redux/axios/apis/events';
 
 export const CartContext = createContext(null);
 
@@ -23,11 +23,9 @@ const Index = ({
   const [showListDrawer, setShowListDrawer] = useState(false);
   const [contributionModal, setContributionModal] = useState(false);
   const [data, setData] = useState([]);
-  const { eventDeliveryDetails, newEvent } = useSelector(
-    state => state.event
-  );
-  const {user} = useSelector(state => state.user)
+  const { eventDeliveryDetails, newEvent } = useSelector(state => state.event);
   const { giftItems, complimentaryGifts } = useSelector(state => state.gift);
+  const { user } = useSelector(state => state.user);
   const [GiftItems, setGiftItems] = useState([]);
   const [ComplimentaryItems, setComplimentaryItems] = useState([]);
   const [addedGiftItems, setAddedGiftItems] = useState([]);
@@ -46,7 +44,7 @@ const Index = ({
   const [contributionGift, setContributionGift] = useState([]);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isComplimentary, setIsComplimentary] = useState(false);
-  const [eventGifts, setEventGifts] = useState([])
+  const [eventGifts, setEventGifts] = useState([]);
 
   const addGift = id => {
     let newItem = eventGifts.find(x => x.giftitemId === id);
@@ -63,20 +61,28 @@ const Index = ({
     }
   };
 
-  const getCoHostGifts = async() => {
+  const GetCoHostGifts = async () => {
     try {
-      const res = await GetCoHostAddedGiftsApi(newEvent?.id, newEvent?.userId);
-      const data = await res.data;
-      setEventGifts(data);
+      const res = await GetGuestDetailsApi(user.id, newEvent.id);
+      if (res.data) {
+        const cohost = res.data;
+        if (cohost.coHostId) {
+          const result = await GetCoHostAddedGiftsApi(
+            newEvent?.id,
+            cohost.coHostId
+          );
+          const data = await result.data;
+          setEventGifts(data);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    getCoHostGifts();
-  }, [])
-
+    GetCoHostGifts();
+  }, []);
 
   useEffect(() => {
     const newGift = eventGifts.filter(x => x?.enableContribution === false);

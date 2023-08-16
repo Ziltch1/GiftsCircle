@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import {
     Text,
-    Heading,
     Box,
     Modal,
     ModalOverlay,
@@ -12,15 +11,12 @@ import {
     Image,
     useDisclosure,
     Flex,
-    FormLabel,
-    Input,
 } from '@chakra-ui/react';
 import errorImg from '../../assets/errorImg.svg';
 import { Link } from 'react-router-dom';
 
 const JoinEventModal = ({ setShowJoinEventModal, setGuest, setCoHost }) => {
     const { onClose, isOpen } = useDisclosure({ defaultIsOpen: true });
-    const texts = ['Join as a guest', 'Join as a Co-host']
 
     const guestJoin = (index) => {
         setGuest(true)

@@ -5,37 +5,30 @@ import { Box } from '@chakra-ui/react';
 import GiftLists from './subpages/GiftLists';
 import { GetCoHostAddedGiftsApi } from '../../../redux/axios/apis/gift';
 import { useSelector } from 'react-redux';
-
+import SkeletonLoader from '../../../components/Skeleton';
 
 const Index = ({ newEvent }) => {
   const [navPosition, setNavPosition] = useState(0);
   const [data, setData] = useState([]);
-  const [giftList, setGiftList] = useState([]);
-  const { eventGifts } = useSelector(state => state.event);
+  const { user } = useSelector(state => state.user);
+  const [loading, setLoading] = useState(true);
 
-  // const getAddedGifts = async() => {
-  //   try {
-  //     const res = await GetCoHostAddedGiftsApi(newEvent?.id, newEvent.userId);
-  //     const data = await res.data;
-  //     setGiftList(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-
-  // useEffect(() => {
-  //   getAddedGifts();
-  // }, [newEvent]);
-
+  const getAddedGifts = async () => {
+    try {
+      const res = await GetCoHostAddedGiftsApi(newEvent?.id, user.id);
+      if (res.data) {
+        setData(res.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    if (eventGifts) {
-      setData(eventGifts);
-    }
-  }, [eventGifts]);
-
-  // console.log(giftList, data);
+    getAddedGifts();
+  }, []);
 
   return (
     <Box>
@@ -46,12 +39,14 @@ const Index = ({ newEvent }) => {
       />
       {newEvent.published ? (
         <Box>
-          {navPosition === 1 && <GiftLists data={data} />}
+          {navPosition === 1 && (
+            <>{loading ? <SkeletonLoader /> : <GiftLists data={data} />}</>
+          )}
           {navPosition === 0 && <PurchaseHistory />}
         </Box>
-       ) : (
-         <GiftLists data={data} /> 
-       )} 
+      ) : (
+        <GiftLists data={data} />
+      )}
     </Box>
   );
 };
