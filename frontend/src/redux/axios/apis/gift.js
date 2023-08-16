@@ -52,6 +52,10 @@ const GetUserEventGiftsTransApi = (id, userId) => {
   return api.get(`/gift/Get/UserEventGiftsTrans/${id}/${userId}`);
 };
 
+const GetCoHostAddedGiftsApi = (eventId, userId) => {
+  return api.get(`/gift/Get/EventGifts/${eventId}/${userId}`);
+};
+
 export {
   GetGiftItemsApi,
   GetComplimentaryGiftItemsApi,
@@ -66,4 +70,5 @@ export {
   GetUserPurchasedGiftsApi,
   AddGiftApi,
   GetUserGiftApi,
+  GetCoHostAddedGiftsApi,
 };

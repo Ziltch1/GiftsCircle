@@ -33,6 +33,8 @@ import {
 } from '../../redux/features/gift/service';
 import { PositionContext } from '../../Layouts/DashBoardLayout';
 import Marketplace from './EventDetails/GiftMarketplace';
+import { GetEventCoHostGuestCode } from '../../redux/axios/apis/events';
+
 
 const Index = ({ isCoHost }) => {
   const navigate = useNavigate();
@@ -41,6 +43,7 @@ const Index = ({ isCoHost }) => {
   const [newEvent, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showMarketplace, setShowMarketplace] = useState(false);
+  const [coHostGuestCode, setCoHostGuestCode] = useState('');
  
   const { events, fundRaising, eventGuests } = useSelector(
     state => state.event
@@ -83,6 +86,23 @@ const Index = ({ isCoHost }) => {
     }
   }, [newEvent]);
 
+
+   const getCoHostGuestCode = async () => {
+    try {
+      const res = await GetEventCoHostGuestCode(newEvent?.id, userId);
+      const data = await res.data;
+      setCoHostGuestCode(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (newEvent) {
+      getCoHostGuestCode();
+    }
+  }, [userId, newEvent?.id])
+
   useEffect(() => {
     if (fundRaising && newEvent) {
       if (fundRaising.eventId !== newEvent.id) {
@@ -119,7 +139,12 @@ const Index = ({ isCoHost }) => {
               <>
                 <Box>
                   <BackButton action={goBack} />
-                  <EventImages newEvent={newEvent} eventGuests={eventGuests} />
+                  <EventImages 
+                    newEvent={newEvent} 
+                    eventGuests={eventGuests} 
+                    isCoHost={isCoHost} 
+                    coHostGuestCode={coHostGuestCode} 
+                  />
                 </Box>
                 <Tabs
                   navPosition={navPosition}
@@ -137,7 +162,7 @@ const Index = ({ isCoHost }) => {
                       )}
                       {navPosition === 1 && <EventGifts newEvent={newEvent} />}
                       {navPosition === 2 && <EventMedia />}
-                      {navPosition === 3 && <EventGuests />}
+                      {navPosition === 3 && <EventGuests isCoHost={isCoHost} />}
                       {navPosition === 4 && <Asoebi newEvent={newEvent} />}
                       {navPosition === 5 && <Fundraising />}
                     </Box>

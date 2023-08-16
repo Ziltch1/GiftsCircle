@@ -175,9 +175,17 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
                   <Box w={{ base: '100%', lg: '50%' }}>
                     <FormLabel fontSize={14}>Phone Number</FormLabel>
                     <Input
-                      type="text"
+                      type="number"
                       w="100%"
                       maxLength={11}
+                      min="0"
+                      max="99999999999"
+                      onInput={(e) => {
+                        const maxLength = 11;
+                        if (e.target.value.length > maxLength) {
+                          e.target.value = e.target.value.slice(0, maxLength);
+                        }
+                      }}
                       value={phoneNumber}
                       onChange={e => setPhoneNumber(e.target.value)}
                     />
@@ -185,9 +193,17 @@ const DeliveryDetailsForm = ({ step, setStep }) => {
                   <Box w={{ base: '100%', lg: '50%' }}>
                     <FormLabel fontSize={14}>Additional Phone Number</FormLabel>
                     <Input
-                      type="text"
+                      type="number"
                       maxLength={11}
                       w="100%"
+                      min="0"
+                      max="99999999999"
+                      onInput={(e) => {
+                        const maxLength = 11;
+                        if (e.target.value.length > maxLength) {
+                          e.target.value = e.target.value.slice(0, maxLength);
+                        }
+                      }}
                       value={phoneNumber2}
                       onChange={e => setPhoneNumber2(e.target.value)}
                     />

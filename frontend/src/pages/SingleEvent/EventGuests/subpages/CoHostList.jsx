@@ -29,7 +29,7 @@ const CoHostList = ({data}) => {
 
     return (
         <Box minH='500px'>
-            {!data.lenth < 1 ? 
+            {!data.length < 1 ? 
             <TableContainer bg="white">
                 <Table variant="simple">
                     <Thead bg="#EEEEEE" px="17px" py="40px">
