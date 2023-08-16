@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 const GiftLists = ({ data }) => {
   const { giftItems } = useSelector(state => state.gift);
   return (
-    <Box minH='500px'>
+    <Box minH="500px">
       <TableContainer bg="white">
         <Table variant="simple">
           <Thead bg="#EEEEEE" px="17px" py="40px">

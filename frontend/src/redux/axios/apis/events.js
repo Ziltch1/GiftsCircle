@@ -53,9 +53,12 @@ const GetCoHostGuestsApi = (eventId, coHostId) => {
 };
 
 const GetEventCoHostGuestCode = (eventId, userId) => {
-  return api.get(`/event/GetCoHostGuestCode/${eventId}/${userId}`)
-}
+  return api.get(`/event/GetCoHostGuestCode/${eventId}/${userId}`);
+};
 
+const GetGuestDetailsApi = (id, eventId) => {
+  return api.get(`/event/guests/${id}/${eventId}`);
+};
 export {
   GetUserEventsApi,
   GetEventGuestsApi,
@@ -71,4 +74,5 @@ export {
   JoinEventCoHostApi,
   GetEventCoHostGuestCode,
   GetCoHostGuestsApi,
+  GetGuestDetailsApi,
 };
