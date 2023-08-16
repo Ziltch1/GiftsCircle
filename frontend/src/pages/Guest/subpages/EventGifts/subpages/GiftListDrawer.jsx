@@ -30,7 +30,6 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, checkContribution }) => {
   const { user } = useSelector(state => state.user);
   const { newEvent } = useSelector(state => state.event);
   const [quantity, setQuantity] = useState(1);
-  const [newGiftItems, setNewGiftItems] = useState([]);
 
   const {
     complimentaryGifts,
@@ -161,17 +160,6 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, checkContribution }) => {
     setShowCheckout(true);
   };
 
-  useEffect(() => {
-    localStorage.setItem('GiftItems', JSON.stringify(GiftItems));
-  }, [GiftItems]);
-
-  useEffect(() => {
-    const storedData = localStorage.getItem('GiftItems');
-    if (storedData) {
-      setNewGiftItems(JSON.parse(storedData));
-    }
-  }, []);
-
 
   return (
     <Box>
@@ -236,7 +224,7 @@ const GiftListDrawer = ({ setShowListDrawer, isOpen, checkContribution }) => {
           </DrawerBody>
           <DrawerFooter borderTop="1px solid lightgray">
             {checkContribution === true ? (
-              <PaymentButton amount={amount} action={HandleSubmit} />
+              <PaymentButton amount={giftAmount} action={HandleSubmit} />
             ) : (
               <Button
                 mb="3"

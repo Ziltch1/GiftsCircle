@@ -26,12 +26,12 @@ const Index = ({ newEvent }) => {
       />
       {newEvent.published ? (
         <Box>
-          {navPosition === 0 && <PurchaseHistory />}
           {navPosition === 1 && <GiftLists data={data} />}
+          {navPosition === 0 && <PurchaseHistory />}
         </Box>
-      ) : (
-        <GiftLists data={data} />
-      )}
+       ) : (
+         <GiftLists data={data} /> 
+       )} 
     </Box>
   );
 };

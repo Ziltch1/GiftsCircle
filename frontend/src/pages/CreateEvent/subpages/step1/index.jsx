@@ -24,6 +24,7 @@ import { setNewEvent } from '../../../../redux/features/events/eventSlice';
 import { GetEventGifts } from '../../../../redux/features/events/service';
 import { CancelModal } from '../../components/FormHeader';
 import { GetDeliveryDetails } from '../../../../redux/features/user/service';
+import moment from 'moment';
 
 const BasicForm = ({ step, setStep }) => {
   const { user } = useSelector(state => state.user);
@@ -34,11 +35,11 @@ const BasicForm = ({ step, setStep }) => {
   const [coHost, setCoHost] = useState(newEvent ? newEvent.coHost : '');
   const [category, setCategory] = useState(newEvent ? newEvent.category : '');
   const [venue, setVenue] = useState(newEvent ? newEvent.venue : '');
-  const [date, setDate] = useState(newEvent ? newEvent.date : '');
+  const [date, setDate] = useState(newEvent ? newEvent?.date : '');
   const [startTime, setStartTime] = useState(
-    newEvent ? newEvent.startTime : ''
+    newEvent ? newEvent.start_time : ''
   );
-  const [endTime, setEndTime] = useState(newEvent ? newEvent.endTime : '');
+  const [endTime, setEndTime] = useState(newEvent ? newEvent.end_time : '');
 
   useEffect(() => {
     if (!newEvent) {
@@ -255,7 +256,7 @@ const BasicForm = ({ step, setStep }) => {
                   fontSize={14}
                   bg="#FAFAFA"
                   color="black"
-                  value={date}
+                  value={moment(date).format('YYYY-MM-DD')}
                   _placeholder={{ color: newEvent ? '#8C8C8C' : '#000' }}
                   onChange={e => setDate(e.target.value)}
                 />

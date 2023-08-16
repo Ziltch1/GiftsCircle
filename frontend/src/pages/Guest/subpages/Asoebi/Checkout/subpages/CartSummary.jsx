@@ -10,9 +10,9 @@ const CartSummary = ({
   deliveryAmount,
   handleSubmit,
   cartLength,
-  deliveryPercent, setShowAsoebiCheckout
+  deliveryPercent,
 }) => {
-  const { newDeliveryData } = useContext(DeliveryContext);
+  const { newDeliveryData, setShowAsoebiCheckout } = useContext(DeliveryContext);
   const { user } = useSelector(state => state.user);
 
   const singleItem = newDeliveryData.map(item => {
