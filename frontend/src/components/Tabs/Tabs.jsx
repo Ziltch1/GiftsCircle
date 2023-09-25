@@ -11,8 +11,8 @@ const Tabs = ({ navPosition, setNavPosition }) => {
   };
   return (
     <Box>
-      <Flex pt="8" justifyContent={'space-between'} alignItems="center" mb="8">
-        <Box>
+      <Flex pt="8" justifyContent={'space-between'} alignItems={['flex-start', 'center']} mb="8" flexDirection={['column', 'row']}>
+        <Box mb={[3.5, 0]}>
           <Heading size="lg">Events</Heading>
         </Box>
         <Flex gap="4">

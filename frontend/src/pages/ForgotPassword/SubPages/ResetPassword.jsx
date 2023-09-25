@@ -76,11 +76,12 @@ const ResetPassword = () => {
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="525px"
-      w="599px"
+      minH="525px"
+      w={['350px', '559px']}
       direction="column"
       gap="30px"
       zIndex="99"
+      pb={[5,0]}
     >
       <Box bgColor="#0F172A" h="104.25px" p="30px 60px">
         <Flex justifyContent="center">
@@ -90,11 +91,11 @@ const ResetPassword = () => {
         </Flex>
       </Box>
 
-      <Box m="0px 60px">
+      <Box px={[5, 10]}>
         <Flex direction="column" gap="20px">
           <Flex direction="column" gap="10px" width="373px">
             <Text
-              fontSize="30px"
+              fontSize={['25px', '30px']}
               color="#000000"
               letterSpacing="-0.02em"
               lineHeight="40px"
@@ -152,7 +153,7 @@ const ResetPassword = () => {
                 </InputGroup>
               </FormControl>
 
-              <Flex gap="5px">
+              <Flex gap="5px" flexWrap='wrap'>
                 <Flex gap="10px">
                   {passwordCount ? (
                     <img src={checkedbox} alt="" />

@@ -44,7 +44,7 @@ const UploadedMedia = () => {
         </Flex>
         </>
       ) : (
-        <VStack spacing={6} textAlign="center" w="450px" mx="auto">
+        <VStack spacing={6} textAlign="center" w={['300px', '450px']} mx="auto" mt='10'>
           <Heading fontWeight="semibold" fontSize={30}>
             Media Empty
           </Heading>

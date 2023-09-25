@@ -78,7 +78,7 @@ const SignIn = () => {
       bgColor="#fff"
       color="#000000"
       h="575px"
-      w="559px"
+      w={['350px','559px']}
       direction="column"
       zIndex="99"
     >
@@ -90,11 +90,11 @@ const SignIn = () => {
         </Flex>
       </Box>
 
-      <Box p="40px" borderRadius="0px 0px 10px 10px">
+      <Box p="30px" borderRadius="0px 0px 10px 10px">
         <Flex direction="column" gap="20px">
-          <Flex direction="column" gap="10px" width="373px">
+          <Flex direction="column" gap="10px" maxW="373px">
             <Text
-              fontSize="30px"
+              fontSize={[23, 30]}
               color="#000000"
               letterSpacing="-0.02em"
               lineHeight="40px"
@@ -150,10 +150,11 @@ const SignIn = () => {
               borderRadius="5px"
               gap="10px"
               h="50px"
-              p="13px 198px"
               _hover={{ bgColor: '#ffffff' }}
               cursor="pointer"
               onClick={() => GoogleSignInHandler()}
+              justifyContent='center'
+              alignItems='center'
             >
               <img src={Google} alt="google" />
               <Text

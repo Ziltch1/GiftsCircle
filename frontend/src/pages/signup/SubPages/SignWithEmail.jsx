@@ -68,7 +68,7 @@ const SignWithEmail = () => {
       bgColor="#fff"
       color="#000000"
       h={error  ? "720px": "685px"}
-      w="559px"
+      w={['350px', '559px', '559px']}
       direction="column"
       gap="30px"
       zIndex="99"
@@ -81,11 +81,11 @@ const SignWithEmail = () => {
         </Flex>
       </Box>
 
-      <Box m="0px 60px">
+      <Box mx={[25, 10]}>
         <Flex direction="column" gap="20px">
-          <Flex direction="column" gap="10px" width="373px">
+          <Flex direction="column" gap="10px" w='373px'>
             <Text
-              fontSize="30px"
+              fontSize={[23, 30]}
               color="#000000"
               letterSpacing="-0.02em"
               lineHeight="40px"

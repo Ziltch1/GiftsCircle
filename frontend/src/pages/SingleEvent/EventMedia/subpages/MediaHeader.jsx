@@ -41,12 +41,12 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
         setShowModal={setShowVideoModal}
         setData={setImage}
       />
-      <Flex justifyContent="space-between">
+      <Flex justifyContent="space-between" flexDirection={['column', 'row']} mb={[4, 0]}>
         <Heading mb="5" fontWeight={'medium'} fontSize={24}>
           Media
         </Heading>
 
-        <Stack direction="row" spacing={3}>
+        <Stack direction='row' spacing={3}>
           <Button
             onClick={startVideo}
             w="150px"
@@ -65,12 +65,12 @@ const MediaHeader = ({ navPosition, setNavPosition }) => {
           <FormLabel
             htmlFor="upload"
             w="210px"
-            h="45px"
+            h='45px'
             color="white"
             bg="#00BFB2"
             fontSize={14}
             borderRadius="5px"
-            px="28px"
+            px={['20px','28px']}
             py="11px"
             textAlign="center"
           >

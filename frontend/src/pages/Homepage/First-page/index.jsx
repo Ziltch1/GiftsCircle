@@ -6,7 +6,6 @@ import Navbar from '../Navbar'
 const index = () => {
   return (
     <Box >
-        {/* <Navbar /> */}
         <Hero_1 />
     </Box>
   )

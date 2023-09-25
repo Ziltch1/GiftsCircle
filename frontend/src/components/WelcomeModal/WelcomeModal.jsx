@@ -40,8 +40,8 @@ const WelcomeModal = () => {
     <Box>
       <Modal isOpen={welcomeModal} isCentered>
         <ModalOverlay />
-        <ModalContent>
-          <Box maxW="623px" h="auto">
+        <ModalContent w={['350px', '423px']}>
+          <Box w={['350px', '423px']} h="auto" mx='auto'>
             <Box
               bg="#CEDBE6"
               borderTopRightRadius={'10px'}
@@ -59,7 +59,7 @@ const WelcomeModal = () => {
               bg="#0C4C84"
               borderBottomRightRadius={'6px'}
               borderBottomLeftRadius="6px"
-              minH="240px"
+              minH="250px"
             >
               <ModalBody>
                 <Heading

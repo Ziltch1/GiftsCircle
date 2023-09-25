@@ -80,10 +80,11 @@ const VerifyOtp = () => {
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="620px"
-      w="559px"
+      h="630px"
+      w={['350px', '559px']}
       direction="column"
       zIndex="99"
+      mt={[10, 0]}
     >
       <Box bgColor="#0F172A" h="104.25px" p="30px 40px">
         <Flex justifyContent="center">
@@ -93,9 +94,9 @@ const VerifyOtp = () => {
         </Flex>
       </Box>
 
-      <Box p="40px" borderRadius="0px 0px 10px 10px">
+      <Box py={['20px', '40px']} px={['15px', '40px']} borderRadius="0px 0px 10px 10px">
         <Flex direction="column" gap="20px">
-          <Flex direction="column" gap="10px" width="373px">
+          <Flex direction="column" gap="10px" maxW='373px'>
             <Text
               fontSize="30px"
               color="#000000"
@@ -116,8 +117,8 @@ const VerifyOtp = () => {
               we sent to <Link style={{ color: '#0C4C84' }}>{user}</Link>
             </Text>
           </Flex>
-          <Flex direction="column" gap="20px">
-            <Flex gap="40px" p="10px" justifyContent="center">
+          <Flex direction="column" gap='20px'>
+            <Flex gap={['10px', '40px']} p="10px" justifyContent="center">
               <PinInput defaultValue={otp} onChange={value => setOtp(value)}>
                 <PinInputField
                   bgColor="#EFEFEF"

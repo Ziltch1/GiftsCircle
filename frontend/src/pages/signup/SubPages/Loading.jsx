@@ -17,8 +17,9 @@ const Loading = () => {
     <Flex
       bgColor="#fff"
       color="#000000"
-      h="600px"
-      w="600px"
+      h={['350px', '500px']}
+      w={['350px', '500px']}
+      borderRadius={5}
       direction="column"
       justifyContent="center"
       alignItems="center"
@@ -31,10 +32,10 @@ const Loading = () => {
         alignItems="center"
         gap="20px"
       >
-        <img src={LoadingImg} alt="" className="spinner" />
+        <img src={LoadingImg} alt="" className="spinner" width='17%' />
 
         <Text
-          fontSize="24px"
+          fontSize={['18px', '20px']}
           color="#000000"
           lineHeight="32px"
           fontWeight="500"

@@ -64,16 +64,17 @@ const EventImages = ({ newEvent, eventGuests, isCoHost, coHostGuestCode }) => {
   return (
     <>
       <Box mb="6" mt="5">
-        <Flex justifyContent="space-between" alignItems="center">
+        <Flex justifyContent="space-between" alignItems="center" flexDirection={['column', 'row']}>
           <Box
             bg="#EEEEEE"
-            w={newEvent.published ? '68%' : '100%'}
-            h="474px"
+            w={newEvent.published ? ['95%', '68%'] : '100%'}
+            h={['400px', '474px']}
             borderRadius={5}
             display="flex"
             alignItems={'center'}
             justifyContent="center"
             boxShadow={'md'}
+            mb={[5, 0]}
           >
             {newEvent.image ? (
               <Image
@@ -90,8 +91,8 @@ const EventImages = ({ newEvent, eventGuests, isCoHost, coHostGuestCode }) => {
 
           {newEvent.published && (
             <Box
-              w="30%"
-              h="474px"
+              w={['95%', '30%']}
+              h={['474px', '474px']}
               bg="#EEEEEE"
               borderRadius={5}
               py="5"
