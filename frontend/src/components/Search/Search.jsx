@@ -15,7 +15,7 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
     <Box>
       <FormControl>
         <Flex justifyContent={'space-between'}>
-          <InputGroup w="82%">
+          <InputGroup w={['70%', '82%']}>
             <InputLeftElement
               pointerEvents="none"
               children={<SearchIcon color="#8C8C8C" />}
@@ -33,23 +33,10 @@ const Search = ({ setSearchQuery, searchQuery, setFilter, filter }) => {
               letterSpacing={0.5}
             />
           </InputGroup>
-
-          {/* <Box w='20%'>
-            <DropdownList
-              value={filter}
-              defaultValue={"Filter"}
-              onChange={value => setFilter(value)}
-              // style={{ width: '15%' }}
-              // placeholder='Filter'
-              // defaultValue="Filter"
-              data={["Birthday", "Naming", "Retirement", "Graduation", "Induction", "Wedding", "Funeral"]}
-            />
-          </Box> */}
-
           <Select
             variant={'flushed'}
             bg="#555555"
-            w="17%"
+            w={['27%', '17%']}
             borderRadius="5px"
             onChange={e => setFilter(e.target.value)}
             value={filter}

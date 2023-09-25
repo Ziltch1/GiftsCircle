@@ -72,7 +72,7 @@ const Navbar = () => {
 
   return (
     <Box boxShadow={'lg'} bg="white" w="100%" h="60px" pt="7" borderBottom='0.1px solid lightgray'>
-      <Box w="90%" mx="auto">
+      <Box w="90%" mx="auto" overflowX='auto'>
         <UnorderedList
           listStyleType={'none'}
           fontWeight="medium"

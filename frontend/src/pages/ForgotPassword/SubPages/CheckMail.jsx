@@ -12,7 +12,7 @@ const PasswordMail = () => {
       bgColor="#fff"
       color="#000000"
       h="433px"
-      w="559px"
+      w={['350px', '559px']}
       direction="column"
       gap="30px"
       zIndex="99"
@@ -25,11 +25,11 @@ const PasswordMail = () => {
         </Flex>
       </Box>
 
-      <Box m="0px 60px">
+      <Box px={[5, '50px']}>
         <Flex direction="column" gap="20px">
           <Flex direction="column" gap="10px" width="373px">
             <Text
-              fontSize="30px"
+              fontSize={['25px', '30px']}
               color="#000000"
               letterSpacing="-0.02em"
               lineHeight="40px"

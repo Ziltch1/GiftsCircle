@@ -71,14 +71,17 @@ const SignInWithEmail = () => {
   }
 
   return (
+    <Box>
     <Flex
       bgColor="#fff"
       color="#000000"
       h={error ? "670px":"628px"}
-      w="559px"
       direction="column"
       gap="30px"
       zIndex="99"
+      // w={['80%', '100%']}
+      mx='auto'
+      mt={['50px', 0]}
     >
       <Box bgColor="#0F172A" h="104.25px" p="30px 60px">
         <Flex justifyContent="center">
@@ -88,9 +91,9 @@ const SignInWithEmail = () => {
         </Flex>
       </Box>
 
-      <Box m="0px 60px">
+      <Box mx={[0, 14]} p={[5, 0]}>
         <Flex direction="column" gap="20px">
-          <Flex direction="column" gap="10px" width="373px">
+          <Flex direction="column" gap="10px" width={['320px', '430px']}>
             <Text
               fontSize="30px"
               color="#000000"
@@ -258,6 +261,7 @@ const SignInWithEmail = () => {
         </Flex>
       </Box>
     </Flex>
+    </Box>
   );
 };
 

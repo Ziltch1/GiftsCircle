@@ -120,7 +120,7 @@ const Index = ({ isCoHost }) => {
   return (
     <Box bg="#F5F5F5">
       <Box
-        w={showMarketplace ? '90%' : '76%'}
+        w={showMarketplace ? '90%' : ['92%', '76%']}
         mx="auto"
         pt={showMarketplace ? '0' : 8}
         pb="7"

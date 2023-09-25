@@ -19,8 +19,8 @@ const Tabs = ({ navPosition, setNavPosition }) => {
 
   return (
     <Box>
-      <Box borderBottom="1.5px solid lightgrey" w="100%" mb="7">
-        <Flex gap={8} fontSize="14px">
+      <Box borderBottom="1.5px solid lightgrey" w="100%" mb="7" overflow='auto'>
+        <Flex gap={8} fontSize="14px" overflow='auto'>
           {links.map((link, index) => (
             <Button
               key={index}

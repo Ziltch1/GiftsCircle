@@ -6,7 +6,7 @@ import {
   FormControl,
   Input,
   FormLabel,
-  Button,
+  Button, useToast
 } from '@chakra-ui/react';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,6 +20,7 @@ const ForgotPassword = () => {
   const [error, setError] = useState(null);
   const [emailTest, setEmailTest] = useState(false);
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     const EmailRegex =
@@ -42,6 +43,15 @@ const ForgotPassword = () => {
         console.log(e);
         setError(ErrorHandler(e));
       }
+    }else{
+      toast({
+        title: 'Error!',
+        description: "Please fill all fields",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+        position: 'top'
+      })
     }
   };
 
@@ -50,7 +60,7 @@ const ForgotPassword = () => {
       bgColor="#fff"
       color="#000000"
       h={error ? "520px": "467px"}
-      w="559px"
+      w={['350px','559px']}
       direction="column"
       gap="30px"
       zIndex="99"
@@ -63,11 +73,11 @@ const ForgotPassword = () => {
         </Flex>
       </Box>
 
-      <Box m="0px 60px">
+      <Box px={[5, 20]}>
         <Flex direction="column" gap="20px">
-          <Flex direction="column" gap="10px" width="373px">
+          <Flex direction="column" gap="10px" width={['330px', '373px']}>
             <Text
-              fontSize="30px"
+              fontSize={[25, 30]}
               color="#000000"
               letterSpacing="-0.02em"
               lineHeight="40px"

@@ -47,7 +47,7 @@ const SignUp = () => {
       bgColor="#fff"
       color="#000000"
       h="575px"
-      w="559px"
+      w={['350px','559px']}
       direction="column"
       zIndex="99"
     >
@@ -61,9 +61,9 @@ const SignUp = () => {
 
       <Box p="40px" borderRadius="0px 0px 10px 10px">
         <Flex direction="column" gap="20px">
-          <Flex direction="column" gap="10px" width="373px">
+          <Flex direction="column" gap="10px" w="373px">
             <Text
-              fontSize="30px"
+              fontSize={[23, 30]}
               color="#000000"
               letterSpacing="-0.02em"
               lineHeight="40px"
@@ -119,7 +119,9 @@ const SignUp = () => {
               borderRadius="5px"
               gap="10px"
               h="50px"
-              p="13px 198px"
+              // p="13px 198px"
+              alignItems='center'
+              justifyContent='center'
               _hover={{ bgColor: '#ffffff' }}
               cursor="pointer"
               onClick={() => GoogleSignUp()}

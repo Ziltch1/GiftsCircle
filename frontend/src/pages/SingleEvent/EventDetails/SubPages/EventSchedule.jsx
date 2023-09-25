@@ -51,8 +51,8 @@ const EventSchedule = ({ newEvent, deliveryAddress, isCoHost, getDeliveryAddress
       )}
       {editAddress && <DeliveryAddressModal setEditAddress={setEditAddress} setIsEdited={setIsEdited} setConfirmEditAddress={setConfirmEditAddress}  />}
       {confirmEditAddress && <EditAddressModal setEditAddress={setEditAddress} setConfirmEditAddress={setConfirmEditAddress} setIsEdited={setIsEdited} deliveryAddress={deliveryAddress} getDeliveryAddress={getDeliveryAddress} />}
-      <Flex justifyContent="space-between" alignItems="flex-start">
-        <Box w="610px">
+      <Flex justifyContent={['center', 'space-between']} alignItems={['center', 'flex-start']} flexWrap='wrap'>
+        <Box w={['95%', '610px']}>
           <Heading fontWeight={500} fontSize="24px" mb="4">
             {newEvent.title}
           </Heading>
